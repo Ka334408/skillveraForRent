@@ -1,0 +1,84 @@
+{
+    "Content": {
+        "hi": "Welcome",
+        "title": "Hi, I am Dogan MERDEN",
+        "work": "Working as a frontend developer at an international company"
+    },
+    "Navigation": {
+        "homeBtn": "Home",
+        "nameBtn": "Name",
+        "workBtn": "login"
+    },
+    "LocaleSwitcher": {
+        "label": "Change language",
+        "locale": "{locale, select, ar {العربيه} en {English} other {Unknown}}"
+    },
+    
+  "loginWords":{
+  "welcome": "Welcome back !",
+  "tagline": "Enjoy a different rental experience with the Skillvera platform",
+  "email": "Email",
+  "password": "Password",
+  "forgot": "Forgot password?",
+  "login": "Log in",
+  "no_account": "Don’t have an account?",
+  "signup": "Sign Up",
+  "loading":"loading"
+},
+"resetPassWords":{
+"reset":" Reset Password ",
+"associated":"Enter the mail address associated with your account",
+"email":"Email",
+"send":"Send Email",
+"goBack":"Go Back to Login"
+},
+
+  "signup": {
+    "title": "Skillvera",
+    "subtitle": "Start your perfect Rent Journey",
+    "full_name": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "signup": "Sign Up",
+    "signing_up": "Signing Up...",
+    "have_account": "Already have an account?",
+    "login": "Log in",
+    "error": "Something went wrong"
+  },
+
+  "verify": {
+    "title": "Enter verification code",
+    "subtitle": "The verification code has been sent to your email",
+    "resend": "Resend after {seconds} seconds",
+    "back": "Back",
+    "resendBtn":"Resend Code"
+  },
+  
+  "resetPasswordWords": {
+    "title": "Reset Password",
+    "subtitle": "Enter your new password below.",
+    "new_password": "New password",
+    "confirm_password": "Re-enter new password",
+    "button": "Reset Password",
+    "loading": "Loading...",
+    "not_match": "Passwords do not match",
+    "error": "Something went wrong"
+  },
+  
+  "navbar": {
+    "logo": "Logo here",
+    "home": "Home",
+    "facilities": "All facilities",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "become_host": "Become a host",
+    "signup": "Sign Up",
+    "account": "Account",
+    "support": "Support & Help",
+    "login": "Login or signup",
+    "logout": "Logout"
+  
+}
+
+
+}
