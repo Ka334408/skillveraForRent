@@ -85,7 +85,7 @@ export default function VerifyCode() {
   return (
     <main
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className="min-h-screen bg-[#85ADEF] flex items-center justify-center px-4"
+      className="min-h-screen bg-[#2C70E2] flex items-center justify-center px-4"
     >
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-xl flex flex-col items-center justify-center p-8">
         {/* Back */}
