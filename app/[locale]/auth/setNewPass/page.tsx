@@ -49,7 +49,7 @@ export default function ResetPassword() {
   return (
     <main
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className="min-h-screen bg-[#85ADEF] flex items-center justify-center px-4"
+      className="min-h-screen bg-[#2C70E2] flex items-center justify-center px-4"
     >
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-3xl min-h-[500px] flex flex-col items-center justify-center p-10">
         <h1 className="text-2xl font-bold text-center mb-2 text-gray-800">

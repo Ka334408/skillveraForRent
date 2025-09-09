@@ -78,7 +78,38 @@
     "login": "Login or signup",
     "logout": "Logout"
   
-}
+},
+
+  "Hero": {
+    "slogan": "Slogan should be here with one or two good sentences",
+    "explore": "Explore now"
+  },
+  "Search": {
+    "place": "Place",
+    "placePlaceholder": "Search by location",
+    "category": "Category",
+    "categoryPlaceholder": "Filter by category",
+    "hotel": "Hotel",
+    "apartment": "Apartment",
+    "villa": "Villa",
+    "from": "From",
+    "to": "To",
+    "results": "Search Results:"
+  },
+  
+  "categories": {
+    "title": "Our Categories",
+    "all": "some categories",
+    "rooms": "Rooms",
+    "sports": "Sports fields",
+    "labs": "Labs",
+    "login_required": "You must log in first",
+    "ok": "OK",
+    "see_all":"See all"
+  }
+
+
+
 
 
 }
