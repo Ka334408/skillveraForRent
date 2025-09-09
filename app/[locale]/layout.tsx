@@ -1,3 +1,4 @@
+// app/[locale]/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
@@ -15,25 +16,22 @@ export const metadata: Metadata = {
 export default async function LocaleLayout({
   children,
   params: { locale },
-}: Readonly<{
+}: {
   children: React.ReactNode;
   params: { locale: string };
-}>) {
-  // ✅ هات الرسائل الخاصة بالـ locale
+}) {
   const messages = await getMessages();
-
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <html lang={locale} dir={dir}>
       <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages} >       
-           <div className="flex flex-col h-screen">
-            <Header />
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <div className="flex flex-col h-screen">
+           <Header/> 
             <div>{children}</div>
           </div>
-       </NextIntlClientProvider>
-
+        </NextIntlClientProvider>
       </body>
     </html>
   );

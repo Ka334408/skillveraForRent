@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
-import HeroSection from "../components/heroSection";
-import SearchSection from "../components/searchBar";
+import HeroSection from "../../../components/heroSection";
+import SearchSection from "../../../components/searchBar";
 
-import CategoriesSection from "../components/catigories";
+import CategoriesSection from "../../../components/catigories";
+import Header from "@/app/components/header";
 
 export default function HomePage() {
   const [email, setEmail] = useState<string | null>(null);
@@ -30,7 +31,10 @@ export default function HomePage() {
      
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
-     
+      <Header/>
+      <HeroSection />
+    <SearchSection/>
+      <CategoriesSection  />
     </main>
   );
 }
