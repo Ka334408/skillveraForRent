@@ -57,7 +57,7 @@ export default function Navbar() {
       <div className="font-bold text-lg">{t("logo")}</div>
 
       {/* Links - Desktop */}
-      <div className="hidden md:flex gap-6 ml-40">
+      <div className="hidden md:flex gap-4  ">
         {navLinks.map(({ href, label }) => {
           const isActive =  pathname === href;
           
@@ -65,7 +65,7 @@ export default function Navbar() {
             <Link
               key={href}
               href={href}
-              className={`px-3 py-2 rounded-lg transition ${
+              className={`px-3 py-2 rounded-lg transition  text-sm lg:text-lg  ${
                 isActive
                   ? "bg-white text-black font-semibold"
                   : "hover:bg-blue-500 text-white"
@@ -116,7 +116,7 @@ export default function Navbar() {
             className="w-64 bg-blue-600 text-white rounded-bl-3xl rounded-br-xl rounded-tr-xl rounded-tl-xl shadow-xl p-4 text-lg"
           >
             {/* Mobile Links */}
-            <div className="xl:hidden">
+            <div className="md:hidden">
               {navLinks.map(({ href, label, icon: Icon }) => {
                 const isActive = pathname === href;
                 return (
