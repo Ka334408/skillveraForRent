@@ -51,13 +51,13 @@ export default function Navbar() {
   return (
     <nav
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className="w-full bg-blue-600 text-white px-6 py-4 flex items-center justify-between"
+      className="w-full bg-[#2C70E2] text-white px-6 py-4 flex items-center justify-between"
     >
       {/* Logo */}
       <div className="font-bold text-lg">{t("logo")}</div>
 
       {/* Links - Desktop */}
-      <div className="hidden md:flex gap-6">
+      <div className="hidden md:flex gap-6 ml-40">
         {navLinks.map(({ href, label }) => {
           const isActive =  pathname === href;
           
@@ -94,9 +94,17 @@ export default function Navbar() {
             <Link href="/auth/signUp">{t("signup")}</Link>
           </Button>
         )}
+        {isLoggedIn && (
+          <Button
+            
+            className="rounded-full bg-gray-500 text-black font-semibold hover:bg-gray-100"
+          >
+            <Link href="/auth/signUp"><User className="w-8 h-8" /></Link>
+          </Button>
+        )}
 
         {/* Hamburger Dropdown */}
-        <DropdownMenu>
+        <DropdownMenu >
           <DropdownMenuTrigger asChild>
             <button className="p-2 rounded-md hover:bg-blue-500 transition">
               <Menu className="w-7 h-7" />
@@ -105,10 +113,10 @@ export default function Navbar() {
 
           <DropdownMenuContent
             align="end"
-            className="w-64 bg-blue-600 text-white rounded-2xl shadow-xl p-4 text-lg"
+            className="w-64 bg-blue-600 text-white rounded-bl-3xl rounded-br-xl rounded-tr-xl rounded-tl-xl shadow-xl p-4 text-lg"
           >
             {/* Mobile Links */}
-            <div className="md:hidden">
+            <div className="xl:hidden">
               {navLinks.map(({ href, label, icon: Icon }) => {
                 const isActive = pathname === href;
                 return (
@@ -132,20 +140,20 @@ export default function Navbar() {
             </div>
 
             {/* Account (original dropdown item) */}
-            <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-3xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
+            <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
               <User className="w-5 h-5" />
               <span className="flex-1  italic">{t("account")}</span>
             </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-3xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
+              <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
               <Building className="w-5 h-5" />
               <span className="flex-1  italic">{t("facilities")}</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-3xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
+            <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
               <MessageCircle className="w-5 h-5" />
               <span className="flex-1  italic">{t("contact")}</span>
             </DropdownMenuItem>
 
-            <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-3xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
+            <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
               <HelpCircle className="w-5 h-5" />
               <span className="flex-1  italic">{t("support")}</span>
             </DropdownMenuItem>
