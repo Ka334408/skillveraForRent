@@ -57,7 +57,7 @@ export default function Card({
             {rating} ({reviewsCount})
           </span>
         </div>
-        <Link href={`/card/${id}`}>
+        <Link href={`/userview/card/${id}`}>
           <button className="bg-white text-black border-2 border-[#2C70E2] px-4 py-2 rounded-2xl w-full hover:bg-blue-700">
             More Details
           </button>
