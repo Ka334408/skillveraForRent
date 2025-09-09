@@ -116,7 +116,7 @@ export default function Navbar() {
             className="w-64 bg-blue-600 text-white rounded-bl-[50px] rounded-br-xl rounded-tr-xl rounded-tl-xl shadow-xl p-4 text-lg"
           >
             {/* Mobile Links */}
-            <div className="xl:hidden">
+            <div className="sm:hidden">
               {navLinks.map(({ href, label, icon: Icon }) => {
                 const isActive = pathname === href;
                 return (
