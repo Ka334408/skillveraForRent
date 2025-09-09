@@ -97,7 +97,7 @@ export default function Navbar() {
         {isLoggedIn && (
           <Button
             
-            className="rounded-full bg-gray-500 text-black font-semibold hover:bg-gray-100"
+            className="rounded-full  text-gray-200 border-gray-200 bg-[#2C70E2]  border-2 font-semibold hover:bg-gray-100 hover:text-black"
           >
             <Link href="/auth/signUp"><User className="w-8 h-8" /></Link>
           </Button>
