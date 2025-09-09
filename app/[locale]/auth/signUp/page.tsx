@@ -40,7 +40,7 @@ export default function SignUp() {
   };
 
   return (
-    <main className="min-h-screen bg-[#2C70E2] flex items-center justify-center px-4">
+    <main className="min-h-screen bg-gray-200 flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden">
         
         {/* Left side - form */}
