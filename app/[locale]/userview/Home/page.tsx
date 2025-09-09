@@ -31,7 +31,7 @@ export default function HomePage() {
      
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
-      <Header/>
+      
       <HeroSection />
     <SearchSection/>
       <CategoriesSection  />

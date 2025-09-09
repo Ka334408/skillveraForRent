@@ -4,9 +4,9 @@ export const locales = ["en", "ar"] as const;
 
 export const pathnames = {
   "/": "/",
-  "/Home": {
-    en: "/Home",
-    ar: "/Home",
+  "/userview/Home": {
+    en: "/userview/Home",
+    ar: "/userview/Home",
   },
   "/auth/login": {
     en: "/login",

@@ -37,7 +37,7 @@ export default function Login() {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("email", email);
-      window.location.href='/';
+      window.location.href='/userview/Home';
 
       alert("Login successful!");
     } catch (err: any) {
