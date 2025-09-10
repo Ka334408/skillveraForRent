@@ -7,6 +7,7 @@ import SearchSection from "../../../components/searchBar";
 
 import CategoriesSection from "../../../components/catigories";
 import Header from "@/app/components/header";
+import NearestMap from "@/app/components/LiveMap";
 
 export default function HomePage() {
   const [email, setEmail] = useState<string | null>(null);
@@ -35,6 +36,7 @@ export default function HomePage() {
       <HeroSection />
     <SearchSection/>
       <CategoriesSection  />
+      <NearestMap/>
     </main>
   );
 }
