@@ -8,7 +8,7 @@ export default function DownloadSection() {
   return (
     <section className="py-20 bg-white text-center">
       {/* Title */}
-      <h2 className="text-xl md:text-2xl font-semibold max-w-2xl mx-auto mb-12 px-4">
+      <h2 className="text-xl md:text-2xl font-semibold max-w-2xl mx-auto mb-12 px-4 " data-aos="fade-up" data-aos-duration="3000">
         {t("title")} <span className="text-blue-600">{t("appName")}</span>
       </h2>
 
@@ -16,7 +16,7 @@ export default function DownloadSection() {
       <div className="flex flex-col md:flex-row items-center justify-center gap-12">
         {/* App Icon */}
         {/* QR / Footer */}
-      <div className="mt-16 flex flex-col items-center gap-4">
+      <div className="mt-16 flex flex-col items-center gap-4" data-aos="fade-up" data-aos-duration="3000">
         <Image
           src="/qr-code.png"
           alt="QR Code"
@@ -24,11 +24,11 @@ export default function DownloadSection() {
           height={120}
           className="border border-gray-300 rounded-lg"
         />
-        <p className="text-sm text-gray-700">{t("scanNow")}</p>
+        <p className="text-sm text-gray-700" data-aos="fade-up" data-aos-duration="3000">{t("scanNow")}</p>
       </div>
 
         {/* Download buttons */}
-        <div className="flex flex-col items-start gap-6">
+        <div className="flex flex-col items-start gap-6" data-aos="fade-up" data-aos-duration="3000">
           <p className="text-lg font-medium">{t("downloadApp")}</p>
 
           <a
@@ -40,8 +40,9 @@ export default function DownloadSection() {
               alt="Google Play"
               width={28}
               height={28}
+              data-aos="fade-up" data-aos-duration="3000"
             />
-            <span className="text-sm font-medium">
+            <span className="text-sm font-medium" data-aos="fade-up" data-aos-duration="3000">
               {t("googlePlay")}
             </span>
           </a>
@@ -55,8 +56,9 @@ export default function DownloadSection() {
               alt="App Store"
               width={28}
               height={28}
+              data-aos="fade-up" data-aos-duration="2000"
             />
-            <span className="text-sm font-medium">
+            <span className="text-sm font-medium" data-aos="fade-up" data-aos-duration="3000">
               {t("appStore")}
             </span>
           </a>

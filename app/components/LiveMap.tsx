@@ -87,14 +87,14 @@ export default function LiveMap() {
 
   return (
     <section className="px-6 py-12 max-w-7xl mx-auto text-center">
-      <h2 className="text-2xl md:text-3xl font-bold mb-3 text-black " data-aos="fade-up" >
+      <h2 className="text-2xl md:text-3xl font-bold mb-3 text-black " data-aos="fade-up"  data-aos-duration="2000">
         Explore The Nearest City To You!
       </h2>
-      <p className="text-gray-600 mb-6" data-aos="fade-up">
+      <p className="text-gray-600 mb-6" data-aos="fade-up" data-aos-duration="2000">
         Click on any city to see more details.
       </p>
 
-      <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-lg " data-aos="fade-up">
+      <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-lg " data-aos="fade-up" data-aos-duration="2000">
         <MapContainer
           center={userLocation}
           zoom={6}

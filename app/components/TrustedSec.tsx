@@ -16,19 +16,21 @@ export default function TrustedSection() {
   const locale = useLocale();
 
   return (
-    <section className="py-12 bg-gray-50 overflow-hidden">
-      <h2 className="text-center text-lg md:text-xl font-semibold mb-8">
+    <section className="py-12 bg-gray-50 overflow-hidden" data-aos="fade-right" data-aos-duration="2000">
+      <h2 className="text-center text-lg md:text-xl font-semibold mb-8" data-aos="fade-right" data-aos-duration="2500">
         {t("trustedBy")} <span className="text-blue-600">{t("enterprices")}</span>{" "}
         {t("inSaudi")}
       </h2>
 
       {/* Container */}
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden" data-aos="zoom-in" data-aos-duration="3000">
         {/* Track */}
         <div
           className={`flex w-max hover:[animation-play-state:paused] ${
             locale === "ar" ? "animate-marquee-rtl" : "animate-marquee-ltr"
-          }`}
+          }`
+        }
+        
         >
           {[...logos, ...logos, ...logos, ...logos].map((logo, index) => (
             <div
@@ -41,6 +43,7 @@ export default function TrustedSection() {
                 width={100}
                 height={50}
                 className="object-contain"
+                
               />
             </div>
           ))}
