@@ -6,8 +6,11 @@ import HeroSection from "../../../components/heroSection";
 import SearchSection from "../../../components/searchBar";
 
 import CategoriesSection from "../../../components/catigories";
-import Header from "@/app/components/header";
+
 import NearestMap from "@/app/components/LiveMap";
+import TrustedSection from "@/app/components/TrustedSec";
+import FAQSection from "@/app/components/FAQSec";
+
 
 export default function HomePage() {
   const [email, setEmail] = useState<string | null>(null);
@@ -34,9 +37,12 @@ export default function HomePage() {
     >
       
       <HeroSection />
-    <SearchSection/>
+      <SearchSection/>
       <CategoriesSection  />
       <NearestMap/>
+      <TrustedSection/>
+      <FAQSection/>
+      
     </main>
   );
 }

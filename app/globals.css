@@ -98,3 +98,31 @@
 }
 
 @import "leaflet/dist/leaflet.css";
+
+@keyframes marquee-ltr {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-rtl {
+  0% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-ltr {
+  display: flex;
+  animation: marquee-ltr 20s linear infinite;
+}
+
+.animate-marquee-rtl {
+  display: flex;
+  animation: marquee-rtl 20s linear infinite;
+}
