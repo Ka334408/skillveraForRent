@@ -111,7 +111,28 @@
   "trustedBy": "Trusted by top",
   "enterprices": "Enterprices",
   "inSaudi": "in Saudi Arabia"
-  }
+  },
+  "features":{
+  "subtitle": "We deliver best solution",
+  "title": "One application with multiple options to give you freedom of enroll & enjoy your activity",
+  "planningTitle": "Planning",
+  "planningDesc": "Map the crypto projects scope with framer template",
+  "prototypeTitle": "Prototype",
+  "prototypeDesc": "Build crypto website test for your product",
+  "refinementTitle": "Refinement",
+  "refinementDesc": "Refine & improve your crypto landing page",
+  "scaleTitle": "Scale and support",
+  "scaleDesc": "Deploy product live and ensure expert support"
+},
+"download": {
+  "title": "Explore our mobile app and join your nearest activity now on",
+  "appName": "App Name",
+  "downloadApp": "Download app",
+  "googlePlay": "Download on the Play Store",
+  "appStore": "Download on the App Store",
+  "scanNow": "Scan to get the app now"
+}
+  
 
 
 

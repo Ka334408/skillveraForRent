@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import heroImage from "../../public/herosec.jpg";
+import heroImage from "/herosec.png";
 import { useTranslations } from "next-intl";
 
 export default function HeroSection() {
@@ -24,7 +24,7 @@ export default function HeroSection() {
       {/* Right side image */}
       <div className="flex-1">
         <Image
-          src={heroImage}
+          src={"/herosec.png"}
           alt="Hero image"
           width={500}
           height={350}
