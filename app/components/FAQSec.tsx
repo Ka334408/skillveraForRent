@@ -51,11 +51,11 @@ export default function FAQSection() {
       </div>
 
       {/* FAQ Grid */}
-      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-4" data-aos="fade-up" data-aos-duration="3000">
+      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-4" data-aos="fade-up" data-aos-duration="3000" >
         {faqs.map((faq, index) => (
           <div
             key={index}
-            data-aos="fade-up" data-aos-duration="3000"
+            
             className={`border rounded-xl p-4 transition-all duration-300 ${
               openIndex === index ? "bg-blue-50 border-blue-500" : "border-gray-300"
             }`}
@@ -63,7 +63,7 @@ export default function FAQSection() {
             <button
               onClick={() => toggleFAQ(index)}
               className="w-full flex justify-between items-center text-left font-semibold text-gray-900"
-              data-aos="fade-up" data-aos-duration="3000"
+              
             >
               {faq.question}
               {openIndex === index ? (

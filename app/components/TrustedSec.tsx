@@ -4,11 +4,11 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 
 const logos = [
-  "/trusted.jpg",
-  "/trusted.jpg",
-  "/trusted.jpg",
-  "/trusted.jpg",
-  "/trusted.jpg",
+  "/logo1.png",
+  "/logo2.png",
+  "/logo3.png",
+  "/logo4.png",
+  "/logo5.png",
 ];
 
 export default function TrustedSection() {
