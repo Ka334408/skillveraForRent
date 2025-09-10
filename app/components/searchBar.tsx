@@ -51,8 +51,8 @@ export default function SearchSection() {
             className="w-full bg-transparent text-gray-500 placeholder-gray-400 focus:outline-none text-sm text-center"
           />
           {/* Divider */}
-          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-px bg-blue-500"></span>
-          <span className="sm:hidden mt-2 w-2/3 h-px bg-blue-500"></span>
+          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-[2px] bg-blue-500"></span>
+          <span className="sm:hidden mt-2 w-2/3 h-[2px] bg-blue-500"></span>
         </div>
 
         {/* Category */}
@@ -69,8 +69,11 @@ export default function SearchSection() {
             <option value="villa">{t("villa")}</option>
           </select>
           {/* Divider */}
+          {/* Divider (Desktop) */}
           <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-px bg-blue-500"></span>
-          <span className="sm:hidden mt-2 w-2/3 h-px bg-blue-500"></span>
+
+        {/* Divider (Mobile) */}
+        <span className="sm:hidden mt-2 w-full h-px bg-blue-500"></span>
         </div>
 
         {/* From */}
@@ -86,8 +89,8 @@ export default function SearchSection() {
             className="w-full bg-transparent text-gray-500 placeholder-gray-400 focus:outline-none text-sm text-center"
           />
           {/* Divider */}
-          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-px bg-blue-500"></span>
-          <span className="sm:hidden mt-2 w-2/3 h-px bg-blue-500"></span>
+          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-[2px] bg-blue-500"></span>
+          <span className="sm:hidden mt-2 w-2/3 h-[2px] bg-blue-500"></span>
         </div>
 
         {/* To */}
@@ -103,8 +106,8 @@ export default function SearchSection() {
             className="w-full bg-transparent text-gray-500 placeholder-gray-400 focus:outline-none text-sm text-center"
           />
           {/* Divider */}
-          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-px bg-blue-500"></span>
-          <span className="sm:hidden mt-2 w-2/3 h-px bg-blue-500"></span>
+          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-[2px] bg-blue-500"></span>
+          <span className="sm:hidden mt-2 w-2/3 h-[2px] bg-blue-500"></span>
         </div>
 
         {/* Search button */}
