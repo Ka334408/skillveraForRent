@@ -75,9 +75,10 @@ export default function CategoriesSection() {
     <section className="px-6 py-10 relative bg-gray-100">
       {/* Title + See All */}
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-blue-600">{t("title")}</h2>
+        <h2 className="text-2xl font-bold text-blue-600" data-aos="fade-up" data-aos-duration="2000">{t("title")}</h2>
         <button
           onClick={() => router.push("/categories")}
+          data-aos="fade-up" data-aos-duration="2000"
           className="text-blue-600 font-semibold hover:text-white border-[#2C70E2] px-4 py-2 rounded-full border transition hover:bg-[#2C70E2]"
         >
           {t("see_all")}
@@ -101,6 +102,8 @@ export default function CategoriesSection() {
                 ? "bg-blue-600 text-white border-blue-600"
                 : "bg-white text-blue-600 border-blue-400 hover:bg-blue-100"
             }`}
+          data-aos="fade-up" data-aos-duration="2000"
+
           >
             {cat.label}
           </button>
@@ -111,6 +114,8 @@ export default function CategoriesSection() {
       <div
         ref={scrollRef}
         className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+        data-aos="fade-right" data-aos-duration="3000"
+        
       >
         {filteredItems.map((item) => (
           <Card
@@ -118,6 +123,7 @@ export default function CategoriesSection() {
             {...item}
             isFavorite={favorites.includes(item.id)}
             onFavorite={handleFavorite}
+            
           />
         ))}
       </div>

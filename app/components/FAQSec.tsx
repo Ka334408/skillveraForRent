@@ -41,20 +41,21 @@ export default function FAQSection() {
     <section className="py-12 bg-white">
       {/* Title */}
       <div className="text-center mb-8">
-        <p className="text-blue-600 font-medium uppercase tracking-wide">FAQ</p>
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">
+        <p className="text-blue-600 font-medium uppercase tracking-wide" data-aos="fade-up" data-aos-duration="3000">FAQ</p>
+        <h2 className="text-2xl md:text-3xl font-bold mb-2" data-aos="fade-up" data-aos-duration="3000">
           Frequently Asked Question
         </h2>
-        <p className="text-gray-600">
+        <p className="text-gray-600" data-aos="fade-up" data-aos-duration="3000">
           Did you find the question as you expected?
         </p>
       </div>
 
       {/* FAQ Grid */}
-      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-4">
+      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-4" data-aos="fade-up" data-aos-duration="3000">
         {faqs.map((faq, index) => (
           <div
             key={index}
+            data-aos="fade-up" data-aos-duration="3000"
             className={`border rounded-xl p-4 transition-all duration-300 ${
               openIndex === index ? "bg-blue-50 border-blue-500" : "border-gray-300"
             }`}
@@ -62,6 +63,7 @@ export default function FAQSection() {
             <button
               onClick={() => toggleFAQ(index)}
               className="w-full flex justify-between items-center text-left font-semibold text-gray-900"
+              data-aos="fade-up" data-aos-duration="3000"
             >
               {faq.question}
               {openIndex === index ? (
@@ -85,7 +87,7 @@ export default function FAQSection() {
 
       {/* CTA Button */}
       <div className="text-center mt-8">
-        <button className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+        <button className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition" data-aos="fade-up" data-aos-duration="3000">
           Give a Quote
         </button>
       </div>

@@ -52,6 +52,7 @@ export default function Navbar() {
     <nav
       dir={locale === "ar" ? "rtl" : "ltr"}
       className="w-full bg-[#2C70E2] text-white px-6 py-4 flex items-center justify-between"
+      
     >
       {/* Logo */}
       <div className="font-bold text-lg">{t("logo")}</div>
