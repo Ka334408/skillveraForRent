@@ -10,6 +10,8 @@ import CategoriesSection from "../../../components/catigories";
 import NearestMap from "@/app/components/LiveMap";
 import TrustedSection from "@/app/components/TrustedSec";
 import FAQSection from "@/app/components/FAQSec";
+import FeaturesSection from "@/app/components/FeaturesSec";
+import DownloadSection from "@/app/components/downloadappsec";
 
 
 export default function HomePage() {
@@ -42,7 +44,8 @@ export default function HomePage() {
       <NearestMap/>
       <TrustedSection/>
       <FAQSection/>
-      
+      <FeaturesSection/>
+      <DownloadSection/>
     </main>
   );
 }

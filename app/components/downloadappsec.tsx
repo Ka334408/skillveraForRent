@@ -1,0 +1,70 @@
+"use client";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+
+export default function DownloadSection() {
+  const t = useTranslations("download");
+
+  return (
+    <section className="py-20 bg-white text-center">
+      {/* Title */}
+      <h2 className="text-xl md:text-2xl font-semibold max-w-2xl mx-auto mb-12 px-4">
+        {t("title")} <span className="text-blue-600">{t("appName")}</span>
+      </h2>
+
+      {/* Content */}
+      <div className="flex flex-col md:flex-row items-center justify-center gap-12">
+        {/* App Icon */}
+        {/* QR / Footer */}
+      <div className="mt-16 flex flex-col items-center gap-4">
+        <Image
+          src="/qr-code.png"
+          alt="QR Code"
+          width={120}
+          height={120}
+          className="border border-gray-300 rounded-lg"
+        />
+        <p className="text-sm text-gray-700">{t("scanNow")}</p>
+      </div>
+
+        {/* Download buttons */}
+        <div className="flex flex-col items-start gap-6">
+          <p className="text-lg font-medium">{t("downloadApp")}</p>
+
+          <a
+            href="#"
+            className="flex items-center gap-3 border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-100 transition"
+          >
+            <Image
+              src="/google-play.png"
+              alt="Google Play"
+              width={28}
+              height={28}
+            />
+            <span className="text-sm font-medium">
+              {t("googlePlay")}
+            </span>
+          </a>
+
+          <a
+            href="#"
+            className="flex items-center gap-3 border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-100 transition"
+          >
+            <Image
+              src="/app-store.png"
+              alt="App Store"
+              width={28}
+              height={28}
+            />
+            <span className="text-sm font-medium">
+              {t("appStore")}
+            </span>
+          </a>
+        </div>
+      </div>
+
+      {/* QR / Footer */}
+      <p className="mt-16 text-sm text-gray-700">{t("scanNow")}</p>
+    </section>
+  );
+}
