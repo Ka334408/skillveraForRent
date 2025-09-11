@@ -15,11 +15,11 @@ export default function FeaturesSection() {
   const locale = useLocale();
 
   return (
-    <section className="relative bg-blue-600 text-white py-14 rounded-[100px] overflow-hidden" data-aos="fade-up" data-aos-duration="3000">
+    <section className="relative bg-blue-600 text-white py-14 rounded-tr-[200px] rounded-bl-[150px] overflow-hidden" data-aos="fade-up" data-aos-duration="3000">
       {/* Header */}
       <div className="text-center mb-16 px-4" data-aos="fade-up" data-aos-duration="3000">
         <p className="text-sm opacity-80 text-black" data-aos="fade-up" data-aos-duration="3000">{t("subtitle")}</p>
-        <h2 className="text-3xl md:text-4xl font-bold max-w-3xl mx-auto mt-2 leading-relaxed" data-aos="zoom-in" data-aos-duration="3000">
+        <h2 className="text-3xl md:text-4xl font-bold max-w-3xl mx-auto mt-2 leading-relaxed dark:text-[#0a0a0a]" data-aos="zoom-in" data-aos-duration="3000">
           {t("title")}
         </h2>
       </div>
@@ -57,11 +57,11 @@ export default function FeaturesSection() {
              
             >
               <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-sm shrink-0">
-                <Icon className="w-6 h-6 text-white" data-aos="zoom-in" data-aos-duration="3000" />
+                <Icon className="w-6 h-6 text-white dark:text-[#0a0a0a]" data-aos="zoom-in" data-aos-duration="3000" />
               </div>
               <div>
-                <h3 className="font-semibold text-lg">{t(`${feature.key}Title`)}</h3>
-                <p className="text-sm opacity-90 leading-6">
+                <h3 className="font-semibold text-lg dark:text-[#0a0a0a]">{t(`${feature.key}Title`)}</h3>
+                <p className="text-sm opacity-90 leading-6 dark:text-[#0a0a0a]">
                   {t(`${feature.key}Desc`)}
                 </p>
               </div>
@@ -93,10 +93,10 @@ export default function FeaturesSection() {
                 
               >
                 <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-sm">
-                  <Icon className="w-6 h-6 text-white"  />
+                  <Icon className="w-6 h-6 text-white dark:text-[#0a0a0a]"  />
                 </div>
-                <h3 className="font-semibold text-lg" >{t(`${feature.key}Title`)}</h3>
-                <p className="text-sm opacity-90 leading-6" >
+                <h3 className="font-semibold text-lg dark:text-[#0a0a0a]" >{t(`${feature.key}Title`)}</h3>
+                <p className="text-sm opacity-90 leading-6 dark:text-[#0a0a0a] " >
                   {t(`${feature.key}Desc`)}
                 </p>
               </div>

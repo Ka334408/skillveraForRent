@@ -40,8 +40,8 @@ export default function SignUp() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-200 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden">
+    <main className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]">
+      <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden dark:bg-black">
         
         {/* Left side - form */}
         <div className="flex flex-col justify-center p-8 md:w-1/2 w-full">

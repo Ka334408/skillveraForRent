@@ -22,6 +22,7 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import LocaleSwitcher from "./local-switcher";
+import ThemeSwitcher from "./darkModeBtn";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -66,7 +67,7 @@ export default function Navbar() {
             <Link
               key={href}
               href={href}
-              className={`px-3 py-2 rounded-lg transition  text-sm lg:text-lg  ${
+              className={`px-3 py-2 rounded-lg transition  text-sm lg:text-lg dark:text-black font-bold  ${
                 isActive
                   ? "bg-white text-black font-semibold"
                   : "hover:bg-blue-500 text-white"
@@ -82,7 +83,7 @@ export default function Navbar() {
       <div className="flex items-center gap-4">
         <Button
           variant="outline"
-          className="sm:inline bg-transparent border-white text-white hover:bg-white hover:text-blue-600"
+          className="sm:inline bg-transparent  font-bold border-2 border-white text-white hover:bg-white hover:text-blue-600 dark:border-black dark:text-black dark:hover:border-none "
         >
           {t("become_host")}
         </Button>
@@ -90,7 +91,7 @@ export default function Navbar() {
         {!isLoggedIn && (
           <Button
             
-            className="bg-white text-blue-600 font-semibold hover:bg-gray-100"
+            className="bg-white text-blue-600 font-semibold hover:bg-gray-100 dark:text-white dark:bg-[#0a0a0a] dark:hover:bg-gray-100 dark:hover:text-black"
           >
             <Link href="/auth/signUp">{t("signup")}</Link>
           </Button>
@@ -163,6 +164,9 @@ export default function Navbar() {
             <div className="border-t border-blue-400 my-3">
               <LocaleSwitcher />
             </div>
+            <DropdownMenuItem asChild>
+              <ThemeSwitcher/>
+            </DropdownMenuItem>
 
             <div className="border-t border-blue-400 my-3"></div>
 

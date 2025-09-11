@@ -38,7 +38,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="py-12 bg-white">
+    <section className="py-12 bg-white dark:bg-[#0a0a0a]">
       {/* Title */}
       <div className="text-center mb-8">
         <p className="text-blue-600 font-medium uppercase tracking-wide" data-aos="fade-up" data-aos-duration="3000">FAQ</p>
@@ -51,18 +51,18 @@ export default function FAQSection() {
       </div>
 
       {/* FAQ Grid */}
-      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-4" data-aos="fade-up" data-aos-duration="3000" >
+      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-4 " data-aos="fade-up" data-aos-duration="3000" >
         {faqs.map((faq, index) => (
           <div
             key={index}
             
-            className={`border rounded-xl p-4 transition-all duration-300 ${
+            className={`border rounded-xl p-4 transition-all duration-300 dark:bg-[#0a0a0a] ${
               openIndex === index ? "bg-blue-50 border-blue-500" : "border-gray-300"
             }`}
           >
             <button
               onClick={() => toggleFAQ(index)}
-              className="w-full flex justify-between items-center text-left font-semibold text-gray-900"
+              className="w-full flex justify-between items-center text-left font-semibold text-gray-900 dark:text-white"
               
             >
               {faq.question}
@@ -74,7 +74,7 @@ export default function FAQSection() {
             </button>
 
             {openIndex === index && (
-              <div className="mt-3 text-gray-600 text-sm">
+              <div className="mt-3 text-gray-600 text-sm dark:text-slate-400">
                 {faq.answer}
                 <p className="text-blue-600 font-medium mt-2 cursor-pointer">
                   Read More

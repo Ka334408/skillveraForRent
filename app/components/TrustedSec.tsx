@@ -16,8 +16,8 @@ export default function TrustedSection() {
   const locale = useLocale();
 
   return (
-    <section className="py-12 bg-gray-50 overflow-hidden" data-aos="fade-right" data-aos-duration="2000">
-      <h2 className="text-center text-lg md:text-xl font-semibold mb-8" data-aos="fade-right" data-aos-duration="2500">
+    <section className="py-12 bg-gray-50 overflow-hidden dark:bg-[#0a0a0a]" data-aos="fade-right" data-aos-duration="2000">
+      <h2 className="text-center text-lg md:text-xl font-semibold mb-8 dark:text-white" data-aos="fade-right" data-aos-duration="2500">
         {t("trustedBy")} <span className="text-blue-600">{t("enterprices")}</span>{" "}
         {t("inSaudi")}
       </h2>

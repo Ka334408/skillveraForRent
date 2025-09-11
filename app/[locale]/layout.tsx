@@ -1,12 +1,13 @@
-
 // app/[locale]/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+
 import Header from "../components/header";
+import AOSProvider from "../components/AOSProvider";
+import ThemeProvider from "../components/ThemeProvider";
 import "../globals.css";
-import AOSProvider from "../components/AOSProvider"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,15 +25,21 @@ export default async function LocaleLayout({
 }) {
   const messages = await getMessages();
   const dir = locale === "ar" ? "rtl" : "ltr";
-  
+
   return (
-    <html lang={locale} dir={dir}>
+    <html lang={locale} dir={dir} suppressHydrationWarning>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="flex flex-col h-screen">
-           <Header/> 
-            <div><AOSProvider>{children}</AOSProvider></div>
-          </div>
+          
+            <AOSProvider>
+              <ThemeProvider>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-1">{children}</main>
+              </div>
+              </ThemeProvider>
+            </AOSProvider>
+          
         </NextIntlClientProvider>
       </body>
     </html>

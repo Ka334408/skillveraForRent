@@ -13,11 +13,13 @@ export default function HeroSection() {
     >
       {/* Left side slogan */}
       <div className="flex-1 text-center md:text-start">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-right" data-aos-duration="3000">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4 dark:text-[#0a0a0a]" data-aos="fade-right" data-aos-duration="3000" >
           {t("slogan")}
         </h1>
         <div className="flex justify-center md:justify-start">
-          <button className="mt-4 px-6 py-3 border-2 border-white rounded-full hover:bg-white hover:text-blue-600 transition"
+          <button className="mt-4 px-6 py-3 border-2 border-white rounded-full hover:bg-white hover:text-blue-600 transition
+          dark:text-[#0a0a0a] dark:border-black dark:hover:bg-blue-600
+          "
           data-aos="fade-right" data-aos-duration="3000"
           >
             {t("explore")}

@@ -87,10 +87,10 @@ export default function LiveMap() {
 
   return (
     <section className="px-6 py-12 max-w-7xl mx-auto text-center">
-      <h2 className="text-2xl md:text-3xl font-bold mb-3 text-black " data-aos="fade-up"  data-aos-duration="2000">
+      <h2 className="text-2xl md:text-3xl font-bold mb-3 text-black dark:text-white" data-aos="fade-up"  data-aos-duration="2000">
         Explore The Nearest City To You!
       </h2>
-      <p className="text-gray-600 mb-6" data-aos="fade-up" data-aos-duration="2000">
+      <p className="text-gray-600 mb-6  dark:text-gray-200" data-aos="fade-up" data-aos-duration="2000">
         Click on any city to see more details.
       </p>
 

@@ -48,11 +48,11 @@ export default function Login() {
   };
 
   return (
-    <main dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen bg-gray-200 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden">
+    <main dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]">
+      <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden dark:bg-black">
         
         {/* Left side - images */}
-        <div className="md:w-1/2 grid grid-cols-2 gap-4 bg-gray-100 p-6">
+        <div className="md:w-1/2 grid grid-cols-2 gap-4 bg-gray-100 p-6 dark:bg-black">
           <div className="col-span-2 mt-5 bg-gray-300 rounded-xl h-40 flex items-center justify-center">
             <span className="text-gray-700">Image 1</span>
           </div>
