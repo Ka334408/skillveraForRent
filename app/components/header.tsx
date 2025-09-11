@@ -53,7 +53,7 @@ export default function Navbar() {
     <nav
       dir={locale === "ar" ? "rtl" : "ltr"}
       className="w-full bg-[#2C70E2] text-white px-6 py-4 flex items-center justify-between"
-      
+
     >
       {/* Logo */}
       <div className="font-bold text-lg">{t("logo")}</div>
@@ -61,17 +61,16 @@ export default function Navbar() {
       {/* Links - Desktop */}
       <div className="hidden md:flex gap-4  ">
         {navLinks.map(({ href, label }) => {
-          const isActive =  pathname === href;
-          
+          const isActive = pathname === href;
+
           return (
             <Link
               key={href}
               href={href}
-              className={`px-3 py-2 rounded-lg transition  text-sm lg:text-lg dark:text-black font-bold  ${
-                isActive
+              className={`px-3 py-2 rounded-lg transition  text-sm lg:text-lg dark:text-black font-bold  ${isActive
                   ? "bg-white text-black font-semibold"
                   : "hover:bg-blue-500 text-white"
-              }`}
+                }`}
             >
               {label}
             </Link>
@@ -90,7 +89,7 @@ export default function Navbar() {
 
         {!isLoggedIn && (
           <Button
-            
+
             className="bg-white text-blue-600 font-semibold hover:bg-gray-100 dark:text-white dark:bg-[#0a0a0a] dark:hover:bg-gray-100 dark:hover:text-black"
           >
             <Link href="/auth/signUp">{t("signup")}</Link>
@@ -98,7 +97,7 @@ export default function Navbar() {
         )}
         {isLoggedIn && (
           <Button
-            
+
             className="rounded-full  text-gray-200 border-gray-200 bg-[#2C70E2]  border-2 font-semibold hover:bg-gray-100 hover:text-black"
           >
             <Link href="/auth/signUp"><User className="w-8 h-8" /></Link>
@@ -125,11 +124,10 @@ export default function Navbar() {
                   <DropdownMenuItem asChild key={href}>
                     <Link
                       href={href}
-                      className={`flex items-center gap-3 px-3 py-3 rounded-3xl text-center w-full mt-2 mb-2 text-black ${
-                        isActive
+                      className={`flex items-center gap-3 px-3 py-3 rounded-3xl text-center w-full mt-2 mb-2 text-black ${isActive
                           ? "bg-white text-black font-semibold"
                           : "bg-[#85ADEF] hover:bg-blue-500"
-                      }`}
+                        }`}
                     >
                       <Icon className="w-5 h-5" />
                       <span className="flex-1 text-center">{label}</span>
@@ -146,7 +144,7 @@ export default function Navbar() {
               <User className="w-5 h-5" />
               <span className="flex-1  italic">{t("account")}</span>
             </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
+            <DropdownMenuItem className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black">
               <Building className="w-5 h-5" />
               <span className="flex-1  italic">{t("facilities")}</span>
             </DropdownMenuItem>
@@ -165,7 +163,7 @@ export default function Navbar() {
               <LocaleSwitcher />
             </div>
             <DropdownMenuItem asChild>
-              <ThemeSwitcher/>
+              <ThemeSwitcher />
             </DropdownMenuItem>
 
             <div className="border-t border-blue-400 my-3"></div>

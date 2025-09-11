@@ -2,14 +2,8 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
+import { logos } from "../constants/content";
 
-const logos = [
-  "/logo1.png",
-  "/logo2.png",
-  "/logo3.png",
-  "/logo4.png",
-  "/logo5.png",
-];
 
 export default function TrustedSection() {
   const t = useTranslations("trusted");
@@ -26,11 +20,10 @@ export default function TrustedSection() {
       <div className="relative w-full overflow-hidden" data-aos="zoom-in" data-aos-duration="3000">
         {/* Track */}
         <div
-          className={`flex w-max hover:[animation-play-state:paused] ${
-            locale === "ar" ? "animate-marquee-rtl" : "animate-marquee-ltr"
-          }`
-        }
-        
+          className={`flex w-max hover:[animation-play-state:paused] ${locale === "ar" ? "animate-marquee-rtl" : "animate-marquee-ltr"
+            }`
+          }
+
         >
           {[...logos, ...logos, ...logos, ...logos].map((logo, index) => (
             <div
@@ -43,7 +36,7 @@ export default function TrustedSection() {
                 width={100}
                 height={50}
                 className="object-contain"
-                
+
               />
             </div>
           ))}

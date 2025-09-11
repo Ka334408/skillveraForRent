@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { start } from "repl";
 
 export default function SearchSection() {
   const [place, setPlace] = useState("");
@@ -72,8 +73,8 @@ export default function SearchSection() {
           {/* Divider (Desktop) */}
           <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-px bg-blue-500"></span>
 
-        {/* Divider (Mobile) */}
-        <span className="sm:hidden mt-2 w-full h-px bg-blue-500"></span>
+          {/* Divider (Mobile) */}
+          <span className="sm:hidden mt-2 w-full h-px bg-blue-500"></span>
         </div>
 
         {/* From */}
@@ -83,7 +84,7 @@ export default function SearchSection() {
             type={fromType}
             onFocus={() => setFromType("date")}
             onBlur={() => !from && setFromType("text")}
-            placeholder="Add start date"
+            placeholder={t("start")}
             value={from}
             onChange={(e) => setFrom(e.target.value)}
             className="w-full bg-transparent text-gray-500 placeholder-gray-400 focus:outline-none text-sm text-center"
@@ -100,7 +101,7 @@ export default function SearchSection() {
             type={toType}
             onFocus={() => setToType("date")}
             onBlur={() => !to && setToType("text")}
-            placeholder="Add end date"
+            placeholder={t("end")}
             value={to}
             onChange={(e) => setTo(e.target.value)}
             className="w-full bg-transparent text-gray-500 placeholder-gray-400 focus:outline-none text-sm text-center"

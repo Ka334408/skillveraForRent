@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-
 import Header from "../components/header";
 import AOSProvider from "../components/AOSProvider";
 import ThemeProvider from "../components/ThemeProvider";
@@ -30,16 +29,14 @@ export default async function LocaleLayout({
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          
-            <AOSProvider>
-              <ThemeProvider>
+          <AOSProvider>
+            <ThemeProvider>
               <div className="flex flex-col min-h-screen">
                 <Header />
                 <main className="flex-1">{children}</main>
               </div>
-              </ThemeProvider>
-            </AOSProvider>
-          
+            </ThemeProvider>
+          </AOSProvider>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -23,7 +23,8 @@ export default function Card({
   onFavorite,
 }: CardProps) {
   return (
-    <div className="min-w-[250px] bg-white rounded-3xl shadow-lg overflow-hidden flex-shrink-0 dark:bg-black/30 dark:text-white dark:border-2 dark:border-white ">
+    <div className="min-w-[250px] bg-white rounded-3xl shadow-lg overflow-hidden flex-shrink-0
+     dark:bg-black/30 dark:text-white dark:border-2 dark:border-white ">
       {/* Image */}
       <div className="relative">
         <img
@@ -36,9 +37,8 @@ export default function Card({
         </span>
         <button
           onClick={() => onFavorite && onFavorite(id)}
-          className={`absolute top-3 right-3 p-2 rounded-full transition  ${
-            isFavorite ? "bg-red-500" : "bg-blue-600"
-          }`}
+          className={`absolute top-3 right-3 p-2 rounded-full transition  ${isFavorite ? "bg-red-500" : "bg-blue-600"
+            }`}
         >
           <Heart
             className={`w-5 h-5 ${isFavorite ? "text-white fill-white" : "text-white"}`}
