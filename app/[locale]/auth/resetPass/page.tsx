@@ -26,9 +26,9 @@ export default function ResetPassword() {
       const data = await res.json();
       if (!res.ok || !data.exists) throw new Error("Email not found");
 
-      
+
       console.log("✅ Reset API response:", data);
-      localStorage.setItem("resetEmail",email);
+      localStorage.setItem("resetEmail", email);
       router.push("/auth/Varcode");
     } catch (err: any) {
       setError(err.message || "Something went wrong");
@@ -40,7 +40,7 @@ export default function ResetPassword() {
   return (
     <main className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden dark:bg-black">
-        
+
         {/* Left side - image */}
         <div className="md:w-1/3 flex items-center justify-center p-6">
           <span className="text-gray-700">[Image]</span>

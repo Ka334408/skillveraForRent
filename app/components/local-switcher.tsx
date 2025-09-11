@@ -20,7 +20,7 @@ export default function LocaleSwitcher() {
 
   const handleLocaleChange = (nextLocale: string) => {
     router.replace(
-      
+
       { pathname },
       { locale: nextLocale }
     );
@@ -50,11 +50,10 @@ export default function LocaleSwitcher() {
           <DropdownMenuItem
             key={cur}
             onClick={() => handleLocaleChange(cur)}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer ${
-              cur === locale
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer ${cur === locale
                 ? "bg-white text-black font-semibold"
                 : "bg-blue-700 hover:bg-blue-500"
-            }`}
+              }`}
           >
             <Image
               src={`/locale/${cur}.svg`}

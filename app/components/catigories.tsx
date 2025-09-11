@@ -20,12 +20,12 @@ export default function CategoriesSection() {
   useEffect(() => {
     if (token) setIsLoggedIn(true);
 
-    // Fetch من fakestoreapi
+    // Fetch from fakestoreapi
     const fetchItems = async () => {
       try {
         const res = await fetch("https://fakestoreapi.com/products");
         const data = await res.json();
-        // نخلي الكاتيجوري مؤقتاً = category من api
+        // fake api
         const mapped = data.map((p: any) => ({
           id: p.id.toString(),
           title: p.title,
@@ -59,7 +59,7 @@ export default function CategoriesSection() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          
+
         },
         body: JSON.stringify({ itemId: id }),
       });
@@ -97,12 +97,11 @@ export default function CategoriesSection() {
           <button
             key={cat.key}
             onClick={() => setActiveCategory(cat.key)}
-            className={`px-4 py-2 rounded-full border transition  dark:bg-[#0a0a0a] dark:text-white ${
-              activeCategory === cat.key
+            className={`px-4 py-2 rounded-full border transition  dark:bg-[#0a0a0a] dark:text-white ${activeCategory === cat.key
                 ? "bg-blue-600 text-white border-blue-600 dark:bg-white dark:text-blue-600"
                 : "bg-white text-blue-600 border-blue-400 hover:bg-blue-100"
-            }`}
-          
+              }`}
+
 
           >
             {cat.label}
@@ -115,7 +114,7 @@ export default function CategoriesSection() {
         ref={scrollRef}
         className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
         data-aos="fade-right" data-aos-duration="3000"
-        
+
       >
         {filteredItems.map((item) => (
           <Card
@@ -123,7 +122,7 @@ export default function CategoriesSection() {
             {...item}
             isFavorite={favorites.includes(item.id)}
             onFavorite={handleFavorite}
-            
+
           />
         ))}
       </div>

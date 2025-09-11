@@ -8,7 +8,6 @@ export default function ResetPassword() {
   const t = useTranslations("resetPasswordWords");
   const locale = useLocale();
   const router = useRouter();
-
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,12 +25,12 @@ export default function ResetPassword() {
     setLoading(true);
 
     try {
-      const email=localStorage.getItem("resetEmail");
-      if(!email)throw new Error("No Email found !.")
+      const email = localStorage.getItem("resetEmail");
+      if (!email) throw new Error("No Email found !.")
       const res = await fetch("/api/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email,password }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (!res.ok) {

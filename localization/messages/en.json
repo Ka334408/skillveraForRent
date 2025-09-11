@@ -1,38 +1,36 @@
 {
-    "Content": {
-        "hi": "Welcome",
-        "title": "Hi, I am Dogan MERDEN",
-        "work": "Working as a frontend developer at an international company"
-    },
-    "Navigation": {
-        "homeBtn": "Home",
-        "nameBtn": "Name",
-        "workBtn": "login"
-    },
-    "LocaleSwitcher": {
-        "label": "Change language",
-        "locale": "{locale, select, ar {العربيه} en {English} other {Unknown}}"
-    },
-    
-  "loginWords":{
-  "welcome": "Welcome back !",
-  "tagline": "Enjoy a different rental experience with the Skillvera platform",
-  "email": "Email",
-  "password": "Password",
-  "forgot": "Forgot password?",
-  "login": "Log in",
-  "no_account": "Don’t have an account?",
-  "signup": "Sign Up",
-  "loading":"loading"
-},
-"resetPassWords":{
-"reset":" Reset Password ",
-"associated":"Enter the mail address associated with your account",
-"email":"Email",
-"send":"Send Email",
-"goBack":"Go Back to Login"
-},
-
+  "Content": {
+    "hi": "Welcome",
+    "title": "Hi, I am Dogan MERDEN",
+    "work": "Working as a frontend developer at an international company"
+  },
+  "Navigation": {
+    "homeBtn": "Home",
+    "nameBtn": "Name",
+    "workBtn": "login"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, ar {العربيه} en {English} other {Unknown}}"
+  },
+  "loginWords": {
+    "welcome": "Welcome back !",
+    "tagline": "Enjoy a different rental experience with the Skillvera platform",
+    "email": "Email",
+    "password": "Password",
+    "forgot": "Forgot password?",
+    "login": "Log in",
+    "no_account": "Don’t have an account?",
+    "signup": "Sign Up",
+    "loading": "loading"
+  },
+  "resetPassWords": {
+    "reset": " Reset Password ",
+    "associated": "Enter the mail address associated with your account",
+    "email": "Email",
+    "send": "Send Email",
+    "goBack": "Go Back to Login"
+  },
   "signup": {
     "title": "Skillvera",
     "subtitle": "Start your perfect Rent Journey",
@@ -45,15 +43,13 @@
     "login": "Log in",
     "error": "Something went wrong"
   },
-
   "verify": {
     "title": "Enter verification code",
     "subtitle": "The verification code has been sent to your email",
     "resend": "Resend after {seconds} seconds",
     "back": "Back",
-    "resendBtn":"Resend Code"
+    "resendBtn": "Resend Code"
   },
-  
   "resetPasswordWords": {
     "title": "Reset Password",
     "subtitle": "Enter your new password below.",
@@ -64,7 +60,6 @@
     "not_match": "Passwords do not match",
     "error": "Something went wrong"
   },
-  
   "navbar": {
     "logo": "Logo here",
     "home": "Home",
@@ -77,9 +72,7 @@
     "support": "Support & Help",
     "login": "Login or signup",
     "logout": "Logout"
-  
-},
-
+  },
   "Hero": {
     "slogan": "Slogan should be here with one or two good sentences",
     "explore": "Explore now"
@@ -94,9 +87,10 @@
     "villa": "Villa",
     "from": "From",
     "to": "To",
-    "results": "Search Results:"
+    "results": "Search Results:",
+    "start":"Add Start Date",
+    "end":"Add End Date"
   },
-  
   "categories": {
     "title": "Our Categories",
     "all": "some categories",
@@ -105,37 +99,35 @@
     "labs": "Labs",
     "login_required": "You must log in first",
     "ok": "OK",
-    "see_all":"See all"
+    "see_all": "See all"
   },
-  "trusted" :{
-  "trustedBy": "Trusted by top",
-  "enterprices": "Enterprices",
-  "inSaudi": "in Saudi Arabia"
+  "map":{
+    "title":"Explore The Nearest Facility To You!",
+    "subtitle":"Click on any Facility to see more details."
   },
-  "features":{
-  "subtitle": "We deliver best solution",
-  "title": "One application with multiple options to give you freedom of enroll & enjoy your activity",
-  "planningTitle": "Planning",
-  "planningDesc": "Map the crypto projects scope with framer template",
-  "prototypeTitle": "Prototype",
-  "prototypeDesc": "Build crypto website test for your product",
-  "refinementTitle": "Refinement",
-  "refinementDesc": "Refine & improve your crypto landing page",
-  "scaleTitle": "Scale and support",
-  "scaleDesc": "Deploy product live and ensure expert support"
-},
-"download": {
-  "title": "Explore our mobile app and join your nearest activity now on",
-  "appName": "App Name",
-  "downloadApp": "Download app",
-  "googlePlay": "Download on the Play Store",
-  "appStore": "Download on the App Store",
-  "scanNow": "Scan to get the app now"
-}
-  
-
-
-
-
-
+  "trusted": {
+    "trustedBy": "Trusted by top",
+    "enterprices": "Enterprices",
+    "inSaudi": "in Saudi Arabia"
+  },
+  "features": {
+    "subtitle": "We deliver best solution",
+    "title": "One application with multiple options to give you freedom of enroll & enjoy your activity",
+    "planningTitle": "Planning",
+    "planningDesc": "Map the crypto projects scope with framer template",
+    "prototypeTitle": "Prototype",
+    "prototypeDesc": "Build crypto website test for your product",
+    "refinementTitle": "Refinement",
+    "refinementDesc": "Refine & improve your crypto landing page",
+    "scaleTitle": "Scale and support",
+    "scaleDesc": "Deploy product live and ensure expert support"
+  },
+  "download": {
+    "title": "Explore our mobile app and join your nearest activity now on",
+    "appName": "App Name",
+    "downloadApp": "Download app",
+    "googlePlay": "Download on the Play Store",
+    "appStore": "Download on the App Store",
+    "scanNow": "Scan to get the app now"
+  }
 }
