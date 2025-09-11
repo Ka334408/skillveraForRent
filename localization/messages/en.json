@@ -101,6 +101,9 @@
     "ok": "OK",
     "see_all": "See all"
   },
+   "card":{
+    "more":"More Details"
+  },
   "map":{
     "title":"Explore The Nearest Facility To You!",
     "subtitle":"Click on any Facility to see more details."

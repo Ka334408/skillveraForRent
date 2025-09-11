@@ -1,5 +1,6 @@
 import { Heart, Star } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface CardProps {
   id: string;
@@ -22,6 +23,7 @@ export default function Card({
   isFavorite,
   onFavorite,
 }: CardProps) {
+  const t = useTranslations("card");
   return (
     <div className="min-w-[250px] bg-white rounded-3xl shadow-lg overflow-hidden flex-shrink-0
      dark:bg-black/30 dark:text-white dark:border-2 dark:border-white ">
@@ -59,7 +61,7 @@ export default function Card({
         </div>
         <Link href={`/userview/card/${id}`}>
           <button className="bg-white text-black border-2 border-[#2C70E2] px-4 py-2 rounded-2xl w-full hover:bg-blue-700 dark:bg-[#0a0a0a] dark:text-[#2C70E2] dark:hover:bg-white dark:hover:text-black">
-            More Details
+            {t("more")}
           </button>
         </Link>
       </div>
