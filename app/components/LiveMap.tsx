@@ -88,7 +88,7 @@ export default function LiveMap() {
     if (!icons) return <p>Loading map...</p>;
 
     return (
-        <section className="px-6 py-12 max-w-7xl mx-auto text-center">
+        <section className="px-6 py-12 max-w-7xl mx-auto text-center overflow-hidden">
             <h2 className="text-2xl md:text-3xl font-bold mb-3 text-black dark:text-white" data-aos="fade-up" data-aos-duration="2000">
                 {t("title")}
             </h2>

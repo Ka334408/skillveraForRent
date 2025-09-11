@@ -28,6 +28,7 @@ export default function HomePage() {
   };
 
   return (
+    
     <main
       dir={locale === "ar" ? "rtl" : "ltr"}
     >

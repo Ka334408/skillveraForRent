@@ -10,7 +10,7 @@ export default function FeaturesSection() {
     const locale = useLocale();
 
     return (
-        <section className="relative bg-blue-600 text-white py-14 rounded-tr-[150px] rounded-bl-[150px] overflow-hidden" data-aos="fade-up" data-aos-duration="3000">
+        <section className="relative bg-blue-600 text-white py-14 rounded-tr-[150px] rounded-bl-[150px] overflow-hidden " data-aos="fade-up" data-aos-duration="3000">
             {/* Header */}
             <div className="text-center mb-16 px-4" data-aos="fade-up" data-aos-duration="3000">
                 <p className="text-sm opacity-80 text-black" data-aos="fade-up" data-aos-duration="3000">{t("subtitle")}</p>

@@ -52,7 +52,7 @@ export default function Navbar() {
   return (
     <nav
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className="w-full bg-[#2C70E2] text-white px-6 py-4 flex items-center justify-between"
+      className="w-full bg-[#2C70E2] text-white px-3  sm:px-6 py-3 sm:py-4 flex items-center justify-between overflow-x-hidden"
 
     >
       {/* Logo */}
@@ -79,7 +79,7 @@ export default function Navbar() {
       </div>
 
       {/* Right side */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-1">
         <Button
           variant="outline"
           className="sm:inline bg-transparent  font-bold border-2 border-white text-white hover:bg-white hover:text-blue-600 dark:border-black dark:text-black dark:hover:border-none "

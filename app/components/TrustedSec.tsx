@@ -32,7 +32,7 @@ export default function TrustedSection() {
       >
         {/* Track */}
         <div
-          className={`flex w-max hover:[animation-play-state:paused] ${
+          className={`flex w-100vw hover:[animation-play-state:paused] ${
             locale === "ar" ? "animate-marquee-rtl" : "animate-marquee-ltr"
           }`}
         >

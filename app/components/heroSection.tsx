@@ -11,7 +11,7 @@ export default function HeroSection() {
     <section
       className="bg-[#2C70E2] rounded-bl-[60px] md:rounded-bl-[100px] text-white 
                  py-10 sm:py-14 md:py-20 px-4 sm:px-8 md:px-16 
-                 flex flex-col md:flex-row items-center justify-between gap-10"
+                 flex flex-col md:flex-row items-center justify-between gap-10 overflow-x-hidden"
     >
       {/* Left side slogan */}
       <div className="flex-1 text-center md:text-start">

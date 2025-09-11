@@ -72,7 +72,7 @@ export default function CategoriesSection() {
   };
 
   return (
-    <section className="px-6 py-10 relative bg-gray-100  dark:bg-[#0a0a0a] dark:text-white">
+    <section className="px-6 py-10 relative bg-gray-100  dark:bg-[#0a0a0a] dark:text-white overflow-hidden mt-15">
       {/* Title + See All */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-blue-600" data-aos="fade-up" data-aos-duration="2000">{t("title")}</h2>
@@ -97,7 +97,7 @@ export default function CategoriesSection() {
           <button
             key={cat.key}
             onClick={() => setActiveCategory(cat.key)}
-            className={`px-4 py-2 rounded-full border transition  dark:bg-[#0a0a0a] dark:text-white ${activeCategory === cat.key
+            className={`px-4 py-2 rounded-full border transition  dark:bg-[#0a0a0a] dark:text-blue-600 ${activeCategory === cat.key
                 ? "bg-blue-600 text-white border-blue-600 dark:bg-white dark:text-blue-600"
                 : "bg-white text-blue-600 border-blue-400 hover:bg-blue-100"
               }`}

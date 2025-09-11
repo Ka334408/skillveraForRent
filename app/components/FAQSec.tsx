@@ -12,7 +12,7 @@ export default function FAQSection() {
     };
 
     return (
-        <section className="py-12 bg-white dark:bg-[#0a0a0a]">
+        <section className="py-12 bg-white dark:bg-[#0a0a0a] overflow-hidden">
             {/* Title */}
             <div className="text-center mb-8">
                 <p className="text-blue-600 font-medium uppercase tracking-wide" data-aos="fade-up" data-aos-duration="3000">FAQ</p>
