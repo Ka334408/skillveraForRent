@@ -38,8 +38,8 @@ export default function ResetPassword() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-200 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden">
+    <main className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]">
+      <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden dark:bg-black">
         
         {/* Left side - image */}
         <div className="md:w-1/3 flex items-center justify-center p-6">
@@ -61,7 +61,7 @@ export default function ResetPassword() {
           {error && <p className="text-red-500 text-sm text-center mt-3">{error}</p>}
 
           <div className="mt-6 flex justify-center items-center gap-2 text-sm">
-            <a href="/auth/login" className="text-black font-semibold hover:underline">← {t("goBack")}</a>
+            <a href="/auth/login" className="text-black font-semibold hover:underline dark:text-white" >← {t("goBack")}</a>
           </div>
         </div>
       </div>

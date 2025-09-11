@@ -39,7 +39,7 @@ export default function SearchSection() {
 
   return (
     <section className="w-[90%] md:w-[75%] mx-auto mt-8 mb-16">
-      <div className="flex flex-col md:flex-row items-center bg-white border-2 border-blue-500 rounded-[50px] sm:rounded-full shadow-md overflow-hidden" data-aos="fade-up">
+      <div className="flex flex-col md:flex-row items-center dark:bg-black bg-white border-2 border-blue-500 rounded-[50px] sm:rounded-full shadow-md overflow-hidden" data-aos="fade-up">
         {/* Place */}
         <div className="flex-1 py-3 flex flex-col items-center justify-center relative">
           <p className="text-sm font-semibold text-gray-700">{t("place")}</p>

@@ -14,6 +14,7 @@ import FeaturesSection from "@/app/components/FeaturesSec";
 import DownloadSection from "@/app/components/downloadappsec";
 
 
+
 export default function HomePage() {
   const [email, setEmail] = useState<string | null>(null);
   const locale = useLocale();

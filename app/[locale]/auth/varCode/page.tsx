@@ -85,9 +85,9 @@ export default function VerifyCode() {
   return (
     <main
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className="min-h-screen bg-gray-200 flex items-center justify-center px-4"
+      className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
     >
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-xl flex flex-col items-center justify-center p-8">
+      <div className="bg-white rounded-2xl shadow-lg w-full max-w-xl flex flex-col items-center justify-center p-8 dark:bg-black">
         {/* Back */}
         <button
           onClick={handleBack}
