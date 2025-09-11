@@ -114,7 +114,9 @@ export default function Navbar() {
 
           <DropdownMenuContent
             align="end"
-            className="w-64 bg-blue-600 text-white rounded-bl-[50px] rounded-br-xl rounded-tr-xl rounded-tl-xl shadow-xl p-4 text-lg"
+            className={`w-64 bg-blue-600 text-white 
+              ${locale === "en" ? "rounded-bl-[50px] rounded-br-xl rounded-tr-xl rounded-tl-xl" : "rounded-br-[50px] rounded-bl-xl rounded-tr-xl rounded-tl-xl"}
+               shadow-xl p-4 text-lg"`}
           >
             {/* Mobile Links */}
             <div className="sm:hidden">
