@@ -1,42 +1,52 @@
 "use client";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { useLocale } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { logos } from "../constants/content";
-
 
 export default function TrustedSection() {
   const t = useTranslations("trusted");
   const locale = useLocale();
 
   return (
-    <section className="py-12 bg-gray-50 overflow-hidden dark:bg-[#0a0a0a]" data-aos="fade-right" data-aos-duration="2000">
-      <h2 className="text-center text-lg md:text-xl font-semibold mb-8 dark:text-white" data-aos="fade-right" data-aos-duration="2500">
-        {t("trustedBy")} <span className="text-blue-600">{t("enterprices")}</span>{" "}
+    <section
+      className="py-8 sm:py-12 bg-gray-50 overflow-hidden dark:bg-[#0a0a0a]"
+      data-aos="fade-right"
+      data-aos-duration="2000"
+    >
+      {/* Title */}
+      <h2
+        className="text-center text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-6 sm:mb-8 dark:text-white px-4"
+        data-aos="fade-right"
+        data-aos-duration="2500"
+      >
+        {t("trustedBy")}{" "}
+        <span className="text-blue-600">{t("enterprices")}</span>{" "}
         {t("inSaudi")}
       </h2>
 
       {/* Container */}
-      <div className="relative w-full overflow-hidden" data-aos="zoom-in" data-aos-duration="3000">
+      <div
+        className="relative w-full overflow-hidden"
+        data-aos="zoom-in"
+        data-aos-duration="3000"
+      >
         {/* Track */}
         <div
-          className={`flex w-max hover:[animation-play-state:paused] ${locale === "ar" ? "animate-marquee-rtl" : "animate-marquee-ltr"
-            }`
-          }
-
+          className={`flex w-max hover:[animation-play-state:paused] ${
+            locale === "ar" ? "animate-marquee-rtl" : "animate-marquee-ltr"
+          }`}
         >
-          {[...logos, ...logos, ...logos, ...logos].map((logo, index) => (
+          {[...logos, ...logos, ...logos].map((logo, index) => (
             <div
               key={index}
-              className="flex items-center justify-center mx-8 flex-shrink-0"
+              className="flex items-center justify-center flex-shrink-0 gap-6 sm:gap-12 px-4"
             >
               <Image
                 src={logo}
                 alt={`logo-${index}`}
-                width={100}
-                height={50}
-                className="object-contain"
-
+                width={120}
+                height={0}
+                className="object-contain w-[70px] sm:w-[100px] md:w-[120px] h-auto"
               />
             </div>
           ))}

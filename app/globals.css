@@ -126,3 +126,6 @@
   display: flex;
   animation: marquee-rtl 20s linear infinite;
 }
+html,body{
+  overflow-x:hidden;
+}
