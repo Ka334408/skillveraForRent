@@ -101,10 +101,10 @@
 
 @keyframes marquee-ltr {
   0% {
-    transform: translateX(0%);
+    transform: translateX(-50%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(0%);
   }
 }
 
@@ -119,11 +119,13 @@
 
 .animate-marquee-ltr {
   display: flex;
-  animation: marquee-ltr 20s linear infinite;
+  width :max-content;
+  animation: marquee-ltr 30s linear infinite;
 }
 
 .animate-marquee-rtl {
   display: flex;
-  animation: marquee-rtl 20s linear infinite;
+  width :max-content;
+  animation: marquee-rtl 30s linear infinite;
 }
 
