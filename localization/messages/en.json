@@ -41,14 +41,16 @@
     "signing_up": "Signing Up...",
     "have_account": "Already have an account?",
     "login": "Log in",
-    "error": "Something went wrong"
+    "error": "Something went wrong",
+    "phone":"your phone"
   },
   "verify": {
     "title": "Enter verification code",
     "subtitle": "The verification code has been sent to your email",
     "resend": "Resend after {seconds} seconds",
     "back": "Back",
-    "resendBtn": "Resend Code"
+    "resendBtn": "Resend Code",
+    "verifyBtn":"verify code"
   },
   "resetPasswordWords": {
     "title": "Reset Password",
@@ -58,7 +60,8 @@
     "button": "Reset Password",
     "loading": "Loading...",
     "not_match": "Passwords do not match",
-    "error": "Something went wrong"
+    "error": "Something went wrong",
+    "success":"password changed successfully"
   },
   "navbar": {
     "logo": "Logo here",

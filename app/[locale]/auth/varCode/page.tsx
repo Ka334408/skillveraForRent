@@ -15,33 +15,26 @@ export default function VerifyCode() {
 
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
-  // Auto focus next input + auto submit if 4 digits
-  const handleChange = async (value: string, index: number) => {
+  // Focus management
+  const handleChange = (value: string, index: number) => {
     if (/^[0-9]?$/.test(value)) {
       const newCode = [...code];
       newCode[index] = value;
       setCode(newCode);
 
-      // focus next input
       if (value && index < code.length - 1) {
         inputsRef.current[index + 1]?.focus();
-      }
-
-      // Auto submit if all digits filled
-      if (newCode.every((digit) => digit !== "")) {
-        await handleVerify(newCode.join(""));
       }
     }
   };
 
-  // Handle backspace focus previous
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
       inputsRef.current[index - 1]?.focus();
     }
   };
 
-  // Timer countdown
+  // Countdown
   useEffect(() => {
     if (timer > 0) {
       const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
@@ -49,19 +42,29 @@ export default function VerifyCode() {
     }
   }, [timer]);
 
-  // Function to verify code with API
-  const handleVerify = async (verificationCode: string) => {
+  // Verify manually with button
+  const handleVerify = async () => {
+    const verificationCode = code.join("");
+    if (verificationCode.length < code.length) {
+      setError("Please enter full code");
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
 
-      const res = await fetch("http://localhost:4000/api/auth/verify", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code: verificationCode }),
-      });
+      const email = localStorage.getItem("resetEmail");
+      if (!email) throw new Error("Email not found");
+
+      const res = await fetch(
+        "http://156.67.24.200:4000/api/authentication/reset-password/validate-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, code: verificationCode }),
+        }
+      );
 
       if (!res.ok) {
         throw new Error("Invalid verification code");
@@ -70,7 +73,42 @@ export default function VerifyCode() {
       const data = await res.json();
       console.log("✅ Verified:", data);
 
-      router.push("/home"); // لو صح يوديه على الصفحة الرئيسية
+      // Save token and email in localStorage
+      const token = data?.data?.token || verificationCode;
+      localStorage.setItem("resetEmail", email);
+      localStorage.setItem("resetToken", token);
+
+      router.push("/auth/setNewPass");
+    } catch (err: any) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Resend new code
+  const handleResend = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const email = localStorage.getItem("resetEmail");
+
+      const res = await fetch(
+        "http://156.67.24.200:4000/api/authentication/reset-password/request",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to resend code");
+
+      const data = await res.json();
+      console.log("📩 New code sent:", data);
+
+      setTimer(30);
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -79,7 +117,7 @@ export default function VerifyCode() {
   };
 
   const handleBack = () => {
-    router.push("/auth/login");
+    router.push("/auth/resetPass");
   };
 
   return (
@@ -118,19 +156,31 @@ export default function VerifyCode() {
           ))}
         </div>
 
-        {/* Timer */}
-        {timer > 0 ? (
-          <p className="text-gray-600 text-sm">
-            {t("resend", { seconds: timer })}
-          </p>
-        ) : (
-          <button
-            onClick={() => setTimer(30)}
-            className="text-blue-600 text-sm hover:underline"
-          >
-            {t("resendBtn")}
-          </button>
-        )}
+        {/* Verify button */}
+        <button
+          onClick={handleVerify}
+          disabled={loading}
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50"
+        >
+          {loading ? "..." : t("verifyBtn")}
+        </button>
+
+        {/* Timer / Resend */}
+        <div className="mt-4">
+          {timer > 0 ? (
+            <p className="text-gray-600 text-sm">
+              {t("resend", { seconds: timer })}
+            </p>
+          ) : (
+            <button
+              onClick={handleResend}
+              disabled={loading}
+              className="text-blue-600 text-sm hover:underline"
+            >
+              {loading ? "..." : t("resendBtn")}
+            </button>
+          )}
+        </div>
 
         {/* Error */}
         {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
