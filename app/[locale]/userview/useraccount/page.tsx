@@ -34,9 +34,7 @@ export default function HomePage() {
     <main
       dir={locale === "ar" ? "rtl" : "ltr"} 
     >
-          <Header bgColor="bg-white border-b-gray-200 border-2" accounticonColor="bg-[#2C70E2]" menuiconColor="bg-[#2C70E2] text-white" activeColor="bg-black text-white" textColor="text-blue-600"  
-      hoverColor="hover:bg-black hover:text-white" enable="hidden"
-      />
+      
      
     </main>
   );

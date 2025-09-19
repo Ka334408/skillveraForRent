@@ -12,10 +12,12 @@ export default function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
 
     if (password !== confirmPassword) {
       setError(t("not_match"));
@@ -26,18 +28,39 @@ export default function ResetPassword() {
 
     try {
       const email = localStorage.getItem("resetEmail");
-      if (!email) throw new Error("No Email found !.")
-      const res = await fetch("/api/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const token = localStorage.getItem("resetToken"); // saved from verify step
+
+      if (!email || !token) throw new Error("Email or Token not found!");
+
+      const res = await fetch(
+        "http://156.67.24.200:4000/api/authentication/reset-password",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            token,
+            password,
+          }),
+        }
+      );
 
       if (!res.ok) {
-        throw new Error("Failed to reset password");
+        const errData = await res.json().catch(() => null);
+        throw new Error(errData?.message || "Failed to reset password");
       }
 
-      router.push("/auth/login");
+      const data = await res.json();
+      console.log("🔑 Password reset success:", data);
+
+      // clear local storage
+      localStorage.removeItem("resetEmail");
+      localStorage.removeItem("resetToken");
+
+      setSuccess(t("success")); 
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 1500);
     } catch (err: any) {
       setError(err.message || t("error"));
     } finally {
@@ -87,8 +110,9 @@ export default function ResetPassword() {
             {loading ? t("loading") : t("button")}
           </button>
 
-          {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {success && (
+            <p className="text-green-600 text-sm text-center">{success}</p>
           )}
         </form>
       </div>

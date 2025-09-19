@@ -1,17 +1,25 @@
 // components/ProfileCard.tsx
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
-export default function ProfileCard({ initialName = "" }: { initialName?: string }) {
+export default function ProfileCard() {
   const t = useTranslations ? useTranslations("proPhoto") : undefined;
-  const [name, setName] = useState(initialName);
+  const [name, setName] = useState("");
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [savedUrl, setSavedUrl] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
+
+  // ✅ هات النيم من localStorage أول ما الكومبوننت يترندر
+  useEffect(() => {
+    const storedName = localStorage.getItem("name");
+    if (storedName) {
+      setName(storedName);
+    }
+  }, []);
 
   const handleChoose = () => fileRef.current?.click();
 
@@ -43,7 +51,7 @@ export default function ProfileCard({ initialName = "" }: { initialName?: string
       });
 
       if (!res.ok) throw new Error("Upload failed");
-      const json = await res.json();
+      await res.json();
 
       const imageUrl = URL.createObjectURL(f);
       setSavedUrl(imageUrl);
@@ -56,15 +64,23 @@ export default function ProfileCard({ initialName = "" }: { initialName?: string
     }
   };
 
+  // ✅ كل مرة النيم يتغير نحفظه في localStorage
+  const handleNameChange = (value: string) => {
+    setName(value);
+    localStorage.setItem("name", value);
+  };
+
   return (
     <div className="max-w-6xl mx-auto py-8 px-4">
-      <h3 className="text-2xl font-semibold mb-6">{t ? t("aboutTitle") : "About me"}</h3>
+      <h3 className="text-2xl font-semibold mb-6">
+        {t ? t("aboutTitle") : "About me"}
+      </h3>
 
       {/* flex container */}
       <div className="flex flex-col md:flex-row items-start gap-10">
         {/* left card */}
         <div className="w-full md:w-1/2 lg:w-1/3">
-          <div className=" rounded-2xl p-6 text-center min-h-[220px] flex flex-col items-center justify-center">
+          <div className="rounded-2xl p-6 text-center min-h-[220px] flex flex-col items-center justify-center">
             {/* image or placeholder */}
             {filePreview || savedUrl ? (
               <div className="rounded-lg overflow-hidden w-48 h-48 mx-auto">
@@ -148,7 +164,7 @@ export default function ProfileCard({ initialName = "" }: { initialName?: string
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
             <input
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => handleNameChange(e.target.value)}
               className="px-4 py-3 border rounded-lg w-full sm:flex-1"
               placeholder={t ? t("namePlaceholder") : "Your name"}
             />

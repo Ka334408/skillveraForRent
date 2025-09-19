@@ -18,18 +18,22 @@ export default function ResetPassword() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:4000/api/auth/reset-password", {
+      const res = await fetch("http://156.67.24.200:4000/api/authentication/reset-password/request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email }), 
       });
+
       const data = await res.json();
-      if (!res.ok || !data.exists) throw new Error("Email not found");
-
-
       console.log("✅ Reset API response:", data);
+
+      if (!res.ok) {
+        throw new Error(data.message || "Reset request failed");
+      }
+
+      
       localStorage.setItem("resetEmail", email);
-      router.push("/auth/Varcode");
+      router.push("/auth/varCode");
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -52,8 +56,19 @@ export default function ResetPassword() {
           <p className="text-gray-500 text-sm mb-8">{t("associated")}</p>
 
           <form onSubmit={handleSubmit} className="flex flex-col space-y-5">
-            <input type="email" placeholder={t("reset")} value={email} onChange={(e) => setEmail(e.target.value)} className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full" required />
-            <button type="submit" disabled={loading} className="bg-blue-600 text-white rounded-full py-3 font-semibold hover:bg-blue-700 transition disabled:opacity-50">
+            <input
+              type="email"
+              placeholder={t("email")}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+              required
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-blue-600 text-white rounded-full py-3 font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+            >
               {loading ? "Sending..." : t("send")}
             </button>
           </form>
@@ -61,7 +76,9 @@ export default function ResetPassword() {
           {error && <p className="text-red-500 text-sm text-center mt-3">{error}</p>}
 
           <div className="mt-6 flex justify-center items-center gap-2 text-sm">
-            <a href="/auth/login" className="text-black font-semibold hover:underline dark:text-white" >← {t("goBack")}</a>
+            <Link href="/auth/login" className="text-black font-semibold hover:underline dark:text-white">
+              ← {t("goBack")}
+            </Link>
           </div>
         </div>
       </div>
