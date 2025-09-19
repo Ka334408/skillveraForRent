@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Card from "./card";
+import LoginModal from "./loginmodel";
 
 export default function CategoriesSection() {
   const t = useTranslations("categories");
@@ -129,19 +130,7 @@ export default function CategoriesSection() {
 
       {/* Login Modal */}
       {showLoginModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <div className="bg-white rounded-2xl p-6 shadow-xl max-w-sm text-center">
-            <h3 className="text-lg font-bold mb-4 text-gray-800">
-              {t("login_required")}
-            </h3>
-            <button
-              onClick={() => setShowLoginModal(false)}
-              className="bg-[#2C70E2] text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-600 transition"
-            >
-              {t("ok")}
-            </button>
-          </div>
-        </div>
+       <LoginModal show={true} onClose={() => setShowLoginModal(false)} />
       )}
     </section>
   );

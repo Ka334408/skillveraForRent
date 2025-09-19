@@ -1,0 +1,44 @@
+"use client";
+
+import { useState } from "react";
+import Header from "@/app/components/header";
+import ProfileSidebar from "@/app/components/userSideBar";
+import PastReservation from "@/app/components/pastreservation";
+import Aboutme from "@/app/components/Aboutme";
+import Reviews from "@/app/components/myreviews";
+import Favorites from "@/app/components/myfavourits";
+
+
+export default function UserAccountLayout() {
+  const [active, setActive] = useState("about");
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Header فوق */}
+      <Header
+        bgColor="bg-white border-b-gray-200 border-2" 
+        accounticonColor="bg-[#2C70E2]"
+        menuiconColor="bg-[#2C70E2] text-white rounder-full"
+        activeColor="bg-black text-white"
+        textColor="text-blue-600"
+        hoverColor="hover:bg-black hover:text-white"
+        enable="hidden"
+        isrounded="rounded-full"
+      />
+
+      {/* تحت الـ Header */}
+      <div className="flex flex-1">
+        {/* Sidebar */}
+        <ProfileSidebar active={active} setActive={setActive} />
+
+        {/* Main Content */}
+        <main className="flex-1 p-6 bg-gray-50">
+          {active === "about" && <Aboutme />}
+          {active === "reservations" && <PastReservation />}
+          {active === "reviews" && <Reviews />}
+          {active === "favorites" && <Favorites />}
+        </main>
+      </div>
+    </div>
+  );
+}

@@ -132,5 +132,51 @@
     "googlePlay": "Download on the Play Store",
     "appStore": "Download on the App Store",
     "scanNow": "Scan to get the app now"
+  },
+  "profile": {
+    "title": "My profile",
+    "about": "About me",
+    "reservations": "Past reservation",
+    "reviews": "My reviews",
+    "favorites": "My favorites"
+  },
+  "proPhoto":{
+  "aboutTitle": "About me",
+  "choose": "Choose image",
+  "uploading": "Uploading...",
+  "save": "Save",
+  "completeTitle": "Complete your profile",
+  "completeDesc": "Add a profile picture and some info to complete your profile.",
+  "namePlaceholder": "Your name",
+  "getStarted": "Get Started"
+},
+
+  "favorites": {
+    "title": "My favorites",
+    "loading": "Loading...",
+    "emptyMessage": "You have not added any favorites yet.",
+    "exploreButton": "Explore Now",
+    "product": "Product",
+    "category": "Category",
+    "addedOn": "Added On"
+  },
+   "reservations": {
+    "title": "Past reservations",
+    "loading": "Loading...",
+    "emptyMessage": "You'll find your past reservations here after your first rent.",
+    "rentNow": "Rent Now",
+    "name": "Name",
+    "date": "Reservation Date"
+  },
+  "reviews": {
+    "title": "My reviews",
+    "loading": "Loading...",
+    "emptyMessage": "You have not written any reviews yet.",
+    "rentNow": "Rent Now",
+    "review": "Review",
+    "date": "Date"
   }
+
+
+
 }
