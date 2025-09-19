@@ -132,5 +132,50 @@
     "googlePlay": "تنزيل من متجر بلاي",
     "appStore": "تنزيل من متجر آبل",
     "scanNow": "امسح الكود لتحميل التطبيق الآن"
+  },
+  "profile": {
+    "title": "ملفي الشخصي",
+    "about": "معلوماتي",
+    "reservations": "الحجوزات السابقة",
+    "reviews": "تقييماتي",
+    "favorites": "مفضلتي"
+  },
+  "proPhoto":{
+  "aboutTitle": "نبذة عني",
+  "choose": "اختر صورة",
+  "uploading": "جاري الرفع...",
+  "save": "حفظ",
+  "completeTitle": "أكمل ملفك الشخصي",
+  "completeDesc": "أضف صورة شخصية وبعض المعلومات لإكمال ملفك الشخصي.",
+  "namePlaceholder": "اسمك",
+  "getStarted": "ابدأ الآن"
+},
+
+  "favorites": {
+    "title": "المفضلة",
+    "loading": "جارٍ التحميل...",
+    "emptyMessage": "لم تقم بإضافة أي عناصر إلى المفضلة بعد.",
+    "exploreButton": "استكشف الآن",
+    "product": "المنتج",
+    "category": "الفئة",
+    "addedOn": "تاريخ الإضافة"
+  },
+   "reservations": {
+    "title": "الحجوزات السابقة",
+    "loading": "جارٍ التحميل...",
+    "emptyMessage": "ستظهر حجوزاتك السابقة هنا بعد أول عملية حجز.",
+    "rentNow": "احجز الآن",
+    "name": "الاسم",
+    "date": "تاريخ الحجز"
+  },
+  "reviews": {
+    "title": "مراجعاتي",
+    "loading": "جارٍ التحميل...",
+    "emptyMessage": "لم تقم بكتابة أي مراجعات بعد.",
+    "rentNow": "احجز الآن",
+    "review": "المراجعة",
+    "date": "التاريخ"
   }
+
+
 }

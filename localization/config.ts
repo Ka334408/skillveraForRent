@@ -12,6 +12,10 @@ export const pathnames = {
     en: "/login",
     ar: "/login",
   },
+  "/userview/useraccount": {
+    en: "/userview/useraccount",
+    ar: "/userview/useraccount",
+  },
   "/auth/setNewPass": {
     en: "/setNewPass",
     ar: "/setNewPass",

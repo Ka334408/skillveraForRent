@@ -8,7 +8,7 @@ import {logos} from "../constants/content"
 export default function TrustedSection() {
   const t = useTranslations("trusted");
   const locale = useLocale();
-console.log(locale)
+
   return (
     <section className="py-12 bg-gray-50 overflow-hidden dark:bg-[#0a0a0a]">
       <h2 className="text-center text-lg md:text-xl font-semibold mb-8 " data-aos="fade-up" data-aos-duration="3000">

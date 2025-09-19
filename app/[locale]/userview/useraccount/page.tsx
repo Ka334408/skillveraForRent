@@ -11,6 +11,7 @@ import FAQSection from "@/app/components/FAQSec";
 import FeaturesSection from "@/app/components/FeaturesSec";
 import DownloadSection from "@/app/components/downloadappsec";
 import Header from "@/app/components/header";
+import ProfileImageUploader from "@/app/components/Aboutme";
 
 export default function HomePage() {
   const [email, setEmail] = useState<string | null>(null);
@@ -31,17 +32,12 @@ export default function HomePage() {
   return (
     
     <main
-      dir={locale === "ar" ? "rtl" : "ltr"}
+      dir={locale === "ar" ? "rtl" : "ltr"} 
     >
-      <Header />
-      <HeroSection />
-      <SearchSection />
-      <CategoriesSection />
-      <NearestMap />
-      <TrustedSection />
-      <FAQSection />
-      <FeaturesSection />
-      <DownloadSection />
+          <Header bgColor="bg-white border-b-gray-200 border-2" accounticonColor="bg-[#2C70E2]" menuiconColor="bg-[#2C70E2] text-white" activeColor="bg-black text-white" textColor="text-blue-600"  
+      hoverColor="hover:bg-black hover:text-white" enable="hidden"
+      />
+     
     </main>
   );
 }
