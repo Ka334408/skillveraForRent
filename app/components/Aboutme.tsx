@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
 export default function ProfileCard() {
-  const t = useTranslations ? useTranslations("proPhoto") : undefined;
+  const t =  useTranslations("proPhoto") ;
   const [name, setName] = useState("");
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
