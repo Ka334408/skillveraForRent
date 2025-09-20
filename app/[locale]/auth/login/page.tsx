@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import LocalizedLink from "@/app/components/localized-link";
 import { useRouter } from "next/navigation";
@@ -13,89 +13,119 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
- const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setError(null);
-  setLoading(true);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
 
-  try {
-    const res = await fetch(
-      "http://156.67.24.200:4000/api/authentication/user/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          fcm: "string",
-          bioAuthToken: "string",
-        }),
+    if (token && role) {
+      switch (role) {
+        case "user":
+          router.replace("/userview/Home");
+          break;
+        case "admin":
+          router.replace("/admin/dashboard");
+          break;
+        case "provider":
+          router.replace("/provider/dashboard");
+          break;
+        case "moderator":
+          router.replace("/moderator/dashboard");
+          break;
+        default:
+          router.replace("/");
       }
+    } else {
+      setCheckingAuth(false);
+    }
+  }, [router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        "http://156.67.24.200:4000/api/authentication/user/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+            fcm: "string",
+            bioAuthToken: "string",
+          }),
+        }
+      );
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Invalid credentials");
+      }
+
+      const payload = data.data;
+      if (!payload) {
+        throw new Error("⚠ No 'data' object found in response");
+      }
+
+      const token = payload.accessToken;
+      const user = payload.user;
+
+      if (!user) {
+        throw new Error("⚠ No user object found in response data");
+      }
+
+      localStorage.setItem("token", token || "");
+      localStorage.setItem("email", email);
+      localStorage.setItem("name", user.name);
+
+      const role = user.type ? user.type.toLowerCase() : null;
+
+      if (!role) {
+        throw new Error("⚠ No role type found for this user");
+      }
+
+      localStorage.setItem("role", role);
+
+      switch (role) {
+        case "user":
+          router.replace("/userview/Home");
+          break;
+        case "admin":
+          router.replace("/admin/dashboard");
+          break;
+        case "provider":
+          router.replace("/provider/dashboard");
+          break;
+        case "moderator":
+          router.replace("/moderator/dashboard");
+          break;
+        default:
+          router.replace("/");
+      }
+    } catch (err: any) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ Spinner Loader بدل النص العادي
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-200 dark:bg-[#0a0a0a]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-gray-600 dark:text-white">Loading...</p>
+        </div>
+      </div>
     );
-
-    const data = await res.json();
-    console.log("🔍 Full Response:", data);
-
-    if (!res.ok) {
-      throw new Error(data.message || "Invalid credentials");
-    }
-
-    
-    const payload = data.data;
-    if (!payload) {
-      throw new Error("⚠ No 'data' object found in response");
-    }
-
-    const token = payload.accessToken;
-    const user = payload.user;
-
-    if (!user) {
-      throw new Error("⚠ No user object found in response data");
-    }
-
-    
-    localStorage.setItem("token", token || "");
-    localStorage.setItem("email", email);
-
-    const role = user.type ? user.type.toLowerCase() : null;
-    
-    localStorage.setItem("name",user.name);
-    console.log(user.name)
-    console.log("👉 Detected role:", role);
-
-    if (!role) {
-      throw new Error("⚠ No role type found for this user");
-    }
-
-    localStorage.setItem("role", role);
-
-    switch (role) {
-      case "user":
-        window.location.href = "/userview/Home";
-        break;
-      case "admin":
-        window.location.href = "/admin/dashboard";
-        break;
-      case "provider":
-        window.location.href = "/provider/dashboard";
-        break;
-      case "moderator":
-        window.location.href = "/moderator/dashboard";
-        break;
-      default:
-        console.warn("⚠ Unknown role:", role);
-        window.location.href = "/";
-    }
-  } catch (err: any) {
-    console.error("❌ Error:", err);
-    setError(err.message || "Something went wrong");
-  } finally {
-    setLoading(false);
   }
-};
 
   return (
     <main
