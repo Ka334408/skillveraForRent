@@ -86,7 +86,9 @@ export default function ProfileCard() {
                 <Image
                   src={filePreview || savedUrl || ""}
                   alt="avatar"
-                  className="w-full h-full object-cover"
+                  className="w-auto h-auto object-cover"
+                   width={100}
+                height={100}
                 />
               </div>
             ) : (

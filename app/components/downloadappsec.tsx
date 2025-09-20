@@ -24,7 +24,7 @@ export default function DownloadSection() {
                         alt="QR Code"
                         width={120}
                         height={120}
-                        className="border border-gray-300 rounded-lg"
+                        className="border border-gray-300 rounded-lg h-auto w-auto"
                     />
                     <p className="text-sm text-gray-700" data-aos="fade-up" data-aos-duration="3000">{t("scanNow")}</p>
                 </div>

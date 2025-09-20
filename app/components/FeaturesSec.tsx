@@ -106,7 +106,7 @@ export default function FeaturesSection() {
           alt="phone"
           width={180}
           height={380}
-          className="relative z-10"
+          className="relative z-10 h-auto w-auto"
         />
 
         {/* Features Grid */}

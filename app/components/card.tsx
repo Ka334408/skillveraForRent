@@ -32,7 +32,9 @@ export default function Card({
         <Image
           src={image}
           alt={title}
-          className="w-full h-48 object-cover"
+          className="w-auto h-auto object-cover"
+           width={100}
+          height={100}
         />
         <span className="absolute top-3 left-3 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold ">
           {title}

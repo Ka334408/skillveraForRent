@@ -76,9 +76,9 @@ export default function Navbar({
 
   const navLinks = [
     { href: `/${locale}/userview/Home`, label: t("home"), icon: Home },
-    { href: `/${locale}/facilities`, label: t("facilities"), icon: Building },
-    { href: `/${locale}/about`, label: t("about"), icon: User },
-    { href: `/${locale}/contact`, label: t("contact"), icon: MessageCircle },
+    { href: `#`, label: t("facilities"), icon: Building },
+    { href: `#`, label: t("about"), icon: User },
+    { href: `#`, label: t("contact"), icon: MessageCircle },
   ];
 
   return (

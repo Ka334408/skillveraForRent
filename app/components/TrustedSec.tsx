@@ -34,7 +34,7 @@ export default function TrustedSection() {
                 alt={`logo-${index}`}
                 width={100}
                 height={50}
-                className="object-contain"
+                className="object-contain h-auto w-auto"
               />
             </div>
           ))}
