@@ -48,7 +48,7 @@ export default function Login() {
 
     try {
       const res = await fetch(
-        "https://156.67.24.200:4000/api/authentication/user/login",
+        "/api/authentication/user/login",
         {
           method: "POST",
           headers: {
@@ -120,7 +120,7 @@ export default function Login() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-200 dark:bg-[#0a0a0a]">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-gray-600 dark:text-white">Loading...</p>
         </div>
       </div>
