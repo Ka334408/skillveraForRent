@@ -24,7 +24,7 @@ export default function SignUp() {
 
     try {
       const res = await fetch(
-        "http://156.67.24.200:4000/api/authentication/register",
+        "https://156.67.24.200:4000/api/authentication/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

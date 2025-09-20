@@ -33,7 +33,7 @@ export default function ResetPassword() {
       if (!email || !token) throw new Error("Email or Token not found!");
 
       const res = await fetch(
-        "http://156.67.24.200:4000/api/authentication/reset-password",
+        "https://156.67.24.200:4000/api/authentication/reset-password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

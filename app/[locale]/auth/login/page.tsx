@@ -48,7 +48,7 @@ export default function Login() {
 
     try {
       const res = await fetch(
-        "http://156.67.24.200:4000/api/authentication/user/login",
+        "https://156.67.24.200:4000/api/authentication/user/login",
         {
           method: "POST",
           headers: {

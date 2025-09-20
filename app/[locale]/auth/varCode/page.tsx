@@ -58,7 +58,7 @@ export default function VerifyCode() {
       if (!email) throw new Error("Email not found");
 
       const res = await fetch(
-        "http://156.67.24.200:4000/api/authentication/reset-password/validate-otp",
+        "https://156.67.24.200:4000/api/authentication/reset-password/validate-otp",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

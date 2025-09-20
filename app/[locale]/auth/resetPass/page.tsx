@@ -18,7 +18,7 @@ export default function ResetPassword() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://156.67.24.200:4000/api/authentication/reset-password/request", {
+      const res = await fetch("https://156.67.24.200:4000/api/authentication/reset-password/request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }), 
