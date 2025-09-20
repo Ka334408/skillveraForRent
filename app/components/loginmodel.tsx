@@ -8,7 +8,7 @@ interface LoginModalProps {
 }
 
 export default function LoginModal({ show, onClose }: LoginModalProps) {
-  const t = useTranslations("categories"); // أو لو عاوز تخليها في namespace عام بدل categories
+  const t = useTranslations("categories"); 
 
   if (!show) return null;
 

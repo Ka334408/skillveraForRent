@@ -24,7 +24,7 @@ import { usePathname } from "next/navigation";
 import LocaleSwitcher from "./local-switcher";
 import ThemeSwitcher from "./darkModeBtn";
 import LoginModal from "./loginmodel";
- // <<< استدعاء الموديل هنا
+
 
 interface NavbarProps {
   bgColor?: string;
@@ -48,7 +48,7 @@ export default function Navbar({
   isrounded = "rounded-md",
 }: NavbarProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false); // <<< state للموديل
+  const [showLoginModal, setShowLoginModal] = useState(false); 
   const locale = useLocale();
   const t = useTranslations("navbar");
   const pathname = usePathname();
@@ -65,12 +65,12 @@ export default function Navbar({
     window.location.href = `/${locale}/userview/Home`;
   };
 
-  // <<< دالة تتحقق لو عامل login ولا لا
+  
   const handleProtectedClick = (href: string) => {
     if (!isLoggedIn) {
-      setShowLoginModal(true); // يفتح الموديل
+      setShowLoginModal(true); 
     } else {
-      window.location.href = href; // يوديه للصفحة المطلوبة
+      window.location.href = href; 
     }
   };
 
@@ -154,7 +154,7 @@ export default function Navbar({
                   return (
                     <DropdownMenuItem
                       key={href}
-                      onClick={() => handleProtectedClick(href)} // <<< هنا التحقق
+                      onClick={() => handleProtectedClick(href)} 
                       className={`flex items-center gap-3 px-3 py-3 rounded-xl w-full mt-2 mb-2 text-black ${
                         isActive
                           ? "bg-white text-black font-semibold"
@@ -236,7 +236,7 @@ export default function Navbar({
         </div>
       </nav>
 
-      {/* <<< Login Modal هنا */}
+      
       <LoginModal show={showLoginModal} onClose={() => setShowLoginModal(false)} />
     </>
   );

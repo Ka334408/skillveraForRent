@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { start } from "repl";
+
 
 export default function SearchSection() {
   const [place, setPlace] = useState("");

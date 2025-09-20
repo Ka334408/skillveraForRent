@@ -11,7 +11,7 @@ export default function CategoriesSection() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // هيتم ضبطها بالـ auth
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
   const [items, setItems] = useState<any[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();

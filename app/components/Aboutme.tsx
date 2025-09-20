@@ -1,6 +1,7 @@
 // components/ProfileCard.tsx
 "use client";
 
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
@@ -13,7 +14,6 @@ export default function ProfileCard() {
   const [message, setMessage] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
 
-  // ✅ هات النيم من localStorage أول ما الكومبوننت يترندر
   useEffect(() => {
     const storedName = localStorage.getItem("name");
     if (storedName) {
@@ -64,7 +64,6 @@ export default function ProfileCard() {
     }
   };
 
-  // ✅ كل مرة النيم يتغير نحفظه في localStorage
   const handleNameChange = (value: string) => {
     setName(value);
     localStorage.setItem("name", value);
@@ -84,7 +83,7 @@ export default function ProfileCard() {
             {/* image or placeholder */}
             {filePreview || savedUrl ? (
               <div className="rounded-lg overflow-hidden w-48 h-48 mx-auto">
-                <img
+                <Image
                   src={filePreview || savedUrl || ""}
                   alt="avatar"
                   className="w-full h-full object-cover"

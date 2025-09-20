@@ -1,7 +1,7 @@
 import { Heart, Star } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-
+import Image from "next/image";
 interface CardProps {
   id: string;
   title: string;
@@ -29,7 +29,7 @@ export default function Card({
      dark:bg-black/30 dark:text-white dark:border-2 dark:border-white ">
       {/* Image */}
       <div className="relative">
-        <img
+        <Image
           src={image}
           alt={title}
           className="w-full h-48 object-cover"
