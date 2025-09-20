@@ -61,6 +61,8 @@ export default function Navbar({
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
+    localStorage.removeItem("role");
+    localStorage.removeItem("name");
     setIsLoggedIn(false);
     window.location.href = `/${locale}/userview/Home`;
   };
