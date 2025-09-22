@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import qr from "../../public/qr-code.png";
-import googleIcon from "../../public/google-play.png";
-import appStoreIcon from "../../public/app-store.png";
+import qr from "../../../public/qr-code.png";
+import googleIcon from "../../../public/google-play.png";
+import appStoreIcon from "../../../public/app-store.png";
 export default function DownloadSection() {
     const t = useTranslations("download");
 

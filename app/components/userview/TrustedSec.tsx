@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
-import {logos} from "../constants/content"
+import {logos} from "../../constants/content"
 
 
 export default function TrustedSection() {

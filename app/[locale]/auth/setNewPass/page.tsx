@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
+import GuestPage from "@/app/components/protectedpages/guestPage";
 
 export default function ResetPassword() {
   const t = useTranslations("resetPasswordWords");
@@ -57,7 +58,7 @@ export default function ResetPassword() {
       localStorage.removeItem("resetEmail");
       localStorage.removeItem("resetToken");
 
-      setSuccess(t("success")); 
+      setSuccess(t("success"));
       setTimeout(() => {
         router.push("/auth/login");
       }, 1500);
@@ -69,53 +70,57 @@ export default function ResetPassword() {
   };
 
   return (
-    <main
-      dir={locale === "ar" ? "rtl" : "ltr"}
-      className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
-    >
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-3xl min-h-[500px] flex flex-col items-center justify-center p-10 dark:bg-black">
-        <h1 className="text-4xl font-bold text-center mb-2 text-gray-800 dark:text-white">
-          {t("title")}
-        </h1>
-        <p className="text-sm text-center text-gray-500 mb-8">
-          {t("subtitle")}
-        </p>
-
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col space-y-5 w-full max-w-md"
+    <div>
+      <GuestPage>
+        <main
+          dir={locale === "ar" ? "rtl" : "ltr"}
+          className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
         >
-          <input
-            type="password"
-            placeholder={t("new_password")}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
-            required
-          />
-          <input
-            type="password"
-            placeholder={t("confirm_password")}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
-            required
-          />
+          <div className="bg-white rounded-2xl shadow-lg w-full max-w-3xl min-h-[500px] flex flex-col items-center justify-center p-10 dark:bg-black">
+            <h1 className="text-4xl font-bold text-center mb-2 text-gray-800 dark:text-white">
+              {t("title")}
+            </h1>
+            <p className="text-sm text-center text-gray-500 mb-8">
+              {t("subtitle")}
+            </p>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 text-white rounded-full py-3 font-semibold hover:bg-blue-700 transition disabled:opacity-50"
-          >
-            {loading ? t("loading") : t("button")}
-          </button>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col space-y-5 w-full max-w-md"
+            >
+              <input
+                type="password"
+                placeholder={t("new_password")}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+                required
+              />
+              <input
+                type="password"
+                placeholder={t("confirm_password")}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+                required
+              />
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-          {success && (
-            <p className="text-green-600 text-sm text-center">{success}</p>
-          )}
-        </form>
-      </div>
-    </main>
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-blue-600 text-white rounded-full py-3 font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+              >
+                {loading ? t("loading") : t("button")}
+              </button>
+
+              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+              {success && (
+                <p className="text-green-600 text-sm text-center">{success}</p>
+              )}
+            </form>
+          </div>
+        </main>
+      </GuestPage>
+    </div>
   );
 }

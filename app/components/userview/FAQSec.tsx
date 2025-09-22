@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
-import { faqs } from "../constants/content";
+import { faqs } from "../../constants/content";
 
 
 export default function FAQSection() {

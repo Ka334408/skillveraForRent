@@ -3,8 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import Card from "./card";
-import LoginModal from "./loginmodel";
+import Card from "../mainComponents/card";
+import LoginModal from "../loginmodel";
 
 export default function CategoriesSection() {
   const t = useTranslations("categories");

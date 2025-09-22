@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
-import { features } from "../constants/content";
-import phone from "../../public/phone.png";
+import { features } from "../../constants/content";
+import phone from "../../../public/phone.png";
 
 export default function FeaturesSection() {
   const t = useTranslations("features");

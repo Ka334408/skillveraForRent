@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { redirect, useRouter } from "next/navigation";
-import HeroSection from "../components/heroSection";
-import SearchSection from "../components/searchBar";
+import HeroSection from "../components/userview/heroSection";
+import SearchSection from "../components/userview/searchBar";
 
-import CategoriesSection from "../components/catigories";
+import CategoriesSection from "../components/userview/catigories";
 
 export default function HomePage() {
 

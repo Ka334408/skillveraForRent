@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import heroImage from "../../public/herosec.png";
+import heroImage from "../../../public/herosec.png";
 import { useTranslations } from "next-intl";
 
 export default function HeroSection() {

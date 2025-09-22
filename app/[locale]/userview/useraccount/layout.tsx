@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import Header from "@/app/components/header";
-import ProfileSidebar from "@/app/components/userSideBar";
-import PastReservation from "@/app/components/pastreservation";
-import Aboutme from "@/app/components/Aboutme";
-import Reviews from "@/app/components/myreviews";
-import Favorites from "@/app/components/myfavourits";
-import ProtectedPage from "@/app/components/protectedPage";
+import ProfileSidebar from "@/app/components/useraccount/userSideBar";
+import PastReservation from "@/app/components/useraccount/pastreservation";
+import Aboutme from "@/app/components/useraccount/Aboutme";
+import Reviews from "@/app/components/useraccount/myreviews";
+import Favorites from "@/app/components/useraccount/myfavourits";
+import ProtectedPage from "@/app/components/protectedpages/protectedPage";
 
 
 export default function UserAccountLayout() {

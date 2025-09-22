@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
+import GuestPage from "@/app/components/protectedpages/guestPage";
 
 export default function VerifyCode() {
   const t = useTranslations("verify");
@@ -121,6 +122,7 @@ export default function VerifyCode() {
   };
 
   return (
+    <div><GuestPage>
     <main
       dir={locale === "ar" ? "rtl" : "ltr"}
       className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
@@ -186,5 +188,6 @@ export default function VerifyCode() {
         {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
       </div>
     </main>
+    </GuestPage></div>
   );
 }
