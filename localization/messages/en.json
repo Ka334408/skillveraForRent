@@ -178,7 +178,21 @@
     "rentNow": "Rent Now",
     "review": "Review",
     "date": "Date"
+  },
+
+  
+  "Footer": {
+    "email": "hello.skillvera@example.com",
+    "home": "Home",
+    "facilities": "All facilities",
+    "about": "About us",
+    "categories": "Categories",
+    "support": "Support",
+    "faq": "FAQ",
+    "contact": "Contact Us",
+    "taxNumber": "Tax number"
   }
+
 
 
 

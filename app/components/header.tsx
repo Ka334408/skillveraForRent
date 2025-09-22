@@ -18,12 +18,14 @@ import {
   Menu,
   LogOut,
   LogIn,
+  Router,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import LocaleSwitcher from "./local-switcher";
 import ThemeSwitcher from "./darkModeBtn";
 import LoginModal from "./loginmodel";
+import { useRouter } from "next/navigation";
 
 
 interface NavbarProps {
@@ -52,6 +54,7 @@ export default function Navbar({
   const locale = useLocale();
   const t = useTranslations("navbar");
   const pathname = usePathname();
+  const router =useRouter()
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -64,7 +67,7 @@ export default function Navbar({
     localStorage.removeItem("role");
     localStorage.removeItem("name");
     setIsLoggedIn(false);
-    window.location.href = `/${locale}/userview/Home`;
+    router.replace( `/${locale}/userview/Home`);
   };
 
   

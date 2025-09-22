@@ -179,7 +179,20 @@
     "rentNow": "احجز الآن",
     "review": "المراجعة",
     "date": "التاريخ"
+  },
+  
+  "Footer": {
+    "email": "hello.skillvera@example.com",
+    "home": "الرئيسية",
+    "facilities": "كل المرافق",
+    "about": "من نحن",
+    "categories": "التصنيفات",
+    "support": "الدعم",
+    "faq": "الأسئلة الشائعة",
+    "contact": "اتصل بنا",
+    "taxNumber": "الرقم الضريبي"
   }
+
 
 
 }

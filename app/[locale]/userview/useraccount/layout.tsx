@@ -7,6 +7,7 @@ import PastReservation from "@/app/components/pastreservation";
 import Aboutme from "@/app/components/Aboutme";
 import Reviews from "@/app/components/myreviews";
 import Favorites from "@/app/components/myfavourits";
+import ProtectedPage from "@/app/components/protectedPage";
 
 
 export default function UserAccountLayout() {
@@ -14,7 +15,7 @@ export default function UserAccountLayout() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header فوق */}
+      
       <Header
         bgColor="bg-white border-b-gray-200 border-2" 
         accounticonColor="bg-[#2C70E2]"
@@ -26,17 +27,17 @@ export default function UserAccountLayout() {
         isrounded="rounded-full"
       />
 
-      {/* تحت الـ Header */}
+      
       <div className="flex flex-1">
         {/* Sidebar */}
         <ProfileSidebar active={active} setActive={setActive} />
 
         {/* Main Content */}
         <main className="flex-1 p-6 bg-gray-50">
-          {active === "about" && <Aboutme />}
-          {active === "reservations" && <PastReservation />}
-          {active === "reviews" && <Reviews />}
-          {active === "favorites" && <Favorites />}
+          {active === "about" && <ProtectedPage><Aboutme /></ProtectedPage>}
+          {active === "reservations" && <ProtectedPage><PastReservation /></ProtectedPage>}
+          {active === "reviews" && <ProtectedPage><Reviews /></ProtectedPage>}
+          {active === "favorites" && <ProtectedPage><Favorites /></ProtectedPage>}
         </main>
       </div>
     </div>

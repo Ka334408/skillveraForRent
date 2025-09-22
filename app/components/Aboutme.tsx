@@ -70,6 +70,7 @@ export default function ProfileCard() {
   };
 
   return (
+    
     <div className="max-w-6xl mx-auto py-8 px-4">
       <h3 className="text-2xl font-semibold mb-6">
         {t ? t("aboutTitle") : "About me"}

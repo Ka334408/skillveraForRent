@@ -11,6 +11,7 @@ import FAQSection from "@/app/components/FAQSec";
 import FeaturesSection from "@/app/components/FeaturesSec";
 import DownloadSection from "@/app/components/downloadappsec";
 import Header from "@/app/components/header";
+import Footer from "@/app/components/footer";
 
 export default function HomePage() {
   const [email, setEmail] = useState<string | null>(null);
@@ -42,6 +43,7 @@ export default function HomePage() {
       <FAQSection />
       <FeaturesSection />
       <DownloadSection />
+    
     </main>
   );
 }
