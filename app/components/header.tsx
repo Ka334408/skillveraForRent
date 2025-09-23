@@ -159,7 +159,7 @@ export default function Navbar({
                   return (
                     <DropdownMenuItem
                       key={href}
-                      onClick={() => handleProtectedClick(href)} 
+                      onClick={() => router.push(href)} 
                       className={`flex items-center gap-3 px-3 py-3 rounded-xl w-full mt-2 mb-2 text-black ${
                         isActive
                           ? "bg-white text-black font-semibold"

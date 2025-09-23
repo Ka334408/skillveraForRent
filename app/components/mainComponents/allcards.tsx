@@ -20,9 +20,9 @@ export default function FacilityCard({
   image,
 }: FacilityCardProps) {
   return (
-    <div className="flex items-stretch bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition w-full h-40">
+    <div className="flex flex-col sm:flex-row items-stretch bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition w-full h-auto sm:h-40">
       {/* الصورة */}
-      <div className="w-40 h-full bg-gray-200 flex-shrink-0">
+      <div className="w-full sm:w-40 h-40 sm:h-full bg-gray-200 flex-shrink-0">
         <Image
           src={image}
           alt={name}
@@ -44,7 +44,7 @@ export default function FacilityCard({
             <MapPin size={16} className="mr-1 text-blue-600" />
             {location}
           </div>
-          <span className="font-semibold bg-blue-600 text-white px-3 py-1 rounded-lg">
+          <span className="sm:font-semibold bg-blue-600 text-white px-3 py-1 rounded-lg text-sm">
             {price} R
           </span>
         </div>
