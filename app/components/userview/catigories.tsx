@@ -1,85 +1,62 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Card from "../mainComponents/card";
 import LoginModal from "../loginmodel";
+
+// 👇 هنستخدم نفس الداتا بتاعت الـ facilities
+import { facilitiesData } from "@/app/components/allFacilities/allFacilities";
 
 export default function CategoriesSection() {
   const t = useTranslations("categories");
   const [activeCategory, setActiveCategory] = useState("all");
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
-  const [items, setItems] = useState<any[]>([]);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
+  // 👇 نشوف هل في token في localStorage
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const isLoggedIn = !!token;
 
-  useEffect(() => {
-    if (token) setIsLoggedIn(true);
-
-    // Fetch from fakestoreapi
-    const fetchItems = async () => {
-      try {
-        const res = await fetch("https://fakestoreapi.com/products");
-        const data = await res.json();
-        // fake api
-        const mapped = data.map((p: any) => ({
-          id: p.id.toString(),
-          title: p.title,
-          category: p.category,
-          image: p.image,
-          price: p.price,
-          rating: p.rating?.rate || 0,
-          reviewsCount: p.rating?.count || 0,
-        }));
-        setItems(mapped);
-      } catch (err) {
-        console.error("Error fetching items:", err);
-      }
-    };
-    fetchItems();
-  }, [token]);
+  // 👇 subset من الـ facilities (أول 10 مثلاً)
+  const items = facilitiesData.slice(0, 10).map((f) => ({
+    id: f.id.toString(),
+    title: f.name,
+    category: f.category,
+    image: f.image,
+    price: f.price,
+    rating: 4.5,
+    reviewsCount: 20,
+  }));
 
   const filteredItems =
     activeCategory === "all"
       ? items
       : items.filter((item) => item.category.includes(activeCategory));
 
-  const handleFavorite = async (id: string) => {
+  const handleFavorite = (id: string) => {
     if (!isLoggedIn) {
       setShowLoginModal(true);
       return;
     }
 
-    try {
-      await fetch("/api/favorites", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-
-        },
-        body: JSON.stringify({ itemId: id }),
-      });
-      setFavorites((prev) =>
-        prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
-      );
-    } catch (err) {
-      console.error("Error adding favorite:", err);
-    }
+    // 👇 toggle logic
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
   };
 
   return (
-    <section className="px-6 py-10 relative bg-gray-100  dark:bg-[#0a0a0a] dark:text-white overflow-hidden mt-15">
+    <section className="px-6 py-10 relative bg-gray-100 dark:bg-[#0a0a0a] dark:text-white overflow-hidden mt-15">
       {/* Title + See All */}
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-blue-600" data-aos="fade-up" data-aos-duration="2000">{t("title")}</h2>
+        <h2 className="text-2xl font-bold text-blue-600">{t("title")}</h2>
         <button
-          onClick={() => router.push("/categories")}
-          data-aos="fade-up" data-aos-duration="2000"
+          onClick={() => router.push("/userview/allFacilities")}
           className="text-blue-600 font-semibold hover:text-white border-[#2C70E2] px-4 py-2 rounded-full border transition hover:bg-[#2C70E2]"
         >
           {t("see_all")}
@@ -87,23 +64,21 @@ export default function CategoriesSection() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-3 mb-6 flex-wrap" data-aos="fade-up" data-aos-duration="2000">
+      <div className="flex gap-3 mb-6 flex-wrap">
         {[
           { key: "all", label: t("all") },
-          { key: "men", label: "Men" },
-          { key: "women", label: "Women" },
-          { key: "jewelery", label: "Jewelery" },
-          { key: "electronics", label: "Electronics" },
+          { key: "Sports", label: "Sports" },
+          { key: "Education", label: "Education" },
+          { key: "Health", label: "Health" },
         ].map((cat) => (
           <button
             key={cat.key}
             onClick={() => setActiveCategory(cat.key)}
-            className={`px-4 py-2 rounded-full border transition  dark:bg-[#0a0a0a] dark:text-blue-600 ${activeCategory === cat.key
+            className={`px-4 py-2 rounded-full border transition ${
+              activeCategory === cat.key
                 ? "bg-blue-600 text-white border-blue-600 dark:bg-white dark:text-blue-600"
-                : "bg-white text-blue-600 border-blue-400 hover:bg-blue-100"
-              }`}
-
-
+                : "bg-white text-blue-600 border-blue-400 hover:bg-blue-100 dark:bg-[#0a0a0a]"
+            }`}
           >
             {cat.label}
           </button>
@@ -114,23 +89,20 @@ export default function CategoriesSection() {
       <div
         ref={scrollRef}
         className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
-        data-aos="fade-right" data-aos-duration="3000"
-
       >
         {filteredItems.map((item) => (
           <Card
             key={item.id}
             {...item}
             isFavorite={favorites.includes(item.id)}
-            onFavorite={handleFavorite}
-
+            onFavorite={() => handleFavorite(item.id)}
           />
         ))}
       </div>
 
       {/* Login Modal */}
       {showLoginModal && (
-       <LoginModal show={true} onClose={() => setShowLoginModal(false)} />
+        <LoginModal show={true} onClose={() => setShowLoginModal(false)} />
       )}
     </section>
   );
