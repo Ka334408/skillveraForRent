@@ -7,7 +7,7 @@ import Card from "../mainComponents/card";
 import LoginModal from "../loginmodel";
 
 // 👇 هنستخدم نفس الداتا بتاعت الـ facilities
-import { facilitiesData } from "@/app/components/allFacilities/allFacilities";
+import { facilitiesData } from "@/app/constants/content";
 
 export default function CategoriesSection() {
   const t = useTranslations("categories");

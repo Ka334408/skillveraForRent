@@ -21,7 +21,7 @@ const FacilityMapSection = dynamic(
   Health: "/hotal.jpg",
 };
 
-export const facilitiesData = Array.from({ length: 100 }, (_, i) => {
+const facilitiesData = Array.from({ length: 100 }, (_, i) => {
   const category = i % 3 === 0 ? "Sports" : i % 3 === 1 ? "Education" : "Health";
 
   return {

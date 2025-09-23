@@ -41,3 +41,27 @@ export const logos = [
   "/logo4.png",
   "/logo5.png",
 ];
+
+const categoryImages: Record<string, string> = {
+  Sports: "/stadium.jpg",
+  Education: "/school.jpg",
+  Health: "/hotal.jpg"
+};
+
+export const facilitiesData = Array.from({ length: 100 }, (_, i) => {
+  const category = i % 3 === 0 ? "Sports" : i % 3 === 1 ? "Education" : "Health";
+
+  return {
+    id: i + 1,
+    name: `Facility ${i + 1}`,
+    description: `Description for facility ${i + 1}, lorem ipsum dolor sit amet.`,
+    location: i % 2 === 0 ? "Riyadh" : "Jeddah",
+    price: 400 + (i % 5) * 100,
+    category,
+    image:
+      categoryImages[category] ||
+      `https://picsum.photos/200/150?random=${i}`,
+    lat: 24.7136 + i * 0.01,
+    lng: 46.6753 + i * 0.01,
+  };
+});
