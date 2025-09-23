@@ -191,7 +191,27 @@
     "faq": "الأسئلة الشائعة",
     "contact": "اتصل بنا",
     "taxNumber": "الرقم الضريبي"
+  },
+
+  
+  "filters": {
+    "category": "التصنيف",
+    "location": "المكان",
+    "maxPrice": "أقصى سعر",
+    "sports": "رياضة",
+    "education": "تعليم",
+    "health": "فنادق",
+    "riyadh": "الرياض",
+    "jeddah": "جدة"
+  },
+  "pagination": {
+    "prev": "السابق",
+    "next": "التالي"
+  },
+  "facility": {
+    "priceUnit": "{price} ر.س"
   }
+
 
 
 

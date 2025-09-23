@@ -191,7 +191,26 @@
     "faq": "FAQ",
     "contact": "Contact Us",
     "taxNumber": "Tax number"
+  },
+  
+  "filters": {
+    "category": "All Category",
+    "location": "Location",
+    "maxPrice": "Max Price",
+    "sports": "Sports",
+    "education": "Education",
+    "health": "Hotals",
+    "riyadh": "Riyadh",
+    "jeddah": "Jeddah"
+  },
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "facility": {
+    "priceUnit": "{price} R"
   }
+
 
 
 

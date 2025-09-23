@@ -81,7 +81,7 @@ export default function Navbar({
 
   const navLinks = [
     { href: `/${locale}/userview/Home`, label: t("home"), icon: Home },
-    { href: `/${locale}/facilities`, label: t("facilities"), icon: Building },
+    { href: `/${locale}/userview/allFacilities`, label: t("facilities"), icon: Building },
     { href: `/${locale}/about`, label: t("about"), icon: User },
     { href: `/${locale}/contact`, label: t("contact"), icon: MessageCircle },
   ];
@@ -150,7 +150,7 @@ export default function Navbar({
 
             <DropdownMenuContent
               align="end"
-              className="w-64 bg-blue-600 text-white rounded-xl shadow-xl p-4 text-lg"
+              className="w-64 bg-blue-600 text-white rounded-xl shadow-xl p-4 text-lg z-20"
             >
               {/* Mobile Links */}
               <div className="sm:hidden">
@@ -184,7 +184,7 @@ export default function Navbar({
               </DropdownMenuItem>
 
               <DropdownMenuItem
-                onClick={() => handleProtectedClick(`/${locale}/facilities`)}
+                onClick={() => handleProtectedClick(`/${locale}/userview/allFacilities`)}
                 className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black"
               >
                 <Building className="w-5 h-5" />
