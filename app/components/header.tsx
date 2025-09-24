@@ -82,8 +82,8 @@ export default function Navbar({
   const navLinks = [
     { href: `/${locale}/userview/Home`, label: t("home"), icon: Home },
     { href: `/${locale}/userview/allFacilities`, label: t("facilities"), icon: Building },
-    { href: `/${locale}/about`, label: t("about"), icon: User },
-    { href: `/${locale}/contact`, label: t("contact"), icon: MessageCircle },
+    { href: `/${locale}/userview/aboutUs`, label: t("about"), icon: User },
+    { href: `/${locale}/userview/contactUs`, label: t("contact"), icon: MessageCircle },
   ];
 
   return (
@@ -192,7 +192,7 @@ export default function Navbar({
               </DropdownMenuItem>
 
               <DropdownMenuItem
-                onClick={() => handleProtectedClick(`/${locale}/contact`)}
+                onClick={() => handleProtectedClick(`/${locale}/userview/contactUs`)}
                 className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#85ADEF] mt-2 mb-2 hover:bg-blue-500 cursor-pointer text-center text-black"
               >
                 <MessageCircle className="w-5 h-5" />

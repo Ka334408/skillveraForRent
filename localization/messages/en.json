@@ -95,8 +95,8 @@
     "end":"Add End Date"
   },
   "categories": {
-    "title": "Our Categories",
-    "all": "some categories",
+    "title": "Our Facilities",
+    "all": "Some Facilities",
     "rooms": "Rooms",
     "sports": "Sports fields",
     "labs": "Labs",
@@ -209,7 +209,42 @@
   },
   "facility": {
     "priceUnit": "{price} R"
+  },
+  
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "Be In Touch With Our Team",
+    "teamTitle": "Contact Our Team",
+    "teamDesc": "Contact us via WhatsApp or email for more information and support, we are here for you.",
+    "fullName": "Full Name",
+    "email": "Email",
+    "message": "Your Message",
+    "agree": "I agree to the Terms of Service and Privacy Policy",
+    "contactUs": "Contact Us",
+    "directChat": "Direct Chat"
+  },
+  
+  "about": {
+    "title": "About us",
+    "subtitle": "Know More About Skillvera"
+  },
+  "benefits": {
+    "responsable": "Responsible Team",
+    "benefit1": "Benefit",
+    "benefit2": "Benefit 2",
+    "benefit3": "Benefit 3",
+    "text": "Lorem ipsum dolor sit amet..."
+  },
+  "story": {
+    "title": "Our Story",
+    "text": "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet..."
+  },
+  "testimonials": {
+    "subtitle": "Happy Viewers",
+    "title": "Why Choose Us"
   }
+
+
 
 
 

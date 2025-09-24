@@ -69,7 +69,7 @@ export default function CategoriesSection() {
           { key: "all", label: t("all") },
           { key: "Sports", label: "Sports" },
           { key: "Education", label: "Education" },
-          { key: "Health", label: "Health" },
+          { key: "hotal", label: "hotal" },
         ].map((cat) => (
           <button
             key={cat.key}

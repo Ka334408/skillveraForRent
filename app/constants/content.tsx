@@ -45,11 +45,11 @@ export const logos = [
 const categoryImages: Record<string, string> = {
   Sports: "/stadium.jpg",
   Education: "/school.jpg",
-  Health: "/hotal.jpg"
+  hotal: "/hotal.jpg"
 };
 
 export const facilitiesData = Array.from({ length: 100 }, (_, i) => {
-  const category = i % 3 === 0 ? "Sports" : i % 3 === 1 ? "Education" : "Health";
+  const category = i % 3 === 0 ? "Sports" : i % 3 === 1 ? "Education" : "hotal";
 
   return {
     id: i + 1,
