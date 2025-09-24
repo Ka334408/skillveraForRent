@@ -90,7 +90,7 @@ export default function VerifyAccount() {
     <main className="min-h-screen flex items-center justify-center bg-blue-100 px-4">
       <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold mb-2 text-gray-800">
-          You're ready to go!
+          You&apos;re ready to go!
         </h1>
         <p className="text-gray-600 mb-6">
           Please check your mail for a verification code to complete your sign up
@@ -124,7 +124,7 @@ export default function VerifyAccount() {
         </form>
 
         <p className="mt-6 text-sm text-gray-600">
-          Didn't receive the code?{" "}
+          Didn&apos;t receive the code?{" "}
           <button
             type="button"
             onClick={handleResend}
