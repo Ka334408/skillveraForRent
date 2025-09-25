@@ -83,6 +83,7 @@ export default function Login() {
       localStorage.setItem("token", token || "");
       localStorage.setItem("email", email);
       localStorage.setItem("name", user.name);
+      localStorage.setItem("avatar", user.image);
 
       const role = user.type ? user.type.toLowerCase() : null;
 
@@ -120,8 +121,9 @@ export default function Login() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-200 dark:bg-[#0a0a0a]">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-gray-600 dark:text-white">Loading...</p>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-blue-600 animate-bounce">
+          Skillvera
+        </h1>
         </div>
       </div>
     );

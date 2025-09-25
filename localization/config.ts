@@ -41,6 +41,10 @@ export const pathnames = {
     en: "/userview/allFacilities/${id}",
     ar: "/userview/allFacilities/${id}",
   },
+  "/providerview/dashBoard": {
+    en: "/providerview/dashBoard",
+    ar: "/providerview/dashBoard",
+  },
   '/auth/resetPass': {
     en: "/resetPass",
     ar: "/resetPass",
