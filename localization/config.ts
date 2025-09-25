@@ -20,6 +20,27 @@ export const pathnames = {
     en: "/setNewPass",
     ar: "/setNewPass",
   },
+  "/auth/verifyAccount": {
+    en: "/verifyAccount",
+    ar: "/verifyAccount",
+  },
+  
+  "/userview/aboutus": {
+    en: "/userview/aboutus",
+    ar: "/userview/aboutus",
+  },
+  "/userview/contactUs": {
+    en: "/userview/contactUs",
+    ar: "/userview/contactUs",
+  },
+  "/userview/allFacilities": {
+    en: "/userview/allFacilities",
+    ar: "/userview/allFacilities",
+  },
+  "/userview/allFacilities/${id}": {
+    en: "/userview/allFacilities/${id}",
+    ar: "/userview/allFacilities/${id}",
+  },
   '/auth/resetPass': {
     en: "/resetPass",
     ar: "/resetPass",
