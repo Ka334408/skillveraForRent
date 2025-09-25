@@ -5,18 +5,17 @@ import { useRouter } from "next/navigation";
 
 export default function ProtectedPage({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true); // لودينج لحد ما نعرف
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      router.replace("/"); // مفيش توكن → روح للهوم
+      router.replace("/"); 
     } else {
-      setLoading(false); // فيه توكن → فك اللودينج ورندر الصفحة
+      setLoading(false); 
     }
 
-    // لو حصل لوج آوت
     const handleStorage = () => {
       if (!localStorage.getItem("token")) {
         router.replace("/");
@@ -31,8 +30,10 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
 
   if (loading) {
     return (
-      <div className="w-full h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+      <div className="w-full h-screen flex items-center justify-center bg-white">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-blue-600 animate-bounce">
+          Skillvera
+        </h1>
       </div>
     );
   }

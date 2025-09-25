@@ -10,7 +10,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="bg-blue-600 text-white py-12 px-6 rounded-none sm:rounded-tl-[75px]"
+      className="bg-blue-600 text-white py-12 px-6 rounded-none ltr:sm:rounded-tl-[75px] rtl:sm:rounded-tr-[75px]"
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
       <div className="max-w-7xl mx-auto grid gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">

@@ -20,7 +20,9 @@ export default function GuestPage({ children }: { children: React.ReactNode }) {
   if (loading) {
     return (
       <div className="w-full h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-blue-600 animate-bounce">
+          Skillvera
+        </h1>
       </div>
     );
   }
