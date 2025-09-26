@@ -117,6 +117,8 @@ export default function Navbar({
         {/* Right side */}
         <div className="flex items-center gap-1">
           <Button
+            onClick={() =>
+                  handleProtectedClick(`/${locale}/providerview/Home`)}
             variant="outline"
             className={`${enable} bg-transparent font-bold border-2 ${textColor}  border-white hover:bg-white hover:text-blue-600 ${hoverColor}`}
           >
