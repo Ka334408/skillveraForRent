@@ -41,17 +41,21 @@ export const pathnames = {
     en: "/userview/allFacilities/${id}",
     ar: "/userview/allFacilities/${id}",
   },
-  "/providerview/myFacilities": {
-    en: "/providerview/myFacilities",
-    ar: "/providerview/myFacilities",
+  "/providerview/dashBoardHome/myFacilities": {
+    en: "/providerview/dashBoardHome/myFacilities",
+    ar: "/providerview/dashBoardHome/myFacilities",
   },
-  "/providerview/myFacilities/addNewFacility": {
-    en: "/providerview/myFacilities/addNewFacility",
-    ar: "/providerview/myFacilities/addNewFacility",
+  "/providerview/dashBoardHome/myFacilities/addNewFacility": {
+    en: "/providerview/dashBoardHome/myFacilities/addNewFacility",
+    ar: "/providerview/dashBoardHome/myFacilities/addNewFacility",
   },
-  "/providerview/dashBoard": {
-    en: "/providerview/dashBoard",
-    ar: "/providerview/dashBoard",
+  "/providerview/dashBoardHome/dashBoard": {
+    en: "/providerview/dashBoardHome/dashBoard",
+    ar: "/providerview/dashBoardHome/dashBoard",
+  },
+  "/providerview/providerRegisteration": {
+    en: "/providerview/providerRegisteration",
+    ar: "/providerview/providerRegisteration",
   },
   '/auth/resetPass': {
     en: "/resetPass",
