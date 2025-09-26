@@ -59,7 +59,7 @@ export default function FacilitiesPage() {
           ))}
 
           <button
-            onClick={() => window.location.href="/providerview/myFacilities/addNewFacility"}
+            onClick={() => window.location.href="/providerview/dashBoardHome/myFacilities/addNewFacility"}
             className="ml-2 px-3 py-2 rounded-md bg-white border border-gray-200 hover:bg-gray-50"
             aria-label="Add facility"
           >

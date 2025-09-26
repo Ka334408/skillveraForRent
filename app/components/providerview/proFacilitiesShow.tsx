@@ -83,7 +83,7 @@ export default function MyFacilities() {
 
       {/* View All */}
       <div className="mt-4 text-right">
-        <button className="text-blue-600 font-semibold hover:underline"  onClick={() => router.push("/providerview/myFacilities")}>
+        <button className="text-blue-600 font-semibold hover:underline"  onClick={() => router.push("/providerview/dashBoardHome/myFacilities")}>
           View all →
         </button>
       </div>
