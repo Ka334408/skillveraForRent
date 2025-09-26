@@ -41,6 +41,14 @@ export const pathnames = {
     en: "/userview/allFacilities/${id}",
     ar: "/userview/allFacilities/${id}",
   },
+  "/providerview/myFacilities": {
+    en: "/providerview/myFacilities",
+    ar: "/providerview/myFacilities",
+  },
+  "/providerview/myFacilities/addNewFacility": {
+    en: "/providerview/myFacilities/addNewFacility",
+    ar: "/providerview/myFacilities/addNewFacility",
+  },
   "/providerview/dashBoard": {
     en: "/providerview/dashBoard",
     ar: "/providerview/dashBoard",
