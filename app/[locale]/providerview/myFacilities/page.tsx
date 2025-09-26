@@ -1,15 +1,13 @@
-import DashboardPage from '@/app/components/providerview/dashboard'
 import MyFacilities from '@/app/components/providerview/proFacilitiesShow'
-import Sidebar from '@/app/components/providerview/sidebar'
-import Topbar from '@/app/components/providerview/topBar'
 import React from 'react'
 import ProviderLayout from '../layout'
+import FacilitiesPage from '@/app/components/providerview/myfacility'
 
 export default function page() {
   return (
     <div>
-      
-      <DashboardPage/>
+        
+      <FacilitiesPage/>
       
     </div>
   )
