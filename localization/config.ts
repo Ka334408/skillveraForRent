@@ -61,6 +61,14 @@ export const pathnames = {
     en: "/resetPass",
     ar: "/resetPass",
   },
+  "/providerview/dashBoardHome/pendingApprove":{
+    en:"/providerview/dashBoardHome/pendingApprove",
+    ar :"/providerview/dashBoardHome/pendingApprove",
+  },
+  "/providerview/dashBoardHome/myProfile":{
+    en:"/providerview/dashBoardHome/myProfile",
+    ar:"/providerview/dashBoardHome/myProfile",
+  },
   "/not-found": {
     en: "/not-found",
     ar: "/not-found",
