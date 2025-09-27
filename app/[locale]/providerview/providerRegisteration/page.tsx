@@ -74,7 +74,7 @@ export default function SelectPlanPage() {
 
         {/* زرار Next */}
         <button className="px-8 py-2 rounded-full bg-white border-2 border-blue-500 text-blue-600 font-semibold hover:bg-blue-50 transition" 
-        onClick={()=>router.push(`/${locale}/providerview/dashBoardHome/dashBoard`)}>
+        onClick={()=>router.push(`/${locale}/providerview/dashBoardHome/myProfile`)}>
           Let&apos;s go
         </button>
       </div>
