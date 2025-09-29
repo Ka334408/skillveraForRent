@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function ProfileCard() {
   const t = useTranslations("proPhoto");
@@ -10,6 +11,7 @@ export default function ProfileCard() {
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const router=useRouter();
 
   // تحميل الاسم والصورة من localStorage
   useEffect(() => {
@@ -142,7 +144,7 @@ export default function ProfileCard() {
               placeholder={t ? t("namePlaceholder") : "Your name"}
             />
             <button
-              onClick={handleSave}
+              onClick={()=>router.push("/userview/userProfile")}
               className="bg-blue-600 text-white px-6 py-3 rounded-lg w-full sm:w-auto"
             >
               {t ? t("getStarted") : "getStarted"}
