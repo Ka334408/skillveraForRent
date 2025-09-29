@@ -19,7 +19,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["fakestoreapi.com","picsum.photos","img.freepik.com","www.freepik.com"],
+    domains: ["fakestoreapi.com","picsum.photos","img.freepik.com","www.freepik.com","156.67.24.200"],
   },
 };
 
