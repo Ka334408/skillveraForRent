@@ -242,7 +242,92 @@
   "testimonials": {
     "subtitle": "Happy Viewers",
     "title": "Why Choose Us"
+  },
+  "rating":{
+  "title": "Guest Rating",
+  "description": "This facility is rated based on guest ratings and reviews."
+  },
+  
+  "review": {
+    "showMore": "Show More",
+    "stayed": "Stayed {nights} nights"
+  },
+  
+  "thingsToKnow": {
+    "title": "Things to know",
+    "rulesTitle": "Facility rules",
+    "policiesTitle": "Facility Policies",
+    "rules": [
+      "Leave before 12 pm",
+      "No smoking inside",
+      "No pets allowed"
+    ],
+    "policies": "Room was very clean and looked just like the photo. Quiet little hotel, especially during the day. Evening you hear some music from nearby places.",
+    "showMore": "Show More"
+  },
+  
+  "facilityMap": {
+    "title": "This Facility is in : {location}",
+    "info": "Facility Information & Features",
+    "noFeatures": "No features added yet.",
+    "popup": "Facility location ({lat}, {lng})"
+  },
+  
+  "facilityHeader": {
+    "ratingCount": "({count})",
+    "priceUnit": "{price}/DAY",
+    "overview": "Overview",
+    "share": "Share",
+    "save": "Save"
+  },
+  
+  "FacilityCalendar": {
+    "selectCheckIn": "Select check-in date",
+    "clearDates": "Clear dates",
+    "forDays": "for {count} days",
+    "checkIn": "CHECK-IN",
+    "checkOut": "CHECK-OUT",
+    "pleaseSelect": "Please select your dates to rent",
+    "rentNow": "Rent now"
+  },
+  
+  "FAQ": {
+    "title": "FAQ",
+    "subtitle": "Frequently Asked Questions",
+    "description": "Did you find the question as you expected?",
+    "readMore": "Read More",
+    "cta": "Give a Quote",
+    "items": [
+      {
+        "question": "What services do you provide?",
+        "answer": "We offer a wide range of services including web development, mobile apps, and design."
+      },
+      {
+        "question": "How long does a project take?",
+        "answer": "Project duration depends on the scope, usually between 2 to 6 weeks."
+      },
+      {
+        "question": "Do you offer support after delivery?",
+        "answer": "Yes, we provide free bug fixes for 1 month and optional long-term support."
+      },
+      {
+        "question": "What are your payment methods?",
+        "answer": "We accept bank transfer, PayPal, and credit card payments."
+      },
+      {
+        "question": "Can you work with international clients?",
+        "answer": "Yes, we collaborate with clients worldwide through remote communication tools."
+     }
+
+    ]
   }
+
+
+
+
+
+
+
 
 
 

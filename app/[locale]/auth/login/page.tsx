@@ -83,7 +83,7 @@ export default function Login() {
       localStorage.setItem("token", token || "");
       localStorage.setItem("email", email);
       localStorage.setItem("name", user.name);
-      localStorage.setItem("avatar", user.image);
+      localStorage.setItem("image", user.image);
 
       const role = user.type ? user.type.toLowerCase() : null;
 

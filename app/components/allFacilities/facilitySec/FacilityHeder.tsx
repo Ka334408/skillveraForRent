@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Star, Share2, Bookmark } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function FacilityHeader({
   facility,
@@ -13,6 +16,8 @@ export default function FacilityHeader({
     image: string;
   };
 }) {
+  const t = useTranslations("facilityHeader");
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
       {/* الصور */}
@@ -56,23 +61,31 @@ export default function FacilityHeader({
           <div className="flex items-center gap-2 mt-2">
             <Star className="text-yellow-500" size={18} />
             <span className="font-medium">5.0</span>
-            <span className="text-gray-500 text-sm">(100)</span>
+            <span className="text-gray-500 text-sm">
+              {t("ratingCount", { count: 100 })}
+            </span>
           </div>
 
           <p className="mt-2 text-blue-600 font-semibold">
-            {facility.price}/DAY
+            {t("priceUnit", { price: facility.price })}
           </p>
 
-          <h3 className="mt-4 font-bold">Overview</h3>
+          <h3 className="mt-4 font-bold">{t("overview")}</h3>
           <p className="text-gray-600 text-sm">{facility.description}</p>
         </div>
 
         {/* اكشنز */}
         <div className="flex gap-3 mt-4">
-          <button className="p-2 rounded-full border hover:bg-gray-100">
+          <button
+            className="p-2 rounded-full border hover:bg-gray-100"
+            title={t("share")}
+          >
             <Share2 size={18} />
           </button>
-          <button className="p-2 rounded-full border hover:bg-gray-100">
+          <button
+            className="p-2 rounded-full border hover:bg-gray-100"
+            title={t("save")}
+          >
             <Bookmark size={18} />
           </button>
         </div>

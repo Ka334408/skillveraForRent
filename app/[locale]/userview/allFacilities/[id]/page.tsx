@@ -7,6 +7,9 @@ import Header from "@/app/components/header";
 import { notFound } from "next/navigation";
 
 import dynamic from "next/dynamic";
+import RatingCard from "@/app/components/allFacilities/facilitySec/facilityReview";
+import ReviewsList from "@/app/components/allFacilities/facilitySec/personalReview";
+import ThingsToKnow from "@/app/components/allFacilities/facilitySec/aboutFacility";
 
 // ✅ منع SSR
 const FacilityMapSection = dynamic(
@@ -75,6 +78,9 @@ export default function FacilityPage({ params }: { params: { id: string } }) {
                       "2025-09-22",
                       "2025-09-25",
                   ]} pricePerDay={facility.price}/>
+      <RatingCard/>
+      <ReviewsList/>
+      <ThingsToKnow/>
 
     
     </div>
