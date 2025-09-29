@@ -84,6 +84,10 @@ export default function Login() {
       localStorage.setItem("email", email);
       localStorage.setItem("name", user.name);
       localStorage.setItem("image", user.image);
+      localStorage.setItem("gender", user.gender);
+      localStorage.setItem("addressLatLong", user.addressLatLong);
+      localStorage.setItem("dob", user.dob);
+      localStorage.setItem("phone", user.phone);
 
       const role = user.type ? user.type.toLowerCase() : null;
 

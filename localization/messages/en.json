@@ -320,7 +320,23 @@
      }
 
     ]
+  },
+  
+  "userprofile": {
+    "title": "My profile",
+    "desc": "Hosts and guests can see your profile and it may appear across Skava to help us build trust in our community",
+    "phone": "Phone",
+    "dob": "Date of Birth",
+    "location": "Current Location",
+    "gender": "Gender",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "genderOther": "Other",
+    "save": "Get Started",
+    "fetchingLocation": "Fetching current location...",
+    "unableLocation": "Unable to fetch location"
   }
+
 
 
 
