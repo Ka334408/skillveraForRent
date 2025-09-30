@@ -8,16 +8,17 @@ import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const t = useTranslations("userprofile");
-  const router=useRouter();
+  const router = useRouter();
 
   const [username, setUsername] = useState("User");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("");
   const [profileImg, setProfileImg] = useState("");
-  const [location, setLocation] = useState(""); // current location lat,long
+  const [location, setLocation] = useState("");
   const [facility, setFacility] = useState({});
   const [errors, setErrors] = useState<{ phone?: string; dob?: string }>({});
+  const [loading, setLoading] = useState(false); // ✅ حالة اللودينج
 
   useEffect(() => {
     const storedName = localStorage.getItem("name");
@@ -31,10 +32,17 @@ export default function ProfilePage() {
     if (storedPhone) setPhone(storedPhone);
     if (storedDob) setDob(storedDob);
     if (storedGender) setGender(storedGender);
-    if (storedProfileImg) setProfileImg(`${storedProfileImg}`);
+
+    if (storedProfileImg) {
+      if (storedProfileImg.startsWith("uploads/")) {
+        setProfileImg(`/api/media?media=${storedProfileImg}`);
+      } else {
+        setProfileImg(storedProfileImg);
+      }
+    }
+
     if (storedFacility) setFacility(JSON.parse(storedFacility));
 
-    // 🟢 get current location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -62,37 +70,44 @@ export default function ProfilePage() {
     e.preventDefault();
     if (!validate()) return;
 
+    setLoading(true); // ✅ يبدأ اللودينج
+
     try {
-      localStorage.setItem("name", username);
-      localStorage.setItem("phone", phone);
-      localStorage.setItem("dob", dob);
-      localStorage.setItem("gender", gender);
-      localStorage.setItem("facility", JSON.stringify(facility));
+      const formData = new FormData();
+      formData.append("name", username);
+      formData.append("email", localStorage.getItem("email") || "");
+      formData.append("dob", dob);
+      formData.append("gender", gender);
+      formData.append("phone", phone);
+      formData.append("addressLatLong", location);
+
+      if (profileImg) {
+        if (!profileImg.startsWith("/api/media")) {
+          const res = await fetch(profileImg);
+          const blob = await res.blob();
+          formData.append("image", blob, "profile.png");
+        }
+      }
+
+      formData.append(
+        "facility",
+        JSON.stringify({
+          name: "string",
+          addressLatLong: location,
+          taxNumber: "string",
+          email: "string",
+          website: "string",
+          phone: "+20 1159675941",
+          image: "string",
+        })
+      );
 
       const response = await fetch(`/api/user/update-profile`, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
-          Authorization:` Bearer ${localStorage.getItem("token")}`,
+          Authorization:`Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({
-          name: username,
-          email: localStorage.getItem("email"),
-          image: localStorage.getItem("image"),
-          dob,
-          gender,
-          phone,
-          addressLatLong: location, // 🟢 current location used here
-          facility: {
-            name: "string",
-            addressLatLong: location, // 🟢 current location in facility too
-            taxNumber: "string",
-            email: "string",
-            website: "string",
-            phone: "+20 1159675941",
-            image: "string",
-          },
-        }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -105,10 +120,12 @@ export default function ProfilePage() {
       const result = await response.json();
       console.log("✅ Profile updated:", result);
       alert("Profile updated successfully 🎉");
-      router.push("/userview/Home")
+      router.push("/userview/Home");
     } catch (err) {
       console.error("❌ Update error:", err);
       alert("Failed to update profile");
+    } finally {
+      setLoading(false); // ✅ يوقف اللودينج
     }
   };
 
@@ -119,7 +136,11 @@ export default function ProfilePage() {
         <div className="bg-blue-600 text-white rounded-xl p-4 w-full md:w-48 flex flex-col items-center justify-center gap-2 self-start">
           <div className="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center overflow-hidden bg-white">
             {profileImg ? (
-              <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
+              <img
+                src={profileImg}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
             ) : (
               <span className="text-2xl">👤</span>
             )}
@@ -135,7 +156,9 @@ export default function ProfilePage() {
           <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Name */}
             <div>
-              <label className="block text-sm font-semibold mb-1">{t("fullName")}</label>
+              <label className="block text-sm font-semibold mb-1">
+                {t("fullName")}
+              </label>
               <input
                 type="text"
                 value={username}
@@ -146,7 +169,9 @@ export default function ProfilePage() {
 
             {/* Phone */}
             <div>
-              <label className="block text-sm font-semibold mb-1">{t("phone")}</label>
+              <label className="block text-sm font-semibold mb-1">
+                {t("phone")}
+              </label>
               <PhoneInput
                 country={"eg"}
                 value={phone}
@@ -155,24 +180,32 @@ export default function ProfilePage() {
                 containerClass="w-full"
                 inputClass="!w-full !rounded-lg !p-3 !pl-12 !border-2 !border-blue-400 !focus:outline-none !focus:border-blue-600"
               />
-              {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+              {errors.phone && (
+                <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+              )}
             </div>
 
             {/* DOB */}
             <div>
-              <label className="block text-sm font-semibold mb-1">{t("dob")}</label>
+              <label className="block text-sm font-semibold mb-1">
+                {t("dob")}
+              </label>
               <input
                 type="date"
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
                 className="w-full border-2 border-blue-400 rounded-lg p-3 focus:outline-none focus:border-blue-600"
               />
-              {errors.dob && <p className="text-red-500 text-sm mt-1">{errors.dob}</p>}
+              {errors.dob && (
+                <p className="text-red-500 text-sm mt-1">{errors.dob}</p>
+              )}
             </div>
 
             {/* Gender */}
             <div>
-              <label className="block text-sm font-semibold mb-1">{t("gender")}</label>
+              <label className="block text-sm font-semibold mb-1">
+                {t("gender")}
+              </label>
               <select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
@@ -188,9 +221,14 @@ export default function ProfilePage() {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+                disabled={loading} // ✅ يمنع الضغط وقت اللودينج
+                className={`px-6 py-2 rounded-lg text-white transition ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
+                }`}
               >
-                {t("save")}
+                {loading ? "Uploading..." : t("save")}
               </button>
             </div>
           </form>
