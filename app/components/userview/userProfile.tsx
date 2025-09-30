@@ -4,67 +4,105 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 export default function ProfilePage() {
-  const t = useTranslations("userprofile"); // نجيب الترجمات الخاصة بالـ profile
+  const t = useTranslations("userprofile");
 
   const [phone, setPhone] = useState("");
-  const [dob, setDob] = useState("");
+  const [dob, setDob] = useState(""); // صيغة yyyy-MM-dd
   const [location, setLocation] = useState("");
   const [gender, setGender] = useState("");
   const [username, setUsername] = useState("User");
   const [profileImg, setProfileImg] = useState("");
 
+  const BASE_URL = "http://156.67.24.200:4000";
+
   useEffect(() => {
     const storedPhone = localStorage.getItem("phone");
     const storedDob = localStorage.getItem("dob");
-    const storedLocation = localStorage.getItem("addressLatLong"); 
+    const storedLocation = localStorage.getItem("addressLatLong");
     const storedGender = localStorage.getItem("gender");
     const storedUsername = localStorage.getItem("name");
-    const storedProfileImg = localStorage.getItem("image") || "/herosec.jpg";
+    const storedProfileImg = localStorage.getItem("image");
 
     if (storedPhone) setPhone(storedPhone);
-    if (storedDob) setDob(storedDob);
+
+    if (storedDob) {
+      const date = new Date(storedDob);
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      setDob(`${yyyy}-${mm}-${dd}`);
+    }
+
     if (storedGender) setGender(storedGender);
     if (storedUsername) setUsername(storedUsername);
-    if (storedProfileImg) setProfileImg(storedProfileImg);
+
+    if (storedProfileImg) {
+      setProfileImg(`/api/media?media=${storedProfileImg}`);
+    } else {
+      setProfileImg("/herosec.jpg");
+    }
 
     if (storedLocation && storedLocation !== "null") {
       setLocation(storedLocation);
     } else {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          async (pos) => {
-            const { latitude, longitude } = pos.coords;
-            try {
-              // تحويل الـ Lat/Lng إلى Address readable
-              const res = await fetch(
-                `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-              );
-              const data = await res.json();
-              const loc = data?.display_name || `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
-              setLocation(loc);
-              localStorage.setItem("addressLatLong", loc);
-            } catch {
-              setLocation(t("unableLocation"));
-            }
+          (pos) => {
+            const loc = `${pos.coords.latitude.toFixed(6)},${pos.coords.longitude.toFixed(6)}`;
+            setLocation(loc);
+            localStorage.setItem("addressLatLong", loc);
           },
-          () => setLocation(t("unableLocation"))
+          () => setLocation(t("unableLocation")),
+          { timeout: 5000 }
         );
       }
     }
   }, [t]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // حفظ البيانات في localStorage
     localStorage.setItem("phone", phone);
     localStorage.setItem("dob", dob);
     localStorage.setItem("gender", gender);
-    alert("Profile saved ✅");
+
+    try {
+      const response = await fetch(`/api/user/update-profile`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          name: username,
+          email: localStorage.getItem("email"),
+          image: localStorage.getItem("image"),
+          dob, // yyyy-MM-dd
+          gender,
+          phone,
+          addressLatLong: location,
+          facility: {},
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+
+      const result = await response.json();
+      console.log("✅ Profile updated:", result);
+      alert("Profile updated successfully 🎉");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Failed to update profile");
+    }
   };
 
   return (
     <section className="bg-gray-50 min-h-screen flex items-center justify-center p-8">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-8 flex flex-col md:flex-row gap-8 items-start">
-        {/* الكارت الأزرق */}
+        {/* كارت البروفايل */}
         <div className="bg-blue-600 text-white rounded-xl p-6 w-48 flex flex-col items-center">
           <div className="w-16 h-16 rounded-full border-2 border-white flex items-center justify-center mb-3 overflow-hidden bg-white">
             {profileImg ? (
