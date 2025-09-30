@@ -38,7 +38,9 @@ export default function HomePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Loading...</p>
+       <h1 className="text-4xl md:text-5xl font-extrabold text-blue-600 animate-bounce">
+          Skillvera
+        </h1>
       </div>
     );
   }
