@@ -11,21 +11,30 @@ export default function Topbar() {
     const email = localStorage.getItem("email");
     const avatar = localStorage.getItem("image");
 
+    // الصورة الافتراضية
+    let photoUrl = "/stadium.jpg";
+
+    if (avatar && avatar !== "null") {
+      // أي صورة نخليها تتحمل من API/media
+      photoUrl = `/api/media?media=${avatar}`;
+    }
+
     setUser({
       name: name || "Provider",
       email: email || "user@email.com",
-      photo: avatar || "/herosec.png",
+      photo: photoUrl,
     });
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between shadw rounded-xl p-4  gap-4 mt-10 sm:mt-0">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between shadw rounded-xl p-4 gap-4 mt-10 sm:mt-0">
       {/* User info */}
       <div className="flex items-center space-x-3">
         <img
           src={user?.photo}
           alt="User"
           className="w-10 h-10 rounded-full object-cover"
+          onError={(e) => (e.currentTarget.src = "/herosec.png")} // fallback لو حصل error
         />
         <div className="flex flex-col leading-tight">
           <span className="font-medium text-sm">{user?.email}</span>
