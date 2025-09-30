@@ -18,7 +18,7 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
 
     const handleStorage = () => {
       if (!localStorage.getItem("token")) {
-        router.replace("/");
+        router.replace("/userview/Home");
       }
     };
     window.addEventListener("storage", handleStorage);

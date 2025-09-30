@@ -11,7 +11,7 @@ export default function GuestPage({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("token");
 
     if (token) {
-      router.replace("/"); // أو "/dashboard" لو عندك صفحة داشبورد
+      router.replace("/userview/Home"); // أو "/dashboard" لو عندك صفحة داشبورد
     } else {
       setLoading(false); // مفيش لوجين → سيبه يدخل
     }

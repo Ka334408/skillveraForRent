@@ -336,7 +336,8 @@
     "genderOther": "آخر",
     "save": "ابدأ الآن",
     "fetchingLocation": "جاري جلب الموقع الحالي...",
-    "unableLocation": "تعذر الحصول على الموقع"
+    "unableLocation": "تعذر الحصول على الموقع",
+    "fullName":"الاسم الكامل"
   }
 
 
