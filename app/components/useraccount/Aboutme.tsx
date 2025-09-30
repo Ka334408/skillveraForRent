@@ -11,7 +11,20 @@ export default function ProfileCard() {
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const router=useRouter();
+  const router = useRouter();
+
+  // يجيب الصورة من الـ API/media
+  const fetchImageFromApi = async (path: string) => {
+    try {
+      const res = await fetch(`/api/media?media=${path}`);
+      if (!res.ok) throw new Error("Failed to fetch image");
+      const blob = await res.blob();
+      return URL.createObjectURL(blob);
+    } catch (err) {
+      console.error("Image fetch error:", err);
+      return null;
+    }
+  };
 
   // تحميل الاسم والصورة من localStorage
   useEffect(() => {
@@ -19,8 +32,17 @@ export default function ProfileCard() {
     const storedImage = localStorage.getItem("image");
 
     if (storedName) setName(storedName);
+
     if (storedImage && storedImage !== "null") {
-      setFilePreview(storedImage);
+      if (storedImage.startsWith("uploads/")) {
+        // لو المسار من السيرفر → جيبه من API
+        fetchImageFromApi(storedImage).then((url) => {
+          if (url) setFilePreview(url);
+        });
+      } else {
+        // لو blob أو base64
+        setFilePreview(storedImage);
+      }
     }
   }, []);
 
@@ -65,8 +87,8 @@ export default function ProfileCard() {
                   src={filePreview}
                   alt="avatar"
                   className="w-auto h-auto object-cover"
-                  width={100}
-                  height={100}
+                  width={192}
+                  height={192}
                 />
               </div>
             ) : (
@@ -144,7 +166,7 @@ export default function ProfileCard() {
               placeholder={t ? t("namePlaceholder") : "Your name"}
             />
             <button
-              onClick={()=>router.push("/userview/userProfile")}
+              onClick={() => router.push("/userview/userProfile")}
               className="bg-blue-600 text-white px-6 py-3 rounded-lg w-full sm:w-auto"
             >
               {t ? t("getStarted") : "getStarted"}
