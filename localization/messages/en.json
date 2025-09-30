@@ -334,7 +334,8 @@
     "genderOther": "Other",
     "save": "Get Started",
     "fetchingLocation": "Fetching current location...",
-    "unableLocation": "Unable to fetch location"
+    "unableLocation": "Unable to fetch location",
+    "fullName":"Full Name"
   }
 
 
