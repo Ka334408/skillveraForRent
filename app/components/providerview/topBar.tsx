@@ -3,38 +3,65 @@
 import { useState, useEffect } from "react";
 import { Bell, Search } from "lucide-react";
 
+interface User {
+  name: string;
+  email: string;
+  photo: string;
+}
+
 export default function Topbar() {
-  const [user, setUser] = useState<{ name: string; email: string; photo: string } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const name = localStorage.getItem("name");
-    const email = localStorage.getItem("email");
-    const avatar = localStorage.getItem("image");
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/authentication/current-user", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // لو محتاج الكوكيز
+        });
 
-    // الصورة الافتراضية
-    let photoUrl = "/stadium.jpg";
+        const result = await res.json();
+        if (result?.data) {
+          const { name, email, image } = result.data;
 
-    if (avatar && avatar !== "null") {
-      // أي صورة نخليها تتحمل من API/media
-      photoUrl = `/api/media?media=${avatar}`;
-    }
+          setUser({
+            name: name || "Provider",
+            email: email || "user@email.com",
+            photo: image
+              ?` /api/media?media=${image}`
+              : "/herosec.png", // fallback
+          });
+        }
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    setUser({
-      name: name || "Provider",
-      email: email || "user@email.com",
-      photo: photoUrl,
-    });
+    fetchUser();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="p-4">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between shadw rounded-xl p-4 gap-4 mt-10 sm:mt-0">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between shadow rounded-xl p-4 mb-5 gap-4 mt-10 sm:mt-0">
       {/* User info */}
       <div className="flex items-center space-x-3">
         <img
           src={user?.photo}
           alt="User"
           className="w-10 h-10 rounded-full object-cover"
-          onError={(e) => (e.currentTarget.src = "/herosec.png")} // fallback لو حصل error
+          onError={(e) => (e.currentTarget.src = "/herosec.png")}
         />
         <div className="flex flex-col leading-tight">
           <span className="font-medium text-sm">{user?.email}</span>

@@ -58,7 +58,7 @@ export default function HomePage() {
         <FAQSection />
         <FeaturesSection />
         <DownloadSection />
-        <Footer />
+      
       </div>
 
       {/* 🟢 أوفرلاي الرسالة */}
