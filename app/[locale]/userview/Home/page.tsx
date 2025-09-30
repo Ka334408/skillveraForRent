@@ -14,30 +14,34 @@ import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 
 export default function HomePage() {
-  const [email, setEmail] = useState<string | null>(null);
   const [needsProfile, setNeedsProfile] = useState(false);
+  const [loading, setLoading] = useState(true);
   const locale = useLocale();
   const router = useRouter();
 
   useEffect(() => {
-  const storedEmail = localStorage.getItem("email");
-  const storedDob = localStorage.getItem("dob");
-  const storedGender = localStorage.getItem("gender");
-  setEmail(storedEmail);
+    const token = localStorage.getItem("token");
 
-  // ✅ check if dob or gender missing OR empty
-  if (!storedDob || !storedGender || storedDob === "null" || storedGender === "null") {
-  setNeedsProfile(true);
-}
+    if (token) {
+      // ✅ لو عامل لوج ان شيك على الـ DOB & Gender
+      const dob = localStorage.getItem("dob");
+      const gender = localStorage.getItem("gender");
 
-  console.log("DOB:", storedDob, "Gender:", storedGender);
-}, []);
+      if (!dob || !gender || dob === "null" || gender === "null") {
+        setNeedsProfile(true);
+      }
+    }
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    router.push("/login");
-  };
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <main dir={locale === "ar" ? "rtl" : "ltr"} className="relative">
@@ -52,26 +56,26 @@ export default function HomePage() {
         <FAQSection />
         <FeaturesSection />
         <DownloadSection />
-        
+        <Footer />
       </div>
 
       {/* 🟢 أوفرلاي الرسالة */}
       {needsProfile && (
-  <div className="fixed top-20 right-4 z-50">
-    <div className="bg-white rounded-lg shadow-lg p-4 text-left max-w-xs border border-gray-200 mr-5">
-      <h2 className="text-lg font-semibold mb-2">Complete your profile</h2>
-      <p className="text-gray-600 mb-3 text-sm">
-        Please update your date of birth and gender to continue.
-      </p>
-      <button
-        onClick={() => router.push("/userview/useraccount")}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full"
-      >
-        Go to Profile
-      </button>
-    </div>
-  </div>
-)}
+        <div className="fixed top-20 right-4 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-4 text-left max-w-xs border border-gray-200 mr-5">
+            <h2 className="text-lg font-semibold mb-2">Complete your profile</h2>
+            <p className="text-gray-600 mb-3 text-sm">
+              Please update your date of birth and gender to continue.
+            </p>
+            <button
+              onClick={() => router.push("/userview/useraccount")}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full"
+            >
+              Go to Profile
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
