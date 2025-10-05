@@ -80,6 +80,8 @@ export default function ProfilePage() {
       formData.append("gender", gender);
       formData.append("phone", phone);
       formData.append("addressLatLong", location);
+      localStorage.setItem("gender",gender);
+      localStorage.setItem("dob",dob);
 
       if (profileImg) {
         if (!profileImg.startsWith("/api/media")) {
