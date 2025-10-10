@@ -1,37 +1,54 @@
-"use client"
-import { useLocale } from "next-intl";
+"use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 
 export default function HeroSection() {
-const router =useRouter();
-const locale =useLocale();
-
   return (
-    <section className="bg-blue-600 text-white py-16 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between rounded-tr-[70px] gap-8">
-      {/* النص */}
-      <div className="max-w-xl text-center md:text-left">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-          List <br />
-          <span className="text-blue-200">Your Facility</span>
-          <br /> with skava now
-        </h1>
-        <button className="mt-8 px-8 py-3 text-lg border rounded-full hover:bg-white hover:text-blue-600 transition"
-        onClick={()=>router.push(`/providerview/providerRegisteration`)}>
-          Register Now
-        </button>
-      </div>
+    <section className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden rounded-br-[200px]">
+      {/* 🖼 الخلفية */}
+      <Image
+        src="/Home.png" // غيّر المسار حسب صورتك
+        alt="Modern home in the countryside"
+        fill
+        className="object-cover"
+        priority
+      />
 
-      {/* الصورة */}
-      <div className="flex-shrink-0">
-        <Image
-          src="/herosec.png"
-          alt="hero"
-          width={500}
-          height={350}
-          className="rounded-xl border-2 border-transparent hover:border-blue-500 hover:scale-105 transition"
-        />
+      
+
+      {/* 💬 المحتوى */}
+      <div
+        className="
+          relative z-10 flex w-full px-6 md:px-24 
+          flex-col md:flex-row items-center md:items-start 
+          justify-between text-center md:text-left
+          gap-10 md:gap-0
+        "
+      >
+        {/* النص الشمال */}
+        <div className="text-black md:mt-16">
+          <h2 className="text-3xl md:text-5xl font-semibold leading-snug">
+            Small living, <br className="hidden md:block" /> supersized.
+          </h2>
+        </div>
+
+        {/* النص اليمين */}
+        <div className="flex flex-col items-center md:items-end space-y-4">
+          <h2 className="text-2xl md:text-5xl font-semibold">
+            List Your Facility <br className="hidden md:block" /> with skava now.
+          </h2>
+          <button
+            className="
+              inline-flex items-center gap-2 
+              bg-white border border-gray-300 rounded-full 
+              px-5 py-2 font-medium 
+              hover:bg-gray-100 transition
+            "
+          >
+            Learn more <ArrowRight size={18} />
+          </button>
+        </div>
       </div>
     </section>
   );

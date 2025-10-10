@@ -75,7 +75,7 @@ export default function Navbar({
     if (!isLoggedIn) {
       setShowLoginModal(true); 
     } else {
-      window.location.href = href; 
+      router.push( href); 
     }
   };
 
