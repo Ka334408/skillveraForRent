@@ -1,7 +1,8 @@
 import Header from '@/app/components/header'
-import CardsSection from '@/app/components/providerview/home/cardsSec'
+import SkavaIntro from '@/app/components/providerview/home/cardsSec'
 import HeroSection from '@/app/components/providerview/home/herosection'
 import HowItWorks from '@/app/components/providerview/home/HowitWork'
+import EasyAsWaterSection from '@/app/components/providerview/home/timeline'
 import ToolsSection from '@/app/components/providerview/home/toolsSec'
 import WhyChooseUs from '@/app/components/providerview/home/whyChooseUs'
 import FAQSection from '@/app/components/userview/FAQSec'
@@ -22,9 +23,10 @@ export default function page() {
                             isrounded="rounded-full"
                           />
       <HeroSection/>
-      <CardsSection/>
+      <SkavaIntro/>
       <ToolsSection/>
       <HowItWorks/>
+      <EasyAsWaterSection/>
       <WhyChooseUs/>
       <FAQSection/>
     </div>

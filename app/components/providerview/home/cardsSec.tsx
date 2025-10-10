@@ -1,75 +1,56 @@
 import Image from "next/image";
 
-export default function CardsSection() {
+export default function SkavaOverview() {
   return (
-    <section className="py-16 px-8">
-      {/* Title + button */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold">Title</h2>
-        <button className="text-sm px-4 py-1 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">
-          See all
-        </button>
-      </div>
-
-      {/* Grid */}
-      <div
-        className="
-          grid gap-4
-          grid-cols-2 md:grid-cols-3
-          auto-rows-[150px] md:auto-rows-[200px]
-        "
-      >
-        {/* العمود الأول */}
-        <div className="col-span-1 row-span-1">
+    <section className="px-6 md:px-16 py-20 bg-white">
+      <div className="max-w-5xl mx-auto text-left">
+        {/* السطر الأول مع الصورة السودة */}
+        <div className="flex items-center gap-3">
+          <h2 className="text-3xl md:text-5xl font-semibold text-gray-900">
+            Skava Is A
+          </h2>
           <Image
-            src="/herosec.png"
-            alt="image"
-            width={400}
-            height={200}
-            className="w-full h-full object-cover rounded-xl border-2 border-transparent hover:border-blue-500 hover:scale-105 transition"
-          />
-        </div>
-        <div className="col-span-1 row-span-1">
-          <Image
-            src="/herosec.jpg"
-            alt="image"
-            width={400}
-            height={200}
-            className="w-full h-full object-cover rounded-xl border-2 border-transparent hover:border-blue-500 hover:scale-105 transition"
-          />
-        </div>
- <div className="col-span-2 md:col-span-1 md:row-span-2">
-          <Image
-            src="/stadium.jpg"
-            alt="image"
-            width={400}
-            height={400}
-            className="w-full h-full object-cover rounded-xl border-2 border-transparent hover:border-blue-500 hover:scale-105 transition"
-          />
-        </div>
-        {/* العمود الثاني */}
-        <div className="col-span-1 row-span-1">
-          <Image
-            src="/hotal.jpg"
-            alt="image"
-            width={400}
-            height={200}
-            className="w-full h-full object-cover rounded-xl border-2 border-transparent hover:border-blue-500 hover:scale-105 transition"
-          />
-        </div>
-        
-        <div className="col-span-1 row-span-1">
-          <Image
-            src="/school.jpg"
-            alt="image"
-            width={400}
-            height={200}
-            className="w-full h-full object-cover rounded-xl border-2 border-transparent hover:border-blue-500 hover:scale-105 transition"
+            src="/blackHouse.png" // غيّر حسب الصورة عندك
+            alt="Black House"
+            width={150}
+            height={150}
+            className="object-contain"
           />
         </div>
 
-        {/* العمود الثالث (يمتد صفين) */}
-       
+        {/* باقي العنوان */}
+        <h2 className="text-3xl md:text-5xl font-semibold text-gray-900 leading-tight mt-2">
+          Super Simple, Smartly <br />
+          Customizable, All-Type Of <br />
+          Facilities Listing From Skillvera.
+        </h2>
+
+        {/* السطرين اللي في الآخر */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-8">
+          <div>
+            <p className="text-lg text-gray-800 font-medium">
+              We Handle Everything, From Listing To Financing.
+            </p>
+
+            <p className="mt-2 text-gray-500 text-sm">
+              Available Now In Riyadh. Not In Riyadh?{" "}
+              <a href="#" className="text-gray-800 underline font-medium">
+                Tell Us Where To Be Next
+              </a>
+            </p>
+          </div>
+
+          {/* الصورة البيضا */}
+          <div className="mt-6 md:mt-0">
+            <Image
+              src="/blackHouse.png" // غيّر حسب الصورة عندك
+              alt="White House"
+              width={180}
+              height={100}
+              className="object-contain"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
