@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
+  const router= useRouter();
   return (
     <section className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden rounded-br-[200px]">
       {/* 🖼 الخلفية */}
@@ -39,6 +41,7 @@ export default function HeroSection() {
             List Your Facility <br className="hidden md:block" /> with skava now.
           </h2>
           <button
+          onClick={()=>router.push("/providerview/providerRegisteration")}
             className="
               inline-flex items-center gap-2 
               bg-white border border-gray-300 rounded-full 
@@ -46,7 +49,7 @@ export default function HeroSection() {
               hover:bg-gray-100 transition
             "
           >
-            Learn more <ArrowRight size={18} />
+            Register Now <ArrowRight size={18} />
           </button>
         </div>
       </div>
