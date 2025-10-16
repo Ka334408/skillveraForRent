@@ -12,16 +12,16 @@ export default function EasyAsWaterTop() {
       </h2>
 
       {/*-------------------- Section 1 */}
-      <div className="relative max-w-5xl mx-auto flex justify-center mb-10">
-        {/* الخط والنقط */}
+      <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
+        {/* الخط */}
         <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
-          <div className="w-[4px] h-28 bg-blue-600 my-1 rounded-full"></div>
-          <div className="w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full"></div>
+          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 my-1 rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
         </div>
 
         {/* النص والصورة */}
-        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 md:ml-[55%] text-center md:text-left">
+        <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left md:pl-[52%]">
           <div>
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
               Create Your <br /> Host Account
@@ -31,25 +31,22 @@ export default function EasyAsWaterTop() {
             </p>
           </div>
 
-          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md mx-auto md:mx-0">
-            <Image
-              src={step1}
-              alt="Create Host Account"
-              fill
-              className="object-cover"
-            />
+          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
+            <Image src={step1} alt="Create Host Account" fill className="object-cover" />
           </div>
         </div>
       </div>
 
       {/*-------------------- Section 2 */}
-      <div className="relative max-w-5xl mx-auto flex justify-center mb-3">
-        <div className="absolute left-1/2 -top-3 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="w-[4px] h-28 bg-blue-600 rounded-full"></div>
-          <div className="w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+      <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
+        {/* الخط */}
+        <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
+          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
         </div>
 
-        <div className="flex flex-col  items-center gap-6 md:gap-8 md:mr-[55%] md:flex-row-reverse text-center md:text-left">
+        {/* النص والصورة */}
+        <div className="flex flex-col md:flex-row-reverse items-center gap-6 text-center md:text-left md:pr-[52%]">
           <div>
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
               Add Your <br /> Property Details
@@ -59,25 +56,20 @@ export default function EasyAsWaterTop() {
             </p>
           </div>
 
-          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md mx-auto md:mx-0">
-            <Image
-              src={step1}
-              alt="Add Property Details"
-              fill
-              className="object-cover"
-            />
+          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
+            <Image src={step1} alt="Add Property Details" fill className="object-cover" />
           </div>
         </div>
       </div>
 
       {/*-------------------- Section 3 */}
-      <div className="relative max-w-5xl mx-auto flex justify-center mb-10">
-        <div className="absolute left-1/2 -top-3 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="w-[4px] h-28 bg-blue-600 rounded-full"></div>
-          <div className="w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+      <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
+        <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
+          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center text-center md:text-left md:ml-[55%]">
+        <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left md:pl-[52%]">
           <div>
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
               Complete Your <br /> Profile Setup
@@ -86,18 +78,22 @@ export default function EasyAsWaterTop() {
               Add all your personal and contact information
             </p>
           </div>
+
+          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
+            <Image src={step1} alt="Profile Setup" fill className="object-cover" />
+          </div>
         </div>
       </div>
 
       {/*-------------------- Section 4 */}
-      <div className="relative max-w-5xl mx-auto flex justify-center mb-3">
-        <div className="absolute left-1/2 -top-3 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="w-[4px] h-28 bg-blue-600 rounded-full"></div>
-          <div className="w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+      <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
+        <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
+          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between w-full text-center md:text-left">
-          <div className="md:w-1/2 md:pr-12 order-2 md:order-1">
+        <div className="flex flex-col md:flex-row-reverse items-center gap-6 text-center md:text-left md:pr-[52%]">
+          <div>
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
               Manage Your <br /> Listings Easily
             </h3>
@@ -106,27 +102,20 @@ export default function EasyAsWaterTop() {
             </p>
           </div>
 
-          <div className="md:w-1/2 flex justify-center md:justify-start md:pl-12 ml-20 order-1 md:order-2 mb-4 md:mb-0">
-            <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md ">
-              <Image
-                src={step1}
-                alt="Manage Listings"
-                fill
-                className="object-cover"
-              />
-            </div>
+          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
+            <Image src={step1} alt="Manage Listings" fill className="object-cover" />
           </div>
         </div>
       </div>
 
       {/*-------------------- Section 5 */}
       <div className="relative max-w-5xl mx-auto flex justify-center">
-        <div className="absolute left-1/2 -top-3 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="w-[4px] h-28 bg-blue-600 rounded-full"></div>
-          <div className="w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+        <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
+          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center text-center md:text-left md:ml-[55%]">
+        <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left md:pl-[52%]">
           <div>
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
               Start Hosting <br /> and Earn Today
@@ -134,6 +123,10 @@ export default function EasyAsWaterTop() {
             <p className="text-gray-600 dark:text-gray-400 text-base mt-2">
               Begin accepting guests and grow your income fast
             </p>
+          </div>
+
+          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
+            <Image src={step1} alt="Start Hosting" fill className="object-cover" />
           </div>
         </div>
       </div>
