@@ -41,10 +41,10 @@ export default function FacilityCard({
 
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center text-sm text-gray-600">
-            <MapPin size={16} className="mr-1 text-blue-600" />
+            <MapPin size={16} className="mr-1 text-[#0E766E]" />
             {location}
           </div>
-          <span className="sm:font-semibold bg-blue-600 text-white px-3 py-1 rounded-lg text-sm">
+          <span className="sm:font-semibold bg-[#0E766E] text-white px-3 py-1 rounded-lg text-sm">
             {price} R
           </span>
         </div>

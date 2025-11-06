@@ -17,12 +17,12 @@ export default function RatingCard() {
 
 
   return (
-    <div className="my-10 rounded-md p-6 text-center shadow-sm bg-white">
-        <p className="border-t-2 border-t-blue-700 mb-10"/>
+    <div className="my-10 rounded-md p-6 text-center shadow-lg shadow-slate-400 bg-white">
+        <p className=" mb-10"/>
       <p className="text-4xl font-bold text-gray-800">{rating}</p>
-      <p className="text-blue-600 font-semibold mt-2">{t("title")}</p>
+      <p className="text-[#0E766E] font-semibold mt-2">{t("title")}</p>
       <p className="text-gray-600 text-lg mt-1">{t("description")}</p>
-      <p className="border-b-2 border-b-blue-700 mt-10"/>
+      <p className=" mt-10"/>
     </div>
   );
 }

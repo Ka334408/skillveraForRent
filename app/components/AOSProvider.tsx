@@ -7,8 +7,8 @@ import "aos/dist/aos.css";
 export default function AOSProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         AOS.init({
-            duration: 3000,
-            once: false,
+            duration: 2000,
+            once: true,
         });
     }, []);
 

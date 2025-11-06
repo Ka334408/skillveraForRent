@@ -92,7 +92,7 @@ export default function ProfileCard() {
                 />
               </div>
             ) : (
-              <div className="w-48 h-48 flex items-center justify-center rounded-lg bg-blue-500 mx-auto">
+              <div className="w-48 h-48 flex items-center justify-center rounded-lg bg-[#0E766E] mx-auto">
                 <svg
                   width="72"
                   height="72"
@@ -127,7 +127,7 @@ export default function ProfileCard() {
 
               <button
                 onClick={handleSave}
-                className="bg-blue-800 text-white px-5 py-2 rounded-full font-medium"
+                className="bg-[#0E766E] text-white px-5 py-2 rounded-full font-medium"
               >
                 {t ? t("save") : "Save"}
               </button>
@@ -167,7 +167,7 @@ export default function ProfileCard() {
             />
             <button
               onClick={() => router.push("/userview/userProfile")}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg w-full sm:w-auto"
+              className="bg-[#0E766E] text-white px-6 py-3 rounded-lg w-full sm:w-auto"
             >
               {t ? t("getStarted") : "getStarted"}
             </button>

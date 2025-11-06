@@ -40,7 +40,7 @@ export default function SearchSection() {
 
   return (
     <section className="w-[90%] md:w-[75%] mx-auto mt-8 mb-16 overflow-hidden">
-      <div className="flex flex-col md:flex-row items-center dark:bg-black bg-white border-2 border-blue-500 rounded-[50px] sm:rounded-full shadow-md overflow-hidden" data-aos="fade-up">
+      <div className="flex flex-col md:flex-row items-center dark:bg-black bg-white border-2 border-[#0E766E] rounded-[50px] sm:rounded-full shadow-md overflow-hidden" data-aos="fade-up">
         {/* Place */}
         <div className="flex-1 py-3 flex flex-col items-center justify-center relative">
           <p className="text-sm font-semibold text-gray-700">{t("place")}</p>
@@ -52,8 +52,8 @@ export default function SearchSection() {
             className="w-full bg-transparent text-gray-500 placeholder-gray-400 focus:outline-none text-sm text-center"
           />
           {/* Divider */}
-          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-[2px] bg-blue-500"></span>
-          <span className="sm:hidden mt-2 w-2/3 h-[2px] bg-blue-500"></span>
+          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-[2px] bg-[#0E766E]"></span>
+          <span className="sm:hidden mt-2 w-2/3 h-[2px] bg-[#0E766E]"></span>
         </div>
 
         {/* Category */}
@@ -71,10 +71,10 @@ export default function SearchSection() {
           </select>
           {/* Divider */}
           {/* Divider (Desktop) */}
-          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-px bg-blue-500"></span>
+          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-px bg-[#0E766E]"></span>
 
           {/* Divider (Mobile) */}
-          <span className="sm:hidden mt-2 w-full h-px bg-blue-500"></span>
+          <span className="sm:hidden mt-2 w-full h-px bg-[#0E766E]"></span>
         </div>
 
         {/* From */}
@@ -90,8 +90,8 @@ export default function SearchSection() {
             className="w-full bg-transparent text-gray-500 placeholder-gray-400 focus:outline-none text-sm text-center"
           />
           {/* Divider */}
-          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-[2px] bg-blue-500"></span>
-          <span className="sm:hidden mt-2 w-2/3 h-[2px] bg-blue-500"></span>
+          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-[2px] bg-[#0E766E]"></span>
+          <span className="sm:hidden mt-2 w-2/3 h-[2px] bg-[#0E766E]"></span>
         </div>
 
         {/* To */}
@@ -107,14 +107,14 @@ export default function SearchSection() {
             className="w-full bg-transparent text-gray-500 placeholder-gray-400 focus:outline-none text-sm text-center"
           />
           {/* Divider */}
-          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-[2px] bg-blue-500"></span>
-          <span className="sm:hidden mt-2 w-2/3 h-[2px] bg-blue-500"></span>
+          <span className="hidden sm:block absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 h-8 w-[2px] bg-[#0E766E]"></span>
+          <span className="sm:hidden mt-2 w-2/3 h-[2px] bg-[#0E766E]"></span>
         </div>
 
         {/* Search button */}
         <button
           type="button"
-          className="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-full m-2 flex items-center justify-center transition"
+          className="bg-[#0E766E] hover:bg-blue-600 text-white p-4 rounded-full m-2 flex items-center justify-center transition"
         >
           <Search className="w-5 h-5" />
         </button>

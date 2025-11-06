@@ -20,7 +20,7 @@ export default function GuestPage({ children }: { children: React.ReactNode }) {
   if (loading) {
     return (
       <div className="w-full h-screen flex items-center justify-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-blue-600 animate-bounce">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#0E766E] animate-bounce">
           Skillvera
         </h1>
       </div>

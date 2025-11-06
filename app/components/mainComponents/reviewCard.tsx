@@ -51,7 +51,7 @@ export default function ReviewCard({
           <Star
             key={i}
             size={18}
-            className={i < rating ? "fill-blue-500 text-blue-500" : "text-gray-300"}
+            className={i < rating ? "fill-[#0E766E] text-[#0E766E]" : "text-gray-300"}
           />
         ))}
       </div>

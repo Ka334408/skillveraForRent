@@ -7,11 +7,11 @@ export default function HeroSection() {
   const t = useTranslations("contact");
 
   return (
-    <section className="bg-blue-600 text-white py-16 px-6 rounded-b-3xl">
+    <section className="bg-[#0E766E] text-white py-16 px-6 rounded-b-3xl">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         {/* النص */}
         <div className="md:w-1/2">
-          <h1 className="text-3xl md:text-4xl font-bold">{t("title")}</h1>
+          <h1 className="text-3xl md:text-6xl font-bold">{t("title")}</h1>
           <p className="mt-2 text-lg opacity-90">{t("subtitle")}</p>
         </div>
 
