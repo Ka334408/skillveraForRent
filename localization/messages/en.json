@@ -181,16 +181,17 @@
   },
 
   
-  "Footer": {
-    "email": "hello.skillvera@example.com",
-    "home": "Home",
-    "facilities": "All facilities",
-    "about": "About us",
-    "categories": "Categories",
+ 
+  "footer": {
+    "main": "Main Page",
+    "mainLinks": ["All Products", "About Skillvera Rent", "Products Map", "I'm an Owner!"],
+    "about": "About Skillvera Rent",
+    "aboutLinks": ["About Skillvera Rent", "Team", "Careers", "Blog"],
     "support": "Support",
-    "faq": "FAQ",
-    "contact": "Contact Us",
-    "taxNumber": "Tax number"
+    "supportLinks": ["Contact Us", "FAQ", "Terms & Conditions", "Help & Support"],
+    "apps": "Our Apps",
+    "appsLinks": ["App Store", "Google Play"],
+    "brand": "Skillvera Rent"
   },
   
   "filters": {
