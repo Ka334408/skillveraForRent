@@ -18,7 +18,7 @@ const ThemeSwitcher = React.forwardRef<HTMLDivElement, React.ComponentPropsWitho
       <DropdownMenuItem
         
         onClick={toggleTheme}
-        className="flex items-center gap-3 px-3 py-3 rounded-xl bg-[#85ADEF] hover:bg-blue-500 cursor-pointer text-black"
+        className="flex items-center gap-3 px-3 py-3 rounded-xl bg-[#0E766E] hover:bg-white cursor-pointer text-black"
       >
         {theme === "dark" ? (
           <Sun className="w-5 h-5" />

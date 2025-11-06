@@ -38,7 +38,7 @@ export default function HomePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-       <h1 className="text-4xl md:text-5xl font-extrabold text-blue-600 animate-bounce">
+       <h1 className="text-4xl md:text-5xl font-extrabold text-[#0E766E] animate-bounce">
           Skillvera
         </h1>
       </div>
@@ -49,7 +49,8 @@ export default function HomePage() {
     <main dir={locale === "ar" ? "rtl" : "ltr"} className="relative">
       {/* 🟢 محتوى الهوم */}
       <div className={needsProfile ? "blur-sm pointer-events-none select-none" : ""}>
-        <Header />
+        <Header bgColor="bg-[#0E766E]" accounticonColor="bg-[#0E766E]"  hoverColor="hover:bg-[#63bdb6]" menuiconColor="bg-[#0E766E]"
+        activeColor="text-[#0E766E] bg-white" />
         <HeroSection />
         <SearchSection />
         <CategoriesSection />
@@ -70,7 +71,7 @@ export default function HomePage() {
             </p>
             <button
               onClick={() => router.push("/userview/useraccount")}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-[#0E766E] transition w-full"
             >
               Go to Profile
             </button>

@@ -10,7 +10,7 @@ export default function FeaturesSection() {
 
   return (
     <section
-      className="relative bg-blue-600 text-white py-14 lg:py-20 rounded-tr-[100px] lg:rounded-tr-[150px] rounded-bl-[100px] lg:rounded-bl-[150px] overflow-hidden"
+      className="relative bg-[#0E766E] text-white py-14 lg:py-20 rounded-tr-[100px] lg:rounded-tr-[150px] rounded-bl-[100px] lg:rounded-bl-[150px] overflow-hidden"
       data-aos="fade-up"
       data-aos-duration="3000"
     >

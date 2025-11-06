@@ -77,10 +77,10 @@ export default function CategoriesSection() {
     <section className="px-6 py-10 relative bg-gray-100 dark:bg-[#0a0a0a] dark:text-white mt-15 overflow-hidden">
       {/* Title + See All */}
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-blue-600">{t("title")}</h2>
+        <h2 className="text-2xl font-bold text-[#0E766E]">{t("title")}</h2>
         <button
           onClick={() => router.push("/userview/allFacilities")}
-          className="text-blue-600 font-semibold hover:text-white border-[#2C70E2] px-4 py-2 rounded-full border transition hover:bg-[#2C70E2]"
+          className="text-[#0E766E] font-semibold hover:text-white border-[#2C70E2] px-4 py-2 rounded-full border transition hover:bg-[#2C70E2]"
         >
           {t("see_all")}
         </button>
@@ -102,8 +102,8 @@ export default function CategoriesSection() {
             }}
             className={`px-4 py-2 rounded-full border transition ${
               activeCategory === cat.key
-                ? "bg-blue-600 text-white border-blue-600 dark:bg-white dark:text-blue-600"
-                : "bg-white text-blue-600 border-blue-400 hover:bg-blue-100 dark:bg-[#0a0a0a]"
+                ? "bg-[#0E766E] text-white border-[#0E766E] dark:bg-white dark:text-[#0E766E]"
+                : "bg-white text-[#0E766E] border-blue-400 hover:bg-blue-100 dark:bg-[#0a0a0a]"
             }`}
           >
             {cat.label}

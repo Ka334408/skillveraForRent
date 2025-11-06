@@ -121,7 +121,7 @@ export default function LiveMap() {
                                     <p className="font-semibold">{p.name}</p>
                                     <Link
                                         href={"/card/${p.id}"}
-                                        className="text-blue-600 underline text-sm"
+                                        className="text-[#0E766E] underline text-sm"
                                     >
                                         More details
                                     </Link>

@@ -66,7 +66,7 @@ export default function FacilityHeader({
             </span>
           </div>
 
-          <p className="mt-2 text-blue-600 font-semibold">
+          <p className="mt-2 text-[#0E766E] font-semibold">
             {t("priceUnit", { price: facility.price })}
           </p>
 

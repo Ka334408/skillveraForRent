@@ -36,12 +36,12 @@ export default function Card({
            width={100}
           height={100}
         />
-        <span className="absolute top-3 left-3 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold ">
+        <span className="absolute top-3 left-3 bg-[#0E766E] text-white px-4 py-1 rounded-full text-sm font-bold ">
           {title}
         </span>
         <button
           onClick={() => onFavorite && onFavorite(id)}
-          className={`absolute top-3 right-3 p-2 rounded-full transition  ${isFavorite ? "bg-red-500" : "bg-blue-600"
+          className={`absolute top-3 right-3 p-2 rounded-full transition  ${isFavorite ? "bg-red-500" : "bg-[#0E766E]"
             }`}
         >
           <Heart
@@ -51,18 +51,18 @@ export default function Card({
       </div>
 
       {/* Details */}
-      <div className="p-4">
-        <div className="flex items-center justify-between bg-blue-100 rounded-xl px-3 py-2 mb-3  dark:bg-[#2C70E2]">
-          <span className="font-bold text-blue-600 dark:text-white">
+      <div className="p-4 ">
+        <div className="flex items-center justify-between bg-[#94ccc7] rounded-xl px-3 py-2 mb-3  dark:bg-[#0E766E]">
+          <span className="font-bold text-[#0E766E] dark:text-white">
             ${price} / Day
           </span>
-          <span className="flex items-center gap-1 text-blue-600 font-semibold dark:text-white">
-            <Star className="w-4 h-4 fill-blue-600" />
+          <span className="flex items-center gap-1 text-[#0E766E] font-semibold dark:text-white">
+            <Star className="w-4 h-4 fill-[#0E766E]" />
             {rating} ({reviewsCount})
           </span>
         </div>
         <Link href={`/userview/allFacilities/${id}`}>
-          <button className="bg-white text-black border-2 border-[#2C70E2] px-4 py-2 rounded-2xl w-full hover:bg-blue-700 dark:bg-[#0a0a0a] dark:text-[#2C70E2] dark:hover:bg-white dark:hover:text-black">
+          <button className="bg-white text-black border-2 border-[##0E766E] px-4 py-2 rounded-2xl w-full hover:bg-[#0E766E] dark:bg-[#0a0a0a] dark:text-[#2C70E2] dark:hover:bg-white dark:hover:text-black">
             {t("more")}
           </button>
         </Link>

@@ -21,7 +21,7 @@ export default function FAQSection() {
       {/* Title */}
       <div className="text-center mb-8">
         <p
-          className="text-blue-600 font-medium uppercase tracking-wide"
+          className="text-[#0E766E] font-medium uppercase tracking-wide"
           data-aos="fade-up"
           data-aos-duration="3000"
         >
@@ -64,16 +64,16 @@ export default function FAQSection() {
             >
               {faq.question}
               {openIndex === index ? (
-                <Minus className="w-5 h-5 text-blue-600" />
+                <Minus className="w-5 h-5 text-[#0E766E]" />
               ) : (
-                <Plus className="w-5 h-5 text-blue-600" />
+                <Plus className="w-5 h-5 text-[#0E766E]" />
               )}
             </button>
 
             {openIndex === index && (
               <div className="mt-3 text-gray-600 text-sm dark:text-slate-400">
                 {faq.answer}
-                <p className="text-blue-600 font-medium mt-2 cursor-pointer">
+                <p className="text-[#0E766E] font-medium mt-2 cursor-pointer">
                   {t("readMore")}
                 </p>
               </div>
@@ -85,7 +85,7 @@ export default function FAQSection() {
       {/* CTA Button */}
       <div className="text-center mt-8">
         <button
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+          className="px-6 py-2 bg-[#0E766E] text-white rounded-lg shadow hover:bg-[#0E766E] transition"
           data-aos="fade-up"
           data-aos-duration="3000"
         >

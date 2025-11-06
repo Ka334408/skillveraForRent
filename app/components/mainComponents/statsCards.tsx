@@ -23,7 +23,7 @@ const fakeData = [
     id: 2,
     title: "Revenue",
     value: "$350.40",
-    icon: <BarChart3 className="text-blue-600 w-5 h-5" />,
+    icon: <BarChart3 className="text-[#0E766E] w-5 h-5" />,
     bgColor: "bg-blue-100",
     chartData: [
       { value: 10 },

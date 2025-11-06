@@ -135,7 +135,7 @@ export default function ProfilePage() {
     <section className="bg-gray-50 min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-md p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8">
         {/* الكارت الأزرق */}
-        <div className="bg-blue-600 text-white rounded-xl p-4 w-full md:w-48 flex flex-col items-center justify-center gap-2 self-start">
+        <div className="bg-[#0E766E] text-white rounded-xl p-4 w-full md:w-48 flex flex-col items-center justify-center gap-2 self-start">
           <div className="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center overflow-hidden bg-white">
             {profileImg ? (
               <img
@@ -165,7 +165,7 @@ export default function ProfilePage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full border-2 border-blue-400 rounded-lg p-3 focus:outline-none focus:border-blue-600"
+                className="w-full border-2 border-blue-400 rounded-lg p-3 focus:outline-none focus:border-[#0E766E]"
               />
             </div>
 
@@ -180,7 +180,7 @@ export default function ProfilePage() {
                 onChange={(value) => setPhone("+" + value)}
                 inputProps={{ name: "phone", required: true }}
                 containerClass="w-full"
-                inputClass="!w-full !rounded-lg !p-3 !pl-12 !border-2 !border-blue-400 !focus:outline-none !focus:border-blue-600"
+                inputClass="!w-full !rounded-lg !p-3 !pl-12 !border-2 !border-blue-400 !focus:outline-none !focus:border-[#0E766E]"
               />
               {errors.phone && (
                 <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
@@ -196,7 +196,7 @@ export default function ProfilePage() {
                 type="date"
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
-                className="w-full border-2 border-blue-400 rounded-lg p-3 focus:outline-none focus:border-blue-600"
+                className="w-full border-2 border-blue-400 rounded-lg p-3 focus:outline-none focus:border-[#0E766E]"
               />
               {errors.dob && (
                 <p className="text-red-500 text-sm mt-1">{errors.dob}</p>
@@ -211,7 +211,7 @@ export default function ProfilePage() {
               <select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
-                className="w-full border-2 border-blue-400 rounded-lg p-3 focus:outline-none focus:border-blue-600"
+                className="w-full border-2 border-blue-400 rounded-lg p-3 focus:outline-none focus:border-[#0E766E]"
               >
                 <option value="">Select gender</option>
                 <option value="male">{t("genderMale")}</option>
@@ -227,7 +227,7 @@ export default function ProfilePage() {
                 className={`px-6 py-2 rounded-lg text-white transition ${
                   loading
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-600 hover:bg-blue-700"
+                    : "bg-[#0E766E] hover:bg-[#054944]"
                 }`}
               >
                 {loading ? "Uploading..." : t("save")}

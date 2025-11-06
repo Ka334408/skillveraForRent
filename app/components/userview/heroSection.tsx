@@ -1,54 +1,50 @@
 "use client";
 
 import Image from "next/image";
-import heroImage from "../../../public/herosec.png";
-import { useTranslations } from "next-intl";
+import { Users, RefreshCw, CreditCard } from "lucide-react";
 
 export default function HeroSection() {
-  const t = useTranslations("Hero");
-
   return (
-    <section
-      className="bg-[#2C70E2] rounded-bl-[60px] md:rounded-bl-[100px] text-white 
-                 py-10 sm:py-14 md:py-20 px-4 sm:px-8 md:px-16 
-                 flex flex-col md:flex-row items-center justify-between gap-10 overflow-x-hidden"
-    >
-      {/* Left side slogan */}
-      <div className="flex-1 text-center md:text-start">
-        <h1
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 
-                     font-bold mb-4 leading-snug dark:text-[#0a0a0a]"
-          data-aos="fade-right"
-          data-aos-duration="3000"
-        >
-          {t("slogan")}
+    <section className="relative bg-[#f3f4f4] py-20 overflow-hidden rounder-bl-[100px]">
+      <div className="max-w-7xl mx-auto px-6 text-center">
+        {/* العنوان الرئيسي */}
+        <h1 className="mx-auto max-w-3xl md:max-w-4xl text-3xl md:text-5xl font-bold text-[#0E766E] mb-12 leading-snug md:leading-tight" data-aos="slide-left">
+          Slogan should be here with <br /> one or two good sentence
         </h1>
 
-        <div className="flex justify-center md:justify-start">
-          <button
-            className="mt-4 px-5 sm:px-6 py-2.5 sm:py-3 
-                       border-2 border-white rounded-full font-medium
-                       hover:bg-white hover:text-blue-600 transition
-                       dark:text-[#0a0a0a] dark:border-black dark:hover:bg-blue-600"
-            data-aos="fade-right"
-            data-aos-duration="3000"
-          >
-            {t("explore")}
-          </button>
-        </div>
-      </div>
+        {/* الصورة مع التأثير */}
+        <div className="relative inline-block group transition-all duration-300 " data-aos="slide-right">
+          <Image
+            src="/herosec.png"
+            alt="Modern Building"
+            width={900}
+            height={600}
+            className="rounded-2xl shadow-lg transition-transform duration-500 group-hover:scale-[1.02]"
+          />
 
-      {/* Right side image */}
-      <div className="flex-1 flex justify-center md:justify-end">
-        <Image
-          src={heroImage}
-          alt="Hero image"
-          priority
-          className="w-[250px] sm:w-[350px] md:w-[450px] lg:w-[500px] h-auto 
-                     rounded-2xl shadow-lg"
-          data-aos="fade-left"
-          data-aos-duration="3000"
-        />
+          {/* الكروت الصغيرة تظهر عند Hover */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            {/* كارت Easy process */}
+            <div className="absolute top-1/3 left-[-50px] bg-white rounded-xl shadow-md px-4 py-2 flex items-center gap-2">
+              <RefreshCw size={18} className="text-[#0E766E]" />
+              <span className="text-sm font-medium text-gray-700">Easy process</span>
+            </div>
+
+            {/* كارت Pay Easley */}
+            <div className="absolute bottom-[-30px] left-[60px] bg-white rounded-xl shadow-md px-4 py-2 flex items-center gap-2">
+              <CreditCard size={18} className="text-[#0E766E]" />
+              <span className="text-sm font-medium text-gray-700">Pay Easley</span>
+            </div>
+
+            {/* كارت Provider */}
+            <div className="absolute top-[20%] right-[-70px] bg-white rounded-xl shadow-md px-4 py-2 flex items-center gap-2">
+              <Users size={18} className="text-[#0E766E]" />
+              <span className="text-sm font-medium text-gray-700">
+                1260 <span className="text-[#0E766E] font-semibold">Provider</span>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

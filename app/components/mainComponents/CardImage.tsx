@@ -7,7 +7,7 @@ export function CardImage() {
       alt="card"
       width={300}
       height={200}
-      className="rounded-xl border-2 border-transparent hover:border-blue-500 hover:scale-105 transition"
+      className="rounded-xl border-2 border-transparent hover:border-[#0E766E] hover:scale-105 transition"
     />
   );
 }

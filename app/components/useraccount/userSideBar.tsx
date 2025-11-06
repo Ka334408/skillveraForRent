@@ -70,8 +70,8 @@ export default function ProfileSidebar({ active, setActive }: SidebarProps) {
               className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition text-left font-medium
                 ${
                   active === id
-                    ? "bg-gray-200 text-blue-600"
-                    : "text-blue-600 hover:bg-gray-100"
+                    ? "bg-gray-200 text-[#0E766E]"
+                    : "text-[#0E766E] hover:bg-gray-100"
                 }`}
             >
               <Icon className="w-5 h-5" />

@@ -29,7 +29,7 @@ export default function LocaleSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-700 hover:bg-blue-500 transition w-full text-black mt-2">
+        <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#0E766E] hover:bg-white transition w-full text-black mt-2">
           <Image
             src={`/locale/${locale}.svg`}
             alt={locale}
@@ -44,7 +44,7 @@ export default function LocaleSwitcher() {
 
       <DropdownMenuContent
         align="end"
-        className="w-48 bg-blue-600 text-black rounded-2xl shadow-xl p-2 text-lg"
+        className="w-48 bg-[#0E766E] text-black rounded-2xl shadow-xl p-2 text-lg"
       >
         {locales.map((cur) => (
           <DropdownMenuItem
@@ -52,7 +52,7 @@ export default function LocaleSwitcher() {
             onClick={() => handleLocaleChange(cur)}
             className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer ${cur === locale
                 ? "bg-white text-black font-semibold"
-                : "bg-blue-700 hover:bg-blue-500"
+                : "bg-[#0E766E] hover:bg-[#0E766E]"
               }`}
           >
             <Image

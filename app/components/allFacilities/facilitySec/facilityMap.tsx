@@ -64,7 +64,7 @@ export default function FacilityMapSection({
                   key={i}
                   className="flex items-center gap-2 text-gray-700 bg-gray-50 p-3 rounded-lg shadow-sm"
                 >
-                  <CheckCircle2 className="text-green-600 w-5 h-5" />
+                  <CheckCircle2 className="text-[#0E766E] w-5 h-5" />
                   <span>{f}</span>
                 </li>
               ))

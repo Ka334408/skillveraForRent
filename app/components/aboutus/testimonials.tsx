@@ -14,7 +14,7 @@ export default function Testimonials() {
   return (
     <section className="container mx-auto px-4 py-16">
       <h3 className="text-center text-gray-600 mb-2">{t("subtitle")}</h3>
-      <h2 className="text-center text-2xl font-bold text-blue-600 mb-8">
+      <h2 className="text-center text-2xl font-bold text-[#0E766E] mb-8">
         {t("title")}
       </h2>
 

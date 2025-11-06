@@ -18,7 +18,7 @@ export default function FacilityCard({ id, name, image, onDelete }: FacilityCard
     <div className="bg-blue-200 rounded-xl p-4 flex flex-col justify-between h-52 w-full relative">
       {/* Header */}
       <div className="flex items-center justify-between relative">
-        <span className="text-xs bg-blue-300 px-2 py-1 rounded-md font-semibold">
+        <span className="text-xs bg-[#0E766E] px-2 py-1 rounded-md font-semibold">
           #{id}
         </span>
 

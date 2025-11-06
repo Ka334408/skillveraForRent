@@ -40,9 +40,9 @@ export default function Reviews() {
 
       {reviews.length === 0 ? (
         <div className="flex flex-col justify-center items-center text-center py-12">
-          <div className="text-blue-500 text-5xl mb-4">💬</div>
+          <div className="text-[#0E766E] text-5xl mb-4">💬</div>
           <p className="text-gray-600 mb-4">{t("emptyMessage")}</p>
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+          <button className="bg-[#0E766E] text-white px-6 py-2 rounded-lg hover:bg-[#0E766E]">
             {t("rentNow")}
           </button>
         </div>
