@@ -15,10 +15,10 @@ export default function FacilityCard({ id, name, image, onDelete }: FacilityCard
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-blue-200 rounded-xl p-4 flex flex-col justify-between h-52 w-full relative">
+    <div className="bg-[#4bb0a7] rounded-xl p-4 flex flex-col justify-between h-52 w-full relative">
       {/* Header */}
       <div className="flex items-center justify-between relative">
-        <span className="text-xs bg-[#0E766E] px-2 py-1 rounded-md font-semibold">
+        <span className="text-xs text-gray-800 px-2 py-1 rounded-md font-semibold">
           #{id}
         </span>
 

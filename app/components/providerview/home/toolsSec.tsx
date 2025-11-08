@@ -3,7 +3,7 @@ import { CardImage } from "../../mainComponents/CardImage";
 
 export default function ToolsSection() {
   return (
-    <section className="bg-blue-600 text-white py-16 px-8 text-center rounded-br-[3rem] my-5">
+    <section className="bg-[#0E766E] text-white py-16 px-8 text-center rounded-br-[3rem] my-5">
       <h2 className="text-2xl font-bold mb-12">
         Get all the tools <br /> you need to host
       </h2>

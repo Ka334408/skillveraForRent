@@ -21,34 +21,34 @@ const revenueData = [
 
 export default function DashboardCards() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-5">
       {/* Card 1 - Calendar */}
       <div className="bg-white shadow rounded-2xl p-6">
         <h2 className="text-xl font-semibold">27 May</h2>
         <div className="mt-4 flex flex-col gap-3">
           <div className="flex items-start gap-2">
-            <span className="w-1 h-5 bg-blue-500 rounded" />
+            <span className="w-1 h-5 bg-[#0E766E] rounded" />
             <div>
               <p className="text-sm font-medium">end date of #1222</p>
               <p className="text-xs text-gray-500">01:00 PM – 02:00 PM</p>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <span className="w-1 h-5 bg-blue-500 rounded" />
+            <span className="w-1 h-5 bg-[#0E766E] rounded" />
             <div>
               <p className="text-sm font-medium">start date of #122</p>
               <p className="text-xs text-gray-500">02:00 PM – 03:00 PM</p>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <span className="w-1 h-5 bg-blue-500 rounded" />
+            <span className="w-1 h-5 bg-[#0E766E] rounded" />
             <div>
               <p className="text-sm font-medium">end date of #122</p>
               <p className="text-xs text-gray-500">03:00 PM – 04:00 PM</p>
             </div>
           </div>
         </div>
-        <p className="mt-4 text-sm text-blue-600 font-medium cursor-pointer">
+        <p className="mt-4 text-sm text-[#0E766E] font-medium cursor-pointer">
           Open calendar
         </p>
       </div>
@@ -85,7 +85,7 @@ export default function DashboardCards() {
             </div>
           </div>
         </div>
-        <p className="mt-4 text-sm text-blue-600 font-medium cursor-pointer">
+        <p className="mt-4 text-sm text-[#0E766E] font-medium cursor-pointer">
           View all →
         </p>
       </div>
@@ -100,7 +100,7 @@ export default function DashboardCards() {
             <BarChart data={revenueData}>
               <XAxis dataKey="name" hide />
               <YAxis hide />
-              <Bar dataKey="value" fill="#2563eb" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="value" fill="#0E766E" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

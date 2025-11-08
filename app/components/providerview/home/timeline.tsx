@@ -15,9 +15,9 @@ export default function EasyAsWaterTop() {
       <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
         {/* الخط */}
         <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full"></div>
-          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 my-1 rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full"></div>
+          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] my-1 rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
         </div>
 
         {/* النص والصورة */}
@@ -41,8 +41,8 @@ export default function EasyAsWaterTop() {
       <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
         {/* الخط */}
         <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
         </div>
 
         {/* النص والصورة */}
@@ -65,8 +65,8 @@ export default function EasyAsWaterTop() {
       {/*-------------------- Section 3 */}
       <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
         <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
         </div>
 
         <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left md:pl-[52%]">
@@ -88,8 +88,8 @@ export default function EasyAsWaterTop() {
       {/*-------------------- Section 4 */}
       <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
         <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
         </div>
 
         <div className="flex flex-col md:flex-row-reverse items-center gap-6 text-center md:text-left md:pr-[52%]">
@@ -111,8 +111,8 @@ export default function EasyAsWaterTop() {
       {/*-------------------- Section 5 */}
       <div className="relative max-w-5xl mx-auto flex justify-center">
         <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-[4px] h-28 bg-blue-600 rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-blue-600 rounded-full mt-1"></div>
+          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] rounded-full"></div>
+          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
         </div>
 
         <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left md:pl-[52%]">

@@ -76,7 +76,7 @@ export default function Topbar() {
           <input
             type="text"
             placeholder="Search For any thing.."
-            className="w-full border rounded-3xl pl-10 pr-4 py-2 focus:ring-2 focus:ring-blue-500"
+            className="w-full border rounded-3xl pl-10 pr-4 py-2 focus:ring-2 focus:ring-[#0E766E]"
           />
         </div>
 

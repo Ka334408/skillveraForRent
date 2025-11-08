@@ -8,21 +8,21 @@ export function AddFacilityPage() {
   return (
     <div className="w-full max-w-5xl mx-auto p-4 sm:p-6 md:p-8 bg-gray-50 min-h-screen mt-5 sm:mt-0">
       {/* Breadcrumb */}
-      <div className="mb-6 text-lg sm:text-xl text-blue-600 font-medium flex flex-wrap gap-2">
+      <div className="mb-6 text-lg sm:text-xl text-[#0E766E] font-medium flex flex-wrap gap-2">
         <h1 className="cursor-pointer hover:underline">My Facilities</h1>
         <span>/</span>
-        <h1 className="text-blue-800">Add new facility</h1>
+        <h1 className="text-[#0E766E]">Add new facility</h1>
       </div>
 
       {/* Title + Input */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-blue-700 uppercase tracking-wide">
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#0E766E] uppercase tracking-wide">
           Facility Name
         </h1>
         <input
           type="text"
           placeholder="Enter facility name"
-          className="w-full sm:w-auto border-b-2 border-blue-300 bg-transparent focus:outline-none focus:border-blue-600 px-2 text-lg text-gray-700"
+          className="w-full sm:w-auto border-b-2 border-[#85bbb6] bg-transparent focus:outline-none focus:border-[#0E766E] px-2 text-lg text-gray-700"
         />
       </div>
 
@@ -42,7 +42,7 @@ export function AddFacilityPage() {
               "Cover Pic"
             )}
           </div>
-          <label className="px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 inline-flex items-center gap-1">
+          <label className="px-4 py-2 bg-[#0E766E] text-white rounded-lg cursor-pointer hover:bg-[#0E766E] inline-flex items-center gap-1">
             Upload +
             <input
               type="file"
@@ -81,7 +81,7 @@ export function AddFacilityPage() {
               </>
             )}
           </div>
-          <label className="px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 inline-flex items-center gap-1">
+          <label className="px-4 py-2 bg-[#0E766E] text-white rounded-lg cursor-pointer hover:bg-[#075d55] inline-flex items-center gap-1">
             Upload +
             <input
               type="file"
@@ -185,7 +185,7 @@ export function AddFacilityPage() {
 
         <button
           type="submit"
-          className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
+          className="w-full sm:w-auto px-6 py-3 bg-[#0E766E] text-white font-semibold rounded-lg hover:bg-[#075d55]"
         >
           Submit Facility
         </button>

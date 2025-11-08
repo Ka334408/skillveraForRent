@@ -29,7 +29,7 @@ export default function HeroSection() {
         "
       >
         {/* النص الشمال */}
-        <div className="text-black md:mt-16">
+        <div className="text-[#0E766E] md:mt-16">
           <h2 className="text-3xl md:text-5xl font-semibold leading-snug">
             Small living, <br className="hidden md:block" /> supersized.
           </h2>

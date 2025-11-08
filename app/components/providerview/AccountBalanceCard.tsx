@@ -30,7 +30,7 @@ export default function AccountBalanceCard() {
   return (
     <div className="bg-white rounded-2xl shadow p-4 w-full max-w-sm">
       {/* Header */}
-      <div className="bg-blue-600 text-white rounded-2xl p-4 flex justify-between items-start">
+      <div className="bg-[#0E766E] text-white rounded-2xl p-4 flex justify-between items-start">
         <div>
           <p className="text-sm opacity-80">Account Balance</p>
           <h2 className="text-2xl font-bold">$25,215</h2>

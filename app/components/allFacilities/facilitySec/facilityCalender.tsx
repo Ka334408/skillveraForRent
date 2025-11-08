@@ -4,15 +4,23 @@ import { useState, useEffect } from "react";
 import { DateRange, Range } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function FacilityCalendar({
-  pricePerDay,
+  facility,
   bookedDates = [],
 }: {
-  pricePerDay: number;
+  facility: {
+    id: number;
+    name: string;
+    description: string;
+    location: string;
+    price: number;
+    image: string;
+  };
   bookedDates?: string[];
 }) {
+  const locale = useLocale();
   const t = useTranslations("FacilityCalendar");
   const [isMobile, setIsMobile] = useState(false);
 
@@ -30,7 +38,6 @@ export default function FacilityCalendar({
   });
 
   const booked = bookedDates.map((d) => new Date(d).toDateString());
-
   const start = range.startDate;
   const end = range.endDate;
 
@@ -47,24 +54,36 @@ export default function FacilityCalendar({
     availableDays = days.length;
   }
 
-  const totalPrice = availableDays > 0 ? availableDays * pricePerDay : 0;
+  const totalPrice = availableDays > 0 ? availableDays * facility.price : 0;
+
+  const handleRentNow = () => {
+    if (start && end && availableDays > 0) {
+      const reservationData = {
+        id: facility.id,
+        name: facility.name,
+        image: facility.image,
+        price: totalPrice,
+        start: start.toISOString().split("T")[0],
+        end: end.toISOString().split("T")[0],
+      };
+      localStorage.setItem("reservationData", JSON.stringify(reservationData));
+      window.location.href = `/${locale}/userview/allFacilities/reservation`;
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
       {/* الكاليندر */}
       <div className="lg:col-span-2 bg-white shadow-md rounded-xl py-6 w-full">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800">
-          {t("selectCheckIn")}
-        </h3>
-
+        <h3 className="text-lg font-semibold mb-4 text-gray-800 rtl:mr-5 ml-5">{t("selectCheckIn")}</h3>
         <div className={`${isMobile ? "flex flex-col" : ""}`}>
           <DateRange
-            editableDateInputs={true}
+            editableDateInputs
             onChange={(item) => setRange(item.selection)}
             moveRangeOnFirstSelection={false}
             ranges={[range]}
-            months={2} // 📆 شهرين دايمًا
-            direction={isMobile ? "vertical" : "horizontal"} // 📱 عمودي في الموبايل
+            months={2}
+            direction={isMobile ? "vertical" : "horizontal"}
             showDateDisplay={false}
             minDate={new Date()}
             disabledDates={booked.map((d) => new Date(d))}
@@ -80,7 +99,7 @@ export default function FacilityCalendar({
               key: "selection",
             })
           }
-          className="mt-4 text-sm text-[#0E766E] underline"
+          className="mt-4 ml-5 rtl:mr-5 text-sm text-[#0E766E] underline"
         >
           {t("clearDates")}
         </button>
@@ -94,26 +113,14 @@ export default function FacilityCalendar({
               <h3 className="text-lg font-semibold mb-2 text-gray-800">
                 {totalPrice} R {t("forDays", { count: availableDays })}
               </h3>
-              <div className="flex flex-col gap-2 mb-4 text-sm  mt-0 sm:mt-32">
+              <div className="flex flex-col gap-2 mb-4 text-sm mt-0 sm:mt-32">
                 <div className="flex justify-between border rounded-md p-2">
                   <span className="font-medium">{t("checkIn")}</span>
-                  <span>
-                    {start?.toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "numeric",
-                      year: "numeric",
-                    })}
-                  </span>
+                  <span>{start?.toLocaleDateString("en-GB")}</span>
                 </div>
                 <div className="flex justify-between border rounded-md p-2">
                   <span className="font-medium">{t("checkOut")}</span>
-                  <span>
-                    {end?.toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "numeric",
-                      year: "numeric",
-                    })}
-                  </span>
+                  <span>{end?.toLocaleDateString("en-GB")}</span>
                 </div>
               </div>
             </>
@@ -127,6 +134,7 @@ export default function FacilityCalendar({
         {/* زرار */}
         <button
           disabled={!start || !end || availableDays === 0}
+          onClick={handleRentNow}
           className={`rounded-lg py-3 font-semibold transition ${
             !start || !end || availableDays === 0
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"

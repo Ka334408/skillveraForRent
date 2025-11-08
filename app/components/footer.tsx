@@ -34,13 +34,13 @@ export default function Footer() {
                 {section.title}
               </h3>
               <ul className="space-y-2">
-                {section.items.map((item: string, j: number) => (
+                {section.items.map((item: {label:string;href:string}, j: number) => (
                   <li key={j}>
                     <a
-                      href="#"
+                      href={item.href}
                       className="hover:text-[#0C8A83] transition-colors font-medium text-sm"
                     >
-                      {item}
+                      {item.label}
                     </a>
                   </li>
                 ))}

@@ -1,11 +1,9 @@
-"use client"
+"use client";
 
 import FacilityHeader from "@/app/components/allFacilities/facilitySec/FacilityHeder";
 import FacilityCalendar from "@/app/components/allFacilities/facilitySec/facilityCalender";
-
 import Header from "@/app/components/header";
 import { notFound } from "next/navigation";
-
 import dynamic from "next/dynamic";
 import RatingCard from "@/app/components/allFacilities/facilitySec/facilityReview";
 import ReviewsList from "@/app/components/allFacilities/facilitySec/personalReview";
@@ -17,8 +15,8 @@ const FacilityMapSection = dynamic(
   { ssr: false }
 );
 
-// نفس الداتا بتاعة all facilities
- const categoryImages: Record<string, string> = {
+// داتا التجريبية
+const categoryImages: Record<string, string> = {
   Sports: "/stadium.jpg",
   Education: "/school.jpg",
   Health: "/hotal.jpg",
@@ -26,7 +24,6 @@ const FacilityMapSection = dynamic(
 
 const facilitiesData = Array.from({ length: 100 }, (_, i) => {
   const category = i % 3 === 0 ? "Sports" : i % 3 === 1 ? "Education" : "Health";
-
   return {
     id: i + 1,
     name: `Facility ${i + 1}`,
@@ -34,8 +31,8 @@ const facilitiesData = Array.from({ length: 100 }, (_, i) => {
     location: i % 2 === 0 ? "Riyadh" : "Jeddah",
     price: 400 + (i % 5) * 100,
     category,
-    image: categoryImages[category] || `https://picsum.photos/400/300?random=${i}`,
-     lat: 24.7136 + i * 0.01,
+    image: categoryImages[category] ,
+    lat: 24.7136 + i * 0.01,
     lng: 46.6753 + i * 0.01,
   };
 });
@@ -47,45 +44,43 @@ export default function FacilityPage({ params }: { params: { id: string } }) {
   if (!facility) return notFound();
 
   return (
-    <div><Header
-                bgColor="bg-white border-b-gray-200 border-2" 
-                accounticonColor="bg-[#0E766E]"
-                menuiconColor="bg-[#0E766E] text-white rounder-full"
-                activeColor="bg-[#0E766E] text-white"
-                textColor="text-[#0E766E]"
-                hoverColor="hover:bg-[#0E766E] hover:text-white"
-                enable="hidden"
-                isrounded="rounded-full"
-              />
-    <div className="container mx-auto px-4 py-8">
-           
-      {/* الهيدر */}
-      <FacilityHeader facility={facility} />
-      <FacilityMapSection
-      location={facility.location}
-        lat={facility.lat}
-        lng={facility.lng}
-        features={[
-          "Free Wi-Fi",
-          "Parking available",
-          "Air Conditioning",
-          "24/7 Security",
-        ]}
+    <div>
+      <Header
+        bgColor="bg-white border-b-gray-200 border-2"
+        accounticonColor="bg-[#0E766E]"
+        menuiconColor="bg-[#0E766E] text-white rounder-full"
+        activeColor="bg-[#0E766E] text-white"
+        textColor="text-[#0E766E]"
+        hoverColor="hover:bg-[#0E766E] hover:text-white"
+        enable="hidden"
+        isrounded="rounded-full"
       />
-      <FacilityCalendar
-                  bookedDates={[
-                      "2025-11-20",
-                      "2025-11s-22",
-                      "2025-11s-25",
-                  ]} pricePerDay={facility.price}/>
-      <ThingsToKnow/>
-      
-      <ReviewsList/>
-      <RatingCard/>
-      
 
-    
-    </div>
+      <div className="container mx-auto px-4 py-8">
+        <FacilityHeader facility={facility} />
+        <FacilityMapSection
+          location={facility.location}
+          lat={facility.lat}
+          lng={facility.lng}
+          features={[
+            "Free Wi-Fi",
+            "Parking available",
+            "Air Conditioning",
+            "24/7 Security",
+          ]}
+        />
+        <FacilityCalendar
+          facility={facility}
+          bookedDates={[
+            "2025-11-20",
+            "2025-11-22",
+            "2025-11-25",
+          ]}
+        />
+        <ThingsToKnow />
+        <ReviewsList />
+        <RatingCard />
+      </div>
     </div>
   );
 }

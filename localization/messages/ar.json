@@ -181,19 +181,41 @@
     "date": "التاريخ"
   },
   
+ 
   "footer": {
-
     "main": "الصفحة الرئيسية",
-    "mainLinks": ["كل المنتجات", "عن سكيلفرا رنت", "خريطة المنتجات", "أنا مالك منتج!"],
-    "about": "عن سكيلفرا رنت",
-    "aboutLinks": ["عن سكيلفرا رنت", "الفريق", "الوظائف", "المدونة"],
-    "support": "الدعم والمساعدة",
-    "supportLinks": ["تواصل معنا", "الأسئلة الشائعة", "الشروط والأحكام", "الدعم والمساعدة"],
-    "apps": "تطبيقاتنا",
-    "appsLinks": ["آب ستور", "جوجل بلاي"],
-    "brand": "سكيلفرا رنت"
+    "mainLinks": [
+      { "label": "كل المنتجات", "href": "/products" },
+      { "label": "عن سكيلفرا رنت", "href": "/userview/aboutUS" },
+      { "label": "خريطة المنتجات", "href": "/userview/allFacilities" },
+      { "label": "أنا مالك منتج!", "href": "/owner" }
+    ],
 
+    "about": "عن سكيلفرا رنت",
+    "aboutLinks": [
+      { "label": "عن سكيلفرا رنت", "href": "/userview/aboutUS" },
+      { "label": "الفريق", "href": "/team" },
+      { "label": "الوظائف", "href": "/careers" },
+      { "label": "المدونة", "href": "/blog" }
+    ],
+
+    "support": "الدعم والمساعدة",
+    "supportLinks": [
+      { "label": "تواصل معنا", "href": "/userview/contactUS" },
+      { "label": "الأسئلة الشائعة", "href": "/userview/FAQpage" },
+      { "label": "الشروط والأحكام", "href": "/terms" },
+      { "label": "الدعم والمساعدة", "href": "/support" }
+    ],
+
+    "apps": "تطبيقاتنا",
+    "appsLinks": [
+      { "label": "آب ستور", "href": "https://apps.apple.com" },
+      { "label": "جوجل بلاي", "href": "https://play.google.com" }
+    ],
+
+    "brand": "سكيلفرا رنت"
   },
+
 
   
   "filters": {

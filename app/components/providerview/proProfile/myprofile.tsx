@@ -98,7 +98,7 @@ export default function MyProfile() {
 
   return (
     <div className="max-w-4xl mx-auto p-8 bg-gray-100 rounded-xl shadow">
-      <h2 className="text-blue-600 font-semibold text-xl mb-6">My profile</h2>
+      <h2 className="text-[#0E766E] font-semibold text-xl mb-6">My profile</h2>
 
       {/* Top section with image + name + email */}
       <div className="flex items-center gap-4 mb-8">
@@ -239,7 +239,7 @@ export default function MyProfile() {
         <div className="col-span-2 flex justify-end mt-4">
           <button
             type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+            className="bg-[#0E766E] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
           >
             Save Changes
           </button>

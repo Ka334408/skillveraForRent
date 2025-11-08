@@ -182,17 +182,41 @@
 
   
  
+ 
   "footer": {
     "main": "Main Page",
-    "mainLinks": ["All Products", "About Skillvera Rent", "Products Map", "I'm an Owner!"],
+    "mainLinks": [
+      { "label": "All Products", "href": "/products" },
+      { "label": "About Skillvera Rent", "href": "/userview/aboutUS" },
+      { "label": "Products Map", "href": "/map" },
+      { "label": "I'm an Owner!", "href": "/owner" }
+    ],
+
     "about": "About Skillvera Rent",
-    "aboutLinks": ["About Skillvera Rent", "Team", "Careers", "Blog"],
+    "aboutLinks": [
+      { "label": "About Skillvera Rent", "href": "/userview/aboutUS" },
+      { "label": "Team", "href": "/team" },
+      { "label": "Careers", "href": "/careers" },
+      { "label": "Blog", "href": "/blog" }
+    ],
+
     "support": "Support",
-    "supportLinks": ["Contact Us", "FAQ", "Terms & Conditions", "Help & Support"],
+    "supportLinks": [
+      { "label": "Contact Us", "href": "/userview/contactUs" },
+      { "label": "FAQ", "href": "/userview/FAQpage" },
+      { "label": "Terms & Conditions", "href": "/terms" },
+      { "label": "Help & Support", "href": "/support" }
+    ],
+
     "apps": "Our Apps",
-    "appsLinks": ["App Store", "Google Play"],
+    "appsLinks": [
+      { "label": "App Store", "href": "https://apps.apple.com" },
+      { "label": "Google Play", "href": "https://play.google.com" }
+    ],
+
     "brand": "Skillvera Rent"
   },
+
   
   "filters": {
     "category": "All Category",

@@ -27,7 +27,7 @@ const statusColor = (s: Facility["status"]): string =>
     : s === "rejected"
     ? "text-red-500"
     : s=== "rented"
-    ?"text-blue-600"
+    ?"text-[#0E766E]"
     :"text-green-600"
 
 export default function FacilitiesPage() {
@@ -38,7 +38,7 @@ export default function FacilitiesPage() {
     <div className="p-6">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-semibold text-blue-600 mb-3">
+        <h2 className="text-2xl font-semibold text-[#0E766E] mb-3">
           My Facilities
         </h2>
 
