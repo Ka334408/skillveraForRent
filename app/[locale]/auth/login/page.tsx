@@ -125,7 +125,7 @@ export default function Login() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-200 dark:bg-[#0a0a0a]">
         <div className="flex flex-col items-center gap-4">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-blue-600 animate-bounce">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#0E766E] animate-bounce">
           Skillvera
         </h1>
         </div>
@@ -163,7 +163,7 @@ export default function Login() {
               placeholder={t("email")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+              className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
               required
             />
             <input
@@ -171,7 +171,7 @@ export default function Login() {
               placeholder={t("password")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+              className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
               required
             />
 
@@ -187,7 +187,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-blue-600 text-white rounded-full py-3 font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+              className="bg-[#0E766E] text-white rounded-full py-3 font-semibold hover:bg-[#0c625b] transition disabled:opacity-50"
             >
               {loading ? t("loading") : t("login")}
             </button>
@@ -201,7 +201,7 @@ export default function Login() {
             <span className="text-gray-600">{t("no_account")}</span>
             <LocalizedLink
               href="/auth/signUp"
-              className="text-blue-600 font-semibold hover:underline"
+              className="text-[#0E766E] font-semibold hover:underline"
             >
               {t("signup")}
             </LocalizedLink>

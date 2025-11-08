@@ -32,8 +32,8 @@ export default function ProviderSidebar() {
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, href: `/${locale}/providerview/dashBoardHome/dashBoard` },
     { id: "facilities", label: "My Facilities", icon: Building2, href: `/${locale}/providerview/dashBoardHome/myFacilities` },
-    { id: "calendar", label: "Calendar", icon: Calendar, href: "/providerview/calendar" },
-    { id: "finance", label: "Finance", icon: CreditCard, href: "/providerview/finance" },
+    { id: "calendar", label: "Calendar", icon: Calendar, href: `/${locale}/providerview/dashBoardHome/Calander` },
+    { id: "finance", label: "Finance", icon: CreditCard, href: `/${locale}/providerview/dashBoardHome/Finance` },
     { id: "statistic", label: "Statistic", icon: BarChart, href: "/providerview/statistic" },
   ];
 

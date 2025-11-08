@@ -126,7 +126,7 @@ export default function Navbar({
           </Button>
 
           {!isLoggedIn && (
-            <Button className="bg-white text-[#0E766E] font-semibold hover:bg-gray-100">
+            <Button className="bg-[#0E766E] text-white font-semibold hover:bg-gray-100 hover:text-black">
               <Link href="/auth/signUp">{t("signup")}</Link>
             </Button>
           )}
@@ -162,7 +162,7 @@ export default function Navbar({
                     <DropdownMenuItem
                       key={href}
                       onClick={() => router.push(href)} 
-                      className={`flex items-center gap-3 px-3 py-3 rounded-xl w-full mt-2 mb-2 text-black ${
+                      className={`flex items-center gap-3 px-3 py-3 rounded-xl w-full mt-2 mb-2 text-white text-lg ${
                         isActive
                           ? "bg-white text-black font-semibold"
                           : "bg-[#0E766E] hover:bg-[#0E766E]"
@@ -179,7 +179,7 @@ export default function Navbar({
                 onClick={() =>
                   handleProtectedClick(`/${locale}/userview/useraccount`)
                 }
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl"
+                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg"
               >
                 <User className="w-5 h-5" />
                 <span className="flex-1  italic">{t("account")}</span>
@@ -187,7 +187,7 @@ export default function Navbar({
 
               <DropdownMenuItem
                 onClick={() => handleProtectedClick(`/${locale}/userview/allFacilities`)}
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl"
+                className="flex items-center gap-1 px-3 py-3 roundedlg bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg"
               >
                 <Building className="w-5 h-5" />
                 <span className="flex-1  italic">{t("facilities")}</span>
@@ -195,7 +195,7 @@ export default function Navbar({
 
               <DropdownMenuItem
                 onClick={() => handleProtectedClick(`/${locale}/userview/contactUs`)}
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl"
+                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span className="flex-1  italic">{t("contact")}</span>
@@ -203,7 +203,7 @@ export default function Navbar({
 
               <DropdownMenuItem
                 onClick={() => handleProtectedClick(`/${locale}/support`)}
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl"
+                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg"
               >
                 <HelpCircle className="w-5 h-5" />
                 <span className="flex-1  italic">{t("support")}</span>
@@ -230,7 +230,7 @@ export default function Navbar({
               ) : (
                 <DropdownMenuItem
                   onClick={handleLogout}
-                  className="flex items-center gap-3 px-3 py-3 rounded-3xl bg-[#0E766E] hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl "
+                  className="flex items-center gap-3 px-3 py-3 rounded-3xl bg-[#0E766E] hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg "
                 >
                   <LogOut className="w-5 h-5" />
                   <span className="flex-1">{t("logout")}</span>

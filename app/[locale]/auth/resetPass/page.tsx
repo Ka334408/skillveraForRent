@@ -64,13 +64,13 @@ export default function ResetPassword() {
                 placeholder={t("email")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+                className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
                 required
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-600 text-white rounded-full py-3 font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+                className="bg-[#0E766E] text-white rounded-full py-3 font-semibold hover:bg-[#06554e] transition disabled:opacity-50"
               >
                 {loading ? "Sending..." : t("send")}
               </button>

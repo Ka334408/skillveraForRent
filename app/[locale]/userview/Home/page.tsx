@@ -51,13 +51,13 @@ export default function HomePage() {
       <div className={needsProfile ? "blur-sm pointer-events-none select-none" : ""}>
        
                        <Header
-                      bgColor="bg-[#f3f4f4] border-b-gray-200 border-2" 
+                      bgColor="bg-[#f3f4f4] border-b-gray-200 " 
                       accounticonColor="bg-[#0E766E]"
                       menuiconColor="bg-[#0E766E] text-white rounder-full"
                       activeColor="bg-[#0E766E] text-white"
                       textColor="text-[#0E766E]"
                       hoverColor="hover:bg-[#0E766E] hover:text-white"
-                      
+                      enable="border-none"
                       isrounded="rounded-full"
                     />
         <HeroSection />

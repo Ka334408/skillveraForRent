@@ -87,7 +87,7 @@ export default function VerifyAccount() {
 
   return (
     <div><GuestPage>
-    <main className="min-h-screen flex items-center justify-center bg-blue-100 px-4">
+    <main className="min-h-screen flex items-center justify-center bg-[#0E766E] px-4">
       <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold mb-2 text-gray-800">
           You&apos;re ready to go!
@@ -106,7 +106,7 @@ export default function VerifyAccount() {
                 maxLength={1}
                 ref={(el) => (inputsRef.current[index] = el)}
                 onChange={(e) => handleChange(e.target.value, index)}
-                className="w-14 h-14 text-center text-xl border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-14 h-14 text-center text-xl border rounded-lg focus:ring-2 focus:ring-[#0E766E]"
               />
             ))}
           </div>
@@ -117,7 +117,7 @@ export default function VerifyAccount() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-full font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+            className="w-full bg-[#0E766E] text-white py-3 rounded-full font-semibold hover:bg-[#0E766E] transition disabled:opacity-50"
           >
             {loading ? "Verifying..." : "Verify"}
           </button>
@@ -129,7 +129,7 @@ export default function VerifyAccount() {
             type="button"
             onClick={handleResend}
             disabled={resending}
-            className="text-blue-600 font-semibold hover:underline disabled:opacity-50"
+            className="text-[#0E766E] font-semibold hover:underline disabled:opacity-50"
           >
             {resending ? "Resending..." : "Resend"}
           </button>
