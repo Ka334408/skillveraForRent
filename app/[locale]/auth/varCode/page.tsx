@@ -131,7 +131,7 @@ export default function VerifyCode() {
         {/* Back */}
         <button
           onClick={handleBack}
-          className="self-start text-blue-600 mb-6 hover:underline"
+          className="self-start text-[#0E766E] mb-6 hover:underline"
         >
           ← {t("back")}
         </button>
@@ -153,7 +153,7 @@ export default function VerifyCode() {
               maxLength={1}
               onChange={(e) => handleChange(e.target.value, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className="w-14 h-14 text-center border-2 border-blue-400 rounded-lg text-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-14 h-14 text-center border-2 border-[#0E766E] rounded-lg text-xl focus:outline-none focus:ring-2 focus:ring-[#0E766E]"
             />
           ))}
         </div>
@@ -162,7 +162,7 @@ export default function VerifyCode() {
         <button
           onClick={handleVerify}
           disabled={loading}
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50"
+          className="bg-[#0E766E] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#0E766E] disabled:opacity-50"
         >
           {loading ? "..." : t("verifyBtn")}
         </button>
@@ -177,7 +177,7 @@ export default function VerifyCode() {
             <button
               onClick={handleResend}
               disabled={loading}
-              className="text-blue-600 text-sm hover:underline"
+              className="text-[#0E766E] text-sm hover:underline"
             >
               {loading ? "..." : t("resendBtn")}
             </button>

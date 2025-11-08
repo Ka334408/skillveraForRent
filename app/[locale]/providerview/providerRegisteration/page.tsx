@@ -59,7 +59,7 @@ export default function SelectPlanPage() {
                   flex flex-col items-center justify-center rounded-2xl border-2 p-6 h-40 transition
                   ${
                     isActive
-                      ? "border-blue-500 text-blue-600 bg-blue-50"
+                      ? "border-[#0E766E] text-[#0E766E] bg-blue-50"
                       : "border-gray-200 text-gray-400 bg-gray-50"
                   }
                 `}
@@ -73,7 +73,7 @@ export default function SelectPlanPage() {
         </div>
 
         {/* زرار Next */}
-        <button className="px-8 py-2 rounded-full bg-white border-2 border-blue-500 text-blue-600 font-semibold hover:bg-blue-50 transition" 
+        <button className="px-8 py-2 rounded-full bg-white border-2 border-[#0E766E] text-[#0E766E] font-semibold hover:bg-blue-50 transition" 
         onClick={()=>router.push(`/${locale}/providerview/dashBoardHome/myProfile`)}>
           Let&apos;s go
         </button>

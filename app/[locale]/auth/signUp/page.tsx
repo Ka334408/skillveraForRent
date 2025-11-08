@@ -82,7 +82,7 @@ export default function SignUp() {
                   placeholder={t("full_name")}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
                   required
                 />
                 <input
@@ -90,7 +90,7 @@ export default function SignUp() {
                   placeholder={t("email")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
                   required
                 />
 
@@ -116,14 +116,14 @@ export default function SignUp() {
                   placeholder={t("password")}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
                   required
                 />
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="bg-blue-600 text-white rounded-full py-3 font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+                  className="bg-[#0E766E] text-white rounded-full py-3 font-semibold hover:bg-[#054e47] transition disabled:opacity-50"
                 >
                   {loading ? "Signing Up..." : t("signup")}
                 </button>
@@ -137,7 +137,7 @@ export default function SignUp() {
                 {t("have_account")}{" "}
                 <Link
                   href="/auth/login"
-                  className="text-blue-600 font-semibold hover:underline"
+                  className="text-[#0E766E] font-semibold hover:underline"
                 >
                   {t("login")}
                 </Link>

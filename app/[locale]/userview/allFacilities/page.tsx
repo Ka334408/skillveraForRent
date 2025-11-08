@@ -7,7 +7,7 @@ export default function page() {
   return (
     <div>
                <Header
-              bgColor="bg-white border-b-gray-200 border-2" 
+              bgColor="bg-white border-b-gray-200 " 
               accounticonColor="bg-[#0E766E]"
               menuiconColor="bg-[#0E766E] text-white rounder-full"
               activeColor="bg-[#0E766E] text-white"
