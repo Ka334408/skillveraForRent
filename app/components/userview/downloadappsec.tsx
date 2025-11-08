@@ -8,7 +8,7 @@ export default function DownloadSection() {
     const t = useTranslations("download");
 
     return (
-        <section className="py-20 bg-white text-center dark:bg-[#0a0a0a] ">
+        <section className="py-20 bg-[#f3f4f4] text-center dark:bg-[#0a0a0a] ">
             {/* Title */}
             <h2 className="text-xl md:text-2xl font-semibold max-w-2xl mx-auto mb-12 px-4 " data-aos="fade-up" data-aos-duration="3000">
                 {t("title")} <span className="text-[#0E766E]">{t("appName")}</span>

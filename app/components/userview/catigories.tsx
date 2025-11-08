@@ -74,7 +74,7 @@ export default function CategoriesSection() {
   };
 
   return (
-    <section className="px-6 py-10 relative bg-gray-100 dark:bg-[#0a0a0a] dark:text-white mt-15 overflow-hidden">
+    <section className="px-6 py-10 relative bg-[#f3f4f4] dark:bg-[#0a0a0a] dark:text-white mt-15 overflow-hidden">
       {/* Title + See All */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-[#0E766E]">{t("title")}</h2>

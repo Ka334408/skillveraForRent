@@ -17,7 +17,7 @@ export default function FAQSection() {
   const faqs = t.raw("items") as { question: string; answer: string }[];
 
   return (
-    <section className="py-12 bg-white dark:bg-[#0a0a0a] overflow-hidden">
+    <section className="py-12 bg-[#f3f4f4] dark:bg-[#0a0a0a] overflow-hidden">
       {/* Title */}
       <div className="text-center mb-8">
         <p

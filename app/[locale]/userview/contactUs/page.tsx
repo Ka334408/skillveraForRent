@@ -7,19 +7,11 @@ import React from 'react'
 export default function page() {
   return (
     <div>
-       <Header
-              bgColor="bg-white border-b-gray-200 border-2" 
-              accounticonColor="bg-[#0E766E]"
-              menuiconColor="bg-[#0E766E] text-white rounder-full"
-              activeColor="bg-[#0E766E] text-white"
-              textColor="text-[#0E766E]"
-              hoverColor="hover:bg-[#0E766E] hover:text-white"
-              enable="hidden"
-              isrounded="rounded-full"
-            />
-            <HeroSection/>
-            <InfoSection/>
-            <ContactFormSection/>
+      <Header bgColor="bg-[#0E766E]" accounticonColor="bg-[#0E766E]" hoverColor="hover:bg-[#63bdb6]" menuiconColor="bg-[#0E766E]"
+        activeColor="text-[#0E766E] bg-white" />
+      <HeroSection />
+      <InfoSection />
+      <ContactFormSection />
     </div>
   )
 }
