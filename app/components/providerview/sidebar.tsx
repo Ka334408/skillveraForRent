@@ -92,7 +92,7 @@ export default function ProviderSidebar() {
         {/* 🔹 الجزء العلوي */}
         <div className="flex-1 overflow-y-auto">
           <h2 className="text-xl font-bold mb-6">{user?.name}</h2>
-          <p className="mb-5 border-t-2 border-t-blue-500 "></p>
+          <p className="mb-5 border-t-2 border-t-[#0E766E] "></p>
 
           {/* Main Menu */}
           <nav className="flex flex-col gap-2 mb-6">
@@ -104,14 +104,14 @@ export default function ProviderSidebar() {
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition text-left font-medium
                   ${
                     isActive(href)
-                      ? "text-blue-600 bg-blue-100"
+                      ? "text-[#0E766E] bg-blue-100"
                       : "hover:bg-gray-100 text-gray-700"
                   }
                 `}
               >
                 <Icon
                   className={`w-5 h-5 ${
-                    isActive(href) ? "text-blue-600" : "text-gray-500"
+                    isActive(href) ? "text-[#0E766E]" : "text-gray-500"
                   }`}
                 />
                 {label}
@@ -130,14 +130,14 @@ export default function ProviderSidebar() {
               className={`flex items-center gap-3 px-4 py-3 rounded-xl transition text-left font-medium
                 ${
                   isActive(href)
-                    ? "text-blue-600 bg-blue-100"
+                    ? "text-[#0E766E] bg-blue-100"
                     : "hover:bg-gray-100 text-gray-700"
                 }
               `}
             >
               <Icon
                 className={`w-5 h-5 ${
-                  isActive(href) ? "text-blue-600" : "text-gray-500"
+                  isActive(href) ? "text-[#0E766E]" : "text-gray-500"
                 }`}
               />
               {label}

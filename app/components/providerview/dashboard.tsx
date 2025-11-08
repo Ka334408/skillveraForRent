@@ -31,7 +31,7 @@ export default function DashboardPage() {
       <div className="lg:col-span-1">
         <AccountBalanceCard />
       </div>
-    </div>
+  </div>
 
 <BottomCharts/>
     </div>

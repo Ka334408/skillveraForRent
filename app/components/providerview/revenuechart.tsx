@@ -43,12 +43,12 @@ export default function RevenueChart() {
           <BarChart data={data}>
             <XAxis dataKey="name" axisLine={false} tickLine={false} />
             <YAxis hide />
-            <Tooltip cursor={{ fill: "#f3f4f6" }} />
+            <Tooltip cursor={{ fill: "#0E766E" }} />
             <Bar dataKey="value" radius={[6, 6, 0, 0]}>
               {data.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={entry.name === "Jun" ? "#2563eb" : "#dbeafe"}
+                  fill={entry.name === "Jun" ? "#0E766E" : "#dbeafe"}
                 />
               ))}
             </Bar>

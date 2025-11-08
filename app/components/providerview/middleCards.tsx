@@ -8,14 +8,14 @@ export default function FinancialSection() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
         {/* Left side - text */}
         <div className="space-y-4">
-          <h2 className="text-3xl font-bold text-blue-600 leading-snug">
+          <h2 className="text-3xl font-bold text-[#0E766E] leading-snug">
             Reach financial goals faster
           </h2>
           <p className="text-gray-600">
             Use your cards with no hidden fees. <br />
             Hold, transfer and gain your money.
           </p>
-          <button className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700">
+          <button className="px-6 py-2 bg-[#0E766E] text-white font-medium rounded-lg shadow hover:bg-[#075d55]">
             Update financial info
           </button>
         </div>
@@ -24,7 +24,7 @@ export default function FinancialSection() {
         <div className="flex justify-center">
           <div className="relative w-72 h-44 group cursor-pointer">
             {/* Card 1 */}
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-500 to-indigo-400 rounded-xl shadow-lg transform rotate-6 transition-transform duration-500 group-hover:-rotate-3 group-hover:translate-x-2"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#0E766E] to-indigo-400 rounded-xl shadow-lg transform rotate-6 transition-transform duration-500 group-hover:-rotate-3 group-hover:translate-x-2"></div>
 
             {/* Card 2 */}
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-indigo-400 to-purple-500 rounded-xl shadow-lg flex flex-col justify-center px-6 text-white font-semibold transform transition-transform duration-500 group-hover:rotate-6 group-hover:-translate-x-2">
@@ -47,7 +47,7 @@ export default function FinancialSection() {
           </h3>
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
-              <span className="bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-lg">
+              <span className="bg-[#0E766E] text-white text-sm font-bold px-3 py-1 rounded-lg">
                 #123
               </span>
               <span className="text-gray-600 text-sm">
@@ -55,7 +55,7 @@ export default function FinancialSection() {
               </span>
             </div>
             <div className="flex items-center space-x-3">
-              <span className="bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-lg">
+              <span className="bg-[#0E766E] text-white text-sm font-bold px-3 py-1 rounded-lg">
                 #100
               </span>
               <span className="text-gray-600 text-sm">
@@ -63,7 +63,7 @@ export default function FinancialSection() {
               </span>
             </div>
             <div className="flex items-center space-x-3">
-              <span className="bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-lg">
+              <span className="bg-[#0E766E] text-white text-sm font-bold px-3 py-1 rounded-lg">
                 #19
               </span>
               <span className="text-gray-600 text-sm">
