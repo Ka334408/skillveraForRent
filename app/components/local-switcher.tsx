@@ -29,7 +29,7 @@ export default function LocaleSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#0E766E] hover:bg-white transition w-full text-black mt-2">
+        <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#0E766E] hover:bg-white hover:text-black transition w-full text-white mt-2">
           <Image
             src={`/locale/${locale}.svg`}
             alt={locale}

@@ -165,7 +165,7 @@ export default function Navbar({
                       className={`flex items-center gap-3 px-3 py-3 rounded-xl w-full mt-2 mb-2 text-black ${
                         isActive
                           ? "bg-white text-black font-semibold"
-                          : "bg-[##0E766E] hover:bg-[#0E766E]"
+                          : "bg-[#0E766E] hover:bg-[#0E766E]"
                       }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -179,7 +179,7 @@ export default function Navbar({
                 onClick={() =>
                   handleProtectedClick(`/${locale}/userview/useraccount`)
                 }
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[##0E766E] mt-2 mb-2 hover:bg-[#0E766E]cursor-pointer text-center text-black"
+                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl"
               >
                 <User className="w-5 h-5" />
                 <span className="flex-1  italic">{t("account")}</span>
@@ -187,7 +187,7 @@ export default function Navbar({
 
               <DropdownMenuItem
                 onClick={() => handleProtectedClick(`/${locale}/userview/allFacilities`)}
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-black"
+                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl"
               >
                 <Building className="w-5 h-5" />
                 <span className="flex-1  italic">{t("facilities")}</span>
@@ -195,7 +195,7 @@ export default function Navbar({
 
               <DropdownMenuItem
                 onClick={() => handleProtectedClick(`/${locale}/userview/contactUs`)}
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-black"
+                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span className="flex-1  italic">{t("contact")}</span>
@@ -203,7 +203,7 @@ export default function Navbar({
 
               <DropdownMenuItem
                 onClick={() => handleProtectedClick(`/${locale}/support`)}
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-black"
+                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl"
               >
                 <HelpCircle className="w-5 h-5" />
                 <span className="flex-1  italic">{t("support")}</span>
@@ -213,9 +213,7 @@ export default function Navbar({
               <div className="border-t border-[bg-[#0E766E]] my-3">
                 <LocaleSwitcher />
               </div>
-              <DropdownMenuItem asChild>
-                <ThemeSwitcher />
-              </DropdownMenuItem>
+             
 
               <div className="border-t border-[#0E766E] my-3"></div>
 
@@ -223,7 +221,7 @@ export default function Navbar({
                 <DropdownMenuItem asChild>
                   <Link
                     href="/auth/login"
-                    className="flex items-center gap-3 px-3 py-3 rounded-3xl bg-[#0E766E] hover:bg-white text-center text-black cursor-pointer"
+                    className="flex items-center gap-3 px-3 py-3 rounded-3xl bg-[#0E766E] hover:bg-white text-center text-white text-xl cursor-pointer"
                   >
                     <LogIn className="w-5 h-5 " />
                     <span className="flex-1 ">{t("login")}</span>
@@ -232,7 +230,7 @@ export default function Navbar({
               ) : (
                 <DropdownMenuItem
                   onClick={handleLogout}
-                  className="flex items-center gap-3 px-3 py-3 rounded-3xl bg-[#0E766E] hover:bg-[#0E766E] cursor-pointer text-center text-black "
+                  className="flex items-center gap-3 px-3 py-3 rounded-3xl bg-[#0E766E] hover:bg-[#0E766E] cursor-pointer text-center text-white text-xl "
                 >
                   <LogOut className="w-5 h-5" />
                   <span className="flex-1">{t("logout")}</span>

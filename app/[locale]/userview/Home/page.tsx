@@ -46,11 +46,20 @@ export default function HomePage() {
   }
 
   return (
-    <main dir={locale === "ar" ? "rtl" : "ltr"} className="relative">
+    <main dir={locale === "ar" ? "rtl" : "ltr"} className="relative bg-[#f3f4f4]">
       {/* 🟢 محتوى الهوم */}
       <div className={needsProfile ? "blur-sm pointer-events-none select-none" : ""}>
-        <Header bgColor="bg-[#0E766E]" accounticonColor="bg-[#0E766E]"  hoverColor="hover:bg-[#63bdb6]" menuiconColor="bg-[#0E766E]"
-        activeColor="text-[#0E766E] bg-white" />
+       
+                       <Header
+                      bgColor="bg-[#f3f4f4] border-b-gray-200 border-2" 
+                      accounticonColor="bg-[#0E766E]"
+                      menuiconColor="bg-[#0E766E] text-white rounder-full"
+                      activeColor="bg-[#0E766E] text-white"
+                      textColor="text-[#0E766E]"
+                      hoverColor="hover:bg-[#0E766E] hover:text-white"
+                      
+                      isrounded="rounded-full"
+                    />
         <HeroSection />
         <SearchSection />
         <CategoriesSection />
