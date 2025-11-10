@@ -129,3 +129,16 @@
   animation: marquee-rtl 30s linear infinite;
 }
 
+.leaflet.container{
+  z-index:0 !important
+}
+.leaflet-pane,
+.leaflet-map-pane,
+.leaflet-tile-pane,
+.leaflet-overlay-pane,
+.leaflet-shadow-pane,
+.leaflet-marker-pane,
+.leaflet-tooltip-pane,
+.leaflet-popup-pane {
+  z-index: 0 !important;
+}

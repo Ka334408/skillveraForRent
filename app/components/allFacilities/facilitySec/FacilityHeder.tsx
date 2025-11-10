@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { Star, Share2, Bookmark } from "lucide-react";
+import { Star, Share2, Bookmark, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 export default function FacilityHeader({
   facility,
@@ -17,33 +18,42 @@ export default function FacilityHeader({
   };
 }) {
   const t = useTranslations("facilityHeader");
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const images = [
+    facility.image,
+    facility.image,
+    facility.image,
+    facility.image,
+    facility.image,
+  ]; // مؤقتًا كلها نفس الصورة
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 relative">
       {/* الصور */}
       <div className="md:col-span-2">
-        <div className="relative w-full h-72 rounded-xl overflow-hidden">
+        {/* الصورة الرئيسية */}
+        <div
+          className="relative w-full h-72 rounded-xl overflow-hidden cursor-pointer group"
+          onClick={() => setSelectedImage(facility.image)}
+        >
           <Image
             src={facility.image}
             alt={facility.name}
             fill
-            className="object-cover"
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </div>
 
         {/* صور صغيرة تحت الرئيسية */}
         <div className="flex gap-3 mt-3">
-          {[...Array(5)].map((_, i) => (
+          {images.map((img, i) => (
             <div
               key={i}
-              className="relative w-20 h-20 rounded-lg overflow-hidden"
+              className="relative w-20 h-20 rounded-lg overflow-hidden cursor-pointer hover:opacity-80"
+              onClick={() => setSelectedImage(img)}
             >
-              <Image
-                src={`${facility.image}`}
-                alt="thumb"
-                fill
-                className="object-cover"
-              />
+              <Image src={img} alt={`thumb-${i}`} fill className="object-cover" />
             </div>
           ))}
           <button className="w-20 h-20 border rounded-lg flex items-center justify-center text-sm font-medium text-gray-600">
@@ -90,6 +100,32 @@ export default function FacilityHeader({
           </button>
         </div>
       </div>
+
+      {/* 🔥 Popup overlay */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div
+            className="relative max-w-4xl w-[90%] h-[80%] rounded-xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()} // منع إغلاق البوب أب لما يدوس على الصورة نفسها
+          >
+            <Image
+              src={selectedImage}
+              alt="selected"
+              fill
+              className="object-contain bg-black"
+            />
+            <button
+              className="absolute top-3 right-3 bg-white/80 hover:bg-white text-black rounded-full p-2"
+              onClick={() => setSelectedImage(null)}
+            >
+              <X size={20} />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

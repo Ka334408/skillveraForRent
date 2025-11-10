@@ -90,7 +90,7 @@ export default function Navbar({
     <>
       <nav
         dir={locale === "ar" ? "rtl" : "ltr"}
-        className={` w-full ${bgColor} ${textColor} px-3 sm:px-6 py-3 sm:py-4 flex items-center justify-between`}
+        className={`sticky top-0 z-50 w-full ${bgColor} ${textColor} px-3 sm:px-6 py-3 sm:py-4 flex items-center justify-between`}
       >
         {/* Logo */}
         <div className="font-bold text-lg">{t("logo")}</div>
