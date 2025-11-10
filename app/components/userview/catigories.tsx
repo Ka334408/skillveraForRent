@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Card from "../mainComponents/card";
@@ -12,10 +12,9 @@ export default function CategoriesSection() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [startIndex, setStartIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(true);
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -37,30 +36,11 @@ export default function CategoriesSection() {
       ? items
       : items.filter((item) => item.category.includes(activeCategory));
 
-  // 🌀 التكرار (عشان الانزلاق يكون دائري)
-  const loopedItems = [...filteredItems, ...filteredItems.slice(0, 4)]; // نكرر أول 3 كروت في النهاية
+  // نكرر العناصر مرتين عشان CSS looping يكون seamless
+  const doubledItems = [...filteredItems, ...filteredItems];
 
-  // ⏱ Auto Slide كل 3 ثواني
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-      setStartIndex((prev) => prev + 1);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // 🎯 لما نوصل لآخر كارت من النسخة المكررة، نرجع لأول واحد بدون حركة
-  useEffect(() => {
-    if (startIndex === filteredItems.length) {
-      // بعد انتهاء الانيميشن بوقت قصير جدًا
-      const timeout = setTimeout(() => {
-        setIsTransitioning(false);
-        setStartIndex(0);
-      }, 600); // نفس زمن transition
-      return () => clearTimeout(timeout);
-    }
-  }, [startIndex, filteredItems.length]);
+  // مدة الانيميشن تعتمد على عدد العناصر (أقصر مدة 10s)
+  const animationDuration = Math.max(10, filteredItems.length * 3); // seconds
 
   const handleFavorite = (id: string) => {
     if (!isLoggedIn) {
@@ -98,7 +78,6 @@ export default function CategoriesSection() {
             key={cat.key}
             onClick={() => {
               setActiveCategory(cat.key);
-              setStartIndex(0);
             }}
             className={`px-4 py-2 rounded-full border transition ${
               activeCategory === cat.key
@@ -111,25 +90,48 @@ export default function CategoriesSection() {
         ))}
       </div>
 
-      {/* Cards Slider */}
-      <div ref={containerRef} className="relative w-full overflow-hidden">
+      {/* Cards Slider (CSS infinite loop) */}
+      <div
+        ref={containerRef}
+        className="relative w-full overflow-hidden"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Inline style for CSS variable --duration */}
         <div
-          className={`flex gap-6 ${
-            isTransitioning ? "transition-transform duration-700 ease-in-out" : ""
-          }`}
+          className="flex gap-6 will-change-transform"
           style={{
-            transform: `translateX(-${startIndex * 320}px)`, // كل كارت عرضه تقريبي 320px
+            // نستخدم animation فقط إذا فيه عناصر كافية
+            animation: filteredItems.length > 0
+              ? `${isPaused ? "scrollX" : "scrollX"} ${animationDuration}s linear infinite`
+              : "none",
           }}
         >
-          {loopedItems.map((item, index) => (
-            <Card
-              key={`${item.id}-${index}`}
-              {...item}
-              isFavorite={favorites.includes(item.id)}
-              onFavorite={() => handleFavorite(item.id)}
-            />
+          {doubledItems.map((item, index) => (
+            <div key={`${item.id}-${index}`} style={{ flex: "0 0 auto" }}>
+              <Card
+                {...item}
+                isFavorite={favorites.includes(item.id)}
+                onFavorite={() => handleFavorite(item.id)}
+              />
+            </div>
           ))}
         </div>
+
+        {/* keyframes داخل style tag عشان تكون مهيئة في نفس الكومبوننت */}
+        <style>{`
+          @keyframes scrollX {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+
+          /* لضمان السلاسة، العنصر الأب لازم يكون display:flex وعرض المحتوى المكرر = 200% */
+          .flex[style] {
+            /* fallback in case Tailwind specificity differs; not relied on */
+          }
+
+          /* إذا احتجت توقف الانيميشن عبر كلاس 'paused' ممكن تضيفه */
+        `}</style>
       </div>
 
       {/* Login Modal */}
