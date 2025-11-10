@@ -20,7 +20,7 @@ const categoryData: Record<
   string,
   { name: string; description: string; src: string,price:number }
 > = {
-  Sports: {
+  FootBall: {
     name: "Five-a-side Football Pitch",
     description:
       "Enjoy premium football pitches equipped with artificial turf, lights, and comfortable seating areas for spectators and price includes tax .",
@@ -34,7 +34,7 @@ const categoryData: Record<
     src: "/hotal.jpg",
     price: 800,
   },
-  Health: {
+  HandBall: {
     name: "Hand ball court",
     description:
       "Experience top-tier fitness and relaxation facilities including a gym, spa, and swimming pool and price includs tax.",
@@ -46,7 +46,7 @@ const categoryData: Record<
 // ✅ إنشاء البيانات التجريبية
 const facilitiesData = Array.from({ length: 100 }, (_, i) => {
   const category =
-    i % 3 === 0 ? "Sports" : i % 3 === 1 ? "Education" : "Health";
+    i % 3 === 0 ? "FootBall" : i % 3 === 1 ? "Education" : "HandBall";
   const cat = categoryData[category];
 
   return {

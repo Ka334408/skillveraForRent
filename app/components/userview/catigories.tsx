@@ -60,7 +60,7 @@ export default function CategoriesSection() {
         <h2 className="text-2xl font-bold text-[#0E766E]">{t("title")}</h2>
         <button
           onClick={() => router.push("/userview/allFacilities")}
-          className="text-[#0E766E] font-semibold hover:text-white border-[#2C70E2] px-4 py-2 rounded-full border transition hover:bg-[#2C70E2]"
+          className="text-[#0E766E] font-semibold hover:text-white border-[#0E766E] px-4 py-2 rounded-full border transition hover:bg-[#0E766E]"
         >
           {t("see_all")}
         </button>
@@ -70,9 +70,9 @@ export default function CategoriesSection() {
       <div className="flex gap-3 mb-6 flex-wrap">
         {[
           { key: "all", label: t("all") },
-          { key: "Sports", label: "Sports" },
+          { key: "FootBall", label: "FootBall" },
           { key: "Education", label: "Education" },
-          { key: "hotal", label: "hotal" },
+          { key: "HandBall", label: "HandBall" },
         ].map((cat) => (
           <button
             key={cat.key}

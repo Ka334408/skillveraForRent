@@ -18,7 +18,7 @@ const categoryImages: Record<
   string,
   { name: string; description: string; src: string , price : number}
 > = {
-  Sports: {
+  FootBall: {
     name: "Football Pitch",
     description:
       "Five-a-side Football Pitch Enjoy premium football pitches equipped with artificial turf, lights, and comfortable seating areas for spectators and price includes tax .",
@@ -32,7 +32,7 @@ const categoryImages: Record<
     src: "/hotal.jpg",
     price: 800,
   },
-  Health: {
+  HandBall: {
     name: "Hand ball court",
     description:
       "Experience top-tier fitness and relaxation facilities including a gym, spa, and swimming pool and price includs tax.",
@@ -43,7 +43,7 @@ const categoryImages: Record<
 
 export const facilitiesData = Array.from({ length: 100 }, (_, i) => {
   const category =
-    i % 3 === 0 ? "Sports" : i % 3 === 1 ? "Education" : "Health";
+    i % 3 === 0 ? "FootBall" : i % 3 === 1 ? "Education" : "HandBall";
   const cat = categoryImages[category];
 
   return {
