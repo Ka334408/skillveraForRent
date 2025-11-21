@@ -36,7 +36,7 @@ export default function ProfilePage() {
 
       if (user.image) {
         if (user.image.startsWith("uploads/")) {
-          setProfileImg(`/api/media?media=${user.image}`);
+          setProfileImg(`/media?media=${user.image}`);
         } else {
           setProfileImg(user.image);
         }
@@ -82,6 +82,7 @@ export default function ProfilePage() {
       formData.append("dob", dob);
       formData.append("gender", gender);
       formData.append("phone", phone);
+      formData.append("image",profileImg);
       formData.append("addressLatLong", location);
 
       // Update local store immediately
@@ -94,7 +95,7 @@ export default function ProfilePage() {
       });
 
       // Add image
-      if (profileImg && !profileImg.startsWith("/api/media")) {
+      if (profileImg && !profileImg.startsWith("/media")) {
         const res = await fetch(profileImg);
         const blob = await res.blob();
         formData.append("image", blob, "profile.png");
