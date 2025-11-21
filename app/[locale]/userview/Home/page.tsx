@@ -32,6 +32,7 @@ export default function HomePage() {
         // 🔹 أولاً: لو فيه user في Zustand → استخدمه
         if (user) {
           const { dob, gender } = user;
+          
 
           if (!dob || !gender) setNeedsProfile(true);
           setLoading(false);
@@ -42,10 +43,7 @@ export default function HomePage() {
         const res = await axiosInstance.get("/authentication/current-user");
 
         const fetchedUser =
-          res.data?.user || res.data?.data?.user || null;
-          
-
-        
+          res.data?.user || res.data?.data?.user || null;     
 
         if (fetchedUser) {
           setUser(fetchedUser);

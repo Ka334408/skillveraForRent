@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import api from "@/lib/axiosInstance";
 import { useUserStore } from "@/app/store/userStore";
 import { EyeIcon, EyeOff } from "lucide-react";
+import GuestPage from "@/app/components/protectedpages/guestPage";
 
 export default function Login() {
   const t = useTranslations("loginWords");
@@ -71,6 +72,7 @@ export default function Login() {
   };
 
   return (
+   <div><GuestPage>
     <main
       dir={locale === "ar" ? "rtl" : "ltr"}
       className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
@@ -158,5 +160,6 @@ export default function Login() {
         </div>
       </div>
     </main>
+    </GuestPage></div>
   );
 }
