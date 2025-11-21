@@ -3,11 +3,15 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import GuestPage from "@/app/components/protectedpages/guestPage";
+import axiosInstance from "@/lib/axiosInstance";
+import { useUserStore } from "@/app/store/userStore";
 
 export default function VerifyCode() {
   const t = useTranslations("verify");
   const locale = useLocale();
   const router = useRouter();
+
+  const { resetEmail } = useUserStore(); // ← الإيميل جاي من Zustand
 
   const [code, setCode] = useState(["", "", "", ""]);
   const [timer, setTimer] = useState(30);
@@ -16,7 +20,6 @@ export default function VerifyCode() {
 
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
-  // Focus management
   const handleChange = (value: string, index: number) => {
     if (/^[0-9]?$/.test(value)) {
       const newCode = [...code];
@@ -35,7 +38,6 @@ export default function VerifyCode() {
     }
   };
 
-  // Countdown
   useEffect(() => {
     if (timer > 0) {
       const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
@@ -43,11 +45,16 @@ export default function VerifyCode() {
     }
   }, [timer]);
 
-  // Verify manually with button
   const handleVerify = async () => {
     const verificationCode = code.join("");
-    if (verificationCode.length < code.length) {
+
+    if (verificationCode.length < 4) {
       setError("Please enter full code");
+      return;
+    }
+
+    if (!resetEmail) {
+      setError("Email not found, please go back");
       return;
     }
 
@@ -55,63 +62,49 @@ export default function VerifyCode() {
       setLoading(true);
       setError(null);
 
-      const email = localStorage.getItem("resetEmail");
-      if (!email) throw new Error("Email not found");
-
-      const res = await fetch(
-        "/api/authentication/reset-password/validate-otp",
+      const res = await axiosInstance.post(
+        "/authentication/reset-password/validate-otp",
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, code: verificationCode }),
+          email: resetEmail,
+          code: verificationCode,
         }
       );
+      console.log(res.data);
 
-      if (!res.ok) {
-        throw new Error("Invalid verification code");
+      // 🟢 الباك بيرجع token — دا اللي نبنيه نبعته للـ reset password
+      const token = res.data?.data?.token;
+
+      if (!token) {
+        setError("Token missing from server response");
+        return;
       }
 
-      const data = await res.json();
-      console.log("✅ Verified:", data);
-
-      // Save token and email in localStorage
-      const token = data?.data?.token || verificationCode;
-      localStorage.setItem("resetEmail", email);
+      // خزّن token في localStorage
       localStorage.setItem("resetToken", token);
+
+      console.log("Received token:", token);
 
       router.push("/auth/setNewPass");
     } catch (err: any) {
-      setError(err.message || "Something went wrong");
+      setError(err.response?.data?.message || "Invalid verification code");
     } finally {
       setLoading(false);
     }
   };
 
-  // Resend new code
   const handleResend = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const email = localStorage.getItem("resetEmail");
-
-      const res = await fetch(
-        "http://156.67.24.200:4000/api/authentication/reset-password/request",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        }
+      await axiosInstance.post(
+        "/authentication/reset-password/request",
+        { email: resetEmail }
       );
-
-      if (!res.ok) throw new Error("Failed to resend code");
-
-      const data = await res.json();
-      console.log("📩 New code sent:", data);
 
       setTimer(30);
     } catch (err: any) {
-      setError(err.message || "Something went wrong");
+      setError(err.response?.data?.message || "Failed to resend code");
     } finally {
       setLoading(false);
     }
@@ -122,72 +115,65 @@ export default function VerifyCode() {
   };
 
   return (
-    <div><GuestPage>
-    <main
-      dir={locale === "ar" ? "rtl" : "ltr"}
-      className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
-    >
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-xl flex flex-col items-center justify-center p-8 dark:bg-black">
-        {/* Back */}
-        <button
-          onClick={handleBack}
-          className="self-start text-[#0E766E] mb-6 hover:underline"
-        >
-          ← {t("back")}
-        </button>
+    <GuestPage>
+      <main
+        dir={locale === "ar" ? "rtl" : "ltr"}
+        className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
+      >
+        <div className="bg-white rounded-2xl shadow-lg w-full max-w-xl flex flex-col items-center justify-center p-8 dark:bg-black">
 
-        {/* Title */}
-        <h1 className="text-2xl font-bold mb-2 text-center">{t("title")}</h1>
-        <p className="text-gray-500 text-sm mb-6 text-center">
-          {t("subtitle")}
-        </p>
+          <button
+            onClick={handleBack}
+            className="self-start text-[#0E766E] mb-6 hover:underline"
+          >
+            ← {t("back")}
+          </button>
 
-        {/* Code inputs */}
-        <div className="flex gap-4 mb-6">
-          {code.map((digit, index) => (
-            <input
-              key={index}
-              ref={(el) => (inputsRef.current[index] = el)}
-              type="text"
-              value={digit}
-              maxLength={1}
-              onChange={(e) => handleChange(e.target.value, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              className="w-14 h-14 text-center border-2 border-[#0E766E] rounded-lg text-xl focus:outline-none focus:ring-2 focus:ring-[#0E766E]"
-            />
-          ))}
+          <h1 className="text-2xl font-bold mb-2 text-center">{t("title")}</h1>
+          <p className="text-gray-500 text-sm mb-6 text-center">{t("subtitle")}</p>
+
+          <div className="flex gap-4 mb-6">
+            {code.map((digit, index) => (
+              <input
+                key={index}
+                ref={(el) => (inputsRef.current[index] = el)}
+                type="text"
+                value={digit}
+                maxLength={1}
+                onChange={(e) => handleChange(e.target.value, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                className="w-14 h-14 text-center border-2 border-[#0E766E] rounded-lg text-xl focus:outline-none focus:ring-2 focus:ring-[#0E766E]"
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={handleVerify}
+            disabled={loading}
+            className="bg-[#0E766E] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#0A5F58] disabled:opacity-50"
+          >
+            {loading ? "Loading..." : t("verifyBtn")}
+          </button>
+
+          <div className="mt-4">
+            {timer > 0 ? (
+              <p className="text-gray-600 text-sm">
+                {t("resend", { seconds: timer })}
+              </p>
+            ) : (
+              <button
+                onClick={handleResend}
+                disabled={loading}
+                className="text-[#0E766E] text-sm hover:underline"
+              >
+                {loading ? "..." : t("resendBtn")}
+              </button>
+            )}
+          </div>
+
+          {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
         </div>
-
-        {/* Verify button */}
-        <button
-          onClick={handleVerify}
-          disabled={loading}
-          className="bg-[#0E766E] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#0E766E] disabled:opacity-50"
-        >
-          {loading ? "..." : t("verifyBtn")}
-        </button>
-
-        {/* Timer / Resend */}
-        <div className="mt-4">
-          {timer > 0 ? (
-            <p className="text-gray-600 text-sm">
-              {t("resend", { seconds: timer })}
-            </p>
-          ) : (
-            <button
-              onClick={handleResend}
-              disabled={loading}
-              className="text-[#0E766E] text-sm hover:underline"
-            >
-              {loading ? "..." : t("resendBtn")}
-            </button>
-          )}
-        </div>
-
-        {/* Error */}
-        {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
-      </div>
-    </main>
-    </GuestPage></div>
+      </main>
+    </GuestPage>
   );
 }

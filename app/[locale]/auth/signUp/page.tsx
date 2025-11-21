@@ -6,17 +6,33 @@ import { useTranslations, useLocale } from "next-intl";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import GuestPage from "@/app/components/protectedpages/guestPage";
+import api from "@/lib/axiosInstance";
+import { CheckCircle, AlertCircle, EyeIcon, EyeOff } from "lucide-react";
+import { useUserStore } from "@/app/store/userStore";
+
 
 export default function SignUp() {
   const t = useTranslations("signup");
   const locale = useLocale();
+  const router = useRouter();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState(""); 
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+  const [showPasswordRules, setShowPasswordRules] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // ✅ Password validation logic
+  const rules = [
+    { id: 1, label: "At least 8 characters", test: (p: string) => p.length >= 8 },
+    { id: 2, label: "Contains uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
+    { id: 3, label: "Contains lowercase letter", test: (p: string) => /[a-z]/.test(p) },
+    { id: 4, label: "Contains a number", test: (p: string) => /[0-9]/.test(p) },
+    { id: 5, label: "Contains a special character", test: (p: string) => /[^A-Za-z0-9]/.test(p) },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,40 +40,21 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      // 1) signup
-      const res = await fetch("/api/authentication/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          phone: `+${phone}`,
-          password,
-        }),
+      const { data } = await api.post("/authentication/register", {
+        name,
+        email,
+        phone: `+${phone}`,
+        password,
       });
 
-      const data = await res.json();
       console.log("✅ Signup response:", data);
 
-      if (!res.ok) throw new Error(data.message || "Sign up failed");
-
-      // 2) request verification
-      const verifyRes = await fetch("/api/authentication/request-verification", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const verifyData = await verifyRes.json();
-      console.log("📩 Request verification response:", verifyData);
-
-      if (!verifyRes.ok)
-        throw new Error(verifyData.message || "Verification request failed");
-
-      // 3) redirect to verify page
-      router.push(`/auth/verifyAccount?email=${encodeURIComponent(email)}`);
+      await api.post("/authentication/request-verification", { email });
+      useUserStore.getState().setVarificationEmail(email);
+      router.push(`/auth/verifyAccount`);
     } catch (err: any) {
-      setError(err.message || t("error"));
+      console.error("Signup error:", err);
+      setError(err.response?.data?.message || t("error"));
     } finally {
       setLoading(false);
     }
@@ -85,6 +82,7 @@ export default function SignUp() {
                   className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
                   required
                 />
+
                 <input
                   type="email"
                   placeholder={t("email")}
@@ -105,25 +103,66 @@ export default function SignUp() {
                       required: true,
                     }}
                     placeholder="your phone"
-                    inputClass="!w-full !rounded-full !py-5 !pl-17 !pr-4 !text-gray-700 !border !focus:outline-none !focus:ring-2 !focus:ring-blue-400"
-                    buttonClass="!absolute !left-0 !top-0 !bottom-0 !rounded-l-full !border-none !bg-transparent !focus:ring-blue-400"
+                    inputClass="!w-full !rounded-full !py-5 !pl-17 !pr-4 !text-gray-700 !border !focus:outline-none focus:ring-2 focus:ring-[#0E766E]"
+                    buttonClass="!absolute !left-0 !top-0 !bottom-0 !rounded-l-full !border !bg-transparent focus:ring-2 focus:ring-[#0E766E]"
                     containerClass="!w-full"
                   />
                 </div>
 
-                <input
-                  type="password"
-                  placeholder={t("password")}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
-                  required
-                />
+                {/* Password field + validation */}
+                {/* Password Field + Icon */}
+                <div className="relative w-full">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder={t("password")}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => setShowPasswordRules(true)}
+                    onBlur={() => password === "" && setShowPasswordRules(false)}
+                    className="border rounded-full px-5 py-3 pr-12 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
+                    required
+                  />
+
+                  {/* Show / Hide Password Icon */}
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {showPassword ? <EyeIcon size={20} /> : <EyeOff size={20} />}
+                  </button>
+                </div>
+
+                {/* Password Rules — in separate box */}
+                {showPasswordRules && (
+                  <div className="mt-3 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 text-sm space-y-2 border dark:border-gray-700">
+                    <p className="font-semibold text-gray-700 dark:text-gray-200 mb-2">
+                      Password must include:
+                    </p>
+
+                    {rules.map((rule) => {
+                      const isValid = rule.test(password);
+                      return (
+                        <div
+                          key={rule.id}
+                          className={`flex items-center gap-2 ${isValid ? "text-green-600" : "text-gray-600 dark:text-gray-400"
+                            }`}
+                        >
+                          {isValid ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+                          <span>{rule.label}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
 
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="bg-[#0E766E] text-white rounded-full py-3 font-semibold hover:bg-[#054e47] transition disabled:opacity-50"
+                  disabled={loading || password.trim() === ""}
+                  className={`rounded-full py-3 font-semibold transition ${password.trim() === ""
+                    ? "bg-gray-400 text-white cursor-not-allowed"
+                    : "bg-[#0E766E] text-white hover:bg-[#054e47]"
+                    }`}
                 >
                   {loading ? "Signing Up..." : t("signup")}
                 </button>

@@ -4,12 +4,13 @@ import { useEffect, useState, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Select, { SingleValue } from "react-select";
+import Select from "../../mainComponents/noSSRSelect"; // ← أهم تعديل هنا
 import countryList from "react-select-country-list";
 import { useRouter } from "next/navigation";
 import moment from "moment-timezone";
+import axiosInstance from "@/lib/axiosInstance";
 
-// ✅ Types
+// Types
 interface ProfileFormData {
   fullName: string;
   nickName: string;
@@ -19,13 +20,12 @@ interface ProfileFormData {
   timeZone: string;
 }
 
-// ✅ Type for dropdowns
 type OptionType = {
   value: string;
   label: string;
 };
 
-// ✅ Validation schema
+// Validation schema
 const schema = yup.object().shape({
   fullName: yup.string().required("Full Name is required"),
   nickName: yup.string().required("Nick Name is required"),
@@ -37,9 +37,10 @@ const schema = yup.object().shape({
 
 export default function MyProfile() {
   const router = useRouter();
-  const [userPhoto, setUserPhoto] = useState<string>("/herosec.png");
-  const [userName, setUserName] = useState<string>("User");
-  const [userEmail, setUserEmail] = useState<string>("user@email.com");
+
+  const [userPhoto, setUserPhoto] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
 
   const {
     register,
@@ -51,20 +52,20 @@ export default function MyProfile() {
     resolver: yupResolver(schema),
   });
 
-  // Dropdown data
-  const countries: OptionType[] = useMemo(() => countryList().getData(), []);
-  const genderOptions: OptionType[] = [
+  const countries = useMemo(() => countryList().getData(), []);
+  const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
   ];
-  const languageOptions: OptionType[] = [
+  const languageOptions = [
     { value: "en", label: "English" },
     { value: "ar", label: "Arabic" },
     { value: "fr", label: "French" },
     { value: "de", label: "German" },
     { value: "es", label: "Spanish" },
   ];
-  const timeZones: OptionType[] = useMemo(
+
+  const timeZones = useMemo(
     () =>
       moment.tz.names().map((tz) => ({
         value: tz,
@@ -73,26 +74,38 @@ export default function MyProfile() {
     []
   );
 
-  // Load user info + detect timezone
+  // Fetch real user
   useEffect(() => {
-    const name = localStorage.getItem("name") || "User";
-    const email = localStorage.getItem("email") || "user@email.com";
-    const image = localStorage.getItem("image") || "/herosec.png";
+    const fetchUser = async () => {
+      try {
+        const res = await axiosInstance.get("/authentication/current-user");
+        const user = res.data?.data;
 
-    setUserName(name);
-    setUserEmail(email);
-    setUserPhoto(image);
+        setUserName(user?.name || "User");
+        setUserEmail(user?.email || "");
 
-    // ✅ Detect default timezone
-    const detectedTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if (detectedTZ) {
-      setValue("timeZone", detectedTZ);
-    }
+        setUserPhoto(
+          user?.image ? `/api/media?media=${user.image}` : null
+        );
+
+        setValue("fullName", user?.fullName || "");
+        setValue("nickName", user?.nickName || "");
+        setValue("gender", user?.gender || "");
+        setValue("country", user?.country || "");
+        setValue("language", user?.language || "");
+
+        const detectedTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        setValue("timeZone", user?.timeZone || detectedTZ);
+      } catch (err) {
+        console.log("FETCH USER ERROR:", err);
+      }
+    };
+
+    fetchUser();
   }, [setValue]);
 
-  // On submit
   const onSubmit = (data: ProfileFormData) => {
-    console.log("✅ Submitted Profile:", data);
+    console.log("Submitted Profile:", data);
     router.push("/providerview/dashBoardHome/pendingApprove");
   };
 
@@ -100,20 +113,27 @@ export default function MyProfile() {
     <div className="max-w-4xl mx-auto p-8 bg-gray-100 rounded-xl shadow">
       <h2 className="text-[#0E766E] font-semibold text-xl mb-6">My profile</h2>
 
-      {/* Top section with image + name + email */}
+      {/* Top section */}
       <div className="flex items-center gap-4 mb-8">
-        <img
-          src={userPhoto}
-          alt="User Avatar"
-          className="w-16 h-16 rounded-full object-cover"
-        />
+        {userPhoto ? (
+          <img
+            src={userPhoto}
+            alt="User Avatar"
+            className="w-16 h-16 rounded-full object-cover"
+          />
+        ) : (
+          <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-2xl">
+            👤
+          </div>
+        )}
+
         <div>
           <h3 className="font-bold text-lg">{userName}</h3>
           <p className="text-gray-500">{userEmail}</p>
         </div>
       </div>
 
-      {/* Form */}
+      {/* FORM */}
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-6">
         {/* Full Name */}
         <div>
@@ -123,7 +143,7 @@ export default function MyProfile() {
           <input
             type="text"
             {...register("fullName")}
-            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+            className="w-full border rounded-lg px-3 py-2"
           />
           {errors.fullName && (
             <p className="text-red-500 text-sm">{errors.fullName.message}</p>
@@ -138,14 +158,14 @@ export default function MyProfile() {
           <input
             type="text"
             {...register("nickName")}
-            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+            className="w-full border rounded-lg px-3 py-2"
           />
           {errors.nickName && (
             <p className="text-red-500 text-sm">{errors.nickName.message}</p>
           )}
         </div>
 
-        {/* Gender Dropdown */}
+        {/* Gender */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Gender</label>
           <Controller
@@ -155,19 +175,14 @@ export default function MyProfile() {
               <Select
                 options={genderOptions}
                 value={genderOptions.find((g) => g.value === field.value) || null}
-                onChange={(val: SingleValue<OptionType>) =>
-                  field.onChange(val?.value)
-                }
+                onChange={(val) => field.onChange((val as OptionType)?.value)}
                 placeholder="Select gender"
               />
             )}
           />
-          {errors.gender && (
-            <p className="text-red-500 text-sm">{errors.gender.message}</p>
-          )}
         </div>
 
-        {/* Country Dropdown */}
+        {/* Country */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Country</label>
           <Controller
@@ -177,19 +192,14 @@ export default function MyProfile() {
               <Select
                 options={countries}
                 value={countries.find((c) => c.value === field.value) || null}
-                onChange={(val: SingleValue<OptionType>) =>
-                  field.onChange(val?.value)
-                }
+                onChange={(val) => field.onChange((val as OptionType)?.value)}
                 placeholder="Select country"
               />
             )}
           />
-          {errors.country && (
-            <p className="text-red-500 text-sm">{errors.country.message}</p>
-          )}
         </div>
 
-        {/* Language Dropdown */}
+        {/* Language */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Language</label>
           <Controller
@@ -201,19 +211,14 @@ export default function MyProfile() {
                 value={
                   languageOptions.find((l) => l.value === field.value) || null
                 }
-                onChange={(val: SingleValue<OptionType>) =>
-                  field.onChange(val?.value)
-                }
+                onChange={(val) => field.onChange((val as OptionType)?.value)}
                 placeholder="Select language"
               />
             )}
           />
-          {errors.language && (
-            <p className="text-red-500 text-sm">{errors.language.message}</p>
-          )}
         </div>
 
-        {/* Time Zone Dropdown */}
+        {/* Timezone */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Time Zone</label>
           <Controller
@@ -223,34 +228,22 @@ export default function MyProfile() {
               <Select
                 options={timeZones}
                 value={timeZones.find((t) => t.value === field.value) || null}
-                onChange={(val: SingleValue<OptionType>) =>
-                  field.onChange(val?.value)
-                }
-                placeholder="Select time zone"
+                onChange={(val) => field.onChange((val as OptionType)?.value)}
+                placeholder="Select Timezone"
               />
             )}
           />
-          {errors.timeZone && (
-            <p className="text-red-500 text-sm">{errors.timeZone.message}</p>
-          )}
         </div>
 
-        {/* Submit button */}
-        <div className="col-span-2 flex justify-end mt-4">
+        <div className="col-span-2 flex justify-end">
           <button
             type="submit"
-            className="bg-[#0E766E] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+            className="bg-[#0E766E] text-white px-6 py-2 rounded-lg"
           >
             Save Changes
           </button>
         </div>
       </form>
-
-      {/* Footer Note */}
-      <p className="mt-6 text-gray-500 text-sm">
-        Users can see your profile and it may appear across Skava to help us
-        build trust in our community
-      </p>
     </div>
   );
 }

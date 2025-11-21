@@ -14,20 +14,55 @@ import {
   LogOut,
   Menu,
   X,
+  User,
 } from "lucide-react";
+import axiosInstance from "@/lib/axiosInstance";
+import { useUserStore } from "@/app/store/userStore";
 import { useLocale } from "next-intl";
 
 export default function ProviderSidebar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState<{ name: string } | null>(null);
+  const [loadingUser, setLoadingUser] = useState(true);
+
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale();
 
+  // Zustand
+  const { user, setUser, isHydrated } = useUserStore();
+
+  // ⭐ نفس منطق HomePage
   useEffect(() => {
-    const name = localStorage.getItem("name");
-    setUser({ name: name || "Provider" });
-  }, []);
+    const fetchUser = async () => {
+      try {
+        if (!isHydrated) return; // مهم جداً
+
+        // لو في User في Zustand → استخدمه
+        if (user) {
+          setLoadingUser(false);
+          return;
+        }
+
+        // لو مش موجود → هات من الـ API
+        const res = await axiosInstance.get("/authentication/current-user");
+
+        const fetchedUser =
+          res.data?.user || res.data?.data?.user || null;
+
+        if (fetchedUser) {
+          setUser(fetchedUser);
+        } else {
+          console.warn("Sidebar: no user returned");
+        }
+      } catch (err) {
+        console.error("Sidebar fetch user error:", err);
+      } finally {
+        setLoadingUser(false);
+      }
+    };
+
+    fetchUser();
+  }, [isHydrated]);
 
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, href: `/${locale}/providerview/dashBoardHome/dashBoard` },
@@ -45,11 +80,6 @@ export default function ProviderSidebar() {
   const isActive = (href: string) => pathname.toLowerCase() === href.toLowerCase();
 
   const handleLogout = () => {
-    // امسح بيانات اليوزر
-    localStorage.removeItem("name");
-    localStorage.removeItem("token"); // لو بتخزن التوكن هنا
-
-    // اعمل redirect
     router.push(`/${locale}/auth/login`);
   };
 
@@ -81,7 +111,6 @@ export default function ProviderSidebar() {
           md:static md:translate-x-0 md:border-r
         `}
       >
-        {/* Close Button on Mobile */}
         <button
           onClick={() => setIsOpen(false)}
           className="md:hidden absolute top-4 right-4 text-gray-600"
@@ -91,8 +120,17 @@ export default function ProviderSidebar() {
 
         {/* 🔹 الجزء العلوي */}
         <div className="flex-1 overflow-y-auto">
-          <h2 className="text-xl font-bold mb-6">{user?.name}</h2>
-          <p className="mb-5 border-t-2 border-t-[#0E766E] "></p>
+          {/* 🟢 اسم اليوزر */}
+          <div className="flex items-center gap-3 mb-6 mt-4">
+          <User className="w-7 h-7 text-[#0E766E]" />
+          { (
+            <h2 className="text-xl font-bold">
+              {loadingUser ? "Skillvera" : user?.name || "Provider"}
+            </h2>
+          )}
+        </div>
+
+          <p className="mb-5 border-t-2 border-t-[#0E766E]" />
 
           {/* Main Menu */}
           <nav className="flex flex-col gap-2 mb-6">
