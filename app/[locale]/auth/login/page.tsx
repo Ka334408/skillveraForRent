@@ -1,8 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import LocalizedLink from "@/app/components/localized-link";
 import { useRouter } from "next/navigation";
+import api from "@/lib/axiosInstance";
+import { useUserStore } from "@/app/store/userStore";
+import { EyeIcon, EyeOff } from "lucide-react";
 
 export default function Login() {
   const t = useTranslations("loginWords");
@@ -13,33 +16,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
-
-    if (token && role) {
-      switch (role) {
-        case "user":
-          router.replace("/userview/Home");
-          break;
-        case "admin":
-          router.replace("/admin/dashboard");
-          break;
-        case "provider":
-          router.replace("/provider/dashboard");
-          break;
-        case "moderator":
-          router.replace("/moderator/dashboard");
-          break;
-        default:
-          router.replace("/");
-      }
-    } else {
-      setCheckingAuth(false);
-    }
-  }, [router]);
+  const { setUser, setToken } = useUserStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,55 +26,26 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        "/api/authentication/user/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-            fcm: "string",
-            bioAuthToken: "string",
-          }),
-        }
+      const res = await api.post(
+        "/authentication/user/login",
+        { email, password },
+        { withCredentials: true }
       );
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || "Invalid credentials");
-      }
+      const payload = res.data?.data;
+      if (!payload) throw new Error("Invalid response from server");
 
-      const payload = data.data;
-      if (!payload) {
-        throw new Error("⚠ No 'data' object found in response");
-      }
-
-      const token = payload.accessToken;
       const user = payload.user;
+      const token = payload.token || payload.accessToken;
 
-      if (!user) {
-        throw new Error("⚠ No user object found in response data");
-      }
+      if (!user) throw new Error("User object missing");
+      if (!token) throw new Error("Token missing from API");
 
-      localStorage.setItem("token", token || "");
-      localStorage.setItem("email", email);
-      localStorage.setItem("name", user.name);
-      localStorage.setItem("image", user.image);
-      localStorage.setItem("gender", user.gender);
-      localStorage.setItem("addressLatLong", user.addressLatLong);
-      localStorage.setItem("dob", user.dob);
-      localStorage.setItem("phone", user.phone);
+      // ✅ Save user & token in Zustand (PERSISTENT)
+      setUser(user);
+      setToken(token);
 
-      const role = user.type ? user.type.toLowerCase() : null;
-
-      if (!role) {
-        throw new Error("⚠ No role type found for this user");
-      }
-
-      localStorage.setItem("role", role);
+      const role = user.type.toLowerCase();
 
       switch (role) {
         case "user":
@@ -114,32 +64,21 @@ export default function Login() {
           router.replace("/");
       }
     } catch (err: any) {
-      setError(err.message || "Something went wrong");
+      setError(err?.response?.data?.message || err.message || "Login failed");
     } finally {
       setLoading(false);
     }
   };
-
-  
-  if (checkingAuth) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-200 dark:bg-[#0a0a0a]">
-        <div className="flex flex-col items-center gap-4">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-[#0E766E] animate-bounce">
-          Skillvera
-        </h1>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <main
       dir={locale === "ar" ? "rtl" : "ltr"}
       className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
     >
+      {/* ---- UI ---- */}
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden dark:bg-black">
-        {/* Left side */}
+        
+        {/* left images */}
         <div className="md:w-1/2 grid grid-cols-2 gap-4 bg-gray-100 p-6 dark:bg-black">
           <div className="col-span-2 mt-5 bg-gray-300 rounded-xl h-40 flex items-center justify-center">
             <span className="text-gray-700">Image 1</span>
@@ -152,7 +91,7 @@ export default function Login() {
           </div>
         </div>
 
-        {/* Right side */}
+        {/* right form */}
         <div className="flex flex-col justify-center p-8 md:w-1/2 w-full">
           <h1 className="text-black text-2xl font-bold mb-2">{t("welcome")}</h1>
           <p className="text-gray-500 text-sm mb-8">{t("tagline")}</p>
@@ -166,14 +105,25 @@ export default function Login() {
               className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
               required
             />
-            <input
-              type="password"
-              placeholder={t("password")}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
-              required
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder={t("password")}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
+                required
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-4 flex items-center text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? <EyeIcon size={20} /> : <EyeOff size={20} />}
+              </button>
+            </div>
 
             <div className="flex justify-end">
               <a
@@ -192,13 +142,12 @@ export default function Login() {
               {loading ? t("loading") : t("login")}
             </button>
 
-            {error && (
-              <p className="text-red-500 text-sm text-center">{error}</p>
-            )}
+            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           </form>
 
           <div className="mt-6 flex justify-center items-center gap-2 text-sm">
             <span className="text-gray-600">{t("no_account")}</span>
+
             <LocalizedLink
               href="/auth/signUp"
               className="text-[#0E766E] font-semibold hover:underline"

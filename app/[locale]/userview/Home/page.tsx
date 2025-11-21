@@ -1,7 +1,10 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/app/store/userStore";
+import axiosInstance from "@/lib/axiosInstance";
 import HeroSection from "../../../components/userview/heroSection";
 import SearchSection from "../../../components/userview/searchBar";
 import CategoriesSection from "../../../components/userview/catigories";
@@ -11,34 +14,63 @@ import FAQSection from "@/app/components/userview/FAQSec";
 import FeaturesSection from "@/app/components/userview/FeaturesSec";
 import DownloadSection from "@/app/components/userview/downloadappsec";
 import Header from "@/app/components/header";
-import Footer from "@/app/components/footer";
 
 export default function HomePage() {
   const [needsProfile, setNeedsProfile] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { isHydrated}=useUserStore();
+
   const locale = useLocale();
   const router = useRouter();
 
+  const { user, setUser } = useUserStore();
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const checkUser = async () => {
+      try {
+        if(!isHydrated) return null;
+        // 🔹 أولاً: لو فيه user في Zustand → استخدمه
+        if (user) {
+          const { dob, gender } = user;
 
-    if (token) {
-      // ✅ لو عامل لوج ان شيك على الـ DOB & Gender
-      const dob = localStorage.getItem("dob");
-      const gender = localStorage.getItem("gender");
+          if (!dob || !gender) setNeedsProfile(true);
+          setLoading(false);
+          return;
+        }
 
-      if (!dob || !gender || dob === "null" || gender === "null") {
-        setNeedsProfile(true);
+        // 🔹 ثانياً: لو مفيش user في Zustand → هات الـ current user
+        const res = await axiosInstance.get("/authentication/current-user");
+
+        const fetchedUser =
+          res.data?.user || res.data?.data?.user || null;
+          
+
+        
+
+        if (fetchedUser) {
+          setUser(fetchedUser);
+
+          const { dob, gender } = fetchedUser;
+
+          if (!dob || !gender) setNeedsProfile(true);
+        } else {
+          console.warn("No user returned from API");
+        }
+      } catch (err) {
+        console.error("Error fetching current user:", err);
+      } finally {
+        setLoading(false);
       }
-    }
+    };
 
-    setLoading(false);
+    checkUser();
   }, []);
 
+  // 🔄 Loader
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-       <h1 className="text-4xl md:text-5xl font-extrabold text-[#0E766E] animate-bounce">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#0E766E] animate-bounce">
           Skillvera
         </h1>
       </div>
@@ -47,19 +79,18 @@ export default function HomePage() {
 
   return (
     <main dir={locale === "ar" ? "rtl" : "ltr"} className="relative bg-[#f3f4f4]">
-      {/* 🟢 محتوى الهوم */}
       <div className={needsProfile ? "blur-sm pointer-events-none select-none" : ""}>
-       
-                       <Header
-                      bgColor="bg-[#f3f4f4] border-b-gray-200 " 
-                      accounticonColor="bg-[#0E766E]"
-                      menuiconColor="bg-[#0E766E] text-white rounder-full"
-                      activeColor="bg-[#0E766E] text-white"
-                      textColor="text-[#0E766E]"
-                      hoverColor="hover:bg-[#0E766E] hover:text-white"
-                      enable="border-none"
-                      isrounded="rounded-full"
-                    />
+        <Header
+          bgColor="bg-[#f3f4f4] border-b-gray-200 "
+          accounticonColor="bg-[#0E766E]"
+          menuiconColor="bg-[#0E766E] text-white rounder-full"
+          activeColor="bg-[#0E766E] text-white"
+          textColor="text-[#0E766E]"
+          hoverColor="hover:bg-[#0E766E] hover:text-white"
+          enable="border-none"
+          isrounded="rounded-full"
+        />
+
         <HeroSection />
         <SearchSection />
         <CategoriesSection />
@@ -70,7 +101,7 @@ export default function HomePage() {
         <DownloadSection />
       </div>
 
-      {/* 🟢 أوفرلاي الرسالة */}
+      {/* 🔸 Overlay message */}
       {needsProfile && (
         <div className="fixed top-20 right-4 z-50">
           <div className="bg-white rounded-lg shadow-lg p-4 text-left max-w-xs border border-gray-200 mr-5">

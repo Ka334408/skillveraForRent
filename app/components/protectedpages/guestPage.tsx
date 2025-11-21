@@ -2,20 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/app/store/userStore";
 
 export default function GuestPage({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const user = useUserStore(); // <-- جاي من zustand
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      router.replace("/userview/Home"); // أو "/dashboard" لو عندك صفحة داشبورد
+    if (user) {
+      router.replace("/userview/Home"); 
+      // لو لوجين بالفعل ارميه على الهوم
     } else {
-      setLoading(false); // مفيش لوجين → سيبه يدخل
+      setLoading(false); // مفيش يوزر → سيبه يدخل
     }
-  }, [router]);
+  }, [user, router]);
 
   if (loading) {
     return (

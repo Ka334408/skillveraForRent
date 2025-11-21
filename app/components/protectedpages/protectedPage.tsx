@@ -2,31 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/app/store/userStore";
 
 export default function ProtectedPage({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const user = useUserStore();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      router.replace("/"); 
+    // لو مفيش يوزر → رجّعه للصفحة الرئيسية
+    if (!user) {
+      router.replace("/userview/Home");
     } else {
-      setLoading(false); 
+      setLoading(false);
     }
-
-    const handleStorage = () => {
-      if (!localStorage.getItem("token")) {
-        router.replace("/userview/Home");
-      }
-    };
-    window.addEventListener("storage", handleStorage);
-
-    return () => {
-      window.removeEventListener("storage", handleStorage);
-    };
-  }, [router]);
+  }, [user, router]);
 
   if (loading) {
     return (

@@ -19,7 +19,7 @@ export default function Benefits() {
       </div>
 
       {/* تكبير جزء الكلام بحيث يبقى بنفس طول الصورة */}
-      <div className="w-full md:w-2/3 border border-blue-500 rounded-xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="w-full md:w-2/3 border border-[#0E766E] rounded-xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <h3 className="font-bold mb-2">{t("responsable")}</h3>
           <p className="text-gray-600 text-sm">{t("text")}</p>

@@ -4,101 +4,129 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useUserStore } from "@/app/store/userStore";
 
 export default function ProfileCard() {
+  const { user, setUser } = useUserStore();
   const t = useTranslations("proPhoto");
-  const [name, setName] = useState("");
-  const [filePreview, setFilePreview] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
   const router = useRouter();
 
-  // يجيب الصورة من الـ API/media
+  const [name, setName] = useState("");
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // 🔥 NEW → Saving + Saved UI
+  const [saving, setSaving] = useState(false);
+  const [savedMessage, setSavedMessage] = useState<string | null>(null);
+
+  const fileRef = useRef<HTMLInputElement | null>(null);
+
+  // مسار الـ API بتاع الصور
   const fetchImageFromApi = async (path: string) => {
     try {
-      const res = await fetch(`/api/media?media=${path}`);
-      if (!res.ok) throw new Error("Failed to fetch image");
-      const blob = await res.blob();
-      return URL.createObjectURL(blob);
+      const res = await axios.get(`/api/media?media=${path}`, {
+        responseType: "blob",
+      });
+
+      const url = URL.createObjectURL(res.data);
+      return url;
     } catch (err) {
-      console.error("Image fetch error:", err);
+      console.error("Failed to load image:", err);
       return null;
     }
   };
 
-  // تحميل الاسم والصورة من localStorage
+  // Load data from Zustand
   useEffect(() => {
-    const storedName = localStorage.getItem("name");
-    const storedImage = localStorage.getItem("image");
-
-    if (storedName) setName(storedName);
-
-    if (storedImage && storedImage !== "null") {
-      if (storedImage.startsWith("uploads/")) {
-        // لو المسار من السيرفر → جيبه من API
-        fetchImageFromApi(storedImage).then((url) => {
-          if (url) setFilePreview(url);
-        });
-      } else {
-        // لو blob أو base64
-        setFilePreview(storedImage);
-      }
+    if (!user) {
+      setLoading(false);
+      return;
     }
-  }, []);
 
-  // يفتح input file
+    setName(user.name || "");
+    console.log(user.email)
+
+    if (user.image && user.image.startsWith("uploads/")) {
+      fetchImageFromApi(user.image).then((url) => {
+        if (url) setFilePreview(url);
+        setLoading(false);
+      });
+    } else if (user.image) {
+      setFilePreview(user.image);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
+
+  // يفتح input
   const handleChoose = () => fileRef.current?.click();
 
-  // لما يغير الصورة
+  // لما يختار صورة جديدة
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
+
     const url = URL.createObjectURL(f);
     setFilePreview(url);
+
+    setUser({
+      ...user!,
+      image: url,
+    });
   };
 
-  // لما يغير الاسم
-  const handleNameChange = (value: string) => {
-    setName(value);
-  };
-
-  // لما يضغط Save
+  // 🔥 NEW → SAVE مع Animation + رسالة نجاح
   const handleSave = () => {
-    localStorage.setItem("name", name);
-    localStorage.setItem("image", filePreview ?? "null");
-    setMessage("Profile saved successfully ✅");
-    setTimeout(() => setMessage(null), 2000);
+    setSaving(true);
+    setSavedMessage(null);
+
+    setTimeout(() => {
+      setSaving(false);
+      setUser({
+        ...user!,
+        name,
+        image: filePreview,
+      });
+
+      setSavedMessage("Saved successfully ✓");
+
+      setTimeout(() => setSavedMessage(null), 2000);
+    }, 1200);
   };
+
+  if (loading) {
+    return (
+      <div className="w-full h-64 flex items-center justify-center">
+        <h1 className="text-3xl font-bold text-[#0E766E] animate-pulse">
+          SkillVera
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto py-8 px-4">
-      <h3 className="text-2xl font-semibold mb-6">
-        {t ? t("aboutTitle") : "About me"}
-      </h3>
+      <h3 className="text-2xl font-semibold mb-6">{t("aboutTitle")}</h3>
 
       <div className="flex flex-col md:flex-row items-start gap-10">
-        {/* left card */}
+        {/* LEFT CARD */}
         <div className="w-full md:w-1/2 lg:w-1/3">
           <div className="rounded-2xl p-6 text-center min-h-[220px] flex flex-col items-center justify-center">
-            {/* صورة أو Placeholder */}
+
+            {/* الصورة */}
             {filePreview ? (
               <div className="rounded-lg overflow-hidden w-48 h-48 mx-auto">
-                <Image
+                <img
                   src={filePreview}
-                  alt="avatar"
-                  className="w-auto h-auto object-cover"
-                  width={192}
-                  height={192}
+                  className="object-cover w-full h-full"
+                  alt="profile"
                 />
               </div>
             ) : (
               <div className="w-48 h-48 flex items-center justify-center rounded-lg bg-[#0E766E] mx-auto">
-                <svg
-                  width="72"
-                  height="72"
-                  viewBox="0 0 24 24"
-                  className="text-white opacity-90"
-                >
+                <svg width="72" height="72" viewBox="0 0 24 24" className="text-white opacity-90">
                   <path
                     fill="none"
                     stroke="white"
@@ -117,20 +145,35 @@ export default function ProfileCard() {
 
             <div className="mt-4 text-black font-semibold text-lg">{name}</div>
 
-            <div className="mt-4 flex flex-wrap gap-3 justify-center">
+            <div className="mt-4 flex gap-3 justify-center">
               <button
                 onClick={handleChoose}
                 className="bg-gray-300 text-black px-5 py-2 rounded-full font-medium"
               >
-                {t ? t("choose") : "Choose image"}
+                {t("choose")}
               </button>
 
               <button
                 onClick={handleSave}
                 className="bg-[#0E766E] text-white px-5 py-2 rounded-full font-medium"
               >
-                {t ? t("save") : "Save"}
+                {saving ? "Saving..." : t("save")}
               </button>
+            </div>
+
+            {/* 🔥 NEW → MESSAGE */}
+            <div className="mt-3 h-6">
+              {saving && (
+                <span className="text-[#0E766E] animate-pulse font-medium">
+                  Saving...
+                </span>
+              )}
+
+              {savedMessage && (
+                <span className="text-green-600 font-medium">
+                  {savedMessage}
+                </span>
+              )}
             </div>
 
             <input
@@ -140,36 +183,28 @@ export default function ProfileCard() {
               onChange={onFileChange}
               className="hidden"
             />
-
-            {message && (
-              <div className="mt-3 text-sm text-green-600">{message}</div>
-            )}
           </div>
         </div>
 
-        {/* right info */}
+        {/* RIGHT */}
         <div className="flex-1">
-          <h4 className="text-2xl font-bold mb-3">
-            {t ? t("completeTitle") : "Complete your profile"}
-          </h4>
-          <p className="text-gray-600 mb-4 leading-6">
-            {t
-              ? t("completeDesc")
-              : "Add a profile picture and some info to complete your profile."}
-          </p>
+          <h4 className="text-2xl font-bold mb-3">{t("completeTitle")}</h4>
+
+          <p className="text-gray-600 mb-4 leading-6">{t("completeDesc")}</p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
             <input
               value={name}
-              onChange={(e) => handleNameChange(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               className="px-4 py-3 border rounded-lg w-full sm:flex-1"
-              placeholder={t ? t("namePlaceholder") : "Your name"}
+              placeholder={t("namePlaceholder")}
             />
+
             <button
               onClick={() => router.push("/userview/userProfile")}
               className="bg-[#0E766E] text-white px-6 py-3 rounded-lg w-full sm:w-auto"
             >
-              {t ? t("getStarted") : "getStarted"}
+              {t("getStarted")}
             </button>
           </div>
         </div>

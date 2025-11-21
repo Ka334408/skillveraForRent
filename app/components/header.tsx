@@ -18,15 +18,12 @@ import {
   Menu,
   LogOut,
   LogIn,
-  Router,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LocaleSwitcher from "./local-switcher";
-import ThemeSwitcher from "./darkModeBtn";
 import LoginModal from "./loginmodel";
-import { useRouter } from "next/navigation";
-
+import { useUserStore } from "@/app/store/userStore";
 
 interface NavbarProps {
   bgColor?: string;
@@ -49,33 +46,29 @@ export default function Navbar({
   enable = "hidden sm:inline",
   isrounded = "rounded-md",
 }: NavbarProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false); 
   const locale = useLocale();
   const t = useTranslations("navbar");
   const pathname = usePathname();
-  const router =useRouter()
+  const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
+  // Zustand Auth
+  const user = useUserStore((state) => state.user);
+  const logout = useUserStore((state) => state.logout);
+
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const isLoggedIn = !!user;
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("role");
-    localStorage.removeItem("name");
-    setIsLoggedIn(false);
-    router.replace( `/${locale}/userview/Home`);
+    logout(); // Zustand logout
+    router.replace(`/${locale}/userview/Home`);
   };
 
-  
   const handleProtectedClick = (href: string) => {
     if (!isLoggedIn) {
-      setShowLoginModal(true); 
+      setShowLoginModal(true);
     } else {
-      router.push( href); 
+      router.push(href);
     }
   };
 
@@ -95,7 +88,7 @@ export default function Navbar({
         {/* Logo */}
         <div className="font-bold text-lg">{t("logo")}</div>
 
-        {/* Links - Desktop */}
+        {/* Desktop Nav */}
         <div className="hidden md:flex gap-4">
           {navLinks.map(({ href, label }) => {
             const isActive = pathname === href;
@@ -104,9 +97,8 @@ export default function Navbar({
               <Link
                 key={href}
                 href={href}
-                className={`px-3 py-2 rounded-lg transition text-sm lg:text-lg font-bold ${
-                  isActive ? activeColor : `${hoverColor} ${textColor}`
-                }`}
+                className={`px-3 py-2 rounded-lg transition text-sm lg:text-lg font-bold ${isActive ? activeColor : `${hoverColor} ${textColor}`
+                  }`}
               >
                 {label}
               </Link>
@@ -114,33 +106,36 @@ export default function Navbar({
           })}
         </div>
 
-        {/* Right side */}
+        {/* Right Side */}
         <div className="flex items-center gap-1">
+          {/* Become host */}
           <Button
-            onClick={() =>
-                  handleProtectedClick(`/${locale}/providerview/Home`)}
+            onClick={() => handleProtectedClick(`/${locale}/providerview/Home`)}
             variant="outline"
-            className={`${enable} bg-transparent font-bold border-2 ${textColor}  border-white hover:bg-white hover:text-[#0E766E] ${hoverColor}`}
+            className={`${enable} bg-transparent font-bold border-2 ${textColor} border-white hover:bg-white hover:text-[#0E766E]`}
           >
             {t("become_host")}
           </Button>
 
+          {/* Sign up Button */}
           {!isLoggedIn && (
             <Button className="bg-[#0E766E] text-white font-semibold hover:bg-gray-100 hover:text-black">
               <Link href="/auth/signUp">{t("signup")}</Link>
             </Button>
           )}
+
+          {/* User Profile Icon */}
           {isLoggedIn && (
             <Button
-              className={`rounded-full text-gray-200 border-gray-200 ${accounticonColor} border-2 font-semibold hover:bg-gray-100 hover:text-black`}
+              className={`rounded-full border-2 ${accounticonColor} border-gray-200 text-gray-200 hover:bg-gray-100 hover:text-black`}
             >
-              <Link href="/userview/useraccount">
+              <Link href={`/${locale}/userview/useraccount`}>
                 <User className="w-8 h-8" />
               </Link>
             </Button>
           )}
 
-          {/* Hamburger Dropdown */}
+          {/* MOBILE MENU */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
@@ -154,19 +149,17 @@ export default function Navbar({
               align="end"
               className="w-64 bg-[#0E766E] text-white rounded-xl shadow-xl p-4 text-lg z-20"
             >
-              {/* Mobile Links */}
+              {/* Mobile Nav Items */}
               <div className="sm:hidden">
                 {navLinks.map(({ href, label, icon: Icon }) => {
                   const isActive = pathname === href;
+
                   return (
                     <DropdownMenuItem
                       key={href}
-                      onClick={() => router.push(href)} 
-                      className={`flex items-center gap-3 px-3 py-3 rounded-xl w-full mt-2 mb-2 text-white text-lg ${
-                        isActive
-                          ? "bg-white text-black font-semibold"
-                          : "bg-[#0E766E] hover:bg-[#0E766E]"
-                      }`}
+                      onClick={() => router.push(href)}
+                      className={`flex items-center gap-3 px-3 py-3 rounded-xl w-full mt-2 mb-2 text-white text-lg ${isActive ? "bg-white text-black font-semibold" : "bg-[#0E766E]"
+                        }`}
                     >
                       <Icon className="w-5 h-5" />
                       <span className="flex-1 text-center">{label}</span>
@@ -175,65 +168,62 @@ export default function Navbar({
                 })}
               </div>
 
+              {/* Protected Links */}
               <DropdownMenuItem
-                onClick={() =>
-                  handleProtectedClick(`/${locale}/userview/useraccount`)
-                }
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg"
+                onClick={() => handleProtectedClick(`/${locale}/userview/useraccount`)}
+                className="px-3 py-3 rounded-xl bg-[#0E766E] mb-2 flex justify-between items-center"
               >
                 <User className="w-5 h-5" />
-                <span className="flex-1  italic">{t("account")}</span>
+                <span className="flex-1 text-center text-lg">{t("account")}</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem
                 onClick={() => handleProtectedClick(`/${locale}/userview/allFacilities`)}
-                className="flex items-center gap-1 px-3 py-3 roundedlg bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg"
+                className="px-3 py-3 rounded-xl bg-[#0E766E] mb-2 flex justify-between items-center"
               >
                 <Building className="w-5 h-5" />
-                <span className="flex-1  italic">{t("facilities")}</span>
+                <span className="flex-1 text-center text-lg">{t("facilities")}</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem
                 onClick={() => handleProtectedClick(`/${locale}/userview/contactUs`)}
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg"
+                className="px-3 py-3 rounded-xl bg-[#0E766E] mb-2 flex justify-between items-center"
               >
                 <MessageCircle className="w-5 h-5" />
-                <span className="flex-1  italic">{t("contact")}</span>
+                <span className="flex-1 text-center text-lg">{t("contact")}</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem
                 onClick={() => handleProtectedClick(`/${locale}/support`)}
-                className="flex items-center gap-1 px-3 py-3 rounded-xl bg-[#0E766E] mt-2 mb-2 hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg"
+                className="flex items-center gap-3 px-3 py-3 rounded-xl bg-[#0E766E] mb-2"
               >
                 <HelpCircle className="w-5 h-5" />
-                <span className="flex-1  italic">{t("support")}</span>
+                <span className="flex-1 text-center text-lg">{t("support")}</span>
               </DropdownMenuItem>
 
-              {/* Lang Switcher */}
-              <div className="border-t border-[bg-[#0E766E]] my-3">
+              {/* Language */}
+              <div className="border-t border-[#0E766E] my-3">
                 <LocaleSwitcher />
               </div>
-             
 
-              <div className="border-t border-[#0E766E] my-3"></div>
-
+              {/* LOGIN / LOGOUT */}
               {!isLoggedIn ? (
                 <DropdownMenuItem asChild>
                   <Link
                     href="/auth/login"
-                    className="flex items-center gap-3 px-3 py-3 rounded-3xl bg-[#0E766E] hover:bg-white text-center text-white text-xl cursor-pointer"
+                    className="flex items-center gap-3 px-3 py-3 rounded-xl bg-[#0E766E] "
                   >
-                    <LogIn className="w-5 h-5 " />
-                    <span className="flex-1 ">{t("login")}</span>
+                    <LogIn className="w-5 h-5" />
+                    <span className="flex-1 text-center text-lg">{t("login")}</span>
                   </Link>
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem
                   onClick={handleLogout}
-                  className="flex items-center gap-3 px-3 py-3 rounded-3xl bg-[#0E766E] hover:bg-[#0E766E] cursor-pointer text-center text-white text-lg "
+                  className="flex items-center gap-3 px-3 py-3 rounded-xl bg-[#0E766E] text-lg cursor-pointer"
                 >
                   <LogOut className="w-5 h-5" />
-                  <span className="flex-1">{t("logout")}</span>
+                  <span className="flex-1 text-center">{t("logout")}</span>
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>
@@ -241,7 +231,6 @@ export default function Navbar({
         </div>
       </nav>
 
-      
       <LoginModal show={showLoginModal} onClose={() => setShowLoginModal(false)} />
     </>
   );

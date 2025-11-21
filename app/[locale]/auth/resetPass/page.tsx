@@ -1,17 +1,22 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import GuestPage from "@/app/components/protectedpages/guestPage";
+import axiosInstance from "@/lib/axiosInstance";
+import { useUserStore } from "@/app/store/userStore";
 
 export default function ResetPassword() {
   const t = useTranslations("resetPassWords");
-  const locale = useLocale();
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+
+  const setResetEmail = useUserStore((state) => state.setResetEmail);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,41 +24,36 @@ export default function ResetPassword() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/authentication/reset-password/request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      // 🔹 Step 1 — Send reset password request
+      const res = await axiosInstance.post(
+        "/authentication/reset-password/request",
+        { email }
+      );
 
-      const data = await res.json();
-      console.log("✅ Reset API response:", data);
+      console.log("✅ Reset API:", res.data);
 
-      if (!res.ok) {
-        throw new Error(data.message || "Reset request failed");
-      }
+      // 🔹 Step 2 — Save email in Zustand
+      setResetEmail(email);
 
-
-      localStorage.setItem("resetEmail", email);
+      // 🔹 Step 4 — Redirect to verification page
       router.push("/auth/varCode");
+
     } catch (err: any) {
-      setError(err.message || "Something went wrong");
+      setError(err.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div><GuestPage>
-
+    <GuestPage>
       <main className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]">
         <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden dark:bg-black">
 
-          {/* Left side - image */}
           <div className="md:w-1/3 flex items-center justify-center p-6">
             <span className="text-gray-700">[Image]</span>
           </div>
 
-          {/* Right side - form */}
           <div className="flex flex-col justify-center p-8 md:w-2/3 w-full">
             <h1 className="text-2xl font-bold mb-2">{t("reset")}</h1>
             <p className="text-gray-500 text-sm mb-8">{t("associated")}</p>
@@ -67,6 +67,7 @@ export default function ResetPassword() {
                 className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
                 required
               />
+
               <button
                 type="submit"
                 disabled={loading}
@@ -76,7 +77,9 @@ export default function ResetPassword() {
               </button>
             </form>
 
-            {error && <p className="text-red-500 text-sm text-center mt-3">{error}</p>}
+            {error && (
+              <p className="text-red-500 text-sm text-center mt-3">{error}</p>
+            )}
 
             <div className="mt-6 flex justify-center items-center gap-2 text-sm">
               <Link href="/auth/login" className="text-black font-semibold hover:underline dark:text-white">
@@ -87,6 +90,5 @@ export default function ResetPassword() {
         </div>
       </main>
     </GuestPage>
-    </div>
   );
 }
