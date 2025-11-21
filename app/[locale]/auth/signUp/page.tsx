@@ -50,7 +50,7 @@ export default function SignUp() {
       console.log("✅ Signup response:", data);
 
       await api.post("/authentication/request-verification", { email });
-      useUserStore.getState().setVarificationEmail(email);
+      useUserStore.getState().setVerificationEmail(email);
       router.push(`/auth/verifyAccount`);
     } catch (err: any) {
       console.error("Signup error:", err);
