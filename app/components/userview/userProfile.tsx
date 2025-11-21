@@ -114,7 +114,7 @@ export default function ProfilePage() {
       );
 
       // ⭐ axios request بديل لـ fetch
-      const response = await axios.patch(`/api/user/update-profile`, formData, {
+      const response = await axios.patch(`/user/update-profile`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -136,7 +136,7 @@ export default function ProfilePage() {
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-md p-6 md:p-8 flex flex-col md:flex-row gap-6">
         
         {/* Profile Card */}
-        <div className="bg-[#0E766E] text-white rounded-xl p-4 w-full md:w-48 flex flex-col items-center gap-2">
+        <div className="bg-[#0E766E] text-white rounded-xl p-4 w-full md:w-48 h-[150px] flex flex-col items-center gap-2">
           <div className="w-20 h-20 rounded-full border-2 border-white overflow-hidden bg-white">
             {profileImg ? (
               <img src={profileImg} className="w-full h-full object-cover" />
