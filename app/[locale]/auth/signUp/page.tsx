@@ -9,7 +9,6 @@ import GuestPage from "@/app/components/protectedpages/guestPage";
 import api from "@/lib/axiosInstance";
 import { CheckCircle, AlertCircle, EyeIcon, EyeOff } from "lucide-react";
 import { useUserStore } from "@/app/store/userStore";
-import ProtectedPage from "@/app/components/protectedpages/protectedPage";
 
 
 export default function SignUp() {
@@ -63,7 +62,7 @@ export default function SignUp() {
 
   return (
     <div>
-      <ProtectedPage>
+      <GuestPage>
         <main
           dir={locale === "ar" ? "rtl" : "ltr"}
           className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
@@ -190,7 +189,7 @@ export default function SignUp() {
             </div>
           </div>
         </main>
-      </ProtectedPage>
+      </GuestPage>
     </div>
   );
 }

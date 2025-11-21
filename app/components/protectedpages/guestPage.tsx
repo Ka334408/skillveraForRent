@@ -9,14 +9,18 @@ export default function GuestPage({ children }: { children: React.ReactNode }) {
   const user = useUserStore(); // <-- جاي من zustand
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) {
+ useEffect(() => {
+  // أول ما يدخل الصفحة، ندي Delay بسيط
+  const timer = setTimeout(() => {
+    if (user.token) {
       router.replace("/userview/Home"); 
-      // لو لوجين بالفعل ارميه على الهوم
     } else {
-      setLoading(false); // مفيش يوزر → سيبه يدخل
+      setLoading(false);
     }
-  }, [user, router]);
+  }, 300); // ← هنا اتحكم في زمن الـ loading (مثلاً 600ms)
+
+  return () => clearTimeout(timer);
+}, [user, router]);
 
   if (loading) {
     return (
