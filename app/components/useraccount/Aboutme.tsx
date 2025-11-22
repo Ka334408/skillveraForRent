@@ -45,7 +45,6 @@ export default function ProfileCard() {
     }
 
     setName(user.name || "");
-    console.log(user.email)
 
     if (user.image && user.image.startsWith("uploads/")) {
       fetchImageFromApi(user.image).then((url) => {
@@ -98,9 +97,9 @@ export default function ProfileCard() {
 
   if (loading) {
     return (
-      <div className="w-full h-64 flex items-center justify-center">
-        <h1 className="text-3xl font-bold text-[#0E766E] animate-pulse">
-          SkillVera
+      <div className="w-full h-screen flex items-center justify-center">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#0E766E] animate-bounce">
+          Skillvera
         </h1>
       </div>
     );
@@ -120,7 +119,7 @@ export default function ProfileCard() {
               <div className="rounded-lg overflow-hidden w-48 h-48 mx-auto">
                 <img
                   src={filePreview}
-                  className="object-cover w-full h-full"
+                  className="w-full h-full object-cover  object-[50%_25%]"
                   alt="profile"
                 />
               </div>
