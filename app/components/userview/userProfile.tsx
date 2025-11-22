@@ -177,7 +177,7 @@ export default function ProfilePage() {
           }
             className="bg-[#0E766E] text-white px-6 py-2 rounded-lg hover:bg-[#06423d]"
           >
-            Let`s go
+            Let&apos; go
           </button>
         </div>
       </div>
