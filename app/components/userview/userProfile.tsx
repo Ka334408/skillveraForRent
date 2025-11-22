@@ -134,8 +134,11 @@ export default function ProfilePage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("❌ Failed to update profile:", errorData);
-        alert(`Failed to update profile: ${errorData.message}`);
+        setModal({
+          open: true,
+          title: "Error ❌",
+          message: errorData.message || "Failed to update profile"
+        });
         return;
       }
 
@@ -152,142 +155,143 @@ export default function ProfilePage() {
         title: "Error ❌",
         message: "Failed to update profile"
       });
-      alert("Failed to update profile");
     } finally {
       setLoading(false); // ✅ يوقف اللودينج
     }
   };
-  
+
 
   return (
     <div>
-    {/* Modal */ }
-  {
-    modal.open && (
-      <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-        <div className="bg-white w-80 p-6 rounded-xl shadow-xl text-center">
-          <h2 className="text-xl font-bold mb-3 text-[#0E766E]">
-            {modal.title}
-          </h2>
-          <p className="text-gray-600 mb-4">{modal.message}</p>
+      {/* Modal */}
+      {
+        modal.open && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div className="bg-white w-80 p-6 rounded-xl shadow-xl text-center">
+              <h2 className="text-xl font-bold mb-3 text-[#0E766E]">
+                {modal.title}
+              </h2>
+              <p className="text-gray-600 mb-4">{modal.message}</p>
 
-          <button
-            onClick={() => {setModal({ open: false, title: "", message: "" });
-          router.push("/userview/Home");}
-          }
-            className="bg-[#0E766E] text-white px-6 py-2 rounded-lg hover:bg-[#06423d]"
-          >
-            Let&apos; go
-          </button>
-        </div>
-      </div>
-    )
-  }
-   
-    <section className="bg-gray-50 min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl bg-white rounded-xl shadow-md p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8">
-        {/* الكارت الأزرق */}
-        <div className="bg-[#0E766E] text-white rounded-xl p-4 w-full md:w-48 flex flex-col items-center justify-center gap-2 self-start">
-          <div className="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center overflow-hidden bg-white">
-            {profileImg ? (
-              <img
-                src={profileImg}
-                alt="Profile"
-                className="w-full h-full object-cover object-[50%_25%]"
-              />
-            ) : (
-              <span className="text-2xl">👤</span>
-            )}
-          </div>
-          <h3 className="text-sm font-semibold text-center mt-2">{username}</h3>
-        </div>
-
-        {/* الفورم */}
-        <div className="flex-1">
-          <h2 className="text-2xl font-bold mb-2">{t("title")}</h2>
-          <p className="text-gray-500 text-sm mb-6">{t("desc")}</p>
-
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            {/* Name */}
-            <div>
-              <label className="block text-sm font-semibold mb-1">
-                {t("fullName")}
-              </label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full border-2 text-black rounded-lg p-3 focus:outline-none focus:text-black"
-              />
-            </div>
-
-            {/* Phone */}
-            <div>
-              <label className="block text-sm font-semibold mb-1">
-                {t("phone")}
-              </label>
-              <PhoneInput
-                country={"eg"}
-                value={phone}
-                onChange={(value) => setPhone("+" + value)}
-                inputProps={{ name: "phone", required: true }}
-                containerClass="w-full"
-                inputClass="!w-full !rounded-lg !p-3 !pl-12 !border-2 !text-black !focus:outline-none !focus:text-black"
-              />
-              {errors.phone && (
-                <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
-              )}
-            </div>
-
-            {/* DOB */}
-            <div>
-              <label className="block text-sm font-semibold mb-1">
-                {t("dob")}
-              </label>
-              <input
-                type="date"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
-                className="w-full border-2 text-black rounded-lg p-3 focus:outline-none focus:text-black"
-              />
-              {errors.dob && (
-                <p className="text-red-500 text-sm mt-1">{errors.dob}</p>
-              )}
-            </div>
-
-            {/* Gender */}
-            <div>
-              <label className="block text-sm font-semibold mb-1">
-                {t("gender")}
-              </label>
-              <select
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                className="w-full border-2 text-black rounded-lg p-3 focus:outline-none focus:text-black"
-              >
-                <option value="">Select gender</option>
-                <option value="male">{t("genderMale")}</option>
-                <option value="female">{t("genderFemale")}</option>
-                <option value="other">{t("genderOther")}</option>
-              </select>
-            </div>
-
-            <div className="flex justify-end">
               <button
-                type="submit"
-                disabled={loading} // ✅ يمنع الضغط وقت اللودينج
-                className={`px-6 py-2 rounded-lg text-white transition ${loading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-[#0E766E] hover:bg-[#033b37]"
-                  }`}
+                onClick={() => {
+                  setModal({ open: false, title: "", message: "" });
+                  router.push("/userview/Home");
+                }
+                }
+                className="bg-[#0E766E] text-white px-6 py-2 rounded-lg hover:bg-[#06423d]"
               >
-                {loading ? "Uploading..." : t("save")}
+                Let&apos; go
               </button>
             </div>
-          </form>
+          </div>
+        )
+      }
+
+      <section className="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+        <div className="w-full max-w-4xl bg-white rounded-xl shadow-md p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8">
+          {/* الكارت الأزرق */}
+          <div className="bg-[#0E766E] text-white rounded-xl p-4 w-full md:w-48 flex flex-col items-center justify-center gap-2 self-start">
+            <div className="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center overflow-hidden bg-white">
+              {profileImg ? (
+                <img
+                  src={profileImg}
+                  alt="Profile"
+                  className="w-full h-full object-cover object-[50%_25%]"
+                />
+              ) : (
+                <span className="text-2xl">👤</span>
+              )}
+            </div>
+            <h3 className="text-sm font-semibold text-center mt-2">{username}</h3>
+          </div>
+
+          {/* الفورم */}
+          <div className="flex-1">
+            <h2 className="text-2xl font-bold mb-2">{t("title")}</h2>
+            <p className="text-gray-500 text-sm mb-6">{t("desc")}</p>
+
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              {/* Name */}
+              <div>
+                <label className="block text-sm font-semibold mb-1">
+                  {t("fullName")}
+                </label>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full border-2 text-black rounded-lg p-3 focus:outline-none focus:text-black"
+                />
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="block text-sm font-semibold mb-1">
+                  {t("phone")}
+                </label>
+                <PhoneInput
+                  country={"eg"}
+                  value={phone}
+                  onChange={(value) => setPhone("+" + value)}
+                  inputProps={{ name: "phone", required: true }}
+                  containerClass="w-full"
+                  inputClass="!w-full !rounded-lg !p-3 !pl-12 !border-2 !text-black !focus:outline-none !focus:text-black"
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                )}
+              </div>
+
+              {/* DOB */}
+              <div>
+                <label className="block text-sm font-semibold mb-1">
+                  {t("dob")}
+                </label>
+                <input
+                  type="date"
+                  value={dob}
+                  onChange={(e) => setDob(e.target.value)}
+                  className="w-full border-2 text-black rounded-lg p-3 focus:outline-none focus:text-black"
+                />
+                {errors.dob && (
+                  <p className="text-red-500 text-sm mt-1">{errors.dob}</p>
+                )}
+              </div>
+
+              {/* Gender */}
+              <div>
+                <label className="block text-sm font-semibold mb-1">
+                  {t("gender")}
+                </label>
+                <select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="w-full border-2 text-black rounded-lg p-3 focus:outline-none focus:text-black"
+                >
+                  <option value="">Select gender</option>
+                  <option value="male">{t("genderMale")}</option>
+                  <option value="female">{t("genderFemale")}</option>
+                  <option value="other">{t("genderOther")}</option>
+                </select>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  disabled={loading} // ✅ يمنع الضغط وقت اللودينج
+                  className={`px-6 py-2 rounded-lg text-white transition ${loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-[#0E766E] hover:bg-[#033b37]"
+                    }`}
+                >
+                  {loading ? "Uploading..." : t("save")}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </div>
   );
 }
