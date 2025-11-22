@@ -176,12 +176,15 @@ export default function ProfilePage() {
               <button
                 onClick={() => {
                   setModal({ open: false, title: "", message: "" });
-                  router.push("/userview/Home");
+                  if (modal.title.includes("Success")){
+                  router.push("/userview/Home");}
                 }
                 }
                 className="bg-[#0E766E] text-white px-6 py-2 rounded-lg hover:bg-[#06423d]"
               >
-                Let&apos; go
+                {modal.title.includes("Error")&&(<>Try Again</>)}
+                {modal.title.includes("Success")&&(<>Let&apos; go</>)}
+                
               </button>
             </div>
           </div>
