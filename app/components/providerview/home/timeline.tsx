@@ -6,21 +6,18 @@ import step1 from "@/public/blackHouse.png";
 export default function EasyAsWaterTop() {
   return (
     <section className="py-20 bg-white dark:bg-[#0a0a0a] relative">
-      {/* العنوان */}
       <h2 className="text-3xl font-bold text-center mb-16 text-gray-900 dark:text-white">
         Easy As Water
       </h2>
 
       {/*-------------------- Section 1 */}
       <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
-        {/* الخط */}
         <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
           <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full"></div>
           <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] my-1 rounded-full"></div>
           <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
         </div>
 
-        {/* النص والصورة */}
         <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left md:pl-[52%]">
           <div>
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
@@ -39,13 +36,11 @@ export default function EasyAsWaterTop() {
 
       {/*-------------------- Section 2 */}
       <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
-        {/* الخط */}
         <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
           <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] rounded-full"></div>
           <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
         </div>
 
-        {/* النص والصورة */}
         <div className="flex flex-col md:flex-row-reverse items-center gap-6 text-center md:text-left md:pr-[52%]">
           <div>
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">

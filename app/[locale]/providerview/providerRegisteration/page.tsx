@@ -40,13 +40,11 @@ export default function SelectPlanPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
       <div className="bg-white rounded-2xl shadow-lg p-10 w-full max-w-4xl text-center">
-        {/* العنوان */}
         <h1 className="text-2xl font-bold mb-2">Choose Your subscibe</h1>
         <p className="text-gray-500 mb-10">
           shoose your subscribation to go to Provider DashBoard.
         </p>
 
-        {/* الباقات */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
           {plans.map((plan) => {
             const Icon = plan.icon;
@@ -72,7 +70,6 @@ export default function SelectPlanPage() {
           })}
         </div>
 
-        {/* زرار Next */}
         <button className="px-8 py-2 rounded-full bg-white border-2 border-[#0E766E] text-[#0E766E] font-semibold hover:bg-blue-50 transition" 
         onClick={()=>router.push(`/${locale}/providerview/dashBoardHome/myProfile`)}>
           Let&apos;s go

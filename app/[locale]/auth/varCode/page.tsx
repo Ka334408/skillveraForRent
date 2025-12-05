@@ -71,7 +71,7 @@ export default function VerifyCode() {
       );
       console.log(res.data);
 
-      // 🟢 الباك بيرجع token — دا اللي نبنيه نبعته للـ reset password
+      
       const token = res.data?.data?.token;
 
       if (!token) {
@@ -79,7 +79,7 @@ export default function VerifyCode() {
         return;
       }
 
-      // خزّن token في localStorage
+      
       localStorage.setItem("resetToken", token);
 
       console.log("Received token:", token);

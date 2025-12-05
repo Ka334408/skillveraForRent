@@ -6,12 +6,10 @@ import { useEffect, useMemo, useState } from "react";
 export default function RatingCard() {
   const t = useTranslations("rating");
 
-  // رقم عشوائي من 1 لـ 5 مع كسر عشري (مثال: 4.3)
   const [rating, setRating] = useState<number | null>(null);
 
   useEffect(() => {
-    // يتنفذ بس في الكلاينت
-    const random = (Math.random() * 4 + 1).toFixed(1); // من 1.0 ل 5.0
+    const random = (Math.random() * 4 + 1).toFixed(1); 
     setRating(Number(random));
   }, []);
 

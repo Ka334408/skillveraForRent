@@ -25,7 +25,7 @@ export default function SignUp() {
   const [showPasswordRules, setShowPasswordRules] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // ✅ Password validation logic
+  //  Password validation logic
   const rules = [
     { id: 1, label: "At least 8 characters", test: (p: string) => p.length >= 8 },
     { id: 2, label: "Contains uppercase letter", test: (p: string) => /[A-Z]/.test(p) },

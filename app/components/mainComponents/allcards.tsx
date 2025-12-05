@@ -21,7 +21,6 @@ export default function FacilityCard({
 }: FacilityCardProps) {
   return (
     <div className="flex flex-col sm:flex-row items-stretch bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition w-full h-auto sm:h-40">
-      {/* الصورة */}
       <div className="w-full sm:w-40 h-40 sm:h-full bg-gray-200 flex-shrink-0">
         <Image
           src={image}
@@ -32,7 +31,6 @@ export default function FacilityCard({
         />
       </div>
 
-      {/* المحتوى */}
       <div className="flex-1 p-4 flex flex-col justify-between">
         <div>
           <h3 className="font-semibold text-lg">{name}</h3>

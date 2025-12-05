@@ -110,19 +110,9 @@ export default function ProfilePage() {
           formData.append("image", blob, "profile.png");
         }
       }
+      console.log(profileImg);
 
-      formData.append(
-        "facility",
-        JSON.stringify({
-          name: "string",
-          addressLatLong: location,
-          taxNumber: "string",
-          email: "string",
-          website: "string",
-          phone: "+20 1159675941",
-          image: "string",
-        })
-      );
+      
 
       const response = await fetch(`/api/user/update-profile`, {
         method: "PATCH",

@@ -22,7 +22,6 @@ export default function ProfileCard() {
 
   const fileRef = useRef<HTMLInputElement | null>(null);
 
-  // مسار الـ API بتاع الصور
   const fetchImageFromApi = async (path: string) => {
     try {
       const res = await axios.get(`/api/media?media=${path}`, {
@@ -59,10 +58,8 @@ export default function ProfileCard() {
     }
   }, [user]);
 
-  // يفتح input
   const handleChoose = () => fileRef.current?.click();
 
-  // لما يختار صورة جديدة
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
@@ -76,7 +73,6 @@ export default function ProfileCard() {
     });
   };
 
-  // 🔥 NEW → SAVE مع Animation + رسالة نجاح
   const handleSave = () => {
     setSaving(true);
     setSavedMessage(null);
@@ -114,7 +110,6 @@ export default function ProfileCard() {
         <div className="w-full md:w-1/2 lg:w-1/3">
           <div className="rounded-2xl p-6 text-center min-h-[220px] flex flex-col items-center justify-center">
 
-            {/* الصورة */}
             {filePreview ? (
               <div className="rounded-lg overflow-hidden w-48 h-48 mx-auto">
                 <img

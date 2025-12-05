@@ -5,7 +5,6 @@ import Image from "next/image";
 export default function HowItWorks() {
   return (
     <section className="flex flex-col items-start justify-center px-8 sm:px-12 lg:px-24 py-20 bg-white">
-      {/* النص */}
       <div className="max-w-xl text-left ml-6 sm:ml-10 lg:ml-20">
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
           How It Works
@@ -22,12 +21,11 @@ export default function HowItWorks() {
         </p>
       </div>
 
-      {/* الصورة */}
       <div className="relative w-full mt-12 flex justify-center">
         <Image
-          src="/blackHouse.png" // 👈 غيّر المسار حسب الصورة عندك
+          src="/blackHouse.png" 
           alt="Modern House"
-          width={1200} // 👈 كبرنا العرض
+          width={1200}
           height={600}
           className="w-[95%] sm:w-[90%] lg:w-[80%] max-w-6xl h-auto object-contain"
           priority

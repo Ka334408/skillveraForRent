@@ -32,7 +32,6 @@ export default function FacilityMapSection({
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-        {/* الماب */}
         <div className="h-80 w-full rounded-xl overflow-hidden">
           <MapContainer
             center={[lat, lng]}
@@ -52,7 +51,6 @@ export default function FacilityMapSection({
           </MapContainer>
         </div>
 
-        {/* الـ features */}
         <div>
           <h3 className="font-bold text-lg mb-4">
             {t("info")}

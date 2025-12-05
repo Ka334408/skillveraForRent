@@ -1,9 +1,10 @@
 // src/lib/axios.ts
+import { useUserStore } from "@/app/store/userStore";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "/api", // ✅ بيروح على الريرايت اللي في next.config
-  withCredentials: true, // ✅ ده أهم سطر عشان الكوكي تتبعت مع كل request
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "/api", 
+  withCredentials: true, 
   headers: {
     "Content-Type": "application/json",
   },
