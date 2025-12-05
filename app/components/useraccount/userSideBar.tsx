@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { User, BookOpen, MessageCircle, Bookmark, Menu, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -21,9 +19,20 @@ export default function ProfileSidebar({ active, setActive }: SidebarProps) {
     { id: "favorites", label: t("favorites"), icon: Bookmark },
   ];
 
+  // 🟢 تحميل التاب النشط من LocalStorage عند أول render
+  useEffect(() => {
+    const storedActive = localStorage.getItem("profileActiveTab");
+    if (storedActive) setActive(storedActive);
+  }, [setActive]);
+
+  const handleTabClick = (id: string) => {
+    setActive(id);
+    localStorage.setItem("profileActiveTab", id); // 🟢 حفظ التاب المختار
+    setIsOpen(false);
+  };
+
   return (
     <>
-     
       <button
         onClick={() => setIsOpen(true)}
         className="md:hidden p-2 m-2 bg-white text-gray-500 rounded-lg"
@@ -31,7 +40,6 @@ export default function ProfileSidebar({ active, setActive }: SidebarProps) {
         <Menu className="w-6 h-6" />
       </button>
 
-      
       <div
         className={`fixed inset-0 z-40 bg-black/50 transition-opacity md:hidden ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
@@ -39,7 +47,6 @@ export default function ProfileSidebar({ active, setActive }: SidebarProps) {
         onClick={() => setIsOpen(false)}
       ></div>
 
-      {/* Sidebar */}
       <aside
         dir={locale === "ar" ? "rtl" : "ltr"}
         className={`
@@ -50,7 +57,6 @@ export default function ProfileSidebar({ active, setActive }: SidebarProps) {
           md:static md:translate-x-0 md:border-r
         `}
       >
-        
         <button
           onClick={() => setIsOpen(false)}
           className="md:hidden absolute top-4 ltr:right-4 rtl:left-4 text-gray-600"
@@ -63,10 +69,7 @@ export default function ProfileSidebar({ active, setActive }: SidebarProps) {
           {menuItems.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
-              onClick={() => {
-                setActive(id);
-                setIsOpen(false); 
-              }}
+              onClick={() => handleTabClick(id)}
               className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition text-left font-medium
                 ${
                   active === id
