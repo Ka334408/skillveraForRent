@@ -20,7 +20,7 @@ export default function Topbar() {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include", // لو محتاج الكوكيز
+          credentials: "include", 
         });
 
         const result = await res.json();

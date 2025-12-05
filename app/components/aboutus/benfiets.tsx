@@ -7,7 +7,6 @@ export default function Benefits() {
 
   return (
     <section className="container mx-auto px-4 py-16 flex flex-col md:flex-row items-stretch gap-8">
-      {/* صورة */}
       <div className="w-full md:w-1/3">
         <Image
           src="/herosec.jpg"
@@ -18,7 +17,6 @@ export default function Benefits() {
         />
       </div>
 
-      {/* تكبير جزء الكلام بحيث يبقى بنفس طول الصورة */}
       <div className="w-full md:w-2/3 border border-[#0E766E] rounded-xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <h3 className="font-bold mb-2">{t("responsable")}</h3>

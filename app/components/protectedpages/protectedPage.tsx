@@ -10,14 +10,13 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  // أول ما يدخل الصفحة، ندي Delay بسيط
   const timer = setTimeout(() => {
     if (!user.token) {
       router.replace("/userview/Home"); 
     } else {
       setLoading(false);
     }
-  }, 300); // ← هنا اتحكم في زمن الـ loading (مثلاً 600ms)
+  }, 300);
 
   return () => clearTimeout(timer);
 }, [user, router]);

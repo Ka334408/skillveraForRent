@@ -55,7 +55,7 @@ export default function VerifyAccount() {
       const res = await axiosInstance.post(
         "/authentication/verify-account",
         { email: verificationEmail, code: verificationCode },
-        { withCredentials: true } // يخلّي الكوكي تتكتب
+        { withCredentials: true } 
       );
 
       console.log("VERIFY RESPONSE:", res.data);

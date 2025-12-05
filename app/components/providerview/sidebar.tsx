@@ -30,20 +30,18 @@ export default function ProviderSidebar() {
 
   // Zustand
   const { user, setUser, isHydrated } = useUserStore();
+  const logout = useUserStore((state) => state.logout);
 
-  // ⭐ نفس منطق HomePage
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        if (!isHydrated) return; // مهم جداً
+        if (!isHydrated) return;
 
-        // لو في User في Zustand → استخدمه
         if (user) {
           setLoadingUser(false);
           return;
         }
 
-        // لو مش موجود → هات من الـ API
         const res = await axiosInstance.get("/authentication/current-user");
 
         const fetchedUser =
@@ -80,12 +78,12 @@ export default function ProviderSidebar() {
   const isActive = (href: string) => pathname.toLowerCase() === href.toLowerCase();
 
   const handleLogout = () => {
-    router.push(`/${locale}/auth/login`);
+    logout();
+    router.push(`/${locale}/providerview/Home`);
   };
 
   return (
     <>
-      {/* زرار الموبايل */}
       <button
         onClick={() => setIsOpen(true)}
         className="md:hidden p-2 m-2 bg-white text-gray-500 rounded-lg fixed top-2 left-2 z-50 shadow"
@@ -118,9 +116,7 @@ export default function ProviderSidebar() {
           <X className="w-6 h-6" />
         </button>
 
-        {/* 🔹 الجزء العلوي */}
         <div className="flex-1 overflow-y-auto">
-          {/* 🟢 اسم اليوزر */}
           <div className="flex items-center gap-3 mb-6 mt-4">
           <User className="w-7 h-7 text-[#0E766E]" />
           { (
@@ -158,7 +154,6 @@ export default function ProviderSidebar() {
           </nav>
         </div>
 
-        {/* 🔹 الجزء السفلي */}
         <div className="flex flex-col gap-2 mt-auto">
           {bottomItems.map(({ id, label, icon: Icon, href }) => (
             <Link

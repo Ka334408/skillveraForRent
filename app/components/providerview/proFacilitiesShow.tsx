@@ -55,7 +55,6 @@ export default function MyFacilities() {
         </div>
       </div>
 
-      {/* ✅ موبايل → تحت بعض */}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:hidden">
         {filteredFacilities.map((facility) => (
           <FacilityCard
@@ -63,7 +62,7 @@ export default function MyFacilities() {
             id={facility.id}
             name={facility.name}
             image={facility.image}
-            onDelete={handleDelete} // 👈 هنمررها هنا
+            onDelete={handleDelete}
           />
         ))}
       </div>
@@ -76,7 +75,7 @@ export default function MyFacilities() {
             id={facility.id}
             name={facility.name}
             image={facility.image}
-            onDelete={handleDelete} // 👈 برضو هنا
+            onDelete={handleDelete} 
           />
         ))}
       </div>

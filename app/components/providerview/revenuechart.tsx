@@ -18,7 +18,7 @@ const data = [
   { name: "Mar", value: 500 },
   { name: "Apr", value: 450 },
   { name: "May", value: 600 },
-  { name: "Jun", value: 800 }, // نميِّز الشهر ده باللون الأزرق
+  { name: "Jun", value: 800 }, 
   { name: "Jul", value: 400 },
   { name: "Aug", value: 350 },
   { name: "Sep", value: 300 },
@@ -35,7 +35,6 @@ export default function RevenueChart() {
           <h2 className="text-lg font-semibold">Revenue</h2>
           <p className="text-2xl font-bold">$682.5</p>
         </div>
-        {/* أي عناصر إضافية (مثلاً أيقونة أو ملخص صغير) */}
       </div>
 
       <div style={{ width: "100%", height: 200 }}>

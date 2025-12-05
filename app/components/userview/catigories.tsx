@@ -20,7 +20,6 @@ export default function CategoriesSection() {
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const isLoggedIn = !!token;
 
-  // تجهيز الداتا
   const items = facilitiesData.slice(0, 10).map((f) => ({
     id: f.id.toString(),
     title: f.name,
@@ -36,10 +35,8 @@ export default function CategoriesSection() {
       ? items
       : items.filter((item) => item.category.includes(activeCategory));
 
-  // نكرر العناصر مرتين عشان CSS looping يكون seamless
   const doubledItems = [...filteredItems, ...filteredItems];
 
-  // مدة الانيميشن تعتمد على عدد العناصر (أقصر مدة 10s)
   const animationDuration = Math.max(10, filteredItems.length * 3); // seconds
 
   const handleFavorite = (id: string) => {
@@ -101,7 +98,6 @@ export default function CategoriesSection() {
         <div
           className="flex gap-6 will-change-transform"
           style={{
-            // نستخدم animation فقط إذا فيه عناصر كافية
             animation: filteredItems.length > 0
               ? `${isPaused ? "scrollX" : "scrollX"} ${animationDuration}s linear infinite`
               : "none",
@@ -118,7 +114,6 @@ export default function CategoriesSection() {
           ))}
         </div>
 
-        {/* keyframes داخل style tag عشان تكون مهيئة في نفس الكومبوننت */}
         <style>{`
           @keyframes scrollX {
             0% { transform: translateX(0); }

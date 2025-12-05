@@ -17,7 +17,7 @@ export default function GuestPage({ children }: { children: React.ReactNode }) {
     } else {
       setLoading(false);
     }
-  }, 300); // ← هنا اتحكم في زمن الـ loading (مثلاً 600ms)
+  }, 300);
 
   return () => clearTimeout(timer);
 }, [user, router]);

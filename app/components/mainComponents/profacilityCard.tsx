@@ -8,14 +8,14 @@ interface FacilityCardProps {
   id: number | string;
   name: string;
   image: string;
-  onDelete: (id: number | string) => void; // 👈 نمرر الفنكشن دي من برة
+  onDelete: (id: number | string) => void;
 }
 
 export default function FacilityCard({ id, name, image, onDelete }: FacilityCardProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-[#4bb0a7] rounded-xl p-4 flex flex-col justify-between h-52 w-full relative">
+    <div className="bg-gray-200 rounded-xl p-4 flex flex-col justify-between h-52 w-full relative">
       {/* Header */}
       <div className="flex items-center justify-between relative">
         <span className="text-xs text-gray-800 px-2 py-1 rounded-md font-semibold">
@@ -45,7 +45,7 @@ export default function FacilityCard({ id, name, image, onDelete }: FacilityCard
               <button
                 onClick={() => {
                   setOpen(false);
-                  onDelete(id); // 👈 هنا بنادي الفنكشن
+                  onDelete(id);
                 }}
                 className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
               >
