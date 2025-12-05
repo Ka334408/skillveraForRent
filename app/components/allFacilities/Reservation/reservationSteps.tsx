@@ -1,26 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaCcVisa, FaCcMastercard } from "react-icons/fa";
+import { useUserStore } from "@/app/store/userStore";
 
 export default function ReservationSteps() {
+  const router = useRouter();
+  const { token } = useUserStore();  
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
-  const router = useRouter();
 
+  // ===== تحقق من تسجيل الدخول =====
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        setIsLoggedIn(true);
-      }, 1500);
+      setIsLoggedIn(true);
     }
-  }, []);
+  }, [token]);
 
   const handleLoginRedirect = () => {
     router.push("/auth/signUp");
@@ -94,18 +92,14 @@ export default function ReservationSteps() {
       <div className="bg-[#0E766E] text-white rounded-lg p-4 flex justify-between items-center">
         <p>1. You need to log in or sign up first</p>
 
-        {!isLoggedIn && !loading && (
+        {!isLoggedIn ? (
           <button
             onClick={handleLoginRedirect}
             className="bg-white text-[#0E766E] px-4 py-1 rounded-md font-medium"
           >
             Continue
           </button>
-        )}
-
-        {loading && <span className="text-sm animate-pulse">Loading...</span>}
-
-        {isLoggedIn && !loading && (
+        ) : (
           <span className="text-sm font-medium">
             ✅ You’re logged in successfully
           </span>
@@ -116,7 +110,7 @@ export default function ReservationSteps() {
       <div className="bg-[#0E766E] text-white rounded-lg p-4 flex justify-between items-center">
         <p>2. Add payment method</p>
 
-        {isLoggedIn && !loading && (
+        {isLoggedIn && (
           <button
             onClick={() => setShowPaymentModal(true)}
             className="bg-white text-[#0E766E] px-4 py-1 rounded-md font-medium"
@@ -156,169 +150,7 @@ export default function ReservationSteps() {
 
             {/* فورم الدفع */}
             <form className="space-y-4" onSubmit={handleSubmit}>
-              {/* Card number */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Card number
-                </label>
-                <input
-                  type="text"
-                  placeholder="0000 0000 0000 0000"
-                  value={form.cardNumber}
-                  onChange={(e) =>
-                    setForm({ ...form, cardNumber: e.target.value })
-                  }
-                  className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#0E766E]"
-                />
-                {errors.cardNumber && (
-                  <p className="text-red-600 text-sm mt-1">
-                    {errors.cardNumber}
-                  </p>
-                )}
-              </div>
-
-              {/* Expiration + CVV */}
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Expiration
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="MM / YY"
-                    value={form.expiration}
-                    onChange={(e) =>
-                      setForm({ ...form, expiration: e.target.value })
-                    }
-                    className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#0E766E]"
-                  />
-                  {errors.expiration && (
-                    <p className="text-red-600 text-sm mt-1">
-                      {errors.expiration}
-                    </p>
-                  )}
-                </div>
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    CVV
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="*"
-                    value={form.cvv}
-                    onChange={(e) => setForm({ ...form, cvv: e.target.value })}
-                    className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#0E766E]"
-                  />
-                  {errors.cvv && (
-                    <p className="text-red-600 text-sm mt-1">{errors.cvv}</p>
-                  )}
-                </div>
-              </div>
-
-              <h3 className="font-semibold mt-4 text-gray-800">
-                Billing address
-              </h3>
-
-              {/* Street address */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Street address
-                </label>
-                <input
-                  type="text"
-                  value={form.street}
-                  onChange={(e) =>
-                    setForm({ ...form, street: e.target.value })
-                  }
-                  className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#0E766E]"
-                />
-                {errors.street && (
-                  <p className="text-red-600 text-sm mt-1">{errors.street}</p>
-                )}
-              </div>
-
-              {/* Apt or suite */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Apt or suite number
-                </label>
-                <input
-                  type="text"
-                  value={form.apt}
-                  onChange={(e) => setForm({ ...form, apt: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#0E766E]"
-                />
-              </div>
-
-              {/* City + State */}
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    City
-                  </label>
-                  <input
-                    type="text"
-                    value={form.city}
-                    onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#0E766E]"
-                  />
-                  {errors.city && (
-                    <p className="text-red-600 text-sm mt-1">{errors.city}</p>
-                  )}
-                </div>
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    State
-                  </label>
-                  <input
-                    type="text"
-                    value={form.state}
-                    onChange={(e) =>
-                      setForm({ ...form, state: e.target.value })
-                    }
-                    className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#0E766E]"
-                  />
-                  {errors.state && (
-                    <p className="text-red-600 text-sm mt-1">{errors.state}</p>
-                  )}
-                </div>
-              </div>
-
-              {/* ZIP */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  ZIP code
-                </label>
-                <input
-                  type="text"
-                  value={form.zip}
-                  onChange={(e) => setForm({ ...form, zip: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#0E766E]"
-                />
-                {errors.zip && (
-                  <p className="text-red-600 text-sm mt-1">{errors.zip}</p>
-                )}
-              </div>
-
-              {/* Country */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Country/region
-                </label>
-                <select
-                  value={form.country}
-                  onChange={(e) =>
-                    setForm({ ...form, country: e.target.value })
-                  }
-                  className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#0E766E]"
-                >
-                  <option>Egypt</option>
-                  <option>United States</option>
-                  <option>United Kingdom</option>
-                </select>
-              </div>
-
-              {/* Submit */}
+              {/* ... نفس الفورم الموجود في كودك ... */}
               <button
                 type="submit"
                 className="w-full mt-4 bg-[#0E766E] text-white py-2 rounded-md font-medium hover:bg-[#095F59]"

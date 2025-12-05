@@ -83,24 +83,11 @@ export default function FacilityPage({ params }: { params: { id: string } }) {
 
       <div className="container mx-auto px-4 py-8">
         <div className="z-50">
-        <FacilityHeader facility={facility} /></div>
+        <FacilityHeader/></div>
         <div className="-z-10">
-        <FacilityMapSection
-          location={facility.location}
-          lat={facility.lat}
-          lng={facility.lng}
-          features={[
-            "Free Wi-Fi",
-            "Parking available",
-            "Air Conditioning",
-            "24/7 Security",
-          ]}
-        />
+        <FacilityMapSection/>
         </div>
-        <FacilityCalendar
-          facility={facility}
-          bookedDates={["2025-11-20", "2025-11-22", "2025-11-25"]}
-        />
+        <FacilityCalendar/>
         <ThingsToKnow />
         <ReviewsList />
         <RatingCard />
