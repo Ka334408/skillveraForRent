@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-// خلي الـ faqs تيجي من الـ messages بدل ما تكون ثابتة
 export default function FAQSection() {
   const t = useTranslations("FAQ");
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -13,7 +12,6 @@ export default function FAQSection() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  // نجيب الأسئلة والأجوبة من الترجمة
   const faqs = t.raw("items") as { question: string; answer: string }[];
 
   return (
