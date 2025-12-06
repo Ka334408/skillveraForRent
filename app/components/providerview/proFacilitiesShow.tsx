@@ -236,7 +236,7 @@ export default function MyFacilities() {
       {/* No Facilities */}
       {!loading && facilities.length === 0 && !error && (
         <div className="flex flex-col items-center justify-center h-64 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 mt-8">
-          <p className="text-gray-600 text-xl font-medium mb-4">You haven't added any facilities yet.</p>
+          <p className="text-gray-600 text-xl font-medium mb-4">You haven&apos;t added any facilities yet.</p>
           <button
             onClick={() => router.push("/providerview/dashBoardHome/myFacilities/addNewFacility")}
             className="bg-teal-600 text-white px-8 py-3 rounded-xl hover:bg-teal-700 transition shadow-md font-semibold"
