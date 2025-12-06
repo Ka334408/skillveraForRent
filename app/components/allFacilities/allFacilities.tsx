@@ -24,6 +24,7 @@ interface Facility {
   lat?: number;
   lng?: number;
   favorites?: any[];
+  rate : number;
 }
 
 // ----------------- Marker Icon -----------------
@@ -106,6 +107,7 @@ export default function FacilitiesSection() {
         lat: f.addressLatLong ? Number(f.addressLatLong.split(",")[0]) : 24.7136,
         lng: f.addressLatLong ? Number(f.addressLatLong.split(",")[1]) : 46.6753,
         favorites: f.favorites ?? [],
+        rate : f.rate 
       }));
 
       setFacilities(parsed);
@@ -132,33 +134,47 @@ export default function FacilitiesSection() {
   };
 
   // ----------------- Facility Card -----------------
-  const FacilityCard = ({ facility }: { facility: Facility }) => (
-    <div
-      className="flex flex-col sm:flex-row items-stretch bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition w-full h-auto sm:h-40 cursor-pointer"
-      onClick={() => window.location.href = `/userview/allFacilities/${facility.id}`}
-    >
-      <div className="w-full sm:w-40 h-40 sm:h-full bg-gray-200 flex-shrink-0">
-        {facility.cover ? (
-          <img src={facility.cover} alt={facility.name} className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-500">No Image</div>
-        )}
-      </div>
+const FacilityCard = ({ facility }: { facility: Facility }) => (
+  <div
+    className="flex flex-col sm:flex-row items-stretch bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition w-full h-auto sm:h-40 cursor-pointer relative"
+    onClick={() => window.location.href = `/userview/allFacilities/${facility.id}`}
+  >
+    {/* Rate Fixed on top-right */}
+    <div className="absolute top-2 right-2 flex gap-1">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          className={`text-lg ${star <= (facility.rate ?? 0) ? "text-yellow-400" : "text-gray-300"}`}
+        >
+          ★
+        </span>
+      ))}
+    </div>
 
-      <div className="flex-1 p-4 flex flex-col justify-between">
-        <div>
-          <h3 className="font-semibold text-lg">{facility.name}</h3>
-          <p className="text-gray-500 text-sm line-clamp-2">{facility.description}</p>
-        </div>
-        <div className="flex items-center justify-between mt-2">
-          <span className="text-sm text-gray-600">{facility.location}</span>
-          <span className="sm:font-semibold bg-[#0E766E] text-white px-3 py-1 rounded-lg text-sm">
-            {facility.price} R
-          </span>
-        </div>
+    {/* Image */}
+    <div className="w-full sm:w-40 h-40 sm:h-full bg-gray-200 flex-shrink-0">
+      {facility.cover ? (
+        <img src={facility.cover} alt={facility.name} className="w-full h-full object-cover" />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center text-gray-500">No Image</div>
+      )}
+    </div>
+
+    {/* Info */}
+    <div className="flex-1 p-4 flex flex-col justify-between">
+      <div>
+        <h3 className="font-semibold text-lg">{facility.name}</h3>
+        <p className="text-gray-500 text-sm line-clamp-2">{facility.description}</p>
+      </div>
+      <div className="flex items-center justify-between mt-2">
+        <span className="text-sm text-gray-600">{facility.location}</span>
+        <span className="sm:font-semibold bg-[#0E766E] text-white px-3 py-1 rounded-lg text-sm">
+          {facility.price} SR
+        </span>
       </div>
     </div>
-  );
+  </div>
+);
 
   return (
     <div className="container mx-auto px-4 py-8">

@@ -24,6 +24,7 @@ import { usePathname, useRouter } from "next/navigation";
 import LocaleSwitcher from "./local-switcher";
 import LoginModal from "./loginmodel";
 import { useUserStore } from "@/app/store/userStore";
+import Image from "next/image";
 
 interface NavbarProps {
   bgColor?: string;
@@ -34,8 +35,8 @@ interface NavbarProps {
   accounticonColor?: string;
   enable?: string;
   isrounded?: string;
-  signupLink : string;
-  loginLink:string;
+  signupLink: string;
+  loginLink: string;
 }
 
 export default function Navbar({
@@ -47,8 +48,8 @@ export default function Navbar({
   accounticonColor = "bg-[#2C70E2]",
   enable = "hidden sm:inline",
   isrounded = "rounded-md",
-  signupLink=" ",
-  loginLink=" "
+  signupLink = " ",
+  loginLink = " "
 }: NavbarProps) {
   const locale = useLocale();
   const t = useTranslations("navbar");
@@ -90,7 +91,17 @@ export default function Navbar({
         className={`sticky top-0 z-50 w-full ${bgColor} ${textColor} px-3 sm:px-6 py-3 sm:py-4 flex items-center justify-between`}
       >
         {/* Logo */}
-        <div className="font-bold text-lg">{t("logo")}</div>
+        <div className="font-bold text-lg">
+          <Link href={`/${locale}/userview/Home`}>
+            <Image
+              src="/logo.png"   // مسار الصورة داخل public/
+              alt="Logo"
+              width={120}
+              height={40}
+              className="object-contain cursor-pointer"
+            />
+          </Link>
+        </div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex gap-4">
@@ -114,7 +125,7 @@ export default function Navbar({
         <div className="flex items-center gap-1">
           {/* Become host */}
           <Button
-            onClick={() => handleProtectedClick(`/${locale}/providerview/Home`)}
+            onClick={() => router.push(`/${locale}/providerview/Home`)}
             variant="outline"
             className={`${enable} bg-transparent font-bold border-2 ${textColor} border-white hover:bg-white hover:text-[#0E766E]`}
           >

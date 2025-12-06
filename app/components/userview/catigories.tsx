@@ -16,7 +16,7 @@ interface FacilityItem {
   name?: { en: string; ar: string };
   cover?: string;
   price: number;
-  rating?: number;
+  rate?: number;
   reviewsCount?: number;
   category?: number;
 }
@@ -72,7 +72,7 @@ const FacilityCard = ({ item, isFavorite, onFavorite }: FacilityCardProps) => {
           <span className="font-bold text-[#0E766E] dark:text-white">${item.price} / Day</span>
           <span className="flex items-center gap-1 text-[#0E766E] font-semibold dark:text-white">
             <Star className="w-4 h-4 fill-[#0E766E] dark:fill-white" />
-            {item.rating ?? 4.5} ({item.reviewsCount ?? 0})
+            {item.rate ?? 4.5} ({item.reviewsCount ?? 0})
           </span>
         </div>
 
@@ -154,7 +154,7 @@ export default function CategoriesSection() {
           },
           cover: f.cover ?? f.image,
           price: typeof f.price === "number" ? f.price : Number(f.price) || 0,
-          rating: typeof f.rating === "number" ? f.rating : Number(f.rating) || undefined,
+          rate: typeof f.rate === "number" ? f.rate : Number(f.rating) || undefined,
           reviewsCount: typeof f.reviewsCount === "number" ? f.reviewsCount : Number(f.reviewsCount) || 0,
           category: toNumberSafe(f.category) ?? (f.category?._id ? toNumberSafe(f.category._id) : undefined),
         })).filter((f:any) => f._id !== -1);

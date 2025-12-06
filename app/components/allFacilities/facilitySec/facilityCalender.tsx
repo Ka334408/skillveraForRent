@@ -8,12 +8,14 @@ import { useLocale, useTranslations } from "next-intl";
 import { useFacilityStore } from "@/app/store/facilityStore";
 import axiosInstance from "@/lib/axiosInstance";
 import toast, { Toaster } from "react-hot-toast";
+import { useUserStore } from "@/app/store/userStore";
 
 export default function FacilityCalendar() {
   const locale = useLocale();
   const t = useTranslations("FacilityCalendar");
 
   const facility = useFacilityStore((state) => state.facility);
+  const {user} = useUserStore();
 
   const [isMobile, setIsMobile] = useState(false);
   const formatLocalDate = (date: Date): string => {
@@ -90,6 +92,7 @@ export default function FacilityCalendar() {
           price: totalPrice,
           start: formattedStartDate,
           end: formattedEndDate,
+          username : user?.name,
         };
         localStorage.setItem("reservationData", JSON.stringify(reservationData));
         window.location.href = `/${locale}/userview/allFacilities/reservation`;
