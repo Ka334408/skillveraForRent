@@ -2,6 +2,8 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import clsx from "clsx";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -21,6 +23,7 @@ export default function Footer() {
       className="bg-white text-gray-700 border-t border-gray-200 py-10"
     >
       <div className="max-w-7xl mx-auto px-6">
+
         {/* الأقسام */}
         <div
           className={clsx(
@@ -34,36 +37,56 @@ export default function Footer() {
                 {section.title}
               </h3>
               <ul className="space-y-2">
-                {section.items.map((item: {label:string;href:string}, j: number) => (
-                  <li key={j}>
-                    <a
-                      href={item.href}
-                      className="hover:text-[#0C8A83] transition-colors font-medium text-sm"
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
+                {section.items.map(
+                  (item: { label: string; href: string }, j: number) => (
+                    <li key={j}>
+                      <a
+                        href={item.href}
+                        className="hover:text-[#0C8A83] transition-colors font-medium text-sm"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           ))}
         </div>
 
-        {/* الفاصل */}
-        <div className="border-t border-gray-200 mt-10 mb-6" />
-
-        {/* اللوجو */}
+        {/* اللوجو تحت قبل الفاصل */}
         <div
           className={clsx(
-            "flex items-center sm:justify-between justify-center flex-row"
+            "flex items-center mt-10 mb-6",
+            isArabic ? "justify-start" : "justify-end"
           )}
         >
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-[#0C8A83] rounded-sm" />
-            <span className="font-semibold text-[#0C8A83] text-sm">
-              {t("brand")}
-            </span>
+             <div className="font-bold text-lg">
+          <Link href={`/${locale}/userview/Home`}>
+            <Image
+              src="/logo.png"   // مسار الصورة داخل public/
+              alt="Logo"
+              width={120}
+              height={40}
+              className="object-contain cursor-pointer"
+            />
+          </Link>
+        </div>
           </div>
+        </div>
+
+        {/* الفاصل */}
+        <div className="border-t border-gray-200 mb-6" />
+
+        {/* الكوبي رايتس */}
+        <div
+          className={clsx(
+            "flex items-center",
+            isArabic ? "justify-end" : "justify-start"
+          )}
+        >
+          <p className="text-sm text-gray-500">© 2025 All Rights Reserved.</p>
         </div>
       </div>
     </footer>

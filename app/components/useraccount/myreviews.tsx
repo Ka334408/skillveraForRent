@@ -2,25 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import  axiosInstance  from "@/lib/axiosInstance"; // تأكد إن المسار صح
+import axiosInstance from "@/lib/axiosInstance";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalData, setTotalData] = useState(0);
 
   const t = useTranslations("reviews");
 
   const fetchReviews = async (page: number) => {
     setLoading(true);
     try {
-      const { data } = await axiosInstance.get("/user-review", {
+      const { data } = await axiosInstance.get("/user-rate", {
         params: { limit: 10, page },
       });
 
       setReviews(data?.data || []);
       setTotalPages(data?.totalPages || 1);
+      setTotalData(data?.totalData || 0);
     } catch (err) {
       console.error(err);
       setReviews([]);
@@ -57,14 +59,50 @@ export default function Reviews() {
             <table className="w-full border-collapse rounded-lg overflow-hidden shadow-sm">
               <thead>
                 <tr className="bg-gray-100 text-left text-sm text-gray-600">
-                  <th className="p-3">{t("review")}</th>
-                  <th className="p-3">{t("date")}</th>
+                  <th className="p-3">Facility</th>
+                  <th className="p-3">Rating</th>
+                  <th className="p-3">Comment</th>
+                  <th className="p-3">Date</th>
                 </tr>
               </thead>
+
               <tbody>
                 {reviews.map((r, index) => (
-                  <tr key={index} className="border-b text-sm hover:bg-gray-50">
-                    <td className="p-3">{r.text}</td>
+                  <tr
+                    key={index}
+                    className="border-b text-sm hover:bg-gray-50"
+                  >
+                    {/* Facility: Image + Name */}
+                    <td className="p-3 flex items-center gap-3">
+                      {r.facility?.cover && (
+                        <img
+                          src={`/api/media?media=${r.facility.cover}`}
+                          alt={r.facility?.name?.en || "Facility"}
+                          className="w-10 h-10 rounded-md object-cover"
+                        />
+                      )}
+                      <span>{r.facility?.name?.en || "-"}</span>
+                    </td>
+
+                    {/* Rate */}
+                    <td className="p-3">
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span
+                            key={star}
+                            className={`text-xl ${star <= r.rate ? "text-yellow-400" : "text-gray-300"
+                              }`}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+
+                    {/* Comment */}
+                    <td className="p-3">{r.comment || "-"}</td>
+
+                    {/* Date */}
                     <td className="p-3">
                       {new Date(r.createdAt).toLocaleDateString()}
                     </td>
@@ -75,33 +113,24 @@ export default function Reviews() {
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-center items-center gap-4 mt-6">
-            <button
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              disabled={page === 1}
-              className={`px-4 py-2 rounded-lg ${
-                page === 1
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-[#0E766E] text-white hover:bg-[#095F59]"
-              }`}
-            >
-              Previous
-            </button>
-            <span>
-              Page {page} of {totalPages}
-            </span>
-            <button
-              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={page === totalPages}
-              className={`px-4 py-2 rounded-lg ${
-                page === totalPages
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-[#0E766E] text-white hover:bg-[#095F59]"
-              }`}
-            >
-              Next
-            </button>
-          </div>
+          {totalData > 10 && (
+            <div className="flex justify-center gap-2 mt-6">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (num) => (
+                  <button
+                    key={num}
+                    onClick={() => setPage(num)}
+                    className={`w-10 h-10 flex items-center justify-center rounded-full font-medium transition ${page === num
+                      ? "bg-[#0E766E] text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
+                  >
+                    {num}
+                  </button>
+                )
+              )}
+            </div>
+          )}
         </>
       )}
     </div>
