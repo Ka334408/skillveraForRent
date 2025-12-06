@@ -222,7 +222,7 @@ const FacilityCard = ({ facility }: { facility: Facility }) => (
         </div>
 
         {/* Map */}
-        <div className="lg:w-[50%] w-full h-[400px] lg:h-[690px] mb-10 shadow-2xl shadow-gray-400">
+        <div className="lg:w-[50%] w-full h-[400px] lg:h-[690px] mb-10 shadow-2xl shadow-gray-400 -z-20">
           <MapContainer center={[24.7136, 46.6753]} zoom={12} scrollWheelZoom={false} className="h-full w-full rounded-xl shadow">
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <MapUpdater facilities={facilities} />

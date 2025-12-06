@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -20,9 +21,10 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [showPasswordRules, setShowPasswordRules] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
 
-  const setSignupData = useProviderStore((s:any) => s.setSignupData);
-  const setVerificationEmail = useProviderStore((s:any) => s.setVerificationEmail);
+  const setSignupData = useProviderStore((s: any) => s.setSignupData);
+  const setVerificationEmail = useProviderStore((s: any) => s.setVerificationEmail);
 
   const rules = [
     { id: 1, label: "At least 8 characters", test: (p: string) => p.length >= 8 },
@@ -33,6 +35,14 @@ export default function SignUp() {
   ];
 
   const handleSignup = () => {
+    // Validate phone: 11 digits, no letters
+    const phoneDigits = phone.replace(/\D/g, " "); // remove non-digit chars
+    if (phoneDigits.length !== 13) {
+      setPhoneError("Phone number must be 11 digits");
+      return;
+    }
+    setPhoneError("");
+
     const providerData = {
       name,
       email,
@@ -40,13 +50,9 @@ export default function SignUp() {
       password,
     };
 
-    // حفظ البيانات في Zustand Store
     setSignupData(providerData);
-    console.log(providerData);
-    // تخزين الإيميل للـ VerifyAccount
     setVerificationEmail(email);
-    // الانتقال للصفحة التالية
-    router.push("providerview/providerRegisteration");
+    router.push("providerview/proType");
   };
 
   return (
@@ -63,12 +69,14 @@ export default function SignUp() {
               <h1 className="text-blue-600 text-3xl font-bold mb-4">{t("title")}</h1>
               <h2 className="text-2xl font-bold mb-6">{t("subtitle")}</h2>
 
-              <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-5">
+              <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-5" autoComplete="off">
 
                 <input
                   type="text"
                   placeholder={t("full_name")}
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
+                  autoComplete="off"
                   className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
                   required
                 />
@@ -76,7 +84,9 @@ export default function SignUp() {
                 <input
                   type="email"
                   placeholder={t("email")}
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="off"
                   className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
                   required
                 />
@@ -86,13 +96,19 @@ export default function SignUp() {
                   <PhoneInput
                     country={"eg"}
                     value={phone}
-                    onChange={(value) => setPhone(value)}
-                    inputProps={{ name: "phone", required: true }}
+                    onChange={(value) => {
+                      setPhone(value);
+                      const digits = value.replace(/\D/g, " ");
+                      if (digits.length !== 13) setPhoneError("Phone number must be 11 digits");
+                      else setPhoneError("");
+                    }}
+                    inputProps={{ name: "phone", required: true, autoComplete: "off" }}
                     placeholder="your phone"
                     inputClass="!w-full !rounded-full !py-5 !pl-17 !pr-4 !text-gray-700 !border !focus:outline-none focus:ring-2 focus:ring-[#0E766E]"
                     buttonClass="!absolute !left-0 !top-0 !bottom-0 !rounded-l-full !border !bg-transparent focus:ring-2 focus:ring-[#0E766E]"
                     containerClass="!w-full"
                   />
+                  {phoneError && <p className="text-red-500 text-sm mt-1">{phoneError}</p>}
                 </div>
 
                 {/* Password field */}
@@ -100,13 +116,14 @@ export default function SignUp() {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder={t("password")}
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     onFocus={() => setShowPasswordRules(true)}
                     onBlur={() => password === "" && setShowPasswordRules(false)}
+                    autoComplete="new-password"
                     className="border rounded-full px-5 py-3 pr-12 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
                     required
                   />
-
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
@@ -142,9 +159,11 @@ export default function SignUp() {
                 <button
                   type="button"
                   onClick={handleSignup}
-                  disabled={password.trim() === ""}
+                  disabled={
+                    password.trim() === "" || phoneError !== "" || name.trim() === "" || email.trim() === ""
+                  }
                   className={`rounded-full py-3 font-semibold transition ${
-                    password.trim() === ""
+                    password.trim() === "" || phoneError !== "" || name.trim() === "" || email.trim() === ""
                       ? "bg-gray-400 text-white cursor-not-allowed"
                       : "bg-[#0E766E] text-white hover:bg-[#054e47]"
                   }`}

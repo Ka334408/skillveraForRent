@@ -7,9 +7,9 @@ import axiosInstance from "@/lib/axiosInstance";
 
 interface Facility {
   id: number;
-  name: {en:string,ar:string};
+  name: { en: string; ar: string };
   cover?: string | null;
-  description?: {en:string,ar:string} | null;
+  description?: { en: string; ar: string } | null;
   price?: number | null;
 }
 
@@ -19,7 +19,6 @@ export default function MyFacilities() {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"name" | "id">("name");
-
   const [showFilter, setShowFilter] = useState(false);
 
   const router = useRouter();
@@ -27,7 +26,6 @@ export default function MyFacilities() {
   const fetchFacilities = async (searchValue = "", filterBy: "name" | "id" = "name") => {
     try {
       setLoading(true);
-      // 🔹 لو searchValue رقم → نبحث بالـ id، وإلا بالـ name
       const isNumber = /^\d+$/.test(searchValue);
       const params: Record<string, string | number> = {};
       if (searchValue) {
@@ -61,7 +59,7 @@ export default function MyFacilities() {
   };
 
   return (
-    <section className="bg-gray-100 p-6 rounded-xl shadow w-full my-5">
+    <section className="bg-gray-100 p-6 rounded-xl shadow w-full my-5 min-h-[300px]">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between mb-6 gap-2">
         <h2 className="text-xl font-bold text-gray-800">My Facilities</h2>
@@ -124,9 +122,9 @@ export default function MyFacilities() {
       )}
 
       {/* Facilities Grid */}
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {!loading &&
-          facilities.map((facility) => (
+      {!loading && facilities.length > 0 ? (
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {facilities.map((facility) => (
             <div
               key={facility.id}
               className="bg-white rounded-xl shadow-md overflow-hidden"
@@ -158,17 +156,33 @@ export default function MyFacilities() {
               </div>
             </div>
           ))}
-      </div>
+        </div>
+      ) : null}
+
+      {/* No Facilities */}
+      {!loading && facilities.length === 0 && !error && (
+        <div className="flex flex-col items-center justify-center h-64 border-2 border-dashed border-gray-300 rounded-xl">
+          <p className="text-gray-500 text-lg mb-4">Create your first facility</p>
+          <button
+            onClick={() => router.push("/providerview/dashBoardHome/myFacilities/addNewFacility")}
+            className="bg-[#0E766E] text-white px-6 py-2 rounded-lg hover:bg-[#0c625b] transition"
+          >
+            Create
+          </button>
+        </div>
+      )}
 
       {/* View All */}
-      <div className="mt-4 text-right">
-        <button
-          className="text-[#0E766E] font-semibold hover:underline"
-          onClick={() => router.push("/providerview/dashBoardHome/myFacilities")}
-        >
-          View all →
-        </button>
-      </div>
+      {facilities.length > 0 && (
+        <div className="mt-4 text-right">
+          <button
+            className="text-[#0E766E] font-semibold hover:underline"
+            onClick={() => router.push("/providerview/dashBoardHome/myFacilities")}
+          >
+            View all →
+          </button>
+        </div>
+      )}
     </section>
   );
 }
