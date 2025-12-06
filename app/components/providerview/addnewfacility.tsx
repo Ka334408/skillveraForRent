@@ -167,8 +167,8 @@ export function AddFacilityPage() {
       fd.append("phone", facility.phone);
       fd.append("website", facility.website);
       fd.append("address", facility.address);
-      fd.append("addressLatLng", `${facility.lat},${facility.lng}`);
-      fd.append("rules", JSON.stringify({ en: " " }));
+      fd.append("addressLatLong", `${facility.lat},${facility.lng}`);
+      fd.append("rules", JSON.stringify({ en: "rule" }));
 
       // 2. Append Cover Image (as Blob/File)
       if (coverPic) {
