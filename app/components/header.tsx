@@ -218,7 +218,7 @@ export default function Navbar({
 
               {/* Language */}
               <div className="border-t border-[#0E766E] my-3">
-                <LocaleSwitcher />
+                <LocaleSwitcher bgColor="bg-gray" enableFlag="block" enableLabel="block" iconiHight="w-4" iconwidth="w-4"/>
               </div>
 
               {/* LOGIN / LOGOUT */}

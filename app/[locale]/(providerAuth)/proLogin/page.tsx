@@ -48,7 +48,7 @@ export default function Login() {
 
       const role = user.type.toLowerCase();
 
-      router.push("/providerview/dashBoardHome/dashBoard")
+      router.push("/providerview/dashBoardHome/myProfile")
     } catch (err: any) {
       setError(err?.response?.data?.message || err.message || "Login failed");
     } finally {

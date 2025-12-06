@@ -1,25 +1,50 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
   XAxis,
   YAxis,
   ResponsiveContainer,
+  Tooltip,
+  Cell,
+  ComposedChart,
+  Line,
 } from "recharts";
 import { Calendar, Bus, ShoppingBag, CreditCard } from "lucide-react";
+import axiosInstance from "@/lib/axiosInstance";
 
-const revenueData = [
-  { name: "Mon", value: 50 },
-  { name: "Tue", value: 80 },
-  { name: "Wed", value: 40 },
-  { name: "Thu", value: 95 },
-  { name: "Fri", value: 60 },
-  { name: "Sat", value: 85 },
-  { name: "Sun", value: 30 },
-];
+// خريطة لتحويل رقم الشهر لاختصار الاسم
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-export default function DashboardCards() {
+export default function CurrentMonthRevenue() {
+  const [revenueData, setRevenueData] = useState<{ name: string, value: number }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRevenue = async () => {
+      try {
+        const res = await axiosInstance.get("/provider/revenue-per-month-chart");
+        const data = res.data?.data || [];
+
+        const chartData = data.map((item: any) => ({
+          name: monthNames[item.month - 1] || "Unknown",
+          value: item.totalRevenue,
+        }));
+
+        setRevenueData(chartData);
+      } catch (err) {
+        console.error("Failed to fetch revenue:", err);
+        setRevenueData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRevenue();
+  }, []);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-5">
       {/* Card 1 - Calendar */}
@@ -93,17 +118,27 @@ export default function DashboardCards() {
       {/* Card 3 - Revenue Chart */}
       <div className="bg-white shadow rounded-2xl p-6">
         <h2 className="text-sm text-gray-500">Revenue this month</h2>
-        <p className="text-2xl font-bold mt-1">$682.5</p>
-        <p className="text-green-500 text-sm font-medium">+2.45% On track</p>
-        <div className="mt-6 h-40">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={revenueData}>
-              <XAxis dataKey="name" hide />
-              <YAxis hide />
-              <Bar dataKey="value" fill="#0E766E" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        {loading ? (
+          <p className="mt-2 text-gray-500">Loading...</p>
+        ) : (
+          <>
+            <p className="text-2xl font-bold mt-1">
+              {revenueData.reduce((sum, item) => sum + item.value, 0)} SR
+            </p>
+            <p className="text-green-500 text-sm font-medium">+2.45% On track</p>
+            <div className="mt-6 h-40 text-center">
+              <ResponsiveContainer width="100%" height={150}>
+                <ComposedChart data={revenueData}>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#0E766E" />
+                  <Line type="monotone" dataKey="value" stroke="#FF7F50" strokeWidth={2} />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -71,7 +71,7 @@ export default function ProviderSidebar() {
   ];
 
   const bottomItems = [
-    { id: "support", label: "Support", icon: HelpCircle, href: "/providerview/support" },
+    { id: "myprofile", label: "myprofile", icon: User, href: "/providerview/dashBoardHome/myProfile" },
     { id: "settings", label: "Settings", icon: Settings, href: "/providerview/settings" },
   ];
 
