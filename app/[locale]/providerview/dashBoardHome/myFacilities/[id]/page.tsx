@@ -230,7 +230,7 @@ export default function FacilityDashboard() {
                                             <p className="text-gray-800 font-bold">{fb.user?.name || "Anonymous"}</p>
                                             <StarRating rate={fb.rate} />
                                         </div>
-                                        <p className="text-sm italic text-gray-700 leading-relaxed">"{fb.comment}"</p>
+                                        <p className="text-sm italic text-gray-700 leading-relaxed">Comment is: {fb.comment}</p>
                                     </div>
                                 ))}
                                 {facility.feedbacks.length > 5 && (
