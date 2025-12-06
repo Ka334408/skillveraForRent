@@ -8,7 +8,8 @@ export default function page() {
   return (
     <div>
       <Header bgColor="bg-[#0E766E]" accounticonColor="bg-[#0E766E]" hoverColor="hover:bg-[#63bdb6]" menuiconColor="bg-[#0E766E]"
-        activeColor="text-[#0E766E] bg-white" />
+        activeColor="text-[#0E766E] bg-white" loginLink="/auth/login"
+        signupLink="/auth/signUp" />
       <HeroSection />
       <InfoSection />
       <ContactFormSection />
