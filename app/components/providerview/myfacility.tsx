@@ -6,10 +6,10 @@ import axiosInstance from "@/lib/axiosInstance";
 
 type Facility = {
   id: number;
-  name: string;
+  name: {en:string,ar:string};
   status: "PENDING" | "APPROVED" | "REJECTED" | "RENTED";
   cover?: string | null;
-  description?: string | null;
+  description?: {en:string,ar:string} | null;
 };
 
 const statusColor = (s: Facility["status"]): string =>
@@ -131,7 +131,7 @@ export default function FacilitiesPage() {
                           ? f.cover
                           : `/api/media?media=${f.cover}`
                       }
-                      alt={f.name}
+                      alt={f.name.en}
                       onError={(e) =>
                         (e.currentTarget.src =
                           "https://via.placeholder.com/600x360?text=No+Image")

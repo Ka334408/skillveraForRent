@@ -7,9 +7,9 @@ import axiosInstance from "@/lib/axiosInstance";
 
 interface Facility {
   id: number;
-  name: string;
+  name: {en:string,ar:string};
   cover?: string | null;
-  description?: string | null;
+  description?: {en:string,ar:string} | null;
   price?: number | null;
 }
 
@@ -139,7 +139,7 @@ export default function MyFacilities() {
                         ? facility.cover
                         : `/api/media?media=${facility.cover}`
                     }
-                    alt={facility.name}
+                    alt={facility.name.en}
                     className="w-full h-full object-cover"
                   />
                 ) : (
