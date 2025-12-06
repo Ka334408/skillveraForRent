@@ -50,7 +50,7 @@ export default function MyFacilities() {
         }
       }
 
-      const res = await axiosInstance.get("/provider-facility", {
+      const res = await axiosInstance.get(`/provider-facility?limit=${4}`, {
         params,
         withCredentials: true,
       });
