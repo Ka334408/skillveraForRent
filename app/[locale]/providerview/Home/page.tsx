@@ -21,6 +21,8 @@ export default function page() {
         hoverColor="hover:bg-[#0E766E] hover:text-white"
         enable="hidden"
         isrounded="rounded-full"
+        loginLink="/proLogin"
+        signupLink="/providerRegistration"
       />
       <HeroSection />
       <SkavaIntro />

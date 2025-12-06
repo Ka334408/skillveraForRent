@@ -25,6 +25,8 @@ export default function UserAccountLayout() {
         hoverColor="hover:bg-[#0E766E] hover:text-white"
         enable="hidden"
         isrounded="rounded-full"
+        loginLink="/auth/login"
+        signupLink="/auth/signUp"
       />
 
       

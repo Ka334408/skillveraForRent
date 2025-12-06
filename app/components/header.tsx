@@ -34,6 +34,8 @@ interface NavbarProps {
   accounticonColor?: string;
   enable?: string;
   isrounded?: string;
+  signupLink : string;
+  loginLink:string;
 }
 
 export default function Navbar({
@@ -45,6 +47,8 @@ export default function Navbar({
   accounticonColor = "bg-[#2C70E2]",
   enable = "hidden sm:inline",
   isrounded = "rounded-md",
+  signupLink=" ",
+  loginLink=" "
 }: NavbarProps) {
   const locale = useLocale();
   const t = useTranslations("navbar");
@@ -120,7 +124,7 @@ export default function Navbar({
           {/* Sign up Button */}
           {!isLoggedIn && (
             <Button className="bg-[#0E766E] text-white font-semibold hover:bg-gray-100 hover:text-black">
-              <Link href="/auth/signUp">{t("signup")}</Link>
+              <Link href={signupLink}>{t("signup")}</Link>
             </Button>
           )}
 
@@ -210,7 +214,7 @@ export default function Navbar({
               {!isLoggedIn ? (
                 <DropdownMenuItem asChild>
                   <Link
-                    href="/auth/login"
+                    href={loginLink}
                     className="flex items-center gap-3 px-3 py-3 rounded-xl bg-[#0E766E] "
                   >
                     <LogIn className="w-5 h-5" />

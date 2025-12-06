@@ -79,6 +79,8 @@ export default function FacilityPage({ params }: { params: { id: string } }) {
         hoverColor="hover:bg-[#0E766E] hover:text-white"
         enable="hidden"
         isrounded="rounded-full"
+        loginLink="/auth/login"
+        signupLink="/auth/signUp"
       />
 
       <div className="container mx-auto px-4 py-8">

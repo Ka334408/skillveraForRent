@@ -39,7 +39,7 @@ export default function HeroSection() {
             List Your Facility <br className="hidden md:block" /> with skava now.
           </h2>
           <button
-          onClick={()=>router.push("/providerview/providerRegisteration")}
+          onClick={()=>router.push("/providerRegistration")}
             className="
               inline-flex items-center gap-2 
               bg-white border border-gray-300 rounded-full 

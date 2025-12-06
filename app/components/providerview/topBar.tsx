@@ -31,7 +31,7 @@ export default function Topbar() {
             name: name || "Provider",
             email: email || "user@email.com",
             photo: image
-              ?` /api/media?media=${image}`
+              ?`/api/media?media=${image}`
               : "/herosec.png", // fallback
           });
         }

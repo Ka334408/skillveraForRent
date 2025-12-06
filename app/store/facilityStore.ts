@@ -22,6 +22,8 @@ import { create } from "zustand";
   address: string;
   webSite: string;
   taxNumber: string;
+  startDate:Date;
+  endDate :Date;
 }
 interface FacilityState {
   facility: Facility | null;
