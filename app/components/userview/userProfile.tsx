@@ -6,6 +6,16 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/app/store/userStore";
+import { 
+  User, 
+  MapPin, 
+  Calendar, 
+  ChevronRight, 
+  Loader2, 
+  ShieldCheck, 
+  Phone as PhoneIcon,
+  Users
+} from "lucide-react";
 
 export default function ProfilePage() {
   const t = useTranslations("userprofile");
@@ -20,15 +30,8 @@ export default function ProfilePage() {
   const [location, setLocation] = useState("");
   const [errors, setErrors] = useState<{ phone?: string; dob?: string }>({});
   const [loading, setLoading] = useState(false);
-  const [modal, setModal] = useState({
-    open: false,
-    title: "",
-    message: ""
-  });
+  const [modal, setModal] = useState({ open: false, title: "", message: "" });
 
-  // -----------------------------
-  //  FIXED useEffect
-  // -----------------------------
   useEffect(() => {
     if (!isHydrated || !user) return;
 
@@ -38,46 +41,21 @@ export default function ProfilePage() {
     setGender(user.gender || "");
 
     if (user.image) {
-      if (user.image.startsWith("uploads/")) {
-        setProfileImg(`/api/media?media=${user.image}`);
-      } else {
-        setProfileImg(user.image);
-      }
+      setProfileImg(user.image.startsWith("uploads/") ? `/api/media?media=${user.image}` : user.image);
     }
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const lat = pos.coords.latitude;
-        const long = pos.coords.longitude;
-        setLocation(`${lat},${long}`);
-      },
+      (pos) => setLocation(`${pos.coords.latitude},${pos.coords.longitude}`),
       (err) => console.error(err)
     );
   }, [isHydrated, user]);
 
-  // -----------------------------
-  // Loading screens
-  // -----------------------------
-  if (!isHydrated) {
-    return (
-      <div className="w-full h-screen flex items-center justify-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-black animate-bounce">
-          Skillvera
-        </h1>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <section className="flex items-center justify-center min-h-screen">
-        <h1 className="text-xl font-semibold text-red-500">
-          No user loaded ❌
-        </h1>
-      </section>
-    );
-  }
-
+  if (!isHydrated) return (
+    <div className="w-full h-screen flex flex-col items-center justify-center bg-white">
+      <Loader2 className="animate-spin text-[#0E766E] mb-4" size={48} />
+      <h1 className="text-2xl font-black text-[#0E766E] tracking-tighter">Skillvera</h1>
+    </div>
+  );
 
   const validate = () => {
     const errs: { phone?: string; dob?: string } = {};
@@ -91,8 +69,7 @@ export default function ProfilePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-
-    setLoading(true); // ✅ يبدأ اللودينج
+    setLoading(true);
 
     try {
       const formData = new FormData();
@@ -103,188 +80,194 @@ export default function ProfilePage() {
       formData.append("phone", phone);
       formData.append("addressLatLong", location);
 
-      if (profileImg) {
-        if (!profileImg.startsWith("/api/media")) {
-          const res = await fetch(profileImg);
-          const blob = await res.blob();
-          formData.append("image", blob, "profile.png");
-        }
+      if (profileImg && !profileImg.startsWith("/api/media")) {
+        const res = await fetch(profileImg);
+        const blob = await res.blob();
+        formData.append("image", blob, "profile.png");
       }
-      console.log(profileImg);
-
-      
 
       const response = await fetch(`/api/user/update-profile`, {
         method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        setModal({
-          open: true,
-          title: "Error ❌",
-          message: errorData.message || "Failed to update profile"
-        });
-        return;
-      }
+      if (!response.ok) throw new Error();
 
-      const result = await response.json();
-
-      setModal({
-        open: true,
-        title: "Success 🎉",
-        message: "Profile updated successfully!"
-      });
+      setModal({ open: true, title: "Success 🎉", message: "Profile updated successfully!" });
     } catch (err) {
-      setModal({
-        open: true,
-        title: "Error ❌",
-        message: "Failed to update profile"
-      });
+      setModal({ open: true, title: "Error ❌", message: "Failed to update profile" });
     } finally {
-      setLoading(false); // ✅ يوقف اللودينج
+      setLoading(false);
     }
   };
 
-
   return (
-    <div>
-      {/* Modal */}
-      {
-        modal.open && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white w-80 p-6 rounded-xl shadow-xl text-center">
-              <h2 className="text-xl font-bold mb-3 text-[#0E766E]">
-                {modal.title}
-              </h2>
-              <p className="text-gray-600 mb-4">{modal.message}</p>
+    <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-10 font-sans">
+      {/* SUCCESS/ERROR MODAL */}
+      {modal.open && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+          <div className="bg-white w-full max-w-sm p-8 rounded-[2rem] shadow-2xl text-center animate-in zoom-in duration-300">
+            <div className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${modal.title.includes("Success") ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}>
+              {modal.title.includes("Success") ? <ShieldCheck size={32} /> : <span className="text-2xl">❌</span>}
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">{modal.title}</h2>
+            <p className="text-gray-500 mb-8">{modal.message}</p>
+            <button
+              onClick={() => {
+                setModal({ open: false, title: "", message: "" });
+                if (modal.title.includes("Success")) router.push("/userview/Home");
+              }}
+              className="w-full bg-[#0E766E] text-white py-4 rounded-2xl font-bold hover:shadow-lg hover:shadow-teal-100 transition-all flex items-center justify-center gap-2"
+            >
+              {modal.title.includes("Success") ? "Let's Go" : "Try Again"} <ChevronRight size={20}/>
+            </button>
+          </div>
+        </div>
+      )}
 
-              <button
-                onClick={() => {
-                  setModal({ open: false, title: "", message: "" });
-                  if (modal.title.includes("Success")){
-                  router.push("/userview/Home");}
-                }
-                }
-                className="bg-[#0E766E] text-white px-6 py-2 rounded-lg hover:bg-[#06423d]"
-              >
-                {modal.title.includes("Error")&&(<>Try Again</>)}
-                {modal.title.includes("Success")&&(<>Let&apos; go</>)}
-                
-              </button>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        {/* LEFT PANEL: IDENTITY CARD */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="bg-[#0E766E] rounded-[2.5rem] p-8 text-white shadow-xl shadow-teal-900/10 relative overflow-hidden group">
+            <div className="absolute top-[-20%] right-[-20%] w-48 h-48 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-all" />
+            
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="w-28 h-28 rounded-3xl border-4 border-white/20 overflow-hidden bg-white shadow-lg mb-4">
+                {profileImg ? (
+                  <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-300"><User size={48}/></div>
+                )}
+              </div>
+              <h1 className="text-2xl font-bold">{username}</h1>
+              <p className="text-teal-100 text-sm opacity-80 mb-6">{user?.email}</p>
+              
+              <div className="w-full space-y-3">
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 flex items-center gap-3 text-sm">
+                   <div className="bg-white/20 p-2 rounded-xl"><MapPin size={16}/></div>
+                   <span className="truncate">{location ? "Location Verified" : "Detecting Location..."}</span>
+                </div>
+              </div>
             </div>
           </div>
-        )
-      }
 
-      <section className="bg-gray-50 min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-4xl bg-white rounded-xl shadow-md p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8">
-          {/* الكارت الأزرق */}
-          <div className="bg-[#0E766E] text-white rounded-xl p-4 w-full md:w-48 flex flex-col items-center justify-center gap-2 self-start">
-            <div className="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center overflow-hidden bg-white">
-              {profileImg ? (
-                <img
-                  src={profileImg}
-                  alt="Profile"
-                  className="w-full h-full object-cover object-[50%_25%]"
-                />
-              ) : (
-                <span className="text-2xl">👤</span>
-              )}
-            </div>
-            <h3 className="text-sm font-semibold text-center mt-2">{username}</h3>
+          <div className="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-sm hidden lg:block">
+            <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <ShieldCheck size={18} className="text-[#0E766E]"/> Security Tip
+            </h4>
+            <p className="text-xs text-gray-500 leading-relaxed">
+              Keep your profile information up to date to ensure accurate service delivery and booking confirmations.
+            </p>
           </div>
+        </div>
 
-          {/* الفورم */}
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold mb-2">{t("title")}</h2>
-            <p className="text-gray-500 text-sm mb-6">{t("desc")}</p>
+        {/* RIGHT PANEL: EDIT FORM */}
+        <div className="lg:col-span-8">
+          <div className="bg-white rounded-[2.5rem] p-6 md:p-12 border border-gray-100 shadow-sm">
+            <div className="mb-10">
+              <h2 className="text-3xl font-black text-gray-900 tracking-tight mb-2">{t("title")}</h2>
+              <p className="text-gray-500 font-medium">{t("desc")}</p>
+            </div>
 
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              {/* Name */}
-              <div>
-                <label className="block text-sm font-semibold mb-1">
-                  {t("fullName")}
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
+              {/* Full Name */}
+              <div className="md:col-span-2">
+                <label className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">
+                  <User size={14}/> {t("fullName")}
                 </label>
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full border-2 text-black rounded-lg p-3 focus:outline-none focus:text-black"
+                  className="w-full bg-gray-50 border-none rounded-2xl p-4 text-gray-800 font-semibold focus:ring-2 focus:ring-[#0E766E]/20 transition-all outline-none"
+                  placeholder="Enter your name"
                 />
               </div>
 
-              {/* Phone */}
-              <div>
-                <label className="block text-sm font-semibold mb-1">
-                  {t("phone")}
+              {/* Phone Input */}
+              <div className="md:col-span-1">
+                <label className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">
+                  <PhoneIcon size={14}/> {t("phone")}
                 </label>
                 <PhoneInput
                   country={"eg"}
                   value={phone}
                   onChange={(value) => setPhone("+" + value)}
-                  inputProps={{ name: "phone", required: true }}
-                  containerClass="w-full"
-                  inputClass="!w-full !rounded-lg !p-3 !pl-12 !border-2 !text-black !focus:outline-none !focus:text-black"
+                  containerClass="!w-full"
+                  inputClass="!w-full !h-14 !bg-gray-50 !border-none !rounded-2xl !text-gray-800 !font-semibold !pl-14"
+                  buttonClass="!bg-transparent !border-none !rounded-l-2xl !pl-2"
                 />
-                {errors.phone && (
-                  <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
-                )}
+                {errors.phone && <p className="text-red-500 text-[10px] mt-2 font-bold uppercase ml-1">{errors.phone}</p>}
               </div>
 
               {/* DOB */}
-              <div>
-                <label className="block text-sm font-semibold mb-1">
-                  {t("dob")}
+              <div className="md:col-span-1">
+                <label className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">
+                  <Calendar size={14}/> {t("dob")}
                 </label>
                 <input
                   type="date"
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
-                  className="w-full border-2 text-black rounded-lg p-3 focus:outline-none focus:text-black"
+                  className="w-full bg-gray-50 border-none rounded-2xl p-4 text-gray-800 font-semibold focus:ring-2 focus:ring-[#0E766E]/20 transition-all outline-none h-14"
                 />
-                {errors.dob && (
-                  <p className="text-red-500 text-sm mt-1">{errors.dob}</p>
-                )}
+                {errors.dob && <p className="text-red-500 text-[10px] mt-2 font-bold uppercase ml-1">{errors.dob}</p>}
               </div>
 
               {/* Gender */}
-              <div>
-                <label className="block text-sm font-semibold mb-1">
-                  {t("gender")}
+              <div className="md:col-span-2">
+                <label className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">
+                  <Users size={14}/> {t("gender")}
                 </label>
-                <select
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="w-full border-2 text-black rounded-lg p-3 focus:outline-none focus:text-black"
-                >
-                  <option value="">Select gender</option>
-                  <option value="male">{t("genderMale")}</option>
-                  <option value="female">{t("genderFemale")}</option>
-                  <option value="other">{t("genderOther")}</option>
-                </select>
+                <div className="grid grid-cols-3 gap-3">
+                  {["male", "female", "other"].map((g) => (
+                    <button
+                      key={g}
+                      type="button"
+                      onClick={() => setGender(g)}
+                      className={`py-4 rounded-2xl text-sm font-bold capitalize transition-all border-2 ${
+                        gender === g 
+                        ? "bg-[#0E766E] border-[#0E766E] text-white shadow-lg shadow-teal-100" 
+                        : "bg-white border-gray-100 text-gray-400 hover:border-gray-200"
+                      }`}
+                    >
+                      {t(`gender${g.charAt(0).toUpperCase() + g.slice(1)}`)}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex justify-end">
+              {/* Submit Button */}
+              <div className="md:col-span-2 pt-6">
                 <button
                   type="submit"
-                  disabled={loading} // ✅ يمنع الضغط وقت اللودينج
-                  className={`px-6 py-2 rounded-lg text-white transition ${loading
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-[#0E766E] hover:bg-[#033b37]"
-                    }`}
+                  disabled={loading}
+                  className={`w-full py-5 rounded-[2rem] text-white font-black text-lg tracking-tight shadow-xl transition-all flex items-center justify-center gap-3 ${
+                    loading 
+                    ? "bg-gray-300 cursor-not-allowed shadow-none" 
+                    : "bg-gray-900 hover:bg-black shadow-gray-200 hover:-translate-y-1"
+                  }`}
                 >
-                  {loading ? "Uploading..." : t("save")}
+                  {loading ? (
+                    <>
+                      <Loader2 className="animate-spin" size={24}/>
+                      Saving Changes...
+                    </>
+                  ) : (
+                    <>
+                      Update Profile
+                      <ChevronRight size={24}/>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
           </div>
         </div>
-      </section>
+
+      </div>
     </div>
   );
 }

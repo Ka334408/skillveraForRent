@@ -237,7 +237,7 @@ export function AddFacilityPage() {
                   <img
                     src={typeof coverPic === "string" ? coverPic : URL.createObjectURL(coverPic)}
                     alt="Cover"
-                    className="w-full h-full object-cover"
+                    className="max-w-full max-h-full object-contain"
                   />
                   <button
                     type="button"
@@ -277,7 +277,7 @@ export function AddFacilityPage() {
                   <img
                     src={typeof file === "string" ? file : URL.createObjectURL(file)}
                     alt={`Facility ${i}`}
-                    className="w-full h-full object-cover rounded-xl border border-gray-300 shadow-md"
+                    className="max-w-full max-h-full object-contain rounded-xl border border-gray-300 shadow-md"
                   />
                   <button
                     type="button"
