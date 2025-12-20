@@ -48,7 +48,7 @@ export default function Reviews() {
     <div className="w-full px-2 md:px-4 py-4">
       <div className="mb-6 md:mb-8">
         <h1 className="text-xl md:text-2xl font-bold text-gray-800">{t("title")}</h1>
-        <p className="text-gray-500 text-xs md:text-sm">Everything you've shared about your visits</p>
+        <p className="text-gray-500 text-xs md:text-sm">Everything you&apos;ve shared about your visits</p>
       </div>
 
       {reviews.length === 0 ? (
@@ -86,7 +86,7 @@ export default function Reviews() {
                       <div className="flex flex-col gap-1.5">
                         <StarRating rate={r.rate} />
                         <p className="text-gray-600 text-sm leading-relaxed max-w-md italic">
-                          "{r.comment || "No written feedback provided."}"
+                          &quot;{r.comment || "No written feedback provided."}&quot;
                         </p>
                       </div>
                     </td>
@@ -116,7 +116,7 @@ export default function Reviews() {
                 <div className="space-y-2">
                   <StarRating rate={r.rate} />
                   <p className="text-gray-600 text-sm leading-relaxed italic bg-gray-50 p-3 rounded-xl border border-gray-100/50">
-                    "{r.comment || "No written feedback provided."}"
+                    &quot;{r.comment || "No written feedback provided."}&quot;
                   </p>
                 </div>
               </div>
