@@ -52,7 +52,7 @@ export default function SignUp() {
 
     setSignupData(providerData);
     setVerificationEmail(email);
-    router.push("providerview/proType");
+    router.push("providerview/providerType");
   };
 
   return (

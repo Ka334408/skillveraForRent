@@ -68,6 +68,7 @@ export default function ProviderSidebar() {
     { id: "calendar", label: "Calendar", icon: Calendar, href: `/${locale}/providerview/dashBoardHome/Calander` },
     { id: "finance", label: "Finance", icon: CreditCard, href: `/${locale}/providerview/dashBoardHome/Finance` },
     { id: "statistic", label: "Statistic", icon: BarChart, href: "/providerview/statistic" },
+    { id: "myprofile", label: "My profile", icon: User, href: `/${locale}/providerview/dashBoardHome/myProfile` },
   ];
 
   const bottomItems = [
