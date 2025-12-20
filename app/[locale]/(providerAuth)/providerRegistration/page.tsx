@@ -7,7 +7,7 @@ import { useTranslations, useLocale } from "next-intl";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import GuestPage from "@/app/components/protectedpages/guestPage";
-import { CheckCircle, AlertCircle, EyeIcon, EyeOff } from "lucide-react";
+import { CheckCircle, AlertCircle, EyeIcon, EyeOff, User, Mail, ShieldCheck, ArrowRight } from "lucide-react";
 import { useProviderStore } from "@/app/store/providerStore";
 
 export default function SignUp() {
@@ -35,161 +35,178 @@ export default function SignUp() {
   ];
 
   const handleSignup = () => {
-    // Validate phone: 11 digits, no letters
-    const phoneDigits = phone.replace(/\D/g, " "); // remove non-digit chars
-    if (phoneDigits.length !== 13) {
-      setPhoneError("Phone number must be 11 digits");
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (phoneDigits.length < 10) {
+      setPhoneError("Please enter a valid phone number");
       return;
     }
     setPhoneError("");
 
-    const providerData = {
-      name,
-      email,
-      phone: `+${phone}`,
-      password,
-    };
-
+    const providerData = { name, email, phone: `+${phone}`, password };
     setSignupData(providerData);
     setVerificationEmail(email);
     router.push("providerview/providerType");
   };
 
+  const isFormValid = name.trim() !== "" && email.trim() !== "" && phoneError === "" && rules.every(r => r.test(password));
+
   return (
-    <div>
-      <GuestPage>
-        <main
-          dir={locale === "ar" ? "rtl" : "ltr"}
-          className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
-        >
-          <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden dark:bg-black">
+    <GuestPage>
+      <main
+        dir={locale === "ar" ? "rtl" : "ltr"}
+        className="min-h-screen bg-[#F3F4F6] dark:bg-[#0a0a0a] flex items-center justify-center p-4"
+      >
+        <div className="bg-white dark:bg-[#111] rounded-[2.5rem] shadow-2xl w-full max-w-5xl flex flex-col md:flex-row overflow-hidden border border-white/20">
+          
+          {/* --- Left Side: Aesthetic Info Panel --- */}
+          <div className="md:w-5/12 bg-[#0E766E] p-10 text-white flex flex-col justify-between relative overflow-hidden">
+            <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-black/20 rounded-full blur-3xl" />
 
-            {/* Left side - form */}
-            <div className="flex flex-col justify-center p-8 md:w-1/2 w-full">
-              <h1 className="text-blue-600 text-3xl font-bold mb-4">{t("title")}</h1>
-              <h2 className="text-2xl font-bold mb-6">{t("subtitle")}</h2>
+            <div className="relative z-10">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8">
+                <ShieldCheck className="text-white" size={28} />
+              </div>
+              <h1 className="text-3xl font-black leading-tight mb-2">{t("title")}</h1>
+              <h2 className="text-xl font-medium text-emerald-100 opacity-90">{t("subtitle")}</h2>
+            </div>
 
-              <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-5" autoComplete="off">
+            <div className="relative z-10 bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
+              <p className="text-sm font-medium mb-4 italic opacity-80">
+                "Joining this platform was the best decision for my business growth."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-emerald-400/40 border border-white/30" />
+                <span className="text-xs font-bold uppercase tracking-wider">Verified Provider</span>
+              </div>
+            </div>
+          </div>
 
-                <input
-                  type="text"
-                  placeholder={t("full_name")}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  autoComplete="off"
-                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
-                  required
-                />
+          {/* --- Right Side: Form Content --- */}
+          <div className="md:w-7/12 w-full p-8 md:p-12 flex flex-col justify-center bg-white dark:bg-black">
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-5" autoComplete="off">
+              
+              {/* Name field */}
+              <div className="space-y-1">
+                <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">{t("full_name")}</label>
+                <div className="relative group">
+                  <User className="absolute left-5 rtl:right-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0E766E] transition-colors" size={18} />
+                  <input
+                    type="text"
+                    placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-2xl py-3.5 pl-14 pr-5 rtl:pr-14 rtl:pl-5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E766E]/50 focus:border-[#0E766E] transition-all"
+                    required
+                  />
+                </div>
+              </div>
 
-                <input
-                  type="email"
-                  placeholder={t("email")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="off"
-                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
-                  required
-                />
+              {/* Email field */}
+              <div className="space-y-1">
+                <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">{t("email")}</label>
+                <div className="relative group">
+                  <Mail className="absolute left-5 rtl:right-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0E766E] transition-colors" size={18} />
+                  <input
+                    type="email"
+                    placeholder="email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-2xl py-3.5 pl-14 pr-5 rtl:pr-14 rtl:pl-5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E766E]/50 focus:border-[#0E766E] transition-all"
+                    required
+                  />
+                </div>
+              </div>
 
-                {/* Phone input */}
-                <div className="relative">
+              {/* Phone field */}
+              <div className="space-y-1">
+                <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Phone Number</label>
+                <div className="phone-input-container">
                   <PhoneInput
                     country={"eg"}
                     value={phone}
                     onChange={(value) => {
                       setPhone(value);
-                      const digits = value.replace(/\D/g, " ");
-                      if (digits.length !== 13) setPhoneError("Phone number must be 11 digits");
+                      if (value.length < 10) setPhoneError("Invalid number");
                       else setPhoneError("");
                     }}
-                    inputProps={{ name: "phone", required: true, autoComplete: "off" }}
-                    placeholder="your phone"
-                    inputClass="!w-full !rounded-full !py-5 !pl-17 !pr-4 !text-gray-700 !border !focus:outline-none focus:ring-2 focus:ring-[#0E766E]"
-                    buttonClass="!absolute !left-0 !top-0 !bottom-0 !rounded-l-full !border !bg-transparent focus:ring-2 focus:ring-[#0E766E]"
-                    containerClass="!w-full"
+                    inputProps={{ name: "phone", required: true }}
+                    containerClass="!w-full shadow-none"
+                    inputClass="!w-full !h-[50px] !bg-gray-50 dark:!bg-[#1a1a1a] !border-gray-200 dark:!border-white/10 !rounded-2xl !text-gray-900 dark:!text-white focus:!ring-2 focus:!ring-[#0E766E]/50 !transition-all"
+                    buttonClass="!bg-transparent !border-r dark:!border-white/10 !rounded-l-2xl rtl:!rounded-r-2xl rtl:!rounded-l-none rtl:!border-l rtl:!border-r-0"
                   />
-                  {phoneError && <p className="text-red-500 text-sm mt-1">{phoneError}</p>}
                 </div>
+                {phoneError && <p className="text-rose-500 text-[10px] font-bold mt-1 ml-4">{phoneError}</p>}
+              </div>
 
-                {/* Password field */}
-                <div className="relative w-full">
+              {/* Password field */}
+              <div className="space-y-1">
+                <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">{t("password")}</label>
+                <div className="relative group">
                   <input
                     type={showPassword ? "text" : "password"}
-                    placeholder={t("password")}
+                    placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     onFocus={() => setShowPasswordRules(true)}
-                    onBlur={() => password === "" && setShowPasswordRules(false)}
                     autoComplete="new-password"
-                    className="border rounded-full px-5 py-3 pr-12 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
+                    className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-2xl py-3.5 px-6 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E766E]/50 focus:border-[#0E766E] transition-all"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
-                    className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute top-1/2 right-5 rtl:left-5 rtl:right-auto -translate-y-1/2 text-gray-400 hover:text-gray-700"
                   >
-                    {showPassword ? <EyeIcon size={20} /> : <EyeOff size={20} />}
+                    {showPassword ? <EyeIcon size={18} /> : <EyeOff size={18} />}
                   </button>
                 </div>
+              </div>
 
-                {/* Password Rules */}
-                {showPasswordRules && (
-                  <div className="mt-3 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 text-sm space-y-2 border dark:border-gray-700">
-                    <p className="font-semibold text-gray-700 dark:text-gray-200 mb-2">
-                      Password must include:
-                    </p>
-
+              {/* Password Rules */}
+              {showPasswordRules && (
+                <div className="bg-gray-50 dark:bg-white/5 rounded-3xl p-5 border border-gray-100 dark:border-white/5 space-y-2">
+                  <p className="text-[11px] font-black uppercase text-gray-400 mb-2 tracking-widest">Security Checklist</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                     {rules.map((rule) => {
                       const isValid = rule.test(password);
                       return (
-                        <div
-                          key={rule.id}
-                          className={`flex items-center gap-2 ${isValid ? "text-green-600" : "text-gray-600 dark:text-gray-400"}`}
-                        >
-                          {isValid ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+                        <div key={rule.id} className={`flex items-center gap-2 text-xs font-medium ${isValid ? "text-emerald-600" : "text-gray-400"}`}>
+                          {isValid ? <CheckCircle size={14} /> : <AlertCircle size={14} className="opacity-50" />}
                           <span>{rule.label}</span>
                         </div>
                       );
                     })}
                   </div>
-                )}
+                </div>
+              )}
 
-                {/* Signup button */}
-                <button
-                  type="button"
-                  onClick={handleSignup}
-                  disabled={
-                    password.trim() === "" || phoneError !== "" || name.trim() === "" || email.trim() === ""
-                  }
-                  className={`rounded-full py-3 font-semibold transition ${
-                    password.trim() === "" || phoneError !== "" || name.trim() === "" || email.trim() === ""
-                      ? "bg-gray-400 text-white cursor-not-allowed"
-                      : "bg-[#0E766E] text-white hover:bg-[#054e47]"
-                  }`}
-                >
-                  {t("signup")}
-                </button>
-              </form>
+              {/* Signup button */}
+              <button
+                type="button"
+                onClick={handleSignup}
+                disabled={!isFormValid}
+                className={`w-full rounded-2xl py-4 font-black text-lg transition-all transform active:scale-[0.98] shadow-xl ${
+                  isFormValid 
+                  ? "bg-[#0E766E] text-white hover:bg-[#0A5D57] shadow-[#0E766E]/20" 
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
+                }`}
+              >
+                {t("signup")}
+              </button>
+            </form>
 
-              <p className="mt-6 text-sm text-gray-600 text-center">
+            <div className="mt-8 text-center">
+              <p className="text-sm font-medium text-gray-500">
                 {t("have_account")}{" "}
-                <Link
-                  href="/proLogin"
-                  className="text-[#0E766E] font-semibold hover:underline"
-                >
+                <Link href="/proLogin" className="text-[#0E766E] font-black hover:underline underline-offset-4">
                   {t("login")}
                 </Link>
               </p>
             </div>
-
-            {/* Right side - image */}
-            <div className="md:w-1/2 flex items-center justify-center p-6">
-              <span className="text-gray-700">[Image]</span>
-            </div>
           </div>
-        </main>
-      </GuestPage>
-    </div>
+        </div>
+      </main>
+    </GuestPage>
   );
 }
