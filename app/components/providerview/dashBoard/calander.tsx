@@ -76,7 +76,7 @@ export default function CalendarPage() {
              
              <div className="space-y-6">
                 <div>
-                  <p className="text-[10px] font-black text-teal-600 uppercase mb-3">Today's Priority</p>
+                  <p className="text-[10px] font-black text-teal-600 uppercase mb-3">Today&apos;s Priority</p>
                   <div className="space-y-3">
                     {events.slice(0, 3).map((event: any, i) => (
                       <div key={i} className="group cursor-pointer flex items-start gap-3 p-3 rounded-2xl hover:bg-gray-50 transition-colors">

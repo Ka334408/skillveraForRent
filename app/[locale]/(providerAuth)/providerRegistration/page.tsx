@@ -73,7 +73,7 @@ export default function SignUp() {
 
             <div className="relative z-10 bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
               <p className="text-sm font-medium mb-4 italic opacity-80">
-                "Joining this platform was the best decision for my business growth."
+                &quot;Joining this platform was the best decision for my business growth.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-emerald-400/40 border border-white/30" />
