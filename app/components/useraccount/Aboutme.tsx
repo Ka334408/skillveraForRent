@@ -80,7 +80,7 @@ export default function ProfileCard() {
             <div className="relative">
               <div className="w-40 h-40 rounded-full overflow-hidden ring-4 ring-teal-50 ring-offset-2 bg-gray-100 shadow-inner">
                 {filePreview ? (
-                  <img src={filePreview} className="w-full h-full object-cover" alt="profile" />
+                  <img src={filePreview} className="w-full h-full object-contain" alt="profile" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-teal-50">
                     <UserIcon size={60} className="text-[#0E766E] opacity-40" />
