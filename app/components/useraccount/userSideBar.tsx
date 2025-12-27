@@ -13,8 +13,8 @@ export default function ProfileSidebar({ active, setActive }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { id: "about", label: t("about"), icon: User },
-    { id: "reservations", label: t("reservations"), icon: BookOpen },
+    { id: "about", label: "My Profile", icon: User },
+    { id: "reservations", label: "My Reservations", icon: BookOpen },
     { id: "reviews", label: t("reviews"), icon: MessageCircle },
     { id: "favorites", label: t("favorites"), icon: Bookmark },
   ];

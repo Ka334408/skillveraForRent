@@ -3,8 +3,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import axiosInstance from "@/lib/axiosInstance";
-import { Loader2, Calendar, Star, XCircle, ChevronLeft, ChevronRight, Clock, CreditCard } from "lucide-react";
-import { toast } from "react-hot-toast";
+import { Loader2, Calendar, Star, XCircle, ChevronLeft, ChevronRight, Clock, Send } from "lucide-react";
+import { toast, Toaster } from "react-hot-toast";
 
 type TabType = "UPCOMING" | "PAST";
 
@@ -21,6 +21,12 @@ export default function Reservations() {
   const [rate, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
+  // Cancellation State
+  const [showCancelPopup, setShowCancelPopup] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const [isSubmitingCancel, setIsSubmitingCancel] = useState(false);
+
   const t = useTranslations("reservations");
 
   const fetchReservations = async (currentPage: number) => {
@@ -32,7 +38,7 @@ export default function Reservations() {
       setReservations(data?.data || []);
       setTotalPages(data?.totalPages || 1);
     } catch (err) {
-      console.error(err);
+      console.error("Fetch Error:", err);
       setReservations([]);
     } finally {
       setLoading(false);
@@ -51,14 +57,41 @@ export default function Reservations() {
     });
   }, [reservations, activeTab]);
 
-  const handleCancel = async (id: string) => {
-    if (!window.confirm("Are you sure you want to cancel this reservation?")) return;
+  const openCancelModal = (id: string) => {
+    setCancellingId(id);
+    setShowCancelPopup(true);
+  };
+
+  const confirmCancellation = async () => {
+    if (!cancelReason.trim()) {
+      toast.error("Please provide a reason for cancellation");
+      return;
+    }
+
+    setIsSubmitingCancel(true);
     try {
-      await axiosInstance.patch(`/user-reservation/cancel/${id}`);
-      toast.success("Reservation cancelled");
+      await axiosInstance.post(`/user-reservation/${cancellingId}/cancel`, {
+        reason: cancelReason 
+      });
+      
+      toast.success("Reservation cancelled successfully");
+      setShowCancelPopup(false);
+      setCancelReason("");
+      setCancellingId(null);
       fetchReservations(page);
-    } catch (err) {
-      toast.error("Failed to cancel reservation");
+    } catch (err: any) {
+      console.error("Cancellation Error Object:", err);
+      
+      // Attempt to extract the most descriptive error message possible
+      const errorMessage = 
+        err.response?.data?.message || 
+        err.response?.data?.error || 
+        err.message || 
+        "Failed to cancel reservation. Please try again.";
+
+      toast.error(errorMessage);
+    } finally {
+      setIsSubmitingCancel(false);
     }
   };
 
@@ -70,8 +103,8 @@ export default function Reservations() {
       setRating(0);
       setComment("");
       fetchReservations(page);
-    } catch (err) {
-      toast.error("Error submitting rating");
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Error submitting rating");
     }
   };
 
@@ -80,22 +113,20 @@ export default function Reservations() {
       {/* HEADER & TABS */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-6">
         <div>
-          <h1 className="text-xl md:text-2xl font-bold text-gray-800">{t("title")}</h1>
-          <p className="text-gray-500 text-xs md:text-sm">Manage your facility bookings</p>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-800">My Reservations</h1>
+          <p className="text-gray-500 text-xs md:text-sm font-medium italic">Manage your facility bookings</p>
         </div>
 
         <div className="flex bg-gray-100 p-1.5 rounded-2xl w-full lg:w-auto">
           <button
             onClick={() => { setActiveTab("UPCOMING"); setPage(1); }}
-            className={`flex-1 lg:flex-none px-4 md:px-8 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all ${activeTab === "UPCOMING" ? "bg-white text-[#0E766E] shadow-sm" : "text-gray-500 hover:text-gray-700"
-              }`}
+            className={`flex-1 lg:flex-none px-4 md:px-8 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all ${activeTab === "UPCOMING" ? "bg-white text-[#0E766E] shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
           >
             My Reservations
           </button>
           <button
             onClick={() => { setActiveTab("PAST"); setPage(1); }}
-            className={`flex-1 lg:flex-none px-4 md:px-8 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all ${activeTab === "PAST" ? "bg-white text-[#0E766E] shadow-sm" : "text-gray-500 hover:text-gray-700"
-              }`}
+            className={`flex-1 lg:flex-none px-4 md:px-8 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all ${activeTab === "PAST" ? "bg-white text-[#0E766E] shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
           >
             Past History
           </button>
@@ -114,7 +145,7 @@ export default function Reservations() {
         </div>
       ) : (
         <>
-          {/* DESKTOP TABLE VIEW (Visible md and up) */}
+          {/* DESKTOP VIEW */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full border-separate border-spacing-y-3">
               <thead>
@@ -168,21 +199,17 @@ export default function Reservations() {
                             onClick={() => { setSelectedReservation(r); setShowPopup(true); }}
                             className="group relative overflow-hidden flex items-center justify-center gap-2 bg-[#0E766E] text-white px-5 py-2.5 rounded-2xl text-xs font-bold transition-all hover:pr-8 active:scale-95 shadow-lg shadow-teal-100"
                           >
-                            {/* Animated Icon */}
                             <Star size={14} className="fill-yellow-400 text-yellow-400 transition-transform group-hover:rotate-[20deg]" />
                             <span>Rate Visit</span>
-
-                            {/* Hidden Arrow that appears on hover */}
-                            <span className="absolute right-2 opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-0 translate-x-4">
-                              →
-                            </span>
+                            <span className="absolute right-2 opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-0 translate-x-4">→</span>
                           </button>
                         ) : (
                           <button
-                            onClick={() => handleCancel(r.id)}
-                            className="flex items-center justify-center gap-2 bg-white text-red-500 border border-red-100 px-5 py-2.5 rounded-2xl text-xs font-bold transition-all hover:bg-red-500 hover:text-white hover:border-red-500 active:scale-95 shadow-sm"
+                            disabled={r.status === 'CANCELLED'}
+                            onClick={() => openCancelModal(r.id)}
+                            className="flex items-center justify-center gap-2 bg-white text-red-500 border border-red-100 px-5 py-2.5 rounded-2xl text-xs font-bold transition-all hover:bg-red-500 hover:text-white hover:border-red-500 active:scale-95 shadow-sm disabled:opacity-30"
                           >
-                            <XCircle size={14} className="transition-transform group-hover:scale-110" />
+                            <XCircle size={14} />
                             <span>Cancel</span>
                           </button>
                         )}
@@ -194,7 +221,7 @@ export default function Reservations() {
             </table>
           </div>
 
-          {/* MOBILE LIST VIEW (Visible on small screens) */}
+          {/* MOBILE VIEW */}
           <div className="grid grid-cols-1 gap-4 md:hidden">
             {filteredReservations.map((r) => (
               <div key={r.id} className="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm flex flex-col gap-4">
@@ -210,7 +237,6 @@ export default function Reservations() {
                   </div>
                   <StatusBadge status={r.status} />
                 </div>
-
                 <div className="grid grid-cols-2 gap-2 py-3 border-y border-gray-50 border-dashed">
                   <div className="flex flex-col gap-1">
                     <span className="text-[10px] text-gray-400 uppercase font-bold">Start Date</span>
@@ -221,14 +247,15 @@ export default function Reservations() {
                     <span className="text-xs font-bold text-[#0E766E]">{r.totalAmount} EGP</span>
                   </div>
                 </div>
-
                 <div className="flex gap-2">
                   {activeTab === "PAST" ? (
-                    <button onClick={() => { setSelectedReservation(r); setShowPopup(true); }} className="mobile-btn-rate">
-                      Rate this Experience
-                    </button>
+                    <button onClick={() => { setSelectedReservation(r); setShowPopup(true); }} className="mobile-btn-rate">Rate Experience</button>
                   ) : (
-                    <button onClick={() => handleCancel(r.id)} className="mobile-btn-cancel">
+                    <button 
+                       disabled={r.status === 'CANCELLED'} 
+                       onClick={() => openCancelModal(r.id)} 
+                       className="mobile-btn-cancel disabled:opacity-30"
+                    >
                       Cancel Reservation
                     </button>
                   )}
@@ -248,71 +275,106 @@ export default function Reservations() {
         </>
       )}
 
-      {/* RATING POPUP (MODAL) - Redesigned for mobile as well */}
-      {showPopup && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-end md:items-center z-[100] p-0 md:p-4">
-          <div className="bg-white w-full max-w-md p-6 md:p-8 rounded-t-[32px] md:rounded-3xl shadow-2xl animate-in slide-in-from-bottom md:zoom-in duration-300">
+      {/* CANCELLATION MODAL */}
+      {showCancelPopup && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-end md:items-center z-[110] p-0 md:p-4">
+          <div className="bg-white w-full max-w-md p-6 md:p-8 rounded-t-[32px] md:rounded-3xl shadow-2xl">
             <div className="w-12 h-1 bg-gray-200 rounded-full mx-auto mb-6 md:hidden"></div>
-            <h2 className="text-xl md:text-2xl font-bold mb-2 text-gray-800 text-center">Share your Feedback</h2>
-            <p className="text-gray-500 text-xs md:text-sm text-center mb-6 px-4">How was your stay at {selectedReservation?.facility?.name?.en}?</p>
-
-            <div className="flex justify-center gap-2 md:gap-3 mb-8">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  onClick={() => setRating(star)}
-                  className={`text-4xl md:text-5xl transition-all hover:scale-110 active:scale-90 ${star <= rate ? "text-yellow-400 scale-105" : "text-gray-100"}`}
-                >
-                  ★
-                </button>
-              ))}
+            <div className="flex flex-col items-center mb-6">
+              <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-red-500 mb-4">
+                <XCircle size={32} />
+              </div>
+              <h2 className="text-xl md:text-2xl font-bold text-gray-800 text-center">Cancel Reservation</h2>
+              <p className="text-gray-500 text-xs md:text-sm text-center mt-2 px-6">
+                Please provide a reason for cancelling your booking.
+              </p>
             </div>
 
             <textarea
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              className="w-full border-none bg-gray-50 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-[#0E766E] outline-none transition-all"
-              placeholder="What did you like or dislike?..."
+              value={cancelReason}
+              onChange={(e) => setCancelReason(e.target.value)}
+              className="w-full border-none bg-gray-50 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-red-500 outline-none transition-all"
+              placeholder="Reason for cancellation..."
               rows={4}
             />
 
             <div className="flex flex-col md:flex-row gap-3 mt-8">
               <button
                 className="order-2 md:order-1 flex-1 py-3 text-gray-400 font-bold hover:bg-gray-50 rounded-2xl transition-all"
-                onClick={() => setShowPopup(false)}
+                onClick={() => { setShowCancelPopup(false); setCancelReason(""); }}
+                disabled={isSubmitingCancel}
               >
-                Maybe Later
+                Go Back
               </button>
               <button
+                disabled={!cancelReason.trim() || isSubmitingCancel}
+                className="order-1 md:order-2 flex-[2] py-4 bg-red-500 text-white rounded-2xl font-bold flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+                onClick={confirmCancellation}
+              >
+                {isSubmitingCancel ? <Loader2 className="animate-spin" size={20} /> : <><Send size={18} /> Confirm</>}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <Toaster
+      position="top-center"
+      containerStyle={{zIndex:9999}}
+      />
+
+      {/* RATING MODAL */}
+      {showPopup && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-end md:items-center z-[100] p-0 md:p-4">
+          <div className="bg-white w-full max-w-md p-6 md:p-8 rounded-t-[32px] md:rounded-3xl shadow-2xl">
+            <h2 className="text-xl md:text-2xl font-bold mb-2 text-gray-800 text-center">Share Feedback</h2>
+            <div className="flex justify-center gap-2 mb-8">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  onClick={() => setRating(star)}
+                  className={`text-4xl ${star <= rate ? "text-yellow-400" : "text-gray-100"}`}
+                >
+                  ★
+                </button>
+              ))}
+            </div>
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              className="w-full bg-gray-50 rounded-2xl p-4 text-sm outline-none"
+              placeholder="Your comments..."
+              rows={4}
+            />
+            <div className="flex gap-3 mt-8">
+              <button className="flex-1 py-3 text-gray-400 font-bold" onClick={() => setShowPopup(false)}>Later</button>
+              <button
                 disabled={rate === 0}
-                className="order-1 md:order-2 flex-[2] py-4 bg-[#0E766E] text-white rounded-2xl font-bold shadow-lg shadow-teal-100 hover:bg-[#095F59] disabled:opacity-50 transition-all"
+                className="flex-[2] py-4 bg-[#0E766E] text-white rounded-2xl font-bold disabled:opacity-50"
                 onClick={submitRating}
               >
-                Submit Review
+                Submit
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Tailwind Specific Scoped Styles for common classes */}
       <style jsx>{`
-        .btn-rate { @apply flex items-center gap-2 ml-auto bg-teal-50 text-[#0E766E] px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-[#0E766E] hover:text-white transition-all shadow-sm; }
-        .btn-cancel { @apply flex items-center gap-2 ml-auto bg-red-50 text-red-600 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-red-600 hover:text-white transition-all shadow-sm; }
-        .mobile-btn-rate { @apply flex-1 py-3 bg-[#0E766E] text-white rounded-xl text-xs font-bold shadow-md shadow-teal-50 text-center; }
-        .mobile-btn-cancel { @apply flex-1 py-3 bg-red-50 text-red-600 rounded-xl text-xs font-bold text-center; }
         .pag-btn { @apply p-2.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-20 transition-all shadow-sm; }
+        .mobile-btn-rate { @apply flex-1 py-3 bg-[#0E766E] text-white rounded-xl text-xs font-bold text-center; }
+        .mobile-btn-cancel { @apply flex-1 py-3 bg-red-50 text-red-600 rounded-xl text-xs font-bold text-center; }
       `}</style>
     </div>
   );
 }
 
-// Sub-component for Status Badge to reduce repetition
 const StatusBadge = ({ status }: { status: string }) => {
   const styles: Record<string, string> = {
     APPROVED: "bg-green-50 text-green-600 border-green-100",
     PENDING: "bg-amber-50 text-amber-600 border-amber-100",
-    CANCELLED: "bg-red-50 text-red-600 border-red-100",
+    FAILED: "bg-red-50 text-red-600 border-red-100",
+    FAILD: "bg-red-50 text-red-600 border-red-100",
+    CANCELLED: "bg-gray-100 text-gray-500 border-gray-200",
   };
   return (
     <span className={`px-2.5 py-1 rounded-lg border text-[10px] font-black uppercase tracking-tight ${styles[status] || "bg-gray-50 text-gray-500"}`}>
