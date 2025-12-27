@@ -76,10 +76,10 @@ export default function SearchSection() {
   return (
     <div className="dark:bg-black transition-colors">
       <section className="w-[95%] md:w-[85%] lg:w-[75%] mx-auto pt-8 pb-12">
-        
+
         {/* --- SEARCH BAR --- */}
         <div className="flex flex-col md:flex-row items-stretch md:items-center  dark:bg-zinc-900 border-2 border-[#0E766E] rounded-[24px] md:rounded-full shadow-xl relative z-50">
-          
+
           {/* Facility Name Input */}
           <div className="flex-[1.5] px-6 py-4 flex flex-col justify-center relative border-b md:border-b-0 md:border-r border-gray-100 dark:border-zinc-800">
             <p className="text-[10px] font-black text-[#0E766E] uppercase tracking-widest mb-1 text-center">{t("place")}</p>
@@ -97,7 +97,7 @@ export default function SearchSection() {
           {/* CUSTOM CATEGORY DROPDOWN */}
           <div className="flex-1 px-6 py-4 flex flex-col justify-center relative cursor-pointer" ref={dropdownRef}>
             <p className="text-[10px] font-black text-[#0E766E] uppercase tracking-widest mb-1">{t("category")}</p>
-            <button 
+            <button
               onClick={() => setIsOpen(!isOpen)}
               className="flex items-center justify-between w-full text-sm font-medium text-gray-800 dark:text-gray-100"
             >
@@ -110,7 +110,7 @@ export default function SearchSection() {
             {/* Floating Menu */}
             {isOpen && (
               <div className="absolute top-[110%] left-0 w-full md:w-[250px] bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-2xl shadow-2xl py-2 animate-in fade-in zoom-in-95 duration-200 z-[100]">
-                <div 
+                <div
                   onClick={() => handleSelectCategory("", "All Categories")}
                   className="px-4 py-3 hover:bg-teal-50 dark:hover:bg-teal-900/20 flex items-center gap-3 transition-colors"
                 >
@@ -119,7 +119,7 @@ export default function SearchSection() {
                 </div>
                 <div className="h-[1px] bg-gray-100 dark:bg-zinc-800 my-1 mx-2" />
                 {categories.map((cat) => (
-                  <div 
+                  <div
                     key={cat.id}
                     onClick={() => handleSelectCategory(cat.id, locale === 'ar' ? cat.name?.ar : cat.name?.en)}
                     className="px-4 py-3 hover:bg-teal-50 dark:hover:bg-teal-900/20 flex items-center gap-3 transition-colors group"
@@ -150,7 +150,7 @@ export default function SearchSection() {
         {/* --- RESULTS TABLE --- */}
         {hasSearched && !loading && (
           <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-500">
-             <div className="bg-white dark:bg-zinc-900 rounded-[32px] shadow-2xl border border-gray-100 dark:border-zinc-800 overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900 rounded-[32px] shadow-2xl border border-gray-100 dark:border-zinc-800 overflow-hidden">
               {results.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse">
@@ -168,10 +168,10 @@ export default function SearchSection() {
                           <td className="px-8 py-5">
                             <div className="flex items-center gap-5">
                               <div className="w-14 h-14 rounded-2xl overflow-hidden bg-gray-100 shadow-inner">
-                                <img 
-                                  src={item.cover ? `/${locale}/api/media?media=${item.cover}` : "/placeholder.png"} 
-                                  className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" 
-                                  alt="" 
+                                <img
+                                  src={item.cover ? `/${locale}/api/media?media=${item.cover}` : "/placeholder.png"}
+                                  className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                                  alt=""
                                 />
                               </div>
                               <div>
@@ -212,7 +212,9 @@ export default function SearchSection() {
                     <Inbox className="w-10 h-10 text-gray-300" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white">No Facilites Found</h3>
-                  <p className="text-gray-500 text-sm mt-2">Try adjusting your filters to find what you're looking for.</p>
+                  <p className="text-gray-500 text-sm mt-2">
+                    Try adjusting your filters to find what you&apos;re looking for.
+                  </p>
                 </div>
               )}
             </div>
