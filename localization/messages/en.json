@@ -80,20 +80,6 @@
     "slogan": "Slogan should be here with one or two good sentences",
     "explore": "Explore now"
   },
-  "Search": {
-    "place": "Place",
-    "placePlaceholder": "Search by location",
-    "category": "Category",
-    "categoryPlaceholder": "Filter by category",
-    "hotel": "Hotel",
-    "apartment": "Apartment",
-    "villa": "Villa",
-    "from": "From",
-    "to": "To",
-    "results": "Search Results:",
-    "start":"Add Start Date",
-    "end":"Add End Date"
-  },
   "categories": {
     "title": "Our Facilities",
     "all": "Some Facilities",
@@ -361,7 +347,24 @@
     "fetchingLocation": "Fetching current location...",
     "unableLocation": "Unable to fetch location",
     "fullName":"Full Name"
+  },
+
+  "Search": {
+    "place": "Location",
+    "placeholderWhere": "Where are you going?",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "searchNow": "Search Now",
+    "facilityDetails": "Facility Details",
+    "pricing": "Pricing",
+    "rating": "Rating",
+    "view": "View",
+    "availableNow": "Available Now",
+    "currencyDay": "SAR/Day",
+    "noFacilities": "No Facilities Found",
+    "adjustFilters": "Try adjusting your filters to find what you're looking for."
   }
+
 
 
 

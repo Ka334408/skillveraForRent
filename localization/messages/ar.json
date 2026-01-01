@@ -81,20 +81,6 @@
     "slogan": "هنا يكتب الشعار مع جملة أو جملتين جذابتين",
     "explore": "استكشف الآن"
   },
-  "Search": {
-    "place": "المكان",
-    "placePlaceholder": "ابحث بالموقع",
-    "category": "التصنيف",
-    "categoryPlaceholder": "اختر التصنيف",
-    "hotel": "فندق",
-    "apartment": "شقة",
-    "villa": "فيلا",
-    "from": "من",
-    "to": "إلى",
-    "results": "نتائج البحث:",
-    "start": "أدخل تاريخ البدء",
-    "end": "أدخل تاريخ الإنتهاء"
-  },
   "categories": {
     "title": "الفئات المتاحة",
     "all": "بعض الفئات ",
@@ -362,6 +348,22 @@
     "fetchingLocation": "جاري جلب الموقع الحالي...",
     "unableLocation": "تعذر الحصول على الموقع",
     "fullName":"الاسم الكامل"
+  },
+  
+  "Search": {
+    "place": "الموقع",
+    "placeholderWhere": "إلى أين أنت ذاهب؟",
+    "category": "الفئة",
+    "allCategories": "جميع الفئات",
+    "searchNow": "ابحث الآن",
+    "facilityDetails": "تفاصيل المنشأة",
+    "pricing": "السعر",
+    "rating": "التقييم",
+    "view": "عرض",
+    "availableNow": "متاح الآن",
+    "currencyDay": "ريال/يوم",
+    "noFacilities": "لم يتم العثور على نتائج",
+    "adjustFilters": "يرجى محاولة تغيير الفلاتر للعثور على ما تبحث عنه."
   }
 
 
