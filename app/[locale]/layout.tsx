@@ -28,6 +28,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
+      <head>
+    <link rel="icon" href="/logo.png" />
+  </head>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AOSProvider>
