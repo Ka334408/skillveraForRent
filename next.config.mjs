@@ -1,33 +1,39 @@
-// next.config.mjs
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./localization/i18n.ts");
+
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+const API_PORT = process.env.NEXT_PUBLIC_API_PORT;
+const API_IMAGES_HOST = process.env.NEXT_PUBLIC_API_IMAGES_HOST;
+
+if (!API_HOST || !API_PORT) {
+  throw new Error("API host or port is not defined");
+}
 
 const nextConfig = {
   async rewrites() {
     return [
       {
         source: "/:locale/api/:path*",
-        destination: "http://156.67.24.200:4000/api/:path*",
+        destination: `http://${API_HOST}:${API_PORT}/api/:path*`,
       },
       {
         source: "/api/:path*",
-        destination: "http://156.67.24.200:4000/api/:path*",
+        destination: `http://${API_HOST}:${API_PORT}/api/:path*`,
       },
     ];
   },
+
   images: {
-    domains: [
-      "fakestoreapi.com",
-      "picsum.photos",
-      "img.freepik.com",
-      "www.freepik.com",
-      "156.67.24.200",
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: API_IMAGES_HOST,
+        port: API_PORT,
+        pathname: "/**",
+      },
     ],
   },
-
-  // ⚙ إعداد ضروري عشان الكوكيز تشتغل مع الريكويستات
-  
 };
 
 export default withNextIntl(nextConfig);
