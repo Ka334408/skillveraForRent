@@ -38,7 +38,7 @@ const FacilityCard = ({ item, isFavorite, onFavorite }: FacilityCardProps) => {
   const t = useTranslations("card");
   const locale = useLocale();
 
-  const imageUrl = item.cover ? `/${locale}/api/media?media=${item.cover}` : undefined;
+  const imageUrl = item.cover ? `/api/media?media=${item.cover}` : undefined;
   const title = locale === "ar" ? item.name?.ar : item.name?.en || "Facility";
 
   return (

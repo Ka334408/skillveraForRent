@@ -39,8 +39,8 @@ export default function FacilityHeader() {
           // 2️⃣ حفظ الجديد في الـ store
           setFacility({
             id: data.id,
-            coverImage: data.cover ? `/${local}/api/media?media=${data.cover}` : "",
-            images: data.images?.map((img: string) => `/${local}/api/media?media=${img}`) ?? [],
+            coverImage: data.cover ? `/api/media?media=${data.cover}` : "",
+            images: data.images?.map((img: string) => `/api/media?media=${img}`) ?? [],
             name: data.name.en,
             rate: data.rate ?? 0,
             category: {

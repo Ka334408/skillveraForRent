@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl";
 import axiosInstance from "@/lib/axiosInstance";
 import { Loader2, Calendar, Star, XCircle, ChevronLeft, ChevronRight, Clock, Send } from "lucide-react";
 import { toast, Toaster } from "react-hot-toast";
+import Image from "next/image";
+
 
 type TabType = "UPCOMING" | "PAST";
 
@@ -71,9 +73,9 @@ export default function Reservations() {
     setIsSubmitingCancel(true);
     try {
       await axiosInstance.post(`/user-reservation/${cancellingId}/cancel`, {
-        reason: cancelReason 
+        reason: cancelReason
       });
-      
+
       toast.success("Reservation cancelled successfully");
       setShowCancelPopup(false);
       setCancelReason("");
@@ -81,12 +83,12 @@ export default function Reservations() {
       fetchReservations(page);
     } catch (err: any) {
       console.error("Cancellation Error Object:", err);
-      
+
       // Attempt to extract the most descriptive error message possible
-      const errorMessage = 
-        err.response?.data?.message || 
-        err.response?.data?.error || 
-        err.message || 
+      const errorMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
         "Failed to cancel reservation. Please try again.";
 
       toast.error(errorMessage);
@@ -162,9 +164,22 @@ export default function Reservations() {
                   <tr key={r.id} className="bg-white shadow-sm hover:shadow-md transition-shadow group">
                     <td className="px-6 py-5 rounded-l-3xl border-y border-l border-gray-50">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center text-[#0E766E] font-bold text-lg">
-                          {r.facility?.name?.en?.charAt(0) || "F"}
+                        <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
+                          {r.facility.cover ? (
+                            <Image
+                              src={`/api/media?media=${r.facility.cover}`}
+                              alt="facility cover"
+                              width={48}
+                              height={48}
+                              className="object-cover w-full h-full"
+                            />
+                          ) : (
+                            <span className="text-[#0E766E] font-bold text-lg">
+                              {r.facility?.name?.en?.charAt(0) || "F"}
+                            </span>
+                          )}
                         </div>
+
                         <div>
                           <p className="font-bold text-gray-800 text-sm truncate max-w-[150px]">
                             {r.facility?.name?.en || "Facility"}
@@ -251,10 +266,10 @@ export default function Reservations() {
                   {activeTab === "PAST" ? (
                     <button onClick={() => { setSelectedReservation(r); setShowPopup(true); }} className="mobile-btn-rate">Rate Experience</button>
                   ) : (
-                    <button 
-                       disabled={r.status === 'CANCELLED'} 
-                       onClick={() => openCancelModal(r.id)} 
-                       className="mobile-btn-cancel disabled:opacity-30"
+                    <button
+                      disabled={r.status === 'CANCELLED'}
+                      onClick={() => openCancelModal(r.id)}
+                      className="mobile-btn-cancel disabled:opacity-30"
                     >
                       Cancel Reservation
                     </button>
@@ -318,8 +333,8 @@ export default function Reservations() {
         </div>
       )}
       <Toaster
-      position="top-center"
-      containerStyle={{zIndex:9999}}
+        position="top-center"
+        containerStyle={{ zIndex: 9999 }}
       />
 
       {/* RATING MODAL */}
