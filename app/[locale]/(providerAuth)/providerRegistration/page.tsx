@@ -7,13 +7,14 @@ import { useTranslations, useLocale } from "next-intl";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import GuestPage from "@/app/components/protectedpages/guestPage";
-import { CheckCircle, AlertCircle, EyeIcon, EyeOff, User, Mail, ShieldCheck, ArrowRight } from "lucide-react";
+import { CheckCircle, AlertCircle, EyeIcon, EyeOff, User, Mail, ShieldCheck, Sparkles, Phone } from "lucide-react";
 import { useProviderStore } from "@/app/store/providerStore";
 
 export default function SignUp() {
-  const t = useTranslations("signup");
+  const t = useTranslations("providerSignup");
   const locale = useLocale();
   const router = useRouter();
+  const isRTL = locale === "ar";
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,21 +24,19 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [phoneError, setPhoneError] = useState("");
 
-  const setSignupData = useProviderStore((s: any) => s.setSignupData);
-  const setVerificationEmail = useProviderStore((s: any) => s.setVerificationEmail);
+  const { setSignupData, setVerificationEmail } = useProviderStore() as any;
 
   const rules = [
-    { id: 1, label: "At least 8 characters", test: (p: string) => p.length >= 8 },
-    { id: 2, label: "Contains uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
-    { id: 3, label: "Contains lowercase letter", test: (p: string) => /[a-z]/.test(p) },
-    { id: 4, label: "Contains a number", test: (p: string) => /[0-9]/.test(p) },
-    { id: 5, label: "Contains a special character", test: (p: string) => /[^A-Za-z0-9]/.test(p) },
+    { id: 1, label: t("rules.min"), test: (p: string) => p.length >= 8 },
+    { id: 2, label: t("rules.upper"), test: (p: string) => /[A-Z]/.test(p) },
+    { id: 3, label: t("rules.number"), test: (p: string) => /[0-9]/.test(p) },
+    { id: 4, label: t("rules.special"), test: (p: string) => /[^A-Za-z0-9]/.test(p) },
   ];
 
   const handleSignup = () => {
     const phoneDigits = phone.replace(/\D/g, "");
     if (phoneDigits.length < 10) {
-      setPhoneError("Please enter a valid phone number");
+      setPhoneError(t("errors.phone"));
       return;
     }
     setPhoneError("");
@@ -52,156 +51,135 @@ export default function SignUp() {
 
   return (
     <GuestPage>
-      <main
-        dir={locale === "ar" ? "rtl" : "ltr"}
-        className="min-h-screen bg-[#F3F4F6] dark:bg-[#0a0a0a] flex items-center justify-center p-4"
-      >
-        <div className="bg-white dark:bg-[#111] rounded-[2.5rem] shadow-2xl w-full max-w-5xl flex flex-col md:flex-row overflow-hidden border border-white/20">
-          
-          {/* --- Left Side: Aesthetic Info Panel --- */}
-          <div className="md:w-5/12 bg-[#0E766E] p-10 text-white flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-black/20 rounded-full blur-3xl" />
+      <style jsx global>{`
+        .react-tel-input .form-control {
+          width: 100% !important; height: 48px !important; background: transparent !important;
+          border: none !important; color: inherit !important; padding-left: 50px !important;
+        }
+        .react-tel-input .flag-dropdown { background: transparent !important; border: none !important; z-index: 50 !important; }
+        .react-tel-input .country-list { 
+            background: #fff !important; border-radius: 12px !important; color: #000 !important;
+            width: 280px !important; z-index: 9999 !important; /* التأكد من ظهور القائمة فوق كل شيء */
+        }
+        .dark .react-tel-input .country-list { background: #1a1a1a !important; color: #fff !important; border: 1px solid #333 !important; }
+        .react-tel-input .selected-flag:hover { background: transparent !important; }
+      `}</style>
 
+      <main dir={isRTL ? "rtl" : "ltr"} className="min-h-screen bg-zinc-50 dark:bg-[#050505] flex items-center justify-center p-4">
+        <div className="bg-white dark:bg-zinc-950 rounded-[2rem] shadow-xl w-full max-w-5xl flex flex-col md:flex-row overflow-hidden border border-zinc-200 dark:border-white/5 min-h-[600px]">
+          
+          {/* الجانب الأيسر - تم تصغير الـ Padding والخطوط */}
+          <div className="md:w-5/12 bg-[#0E766E] p-8 text-white flex flex-col justify-between relative overflow-hidden">
+            <div className="absolute top-[-10%] left-[-10%] w-64 h-64 bg-emerald-400/20 rounded-full blur-[60px]" />
+            
             <div className="relative z-10">
-              <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8">
-                <ShieldCheck className="text-white" size={28} />
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 mb-6">
+                <Sparkles size={14} className="text-emerald-300" />
+                <span className="text-[10px] font-bold uppercase tracking-wider">{t("badge")}</span>
               </div>
-              <h1 className="text-3xl font-black leading-tight mb-2">{t("title")}</h1>
-              <h2 className="text-xl font-medium text-emerald-100 opacity-90">{t("subtitle")}</h2>
+              <h1 className="text-3xl font-black leading-tight mb-4 tracking-tight">{t("hero_title")}</h1>
+              <p className="text-sm text-emerald-50/80 leading-relaxed max-w-xs">{t("hero_desc")}</p>
             </div>
 
-            <div className="relative z-10 bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
-              <p className="text-sm font-medium mb-4 italic opacity-80">
-                &quot;Joining this platform was the best decision for my business growth.&quot;
-              </p>
+            <div className="relative z-10 bg-white/10 backdrop-blur-xl rounded-2xl p-5 border border-white/10">
+              <p className="text-xs font-medium italic mb-4 opacity-90">&quot;{t("testimonial.text")}&quot;</p>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-400/40 border border-white/30" />
-                <span className="text-xs font-bold uppercase tracking-wider">Verified Provider</span>
+                <div className="w-10 h-10 rounded-full bg-emerald-500/30 border border-white/20" />
+                <div>
+                  <p className="text-xs font-bold">{t("testimonial.author")}</p>
+                  <p className="text-[9px] uppercase opacity-60">{t("testimonial.role")}</p>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* --- Right Side: Form Content --- */}
-          <div className="md:w-7/12 w-full p-8 md:p-12 flex flex-col justify-center bg-white dark:bg-black">
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-5" autoComplete="off">
-              
-              {/* Name field */}
+          {/* الجانب الأيمن - تم تقليل المسافات */}
+          <div className="md:w-7/12 w-full p-8 lg:p-12 flex flex-col justify-center bg-white dark:bg-zinc-950">
+            <div className="mb-6">
+              <h2 className="text-xl font-black text-zinc-800 dark:text-white mb-1">{t("form_title")}</h2>
+              <p className="text-zinc-500 text-xs font-medium">{t("form_subtitle")}</p>
+            </div>
+
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+              {/* الاسم */}
               <div className="space-y-1">
-                <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">{t("full_name")}</label>
+                <label className="text-[10px] font-black uppercase text-zinc-400 px-1">{t("fields.name")}</label>
                 <div className="relative group">
-                  <User className="absolute left-5 rtl:right-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0E766E] transition-colors" size={18} />
+                  <User className={`absolute ${isRTL ? 'right-4' : 'left-4'} top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-[#0E766E]`} size={16} />
                   <input
-                    type="text"
-                    placeholder="John Doe"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-2xl py-3.5 pl-14 pr-5 rtl:pr-14 rtl:pl-5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E766E]/50 focus:border-[#0E766E] transition-all"
-                    required
+                    type="text" placeholder="Ahmad Ali" value={name} onChange={(e) => setName(e.target.value)}
+                    className={`w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl py-3 ${isRTL ? 'pr-12' : 'pl-12'} text-sm focus:border-[#0E766E] outline-none transition-all dark:text-white`}
                   />
                 </div>
               </div>
 
-              {/* Email field */}
+              {/* البريد */}
               <div className="space-y-1">
-                <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">{t("email")}</label>
+                <label className="text-[10px] font-black uppercase text-zinc-400 px-1">{t("fields.email")}</label>
                 <div className="relative group">
-                  <Mail className="absolute left-5 rtl:right-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0E766E] transition-colors" size={18} />
+                  <Mail className={`absolute ${isRTL ? 'right-4' : 'left-4'} top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-[#0E766E]`} size={16} />
                   <input
-                    type="email"
-                    placeholder="email@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-2xl py-3.5 pl-14 pr-5 rtl:pr-14 rtl:pl-5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E766E]/50 focus:border-[#0E766E] transition-all"
-                    required
+                    type="email" placeholder="ahmad@example.com" value={email} onChange={(e) => setEmail(e.target.value)}
+                    className={`w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl py-3 ${isRTL ? 'pr-12' : 'pl-12'} text-sm focus:border-[#0E766E] outline-none transition-all dark:text-white`}
                   />
                 </div>
               </div>
 
-              {/* Phone field */}
+              {/* الهاتف - تم تبسيط الحاوية لضمان عمل الدروب داون */}
               <div className="space-y-1">
-                <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Phone Number</label>
-                <div className="phone-input-container">
-                  <PhoneInput
-                    country={"eg"}
-                    value={phone}
-                    onChange={(value) => {
-                      setPhone(value);
-                      if (value.length < 10) setPhoneError("Invalid number");
-                      else setPhoneError("");
-                    }}
-                    inputProps={{ name: "phone", required: true }}
-                    containerClass="!w-full shadow-none"
-                    inputClass="!w-full !h-[50px] !bg-gray-50 dark:!bg-[#1a1a1a] !border-gray-200 dark:!border-white/10 !rounded-2xl !text-gray-900 dark:!text-white focus:!ring-2 focus:!ring-[#0E766E]/50 !transition-all"
-                    buttonClass="!bg-transparent !border-r dark:!border-white/10 !rounded-l-2xl rtl:!rounded-r-2xl rtl:!rounded-l-none rtl:!border-l rtl:!border-r-0"
-                  />
+                <label className="text-[10px] font-black uppercase text-zinc-400 px-1">{t("fields.phone")}</label>
+                <div className="relative" dir="ltr">
+                  <div className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl focus-within:border-[#0E766E] transition-all">
+                    <PhoneInput
+                      country={"eg"} value={phone}
+                      onChange={(val) => { setPhone(val); setPhoneError(val.length < 10 ? t("errors.phone") : ""); }}
+                    />
+                  </div>
                 </div>
-                {phoneError && <p className="text-rose-500 text-[10px] font-bold mt-1 ml-4">{phoneError}</p>}
+                {phoneError && <p className="text-rose-500 text-[9px] font-bold px-1">{phoneError}</p>}
               </div>
 
-              {/* Password field */}
+              {/* كلمة المرور */}
               <div className="space-y-1">
-                <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">{t("password")}</label>
+                <label className="text-[10px] font-black uppercase text-zinc-400 px-1">{t("fields.password")}</label>
                 <div className="relative group">
                   <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    type={showPassword ? "text" : "password"} placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)}
                     onFocus={() => setShowPasswordRules(true)}
-                    autoComplete="new-password"
-                    className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-2xl py-3.5 px-6 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E766E]/50 focus:border-[#0E766E] transition-all"
-                    required
+                    className={`w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl py-3 px-5 text-sm focus:border-[#0E766E] outline-none transition-all dark:text-white`}
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    className="absolute top-1/2 right-5 rtl:left-5 rtl:right-auto -translate-y-1/2 text-gray-400 hover:text-gray-700"
-                  >
-                    {showPassword ? <EyeIcon size={18} /> : <EyeOff size={18} />}
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className={`absolute ${isRTL ? 'left-4' : 'right-4'} top-1/2 -translate-y-1/2 text-zinc-400`}>
+                    {showPassword ? <EyeOff size={16} /> : <EyeIcon size={16} />}
                   </button>
                 </div>
               </div>
 
-              {/* Password Rules */}
+              {/* شروط الأمان - مصغرة */}
               {showPasswordRules && (
-                <div className="bg-gray-50 dark:bg-white/5 rounded-3xl p-5 border border-gray-100 dark:border-white/5 space-y-2">
-                  <p className="text-[11px] font-black uppercase text-gray-400 mb-2 tracking-widest">Security Checklist</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
-                    {rules.map((rule) => {
-                      const isValid = rule.test(password);
-                      return (
-                        <div key={rule.id} className={`flex items-center gap-2 text-xs font-medium ${isValid ? "text-emerald-600" : "text-gray-400"}`}>
-                          {isValid ? <CheckCircle size={14} /> : <AlertCircle size={14} className="opacity-50" />}
-                          <span>{rule.label}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
+                <div className="grid grid-cols-2 gap-2 p-3 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-zinc-100 dark:border-zinc-800">
+                  {rules.map((rule) => (
+                    <div key={rule.id} className={`flex items-center gap-1.5 text-[9px] font-bold ${rule.test(password) ? "text-emerald-600" : "text-zinc-400"}`}>
+                      {rule.test(password) ? <CheckCircle size={10} /> : <AlertCircle size={10} />}
+                      {rule.label}
+                    </div>
+                  ))}
                 </div>
               )}
 
-              {/* Signup button */}
               <button
-                type="button"
-                onClick={handleSignup}
-                disabled={!isFormValid}
-                className={`w-full rounded-2xl py-4 font-black text-lg transition-all transform active:scale-[0.98] shadow-xl ${
-                  isFormValid 
-                  ? "bg-[#0E766E] text-white hover:bg-[#0A5D57] shadow-[#0E766E]/20" 
-                  : "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
+                type="button" onClick={handleSignup} disabled={!isFormValid}
+                className={`w-full rounded-xl py-3.5 font-black text-base transition-all transform active:scale-[0.98] mt-2 ${
+                  isFormValid ? "bg-[#0E766E] text-white shadow-lg shadow-emerald-900/20 hover:bg-[#0A5D57]" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 cursor-not-allowed"
                 }`}
               >
-                {t("signup")}
+                {t("submit_btn")}
               </button>
             </form>
 
-            <div className="mt-8 text-center">
-              <p className="text-sm font-medium text-gray-500">
-                {t("have_account")}{" "}
-                <Link href="/proLogin" className="text-[#0E766E] font-black hover:underline underline-offset-4">
-                  {t("login")}
-                </Link>
+            <div className="mt-6 text-center">
+              <p className="text-xs font-medium text-zinc-500">
+                {t("footer_text")}{" "}
+                <Link href="/proLogin" className="text-[#0E766E] font-black hover:underline">{t("footer_link")}</Link>
               </p>
             </div>
           </div>

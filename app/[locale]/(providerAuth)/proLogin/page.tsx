@@ -5,12 +5,14 @@ import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import api from "@/lib/axiosInstance";
 import { useUserStore } from "@/app/store/userStore";
-import { EyeIcon, EyeOff, Lock, Mail, ArrowRight, ShieldCheck } from "lucide-react";
+import { EyeIcon, EyeOff, Lock, Mail, ArrowRight, ShieldCheck, Loader2 } from "lucide-react";
+import Link from "next/link";
 
 export default function Login() {
-  const t = useTranslations("loginWords");
+  const t = useTranslations("providerLoginWords");
   const locale = useLocale();
   const router = useRouter();
+  const isRTL = locale === "ar";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,8 +28,9 @@ export default function Login() {
     setLoading(true);
 
     try {
+      // ملاحظة: تأكد من تغيير "PROVIDER" حسب نوع المستخدم في مشروعك
       const res = await api.post(
-        `/authentication/${"PROVIDER"}/login`,
+        `/authentication/PROVIDER/login`,
         { email, password },
         { withCredentials: true }
       );
@@ -38,15 +41,14 @@ export default function Login() {
       const user = payload.user;
       const token = payload.token || payload.accessToken;
 
-      if (!user) throw new Error("User object missing");
-      if (!token) throw new Error("Token missing from API");
+      if (!user || !token) throw new Error("Missing authentication data");
 
       setUser(user);
       setToken(token);
 
       router.push("/providerview/dashBoardHome/dashBoard");
     } catch (err: any) {
-      setError(err?.response?.data?.message || err.message || "Login failed");
+      setError(err?.response?.data?.message || t("login_failed"));
     } finally {
       setLoading(false);
     }
@@ -54,107 +56,107 @@ export default function Login() {
 
   return (
     <main
-      dir={locale === "ar" ? "rtl" : "ltr"}
-      className="min-h-screen bg-[#F3F4F6] dark:bg-[#0a0a0a] flex items-center justify-center p-4"
+      dir={isRTL ? "rtl" : "ltr"}
+      className="min-h-screen bg-zinc-100 dark:bg-[#0a0a0a] flex items-center justify-center p-4 transition-colors duration-300"
     >
-      <div className="bg-white dark:bg-[#111] rounded-[2.5rem] shadow-2xl w-full max-w-5xl flex flex-col md:flex-row overflow-hidden border border-white/20">
+      <div className="bg-white dark:bg-zinc-900 rounded-[2.5rem] shadow-2xl w-full max-w-5xl flex flex-col md:flex-row overflow-hidden border border-zinc-200/50 dark:border-white/5">
         
-        {/* --- Left Side: Aesthetic Info Panel --- */}
+        {/* --- الجانب الأيسر: لوحة المعلومات الجمالية --- */}
         <div className="md:w-5/12 bg-[#0E766E] p-10 text-white flex flex-col justify-between relative overflow-hidden">
-          {/* Decorative Circles */}
+          {/* خلفية جمالية */}
           <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
           <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-black/20 rounded-full blur-3xl" />
 
           <div className="relative z-10">
-            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8">
-              <ShieldCheck className="text-white" size={28} />
+            <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 border border-white/10 shadow-inner">
+              <ShieldCheck className="text-white" size={32} />
             </div>
-            <h2 className="text-3xl font-bold leading-tight mb-4">
-              Manage your professional dashboard with ease.
+            <h2 className="text-3xl font-black leading-tight mb-6">
+              {t("sidebar_title")}
             </h2>
-            <p className="text-emerald-100/80 leading-relaxed">
-              Access your profile, track your analytics, and connect with your clients in one secure place.
+            <p className="text-emerald-50/70 leading-relaxed text-sm">
+              {t("sidebar_desc")}
             </p>
           </div>
 
-          <div className="relative z-10 bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
+          <div className="relative z-10 bg-white/10 backdrop-blur-xl rounded-[2rem] p-6 border border-white/20 shadow-xl">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-10 h-10 bg-emerald-400/30 rounded-full flex items-center justify-center">
-                <ArrowRight size={20} className={locale === 'ar' ? 'rotate-180' : ''} />
+              <div className="w-10 h-10 bg-emerald-400/30 rounded-xl flex items-center justify-center">
+                <ArrowRight size={20} className={isRTL ? 'rotate-180' : ''} />
               </div>
-              <span className="text-sm font-medium">Secure Provider Portal</span>
+              <span className="text-xs font-bold uppercase tracking-wider">{t("portal_badge")}</span>
             </div>
-            <div className="space-y-2">
-              <div className="h-2 w-full bg-white/20 rounded-full overflow-hidden">
-                <div className="h-full w-2/3 bg-emerald-400" />
+            <div className="space-y-3">
+              <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full w-3/4 bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
               </div>
-              <div className="h-2 w-1/2 bg-white/20 rounded-full" />
+              <div className="h-1.5 w-1/2 bg-white/10 rounded-full" />
             </div>
           </div>
         </div>
 
-        {/* --- Right Side: Login Form --- */}
-        <div className="md:w-7/12 w-full p-8 md:p-16 flex flex-col justify-center bg-white dark:bg-black">
+        {/* --- الجانب الأيمن: فورم تسجيل الدخول --- */}
+        <div className="md:w-7/12 w-full p-8 md:p-16 flex flex-col justify-center bg-white dark:bg-[#111]">
           <div className="mb-10 text-center md:text-start">
-            <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-3">
+            <h1 className="text-3xl md:text-4xl font-black text-zinc-900 dark:text-white mb-3 tracking-tight">
               {t("welcome")}
             </h1>
-            <p className="text-gray-500 dark:text-gray-400 font-medium">
+            <p className="text-zinc-500 dark:text-zinc-400 font-medium">
               {t("tagline")}
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Input */}
+            {/* حقل البريد الإلكتروني */}
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-4 rtl:mr-4">
-                {t("email")}
+              <label className="text-xs font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500 px-1">
+                {t("email_label")}
               </label>
               <div className="relative group">
-                <Mail className="absolute left-5 rtl:right-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0E766E] transition-colors" size={20} />
+                <Mail className={`absolute ${isRTL ? 'right-5' : 'left-5'} top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-[#0E766E] transition-colors`} size={20} />
                 <input
                   type="email"
                   placeholder="name@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-2xl py-4 pl-14 pr-5 rtl:pr-14 rtl:pl-5 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E766E]/50 focus:border-[#0E766E] transition-all"
+                  className={`w-full bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl py-4 ${isRTL ? 'pr-14 pl-5' : 'pl-14 pr-5'} text-zinc-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-[#0E766E]/10 focus:border-[#0E766E] transition-all`}
                   required
                 />
               </div>
             </div>
 
-            {/* Password Input */}
+            {/* حقل كلمة المرور */}
             <div className="space-y-2">
-              <div className="flex justify-between items-center px-4 rtl:px-4">
-                <label className="text-sm font-bold text-gray-700 dark:text-gray-300">
-                  {t("password")}
+              <div className="flex justify-between items-center px-1">
+                <label className="text-xs font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+                  {t("password_label")}
                 </label>
-                <a href="/auth/resetPass" className="text-xs font-semibold text-[#0E766E] hover:underline">
+                <Link href="/auth/resetPass" className="text-xs font-bold text-[#0E766E] hover:underline">
                   {t("forgot")}
-                </a>
+                </Link>
               </div>
               <div className="relative group">
-                <Lock className="absolute left-5 rtl:right-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0E766E] transition-colors" size={20} />
+                <Lock className={`absolute ${isRTL ? 'right-5' : 'left-5'} top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-[#0E766E] transition-colors`} size={20} />
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-2xl py-4 pl-14 pr-14 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E766E]/50 focus:border-[#0E766E] transition-all"
+                  className={`w-full bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl py-4 ${isRTL ? 'pr-14 pl-14' : 'pl-14 pr-14'} text-zinc-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-[#0E766E]/10 focus:border-[#0E766E] transition-all`}
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-5 rtl:left-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                  className={`absolute ${isRTL ? 'left-5' : 'right-5'} top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors`}
                 >
-                  {showPassword ? <EyeIcon size={20} /> : <EyeOff size={20} />}
+                  {showPassword ? <EyeOff size={20} /> : <EyeIcon size={20} />}
                 </button>
               </div>
             </div>
 
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 text-red-600 dark:text-red-400 p-4 rounded-xl text-sm text-center font-medium">
+              <div className="bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 text-red-600 dark:text-red-400 p-4 rounded-2xl text-sm text-center font-bold animate-shake">
                 {error}
               </div>
             )}
@@ -162,25 +164,18 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#0E766E] text-white rounded-2xl py-4 font-bold text-lg hover:bg-[#0A5D57] transition-all transform active:scale-[0.98] shadow-xl shadow-[#0E766E]/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              className="w-full bg-[#0E766E] text-white rounded-2xl py-4 font-bold text-lg hover:bg-[#0A5D57] active:scale-[0.98] transition-all shadow-xl shadow-[#0E766E]/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
             >
-              {loading ? (
-                <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                t("login")
-              )}
+              {loading ? <Loader2 className="animate-spin" size={24} /> : t("login_btn")}
             </button>
           </form>
 
-          <div className="mt-8 flex flex-col items-center gap-4">
-            <div className="flex items-center gap-2 text-sm">
-              <span className="text-gray-500 dark:text-gray-400">{t("no_account")}</span>
-              <button
-                onClick={() => router.push("/providerRegistration")}
-                className="text-[#0E766E] font-bold hover:underline"
-              >
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <span className="text-zinc-500 dark:text-zinc-400">{t("no_account")}</span>
+              <Link href="/providerRegistration" className="text-[#0E766E] font-bold hover:underline">
                 {t("signup")}
-              </button>
+              </Link>
             </div>
           </div>
         </div>
