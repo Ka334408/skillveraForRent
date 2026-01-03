@@ -31,8 +31,7 @@ export default function FaqPage() {
 
   return (
     <div>
-        <Header bgColor="bg-[#0E766E]" accounticonColor="bg-[#0E766E]"  hoverColor="hover:bg-[#63bdb6]" menuiconColor="bg-[#0E766E]"
-                activeColor="text-[#0E766E] bg-white" loginLink="/auth/login"
+        <Header bgColor="bg-[#0E766E]"  loginLink="/auth/login"
         signupLink="/auth/signUp" />
     
     <div className="min-h-screen bg-gray-50">

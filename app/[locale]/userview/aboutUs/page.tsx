@@ -8,8 +8,7 @@ import Header from "@/app/components/header";
 export default function AboutPage() {
   return (
     <main>
-        <Header bgColor="bg-[#0E766E]" accounticonColor="bg-[#0E766E]"  hoverColor="hover:bg-[#63bdb6]" menuiconColor="bg-[#0E766E]"
-                        activeColor="text-[#0E766E] bg-white" loginLink="/auth/login"
+        <Header bgColor="bg-[#f3f4f4] border-b-gray-200"    loginLink="/auth/login"
         signupLink="/auth/signUp" />
       <Hero />
       <Benefits />

@@ -10,11 +10,11 @@ import api from "@/lib/axiosInstance";
 import { CheckCircle, AlertCircle, EyeIcon, EyeOff } from "lucide-react";
 import { useUserStore } from "@/app/store/userStore";
 
-
 export default function SignUp() {
   const t = useTranslations("signup");
   const locale = useLocale();
   const router = useRouter();
+  const isRTL = locale === "ar";
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,13 +25,12 @@ export default function SignUp() {
   const [showPasswordRules, setShowPasswordRules] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  //  Password validation logic
   const rules = [
-    { id: 1, label: "At least 8 characters", test: (p: string) => p.length >= 8 },
-    { id: 2, label: "Contains uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
-    { id: 3, label: "Contains lowercase letter", test: (p: string) => /[a-z]/.test(p) },
-    { id: 4, label: "Contains a number", test: (p: string) => /[0-9]/.test(p) },
-    { id: 5, label: "Contains a special character", test: (p: string) => /[^A-Za-z0-9]/.test(p) },
+    { id: 1, label: t("rule_length"), test: (p: string) => p.length >= 8 },
+    { id: 2, label: t("rule_upper"), test: (p: string) => /[A-Z]/.test(p) },
+    { id: 3, label: t("rule_lower"), test: (p: string) => /[a-z]/.test(p) },
+    { id: 4, label: t("rule_number"), test: (p: string) => /[0-9]/.test(p) },
+    { id: 5, label: t("rule_special"), test: (p: string) => /[^A-Za-z0-9]/.test(p) },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,156 +39,149 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      const { data } = await api.post("/authentication/register", {
+      await api.post("/authentication/register", {
         name,
         email,
         phone: `+${phone}`,
         password,
       });
 
-      console.log("✅ Signup response:", data);
-
       await api.post("/authentication/request-verification", { email });
       useUserStore.getState().setVerificationEmail(email);
       router.push(`/auth/verifyAccount`);
     } catch (err: any) {
-      console.error("Signup error:", err);
-      setError(err.response?.data?.message || t("error"));
+      setError(err.response?.data?.message || t("error_msg"));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <GuestPage>
-        <main
-          dir={locale === "ar" ? "rtl" : "ltr"}
-          className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
-        >
-          <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl min-h-[550px] flex flex-col md:flex-row overflow-hidden dark:bg-black">
-            {/* Left side - form */}
-            <div className="flex flex-col justify-center p-8 md:w-1/2 w-full">
-              <h1 className="text-blue-600 text-3xl font-bold mb-4">{t("title")}</h1>
-              <h2 className="text-2xl font-bold mb-6">{t("subtitle")}</h2>
+    <GuestPage>
+      <main
+        dir={isRTL ? "rtl" : "ltr"}
+        className="min-h-screen bg-zinc-100 flex items-center justify-center px-4 py-10 dark:bg-[#0a0a0a] transition-colors"
+      >
+        <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-5xl min-h-[650px] flex flex-col md:flex-row overflow-hidden dark:bg-zinc-900 border dark:border-zinc-800">
+          
+          {/* الجانب الأيسر - الفورم */}
+          <div className="flex flex-col justify-center p-8 md:p-14 md:w-1/2 w-full text-start">
+            <h1 className="text-[#0E766E] text-4xl font-black mb-2 tracking-tight">
+              {t("title")}
+            </h1>
+            <h2 className="text-zinc-800 dark:text-zinc-200 text-xl font-bold mb-8">
+              {t("subtitle")}
+            </h2>
 
-              <form onSubmit={handleSubmit} className="flex flex-col space-y-5">
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+              <input
+                type="text"
+                placeholder={t("full_name")}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl px-5 py-4 text-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full transition-all"
+                required
+              />
+
+              <input
+                type="email"
+                placeholder={t("email")}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl px-5 py-4 text-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full transition-all"
+                required
+              />
+
+              {/* حقل رقم الهاتف المطور */}
+              <div className="relative phone-input-container" dir="ltr"> 
+                {/* ملاحظة: حقل الهاتف يفضل دائماً أن يظل ltr لمنع تداخل الأرقام */}
+                <PhoneInput
+                  country={"eg"}
+                  value={phone}
+                  onChange={(value) => setPhone(value)}
+                  placeholder={t("phone_placeholder")}
+                  specialLabel=""
+                  inputClass="!w-full !h-[58px] !rounded-2xl !text-zinc-800 !bg-zinc-50 dark:!bg-zinc-800/50 !border-zinc-200 dark:!border-zinc-700 focus:!ring-2 focus:!ring-[#0E766E]"
+                  buttonClass="!rounded-l-2xl !bg-zinc-50 dark:!bg-zinc-800/50 !border-zinc-200 dark:!border-zinc-700"
+                  dropdownClass="dark:!bg-zinc-800 dark:!text-white"
+                />
+              </div>
+
+              {/* كلمة المرور */}
+              <div className="relative">
                 <input
-                  type="text"
-                  placeholder={t("full_name")}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
+                  type={showPassword ? "text" : "password"}
+                  placeholder={t("password")}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => setShowPasswordRules(true)}
+                  className={`bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl px-5 py-4 text-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full transition-all ${isRTL ? 'pl-12' : 'pr-12'}`}
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className={`absolute inset-y-0 ${isRTL ? 'left-4' : 'right-4'} flex items-center text-zinc-400 hover:text-[#0E766E] transition-colors`}
+                >
+                  {showPassword ? <EyeIcon size={20} /> : <EyeOff size={20} />}
+                </button>
+              </div>
 
-                <input
-                  type="email"
-                  placeholder={t("email")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="border rounded-full px-5 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
-                  required
-                />
-
-                {/* Phone input */}
-                <div className="relative">
-                  <PhoneInput
-                    country={"eg"}
-                    value={phone}
-                    onChange={(value) => setPhone(value)}
-                    inputProps={{
-                      name: "phone",
-                      required: true,
-                    }}
-                    placeholder="your phone"
-                    inputClass="!w-full !rounded-full !py-5 !pl-17 !pr-4 !text-gray-700 !border !focus:outline-none focus:ring-2 focus:ring-[#0E766E]"
-                    buttonClass="!absolute !left-0 !top-0 !bottom-0 !rounded-l-full !border !bg-transparent focus:ring-2 focus:ring-[#0E766E]"
-                    containerClass="!w-full"
-                  />
-                </div>
-
-                {/* Password field + validation */}
-                {/* Password Field + Icon */}
-                <div className="relative w-full">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder={t("password")}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    onFocus={() => setShowPasswordRules(true)}
-                    onBlur={() => password === "" && setShowPasswordRules(false)}
-                    className="border rounded-full px-5 py-3 pr-12 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0E766E] w-full"
-                    required
-                  />
-
-                  {/* Show / Hide Password Icon */}
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                  >
-                    {showPassword ? <EyeIcon size={20} /> : <EyeOff size={20} />}
-                  </button>
-                </div>
-
-                {/* Password Rules — in separate box */}
-                {showPasswordRules && (
-                  <div className="mt-3 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 text-sm space-y-2 border dark:border-gray-700">
-                    <p className="font-semibold text-gray-700 dark:text-gray-200 mb-2">
-                      Password must include:
-                    </p>
-
+              {/* قواعد كلمة المرور */}
+              {showPasswordRules && (
+                <div className="bg-zinc-50 dark:bg-zinc-800/80 rounded-2xl p-4 text-xs space-y-2 border border-zinc-100 dark:border-zinc-700 animate-in fade-in slide-in-from-top-2">
+                  <p className="font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+                    {t("password_must_include")}
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {rules.map((rule) => {
                       const isValid = rule.test(password);
                       return (
-                        <div
-                          key={rule.id}
-                          className={`flex items-center gap-2 ${isValid ? "text-green-600" : "text-gray-600 dark:text-gray-400"
-                            }`}
-                        >
-                          {isValid ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+                        <div key={rule.id} className={`flex items-center gap-2 ${isValid ? "text-green-600" : "text-zinc-400"}`}>
+                          {isValid ? <CheckCircle size={14} /> : <AlertCircle size={14} />}
                           <span>{rule.label}</span>
                         </div>
                       );
                     })}
                   </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={loading || password.trim() === ""}
-                  className={`rounded-full py-3 font-semibold transition ${password.trim() === ""
-                    ? "bg-gray-400 text-white cursor-not-allowed"
-                    : "bg-[#0E766E] text-white hover:bg-[#054e47]"
-                    }`}
-                >
-                  {loading ? "Signing Up..." : t("signup")}
-                </button>
-              </form>
-
-              {error && (
-                <p className="text-red-500 text-sm text-center mt-3">{error}</p>
+                </div>
               )}
 
-              <p className="mt-6 text-sm text-gray-600 text-center">
-                {t("have_account")}{" "}
-                <Link
-                  href="/auth/login"
-                  className="text-[#0E766E] font-semibold hover:underline"
-                >
-                  {t("login")}
-                </Link>
-              </p>
-            </div>
+              <button
+                type="submit"
+                disabled={loading || password.trim() === ""}
+                className="bg-[#0E766E] text-white rounded-2xl py-4 font-bold text-lg hover:bg-[#0c625b] active:scale-[0.98] transition-all shadow-lg shadow-teal-900/20 disabled:bg-zinc-300 disabled:dark:bg-zinc-800"
+              >
+                {loading ? t("signing_up") : t("signup_btn")}
+              </button>
+            </form>
 
-            {/* Right side - image */}
-            <div className="md:w-1/2 flex items-center justify-center p-6">
-              <span className="text-gray-700">[Image]</span>
-            </div>
+            {error && (
+              <p className="text-red-500 text-sm text-center mt-4 font-medium">{error}</p>
+            )}
+
+            <p className="mt-8 text-sm text-zinc-500 text-center">
+              {t("have_account")}{" "}
+              <Link href="/auth/login" className="text-[#0E766E] font-bold hover:underline">
+                {t("login_link")}
+              </Link>
+            </p>
           </div>
-        </main>
-      </GuestPage>
-    </div>
+
+          {/* الجانب الأيمن - الصورة */}
+          <div className="md:w-1/2 relative bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center p-8">
+            <div className="absolute inset-0 opacity-20 dark:opacity-10 bg-[url('/pattern.png')] bg-repeat" />
+            <img 
+              src="/signup.png" 
+              alt="Signup illustration" 
+              className="relative z-10 w-full max-w-md drop-shadow-2xl hover:scale-105 transition-transform duration-700" 
+            />
+            {/* في حال عدم توفر صورة حالياً، سيظهر هذا كخلفية جمالية */}
+            <div className="absolute top-10 right-10 w-32 h-32 bg-teal-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-10 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl" />
+          </div>
+        </div>
+      </main>
+    </GuestPage>
   );
 }

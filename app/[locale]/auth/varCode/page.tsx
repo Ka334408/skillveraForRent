@@ -5,13 +5,15 @@ import { useRouter } from "next/navigation";
 import GuestPage from "@/app/components/protectedpages/guestPage";
 import axiosInstance from "@/lib/axiosInstance";
 import { useUserStore } from "@/app/store/userStore";
+import { ArrowLeft, ArrowRight, MessageSquareCode, RefreshCw } from "lucide-react";
 
 export default function VerifyCode() {
   const t = useTranslations("verify");
   const locale = useLocale();
   const router = useRouter();
+  const isRTL = locale === "ar";
 
-  const { resetEmail } = useUserStore(); // ← الإيميل جاي من Zustand
+  const { resetEmail } = useUserStore();
 
   const [code, setCode] = useState(["", "", "", ""]);
   const [timer, setTimer] = useState(30);
@@ -47,46 +49,30 @@ export default function VerifyCode() {
 
   const handleVerify = async () => {
     const verificationCode = code.join("");
-
     if (verificationCode.length < 4) {
-      setError("Please enter full code");
+      setError(t("error_full_code"));
       return;
     }
-
     if (!resetEmail) {
-      setError("Email not found, please go back");
+      setError(t("error_no_email"));
       return;
     }
 
     try {
       setLoading(true);
       setError(null);
+      const res = await axiosInstance.post("/authentication/reset-password/validate-otp", {
+        email: resetEmail,
+        code: verificationCode,
+      });
 
-      const res = await axiosInstance.post(
-        "/authentication/reset-password/validate-otp",
-        {
-          email: resetEmail,
-          code: verificationCode,
-        }
-      );
-      console.log(res.data);
-
-      
       const token = res.data?.data?.token;
+      if (!token) throw new Error("Token missing");
 
-      if (!token) {
-        setError("Token missing from server response");
-        return;
-      }
-
-      
       localStorage.setItem("resetToken", token);
-
-      console.log("Received token:", token);
-
       router.push("/auth/setNewPass");
     } catch (err: any) {
-      setError(err.response?.data?.message || "Invalid verification code");
+      setError(err.response?.data?.message || t("error_invalid"));
     } finally {
       setLoading(false);
     }
@@ -96,43 +82,47 @@ export default function VerifyCode() {
     try {
       setLoading(true);
       setError(null);
-
-      await axiosInstance.post(
-        "/authentication/reset-password/request",
-        { email: resetEmail }
-      );
-
+      await axiosInstance.post("/authentication/reset-password/request", { email: resetEmail });
       setTimer(30);
+      setCode(["", "", "", ""]);
+      inputsRef.current[0]?.focus();
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to resend code");
+      setError(t("error_resend"));
     } finally {
       setLoading(false);
     }
   };
 
-  const handleBack = () => {
-    router.push("/auth/resetPass");
-  };
-
   return (
     <GuestPage>
       <main
-        dir={locale === "ar" ? "rtl" : "ltr"}
-        className="min-h-screen bg-gray-200 flex items-center justify-center px-4 dark:bg-[#0a0a0a]"
+        dir={isRTL ? "rtl" : "ltr"}
+        className="min-h-screen bg-zinc-100 flex items-center justify-center px-4 dark:bg-[#0a0a0a] transition-colors"
       >
-        <div className="bg-white rounded-2xl shadow-lg w-full max-w-xl flex flex-col items-center justify-center p-8 dark:bg-black">
-
+        <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-lg flex flex-col items-center p-8 md:p-12 dark:bg-zinc-900 border dark:border-zinc-800">
+          
+          {/* زر الرجوع */}
           <button
-            onClick={handleBack}
-            className="self-start text-[#0E766E] mb-6 hover:underline"
+            onClick={() => router.push("/auth/resetPass")}
+            className="self-start flex items-center gap-2 text-zinc-500 hover:text-[#0E766E] transition-colors font-bold text-sm mb-8 group"
           >
-            ← {t("back")}
+            {isRTL ? <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" /> : <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />}
+            {t("back")}
           </button>
 
-          <h1 className="text-2xl font-bold mb-2 text-center">{t("title")}</h1>
-          <p className="text-gray-500 text-sm mb-6 text-center">{t("subtitle")}</p>
+          <div className="w-20 h-20 bg-teal-50 dark:bg-teal-900/20 rounded-3xl flex items-center justify-center mb-6">
+            <MessageSquareCode size={40} className="text-[#0E766E]" />
+          </div>
 
-          <div className="flex gap-4 mb-6">
+          <h1 className="text-3xl font-black mb-3 text-zinc-900 dark:text-white tracking-tight text-center">
+            {t("title")}
+          </h1>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-10 text-center max-w-[280px] leading-relaxed">
+            {t("subtitle")} <span className="text-zinc-900 dark:text-zinc-200 font-semibold">{resetEmail}</span>
+          </p>
+
+          {/* مربعات الكود */}
+          <div className="flex gap-3 md:gap-4 mb-10" dir="ltr">
             {code.map((digit, index) => (
               <input
                 key={index}
@@ -140,38 +130,48 @@ export default function VerifyCode() {
                 type="text"
                 value={digit}
                 maxLength={1}
+                inputMode="numeric"
                 onChange={(e) => handleChange(e.target.value, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
-                className="w-14 h-14 text-center border-2 border-[#0E766E] rounded-lg text-xl focus:outline-none focus:ring-2 focus:ring-[#0E766E]"
+                className="w-14 h-16 md:w-16 md:h-20 text-center border-2 border-zinc-200 dark:border-zinc-700 rounded-2xl text-2xl font-black text-[#0E766E] bg-zinc-50 dark:bg-zinc-800 focus:border-[#0E766E] focus:ring-4 focus:ring-teal-500/10 outline-none transition-all"
               />
             ))}
           </div>
 
           <button
             onClick={handleVerify}
-            disabled={loading}
-            className="bg-[#0E766E] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#0A5F58] disabled:opacity-50"
+            disabled={loading || code.some(d => d === "")}
+            className="w-full bg-[#0E766E] text-white py-4 rounded-2xl font-bold text-lg hover:bg-[#0c625b] active:scale-[0.98] transition-all shadow-lg shadow-teal-900/20 disabled:opacity-50 disabled:grayscale mb-6"
           >
-            {loading ? "Loading..." : t("verifyBtn")}
+            {loading ? t("verifying") : t("verifyBtn")}
           </button>
 
-          <div className="mt-4">
+          {/* إعادة الإرسال */}
+          <div className="flex flex-col items-center gap-2">
             {timer > 0 ? (
-              <p className="text-gray-600 text-sm">
-                {t("resend", { seconds: timer })}
-              </p>
+              <div className="flex items-center gap-2 text-zinc-500 text-sm font-medium">
+                <span>{t("resend_text")}</span>
+                <span className="text-[#0E766E] tabular-nums font-bold">
+                  {Math.floor(timer / 60)}:{String(timer % 60).padStart(2, '0')}
+                </span>
+              </div>
             ) : (
               <button
                 onClick={handleResend}
                 disabled={loading}
-                className="text-[#0E766E] text-sm hover:underline"
+                className="flex items-center gap-2 text-[#0E766E] font-bold text-sm hover:underline group"
               >
-                {loading ? "..." : t("resendBtn")}
+                <RefreshCw size={16} className={loading ? "animate-spin" : "group-hover:rotate-180 transition-transform duration-500"} />
+                {t("resendBtn")}
               </button>
             )}
           </div>
 
-          {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+          {error && (
+            <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-2xl text-red-600 dark:text-red-400 text-sm font-medium">
+              {error}
+            </div>
+          )}
         </div>
       </main>
     </GuestPage>

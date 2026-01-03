@@ -11,75 +11,108 @@
   },
   "LocaleSwitcher": {
     "label": "Change language",
-    "locale": "{locale, select, ar {العربيه} en {English} other {Unknown}}"
+    "locale": "{locale, select, ar {العربيه} en {English} other {Unknown}}",
+    "select_language":"Choose Language"
   },
+  
   "loginWords": {
-    "welcome": "Welcome back !",
-    "tagline": "Enjoy a different rental experience with the Skillvera platform",
-    "email": "Email",
+    "welcome": "Welcome Back",
+    "tagline": "Log in to your account to manage your bookings and explore more.",
+    "email": "Email Address",
     "password": "Password",
-    "forgot": "Forgot password?",
-    "login": "Log in",
-    "no_account": "Don’t have an account?",
-    "signup": "Sign Up",
-    "loading": "loading"
+    "forgot": "Forgot Password?",
+    "login": "Login",
+    "loading": "Processing...",
+    "no_account": "Don't have an account?",
+    "signup": "Sign Up Now"
   },
-  "resetPassWords": {
-    "reset": " Reset Password ",
-    "associated": "Enter the mail address associated with your account",
-    "email": "Email",
-    "send": "Send Email",
-    "goBack": "Go Back to Login"
+
+ "resetPassWords": {
+    "reset": "Reset Password",
+    "associated": "Enter the email address associated with your account and we'll send you a link to reset your password.",
+    "email": "name@example.com",
+    "email_label": "Email Address",
+    "send": "Send Reset Code",
+    "sending": "Sending Code...",
+    "goBack": "Back to Login",
+    "secure_title": "Secure Recovery",
+    "secure_desc": "We use industry standard encryption to protect your recovery data.",
+    "error_msg": "Could not send reset email. Please check the address."
   },
-  "signup": {
-    "title": "Skillvera",
-    "subtitle": "Start your perfect Rent Journey",
+ "signup": {
+    "title": "Create Account",
+    "subtitle": "Join us today and enjoy exclusive features",
     "full_name": "Full Name",
-    "email": "Email",
+    "email": "Email Address",
+    "phone_placeholder": "Phone Number",
     "password": "Password",
-    "signup": "Sign Up",
-    "signing_up": "Signing Up...",
+    "password_must_include": "Password must include:",
+    "rule_length": "At least 8 characters",
+    "rule_upper": "Uppercase letter",
+    "rule_lower": "Lowercase letter",
+    "rule_number": "A number",
+    "rule_special": "Special character",
+    "signup_btn": "Create Account",
+    "signing_up": "Creating Account...",
     "have_account": "Already have an account?",
-    "login": "Log in",
-    "error": "Something went wrong",
-    "phone":"your phone"
+    "login_link": "Log In",
+    "error_msg": "Something went wrong. Please try again."
   },
   "verify": {
-    "title": "Enter verification code",
-    "subtitle": "The verification code has been sent to your email",
-    "resend": "Resend after {seconds} seconds",
     "back": "Back",
+    "title": "Verify Code",
+    "subtitle": "We've sent a 4-digit verification code to",
+    "verifyBtn": "Verify & Continue",
+    "verifying": "Verifying...",
+    "resend_text": "Resend code in",
     "resendBtn": "Resend Code",
-    "verifyBtn":"verify code"
+    "error_full_code": "Please enter the complete 4-digit code",
+    "error_no_email": "Email not found. Please go back.",
+    "error_invalid": "The code you entered is incorrect.",
+    "error_resend": "Failed to resend code. Please try again."
   },
   "resetPasswordWords": {
-    "title": "Reset Password",
-    "subtitle": "Enter your new password below.",
-    "new_password": "New password",
-    "confirm_password": "Re-enter new password",
-    "button": "Reset Password",
-    "loading": "Loading...",
-    "not_match": "Passwords do not match",
-    "error": "Something went wrong",
-    "success":"password changed successfully"
+    "title": "New Password",
+    "subtitle": "Almost there! Create a strong password to secure your account.",
+    "new_password": "New Password",
+    "confirm_password": "Confirm New Password",
+    "button": "Update Password",
+    "loading": "Updating...",
+    "not_match": "Passwords do not match!",
+    "success": "Password updated successfully! Redirecting...",
+    "must_include": "Security Requirements:",
+    "rule_length": "8+ characters",
+    "rule_upper": "Uppercase letter",
+    "rule_lower": "Lowercase letter",
+    "rule_number": "A number",
+    "rule_special": "Special character",
+    "missing_info": "Reset data missing. Please start over.",
+    "error_reset": "Reset failed. The link may have expired."
   },
   "navbar": {
-    "logo": "Logo here",
     "home": "Home",
-    "facilities": "All facilities",
+    "facilities": "Facilities",
     "about": "About Us",
-    "contact": "Contact Us",
-    "become_host": "Become a host",
+    "contact": "Contact",
+    "become_host": "Become a Host",
+    "login": "Login",
     "signup": "Sign Up",
     "account": "Account",
-    "support": "Support & Help",
-    "login": "Login or signup",
-    "logout": "Logout"
+    "support": "Support",
+    "logout": "Logout",
+    "welcome": "Welcome back",
+    "guest": "Guest User",
+    "language": "Language"
   },
-  "Hero": {
-    "slogan": "Slogan should be here with one or two good sentences",
-    "explore": "Explore now"
+  
+  
+  "hero": {
+    "title": "Scava Rent, your success partner in finding facilities that suit your projects and activities",
+    "easy_process": "Easy Process",
+    "pay_easily": "Pay Easily",
+    "providers": "Providers"
   },
+
   "categories": {
     "title": "Our Facilities",
     "all": "Some Facilities",
@@ -93,9 +126,14 @@
    "card":{
     "more":"More Details"
   },
-  "map":{
-    "title":"Explore The Nearest Facility To You!",
-    "subtitle":"Click on any Facility to see more details."
+  "map": {
+    "title": "Discover Facilities Near You",
+    "subtitle": "Explore the interactive map to find the best places available for instant booking in your area.",
+    "live_view": "Live View",
+    "your_location": "Your Location",
+    "status": "Active & Discovery",
+    "day": "day"
+  
   },
   "trusted": {
     "trustedBy": "Trusted by top",
@@ -123,12 +161,12 @@
     "scanNow": "Scan to get the app now"
   },
   "profile": {
-    "title": "My profile",
-    "about": "About me",
-    "reservations": "Past reservation",
-    "reviews": "My reviews",
-    "favorites": "My favorites"
-  },
+  "sidebarTitle": "حسابي",
+  "myProfile": "الملف الشخصي",
+  "myReservations": "حجوزاتي",
+  "reviews": "التقييمات",
+  "favorites": "المفضلة"
+},
   "proPhoto":{
   "aboutTitle": "About me",
   "choose": "Choose image",
@@ -141,13 +179,17 @@
 },
 
   "favorites": {
-    "title": "My favorites",
-    "loading": "Loading...",
-    "emptyMessage": "You have not added any favorites yet.",
-    "exploreButton": "Explore Now",
-    "product": "Product",
-    "category": "Category",
-    "addedOn": "Added On"
+    "title": "My Favorites",
+    "subTitle": "Manage your saved facilities",
+    "loading": "Loading favorites...",
+    "itemsCount": "Items Saved",
+    "emptyMessage": "Your favorites list is currently empty.",
+    "exploreButton": "Explore Facilities",
+    "colFacility": "Facility",
+    "colDetails": "Details",
+    "colActions": "Actions",
+    "colId": "ID",
+    "rentButton": "Rent Now"
   },
    "reservations": {
     "title": "Past reservations",
@@ -223,21 +265,48 @@
   },
   
   "contact": {
-    "title": "Contact us",
-    "subtitle": "Be In Touch With Our Team",
-    "teamTitle": "Contact Our Team",
-    "teamDesc": "Contact us via WhatsApp or email for more information and support, we are here for you.",
-    "fullName": "Full Name",
-    "email": "Email",
-    "message": "Your Message",
-    "agree": "I agree to the Terms of Service and Privacy Policy",
-    "contactUs": "Contact Us",
-    "directChat": "Direct Chat"
+    "title": "Contact Us",
+    "subtitle": "We are here to help you and answer all your inquiries about our facilities.",
+    "teamDesc":"contact US with message or whatsapp to get information and support, we are here for you ",
+    "teamTitle":"Contact Our Team",
+    "formTitle": "Send us a message",
+    "formSubTitle": "We will get back to you as soon as possible",
+    "fullName": "e.g. John Doe",
+    "fullNameLabel": "Full Name",
+    "email": "example@mail.com",
+    "emailLabel": "Email Address",
+    "message": "How can we help you?",
+    "messageLabel": "Your Message",
+    "agree": "I agree to the privacy policy and terms",
+    "sendButton": "Send Message",
+    "whatsappTitle": "Live Chat",
+    "whatsappDesc": "Contact us directly via WhatsApp for an immediate response",
+    "directChat": "Start Chatting Now"
   },
   
   "about": {
-    "title": "About us",
-    "subtitle": "Know More About Skillvera"
+    "badge": "About ScavaRent",
+    "title": "Leadership in Providing Diverse Facilities",
+    "description": "ScavaRent is a leading entity under the Scelvera Group, specialized in providing diverse facilities within the Kingdom of Saudi Arabia. We operate under a professional vision based on quality, reliability, and excellence in the smallest details. We offer integrated value carefully designed to keep pace with the aspirations of major projects, high-end events, and government and private sectors.",
+    "benefit1Title": "Commitment to Quality & Integrity",
+    "benefit1Desc": "For us, quality is not an option; it's a work culture we adhere to at every stage.",
+    "benefit2Title": "Integrated Work System",
+    "benefit2Desc": "We bridge planning, execution, and follow-up within a practical framework that guarantees efficiency.",
+    "benefit3Title": "Facilities Management Expertise",
+    "benefit3Desc": "Years of experience give us a deep understanding of the unique needs of every project.",
+    "benefit4Title": "Clear Operational Plan",
+    "benefit4Desc": "We operate according to a well-studied plan that ensures performance efficiency across all our projects.",
+    "storyTitle": "The ScavaRent Story",
+    "storyText": "ScavaRent was born from an ambitious vision that believes the value of details is what creates success, and that facilities are not just temporary spaces, but an essential element in the success of any project or event. Since our launch, we have set distinctive goals to provide a unique experience that elevates the standards of facility rental in Saudi Arabia, reflecting the quality you deserve.",
+    "whyChooseUsLabel": "Why Choose Us",
+    "mainHeadline": "ScavaRent Where True Values Are Made",
+    "feature1Title": "Committed to Standards",
+    "feature1Desc": "All facilities comply with the approved standards in the Kingdom.",
+    "feature2Title": "Continuous Technical Support",
+    "feature2Desc": "A specialized team is present to handle any inquiry.",
+    "feature3Title": "Operational Flexibility",
+    "feature3Desc": "Diverse facilities to suit various projects and events."
+ 
   },
   "benefits": {
     "responsable": "Responsible Team",
@@ -303,51 +372,62 @@
   },
   
   "FAQ": {
-    "title": "FAQ",
-    "subtitle": "Frequently Asked Questions",
-    "description": "Did you find the question as you expected?",
-    "readMore": "Read More",
-    "cta": "Give a Quote",
-    "items": [
-      {
-        "question": "What services do you provide?",
-        "answer": "We offer a wide range of services including web development, mobile apps, and design."
-      },
-      {
-        "question": "How long does a project take?",
-        "answer": "Project duration depends on the scope, usually between 2 to 6 weeks."
-      },
-      {
-        "question": "Do you offer support after delivery?",
-        "answer": "Yes, we provide free bug fixes for 1 month and optional long-term support."
-      },
-      {
-        "question": "What are your payment methods?",
-        "answer": "We accept bank transfer, PayPal, and credit card payments."
-      },
-      {
-        "question": "Can you work with international clients?",
-        "answer": "Yes, we collaborate with clients worldwide through remote communication tools."
-     }
-
-    ]
-  },
+  "title": "FAQ",
+  "subtitle": "Common Questions",
+  "description": "Have questions about booking or managing a facility? Here are the most common answers.",
+  "readMore": "Read more",
+  "cta": "Request a Quote",
+  "items": [
+    {
+      "question": "How do I book a facility through the platform?",
+      "answer": "Simply select the desired facility, choose an available date and time, then confirm your booking via online payment for instant confirmation."
+    },
+    {
+      "question": "Can I cancel or reschedule my booking?",
+      "answer": "Yes, you can cancel or reschedule through your dashboard. Refund policies apply based on the time remaining before the booking starts."
+    },
+    {
+      "question": "What do the facility rental fees include?",
+      "answer": "Fees vary by facility, but usually include lighting, air conditioning, and the basic amenities listed in the facility description."
+    },
+    {
+      "question": "How can I ensure the facility's quality and cleanliness?",
+      "answer": "We conduct periodic quality checks, and you can view real user reviews, ratings, and up-to-date photos of the facility."
+    },
+    {
+      "question": "Can I list my own facility for rent?",
+      "answer": "Absolutely! You can register as a 'Facility Provider' and upload your space details and photos to start receiving bookings and generating revenue."
+    }
+  ]
+},
+  
   
   "userprofile": {
-    "title": "My profile",
-    "desc": "Hosts and guests can see your profile and it may appear across Skava to help us build trust in our community",
-    "phone": "Phone",
-    "dob": "Date of Birth",
-    "location": "Current Location",
-    "gender": "Gender",
-    "genderMale": "Male",
-    "genderFemale": "Female",
-    "genderOther": "Other",
-    "save": "Get Started",
-    "fetchingLocation": "Fetching current location...",
-    "unableLocation": "Unable to fetch location",
-    "fullName":"Full Name"
-  },
+  "title": "Profile Settings",
+  "desc": "Update your personal information for a better experience",
+  "fullName": "Full Name",
+  "namePlaceholder": "Enter your name",
+  "phone": "Phone Number",
+  "dob": "Date of Birth",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "other": "Other",
+  "updateProfile": "Update Profile",
+  "saving": "Saving Changes...",
+  "locVerified": "Location Verified",
+  "locDetecting": "Detecting Location...",
+  "securityTip": "Security Tip",
+  "securityDesc": "Keep your profile information up to date to ensure accurate service delivery and booking confirmations.",
+  "invalidPhone": "Invalid phone number",
+  "dobRequired": "Date of birth is required",
+  "successTitle": "Success 🎉",
+  "successMsg": "Profile updated successfully!",
+  "errorTitle": "Error ❌",
+  "errorMsg": "Failed to update profile",
+  "letsGo": "Let's Go",
+  "tryAgain": "Try Again"
+},
 
   "Search": {
     "place": "Location",
@@ -363,7 +443,192 @@
     "currencyDay": "SAR/Day",
     "noFacilities": "No Facilities Found",
     "adjustFilters": "Try adjusting your filters to find what you're looking for."
+  },
+"verifyAccount": {
+    "title": "Activate Account",
+    "subtitle": "Almost there! Please enter the 4-digit code we sent to",
+    "verify_btn": "Confirm & Activate",
+    "verifying": "Activating...",
+    "did_not_receive": "Didn't receive the code?",
+    "resend_btn": "Resend Code",
+    "resending": "Resending...",
+    "resend_success": "A new code has been sent to your inbox.",
+    "error_incomplete": "Please enter the full 4-digit code.",
+    "error_no_email": "Session expired. Please sign up again.",
+    "error_failed": "Invalid code. Please try again.",
+    "error_resend": "Failed to resend. Please try later."
+  },
+  "providerLoginWords": {
+    "welcome": "Welcome Back",
+    "tagline": "Sign in to manage your professional services.",
+    "email_label": "Email Address",
+    "password_label": "Password",
+    "forgot": "Forgot Password?",
+    "login_btn": "Sign In",
+    "no_account": "Don't have an account?",
+    "signup": "Create Account",
+    "sidebar_title": "Manage your professional dashboard with ease.",
+    "sidebar_desc": "Access your profile, track your analytics, and connect with your clients in one secure place.",
+    "portal_badge": "Secure Provider Portal",
+    "login_failed": "Login failed. Please check your credentials."
+  },
+  "providerSignup": {
+    "badge": "Growth Platform",
+    "hero_title": "Grow Your Business Faster.",
+    "hero_desc": "Join our community of elite providers and reach more clients than ever before.",
+    "testimonial": {
+      "text": "The best platform for managing my professional services. The growth was immediate!",
+      "author": "Sarah Johnson",
+      "role": "Verified Professional"
+    },
+    "form_title": "Create Account",
+    "form_subtitle": "Enter your details to start your professional journey.",
+    "fields": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "password": "Password"
+    },
+    "rules": {
+      "min": "8+ Characters",
+      "upper": "Upper Case",
+      "number": "One Number",
+      "special": "Special Char"
+    },
+    "errors": {
+      "phone": "Invalid phone number"
+    },
+    "submit_btn": "Start Now",
+    "footer_text": "Already have an account?",
+    "footer_link": "Sign In"
+  },
+  
+  "Proverify": {
+    "hero_title": "Almost there!",
+    "hero_desc": "We've sent a verification code to your email to ensure your account security.",
+    "form_title": "Verify Account",
+    "form_subtitle": "Enter the 4-digit code sent to your inbox.",
+    "verify_btn": "Verify Code",
+    "resend_link": "Resend Code",
+    "resending": "Resending...",
+    "resend_success": "Code has been resent successfully!",
+    "back_to_signup": "Back to Sign Up",
+    "error_incomplete": "Please enter the full code",
+    "error_failed": "Verification failed, the code might be incorrect",
+    "error_resend": "Failed to resend, please try again later"
+  },
+  
+  "plans": {
+    "step_badge": "Step 2: Business Scale",
+    "hero_title": "Select Your Business Scale",
+    "hero_subtitle": "Choose the tier that best fits your facility management needs. You can change this later from your settings.",
+    "individual": { "title": "Individual", "desc": "Perfect for freelancers. Up to 1 facility." },
+    "team": { "title": "Team", "desc": "Ideal for small teams. Up to 5 facilities." },
+    "org": { "title": "Organization", "desc": "For growing businesses. Up to 10 facilities." },
+    "enterprise": { "title": "Enterprise", "desc": "Unleashed power for 10+ facilities." },
+    "confirm_btn": "Confirm & Continue",
+    "secure_footer": "Secure Step • 2 of 3",
+    "error_missing_data": "Signup data missing. Redirecting...",
+    "error_failed": "Registration failed. Please try again."
+  },
+  "contactUs": {
+    "mainTitle": "Contact Our Team",
+    "description": "Contact us via whatsapp or email message for more information and support, Skillvera work for you.",
+    "fullName": "Full Name",
+    "email": "Email",
+    "message": "Your message",
+    "terms": "I agree to Skillvera's Terms of Service and Privacy Policy.",
+    "sendButton": "Contact Us",
+    "chatSubtext": "Prefer real-time conversation?",
+    "chatButton": "Direct chat"
+  },
+  "aboutus": {
+  "description": "At Skafa, we believe that choosing the right facility is the start of any project's success. That's why we provide over 1200 diverse facilities, applying the highest safety standards to ensure a reliable and seamless rental experience.",
+  "more": "Read More"
+},
+"howItWorks": {
+  "title": "Search Easily... Book with Confidence... Pay Securely",
+  "steps": {
+    "search": {
+      "title": "Search for a Facility",
+      "desc": "Enter the type of facility you need, set your location and date. All suitable options will be displayed instantly."
+    },
+    "compare": {
+      "title": "Compare Results",
+      "desc": "Check details, prices, and reviews to get a clear idea of the best options before making your choice."
+    },
+    "book": {
+      "title": "Book the Right One",
+      "desc": "Once you've found the perfect facility, simply click 'Book Now' and select your preferred date and time."
+    },
+    "pay": {
+      "title": "Complete Payment",
+      "desc": "Choose your preferred payment method and complete the process securely... your booking will then be ready and confirmed."
+    }
   }
+},
+"AboutUser": {
+  "yourNamePlaceholder": "Your Name",
+  "accountType": "Personal Account",
+  "saveBtn": "Save Changes",
+  "saving": "Saving...",
+  "saved": "Updated Successfully",
+  "completeTitle": "Complete Your Profile to Get Started",
+  "completeDesc": "Adding your name and photo helps us provide a personalized experience and makes communication easier when booking facilities.",
+  "labelFullName": "Full Display Name",
+  "namePlaceholder": "Enter your full name",
+  "getStarted": "Get Started"
+},
+"Myreservations": {
+    "mainTitle": "My Reservations",
+    "subTitle": "Manage your facility bookings",
+    "tabUpcoming": "My Reservations",
+    "tabPast": "Past History",
+    "loading": "Loading reservations...",
+    "noReservations": "No reservations found.",
+    "colFacility": "Facility",
+    "colDates": "Booking Dates",
+    "colAmount": "Amount",
+    "colStatus": "Status",
+    "colAction": "Action",
+    "colId": "ID",
+    "ends": "Ends",
+    "currency": "EGP",
+    "btnRate": "Rate Visit",
+    "btnCancel": "Cancel",
+    "page": "Page",
+    "cancelTitle": "Cancel Reservation",
+    "cancelSub": "Please provide a reason for cancelling your booking.",
+    "cancelPlaceholder": "Reason for cancellation...",
+    "btnBack": "Go Back",
+    "btnConfirm": "Confirm Cancellation",
+    "cancelReasonRequired": "Please provide a reason for cancellation",
+    "cancelSuccess": "Reservation cancelled successfully",
+    "cancelError": "Failed to cancel reservation",
+    "rateTitle": "Share Feedback",
+    "ratePlaceholder": "Your comments...",
+    "btnLater": "Later",
+    "btnSubmit": "Submit",
+    "rateSuccess": "Rating submitted successfully!",
+    "rateError": "Error submitting rating",
+    "status_APPROVED": "Approved",
+    "status_PENDING": "Pending",
+    "status_FAILED": "Failed",
+    "status_CANCELLED": "Cancelled"
+  },
+  "userreviews": {
+    "title": "My Reviews",
+    "subTitle": "Everything you've shared about your visits",
+    "loading": "Loading reviews...",
+    "emptyMessage": "You haven't shared any reviews yet.",
+    "colFacility": "Facility",
+    "colFeedback": "Rating & Feedback",
+    "colDate": "Posted On",
+    "verifiedStay": "Verified Stay",
+    "noComment": "No written feedback provided.",
+    "page": "Page"
+  }
+
 
 
 

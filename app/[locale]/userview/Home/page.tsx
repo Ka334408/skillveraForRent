@@ -14,6 +14,8 @@ import FAQSection from "@/app/components/userview/FAQSec";
 import FeaturesSection from "@/app/components/userview/FeaturesSec";
 import DownloadSection from "@/app/components/userview/downloadappsec";
 import Header from "@/app/components/header";
+import ContactSection from "@/app/components/userview/contact";
+import AboutSection from "@/app/components/userview/aboutSkillavera";
 
 export default function HomePage() {
   const [needsProfile, setNeedsProfile] = useState(false);
@@ -32,13 +34,6 @@ export default function HomePage() {
       <div>
         <Header
           bgColor="bg-[#f3f4f4] border-b-gray-200 "
-          accounticonColor="bg-[#0E766E]"
-          menuiconColor="bg-[#0E766E] text-white rounder-full"
-          activeColor="bg-[#0E766E] text-white"
-          textColor="text-[#0E766E]"
-          hoverColor="hover:bg-[#0E766E] hover:text-white"
-          enable="border-none"
-          isrounded="rounded-full"
           loginLink="/auth/login"
         signupLink="/auth/signUp"
         />
@@ -49,8 +44,9 @@ export default function HomePage() {
         <NearestMap />
         <TrustedSection />
         <FAQSection />
+        <ContactSection/>
         <FeaturesSection />
-        <DownloadSection />
+        <AboutSection />
       </div>
 
       
