@@ -161,7 +161,7 @@ export default function Navbar({
 
               {/* Become Host - Moved here for Tablet/Mobile */}
               <DropdownMenuItem
-                onClick={() => handleProtectedAction(`/${locale}/providerview/Home`)}
+              onClick={() => router.push(`/${locale}/providerview/Home`)}
                 className="xl:hidden flex items-center gap-4 p-4 rounded-2xl cursor-pointer bg-emerald-500/10 border border-emerald-500/20 mb-2 hover:bg-emerald-500/20 focus:bg-emerald-500/20 transition-all group"
               >
                 <div className="p-2 bg-emerald-500 rounded-xl">
