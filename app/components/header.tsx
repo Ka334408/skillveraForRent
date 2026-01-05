@@ -40,7 +40,6 @@ export default function Navbar({
 
   console.log(user);
 
-  // دالة الحماية: إذا لم يسجل دخول يفتح الموديل، وإذا سجل يذهب للمسار المطلوب
   const handleProtectedAction = (targetPath: string) => {
     if (isLoggedIn) {
       router.push(targetPath);
@@ -106,7 +105,7 @@ export default function Navbar({
 
           {/* Become Host - Desktop Only (Xl+) */}
           <Button
-            onClick={() => handleProtectedAction(`/${locale}/providerview/Home`)}
+            onClick={() => router.push(`/${locale}/providerview/Home`)}
             className="hidden xl:flex bg-transparent border-2 border-[#0E766E] text-[#0E766E] hover:bg-[#0E766E] hover:text-white font-extrabold rounded-2xl transition-all gap-2 px-5 py-6"
           >
             <ArrowRightLeft size={18} />
