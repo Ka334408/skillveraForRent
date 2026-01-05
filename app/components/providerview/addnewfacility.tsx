@@ -2,22 +2,22 @@
 
 import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
+import { useLocale, useTranslations } from "next-intl";
+import toast, { Toaster } from "react-hot-toast"; // استيراد التوست
 
-// Helper Icons for better visual appeal
+// Helper Icons
 import {
   Plus,
   X,
   MapPin,
   Info,
-  DollarSign,
-  Image,
+  Image as ImageIcon,
   Loader2,
 } from "lucide-react";
 import { useUserStore } from "@/app/store/userStore";
 
 // --- START: Helper Functions and Components ---
 
-// Extract lat,lng from Google Maps URL
 const extractLatLng = (url: string) => {
   try {
     const match = url.match(/@([-0-9.]+),([-0-9.]+)/);
@@ -26,20 +26,16 @@ const extractLatLng = (url: string) => {
   return "";
 };
 
-// Convert File / Blob URL to Blob (Crucial for FormData submission)
 const toBlob = async (fileOrUrl: File | string): Promise<Blob> => {
   if (typeof fileOrUrl === "string") {
-    // If it's a string, fetch the data (assuming it's a URL) and convert to Blob
     const res = await fetch(fileOrUrl);
     return await res.blob();
   }
-  // If it's already a File (which is a Blob), return it directly
   return fileOrUrl;
 };
 
-
-// Helper Component for Input (Reusable and consistent design)
-const FormInput = ({ label, ...props }: { label: string;[key: string]: any }) => (
+// Reusable Input Component
+const FormInput = ({ label, ...props }: { label: string; [key: string]: any }) => (
   <div className="space-y-1">
     <label className="text-sm font-medium text-gray-700">{label}</label>
     <input
@@ -49,8 +45,8 @@ const FormInput = ({ label, ...props }: { label: string;[key: string]: any }) =>
   </div>
 );
 
-// Helper Component for Textarea
-const FormTextarea = ({ label, ...props }: { label: string;[key: string]: any }) => (
+// Reusable Textarea Component
+const FormTextarea = ({ label, ...props }: { label: string; [key: string]: any }) => (
   <div className="space-y-1">
     <label className="text-sm font-medium text-gray-700">{label}</label>
     <textarea
@@ -61,42 +57,40 @@ const FormTextarea = ({ label, ...props }: { label: string;[key: string]: any })
   </div>
 );
 
-// Helper Component for Select
-const FormSelect = ({ label, children, ...props }: { label: string; children: React.ReactNode;[key: string]: any }) => (
+// Reusable Select Component
+const FormSelect = ({ label, children, isRTL, ...props }: { label: string; children: React.ReactNode; isRTL: boolean; [key: string]: any }) => (
   <div className="space-y-1">
     <label className="text-sm font-medium text-gray-700">{label}</label>
-    <select
-      className="w-full border border-gray-300 bg-white p-3 rounded-lg shadow-sm focus:border-[#0E766E] focus:ring-1 focus:ring-[#0E766E] transition duration-150 appearance-none pr-10"
-      {...props}
-    >
-      {children}
-    </select>
+    <div className="relative">
+      <select
+        className={`w-full border border-gray-300 bg-white p-3 rounded-lg shadow-sm focus:border-[#0E766E] focus:ring-1 focus:ring-[#0E766E] transition duration-150 appearance-none ${isRTL ? 'pl-10' : 'pr-10'}`}
+        {...props}
+      >
+        {children}
+      </select>
+      <div className={`absolute inset-y-0 ${isRTL ? 'left-3' : 'right-3'} flex items-center pointer-events-none text-gray-400`}>
+        <Plus className="w-4 h-4 rotate-45" />
+      </div>
+    </div>
   </div>
 );
+
 // --- END: Helper Functions and Components ---
 
-
 export function AddFacilityPage() {
+  const t = useTranslations("AddFacility");
+  const locale = useLocale();
+  const isRTL = locale === "ar";
+
   const [categories, setCategories] = useState<any[]>([]);
   const [loadingCats, setLoadingCats] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { user, token, isHydrated } = useUserStore();
+  const { token } = useUserStore();
 
   const [facility, setFacility] = useState({
-    nameEn: "",
-    nameAr: "",
-    taxNumber: "",
-    price: "",
-    categoryId: "",
-    descriptionEn: "",
-    descriptionAr: "",
-    email: "",
-    phone: "",
-    website: "",
-    address: "",
-    mapUrl: "",
-    lat: "",
-    lng: "",
+    nameEn: "", nameAr: "", taxNumber: "", price: "", categoryId: "",
+    descriptionEn: "", descriptionAr: "", email: "", phone: "",
+    website: "", address: "", mapUrl: "", lat: "", lng: "",
   });
 
   const [coverPic, setCoverPic] = useState<File | string | null>(null);
@@ -122,12 +116,7 @@ export function AddFacilityPage() {
     if (key === "mapUrl") {
       const latlng = extractLatLng(value);
       const [lat, lng] = latlng.split(",");
-      setFacility((prev) => ({
-        ...prev,
-        // Ensure lat/lng are set correctly, or to empty string if extraction fails
-        lat: lat || "",
-        lng: lng || "",
-      }));
+      setFacility((prev) => ({ ...prev, lat: lat || "", lng: lng || "" }));
     }
   };
 
@@ -135,31 +124,21 @@ export function AddFacilityPage() {
   const removeFacilityImage = (index: number) =>
     setFacilityPics((prev) => prev.filter((_, i) => i !== index));
 
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    // 🛑 CRITICAL CHECK: Cover Image is Required
     if (!coverPic) {
-      alert("Cover Image is required before submission.");
-      setIsSubmitting(false);
+      toast.error(t("alerts.coverRequired"), { position: isRTL ? "top-left" : "top-right" });
       return;
     }
 
+    setIsSubmitting(true);
+    const loadingToast = toast.loading(t("buttons.submitting"), { position: isRTL ? "top-left" : "top-right" });
+
     try {
       const fd = new FormData();
-
-      // 1. Append Text Data
-      fd.append(
-        "name",
-        JSON.stringify({ en: facility.nameEn, ar: facility.nameAr })
-      );
-      fd.append(
-        "description",
-        JSON.stringify({ en: facility.descriptionEn, ar: facility.descriptionAr })
-      );
-
+      fd.append("name", JSON.stringify({ en: facility.nameEn, ar: facility.nameAr }));
+      fd.append("description", JSON.stringify({ en: facility.descriptionEn, ar: facility.descriptionAr }));
       fd.append("taxNumber", facility.taxNumber);
       fd.append("price", facility.price);
       fd.append("categoryId", facility.categoryId);
@@ -170,64 +149,66 @@ export function AddFacilityPage() {
       fd.append("addressLatLong", `${facility.lat},${facility.lng}`);
       fd.append("rules", JSON.stringify({ en: "rule" }));
 
-      // 2. Append Cover Image (as Blob/File)
       if (coverPic) {
         const blob = await toBlob(coverPic);
-        // The third argument specifies the filename, crucial for multipart form data
         fd.append("cover", blob, "cover.png");
       }
 
-      // 3. Append Facility Images (as Blob/File array)
       for (let i = 0; i < facilityPics.length; i++) {
         const blob = await toBlob(facilityPics[i]);
-        // The key "images" should be expected by the backend for an array of files
         fd.append("images", blob, `image-${i}.png`);
       }
 
-      // 4. Send Request
-      const res = await axiosInstance.post("/provider-facility/create", fd, {
+      await axiosInstance.post("/provider-facility/create", fd, {
         headers: {
-          // Setting content-type is often unnecessary for FormData, but good practice
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`
         },
       });
 
-      alert("Facility Created Successfully!");
-      console.log(res.data);
+      toast.success(t("alerts.success"), { id: loadingToast });
+      
+      // اختياري: تصفير الفورم بعد النجاح
+      setFacility({
+        nameEn: "", nameAr: "", taxNumber: "", price: "", categoryId: "",
+        descriptionEn: "", descriptionAr: "", email: "", phone: "",
+        website: "", address: "", mapUrl: "", lat: "", lng: ""
+      });
+      setCoverPic(null);
+      setFacilityPics([]);
+
     } catch (err) {
       console.error("Error creating facility:", err);
-      alert("Error creating facility. Check console for details.");
+      toast.error(t("alerts.error"), { id: loadingToast });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-8 bg-white shadow-xl rounded-2xl my-10">
+    <div className="w-full max-w-6xl mx-auto p-8 bg-white shadow-xl rounded-2xl my-10" dir={isRTL ? "rtl" : "ltr"}>
+      <Toaster position={isRTL ? "top-left" : "top-right"} reverseOrder={false} />
+
       <header className="mb-8 border-b pb-4">
         <h1 className="text-4xl font-extrabold text-[#0E766E] flex items-center">
-          <Plus className="w-8 h-8 mr-3" />
-          Add New Facility
+          <Plus className={`w-8 h-8 ${isRTL ? 'ml-3' : 'mr-3'}`} />
+          {t("title")}
         </h1>
-        <p className="text-gray-500 mt-1">
-          Please fill in the details below to register a new facility.
-        </p>
+        <p className="text-gray-500 mt-1">{t("subtitle")}</p>
       </header>
 
       <form onSubmit={handleSubmit} className="space-y-8">
+        
         {/* 1. MEDIA SECTION */}
         <section className="p-6 border border-gray-200 rounded-xl bg-gray-50">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-            <Image className="w-6 h-6 mr-2 text-[#0E766E]" />
-            Facility Images
+            <ImageIcon className={`w-6 h-6 ${isRTL ? 'ml-2' : 'mr-2'} text-[#0E766E]`} />
+            {t("sections.images")}
           </h2>
 
           {/* COVER IMAGE */}
           <div className="mb-6">
-            <h3 className="font-semibold text-lg mb-2 text-gray-700">
-              Cover Image (Required)
-            </h3>
+            <h3 className="font-semibold text-lg mb-2 text-gray-700">{t("media.coverLabel")}</h3>
             <div
               className="relative w-full h-64 border-2 border-dashed border-[#0E766E]/50 bg-white rounded-xl flex items-center justify-center text-[#0E766E] text-4xl cursor-pointer transition hover:bg-[#0E766E]/10 overflow-hidden"
               onClick={() => document.getElementById("coverInput")?.click()}
@@ -241,11 +222,8 @@ export function AddFacilityPage() {
                   />
                   <button
                     type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removeCover();
-                    }}
-                    className="absolute top-2 right-2 bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:bg-red-700 transition"
+                    onClick={(e) => { e.stopPropagation(); removeCover(); }}
+                    className={`absolute top-2 ${isRTL ? 'left-2' : 'right-2'} bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:bg-red-700 transition`}
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -253,24 +231,16 @@ export function AddFacilityPage() {
               ) : (
                 <div className="flex flex-col items-center">
                   <Plus className="w-8 h-8" />
-                  <span className="text-base mt-2">Click to Upload</span>
+                  <span className="text-base mt-2">{t("media.uploadPlaceholder")}</span>
                 </div>
               )}
             </div>
-            <input
-              id="coverInput"
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => e.target.files && setCoverPic(e.target.files[0])}
-            />
+            <input id="coverInput" type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files && setCoverPic(e.target.files[0])} />
           </div>
 
           {/* FACILITY IMAGES */}
           <div>
-            <h3 className="font-semibold text-lg mb-2 text-gray-700">
-              Additional Facility Images
-            </h3>
+            <h3 className="font-semibold text-lg mb-2 text-gray-700">{t("media.additionalLabel")}</h3>
             <div className="flex flex-wrap gap-4">
               {facilityPics.map((file, i) => (
                 <div key={i} className="relative w-32 h-32">
@@ -282,84 +252,41 @@ export function AddFacilityPage() {
                   <button
                     type="button"
                     onClick={() => removeFacilityImage(i)}
-                    className="absolute -top-2 -right-2 bg-red-600 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-lg hover:bg-red-700 transition"
+                    className={`absolute -top-2 ${isRTL ? '-left-2' : '-right-2'} bg-red-600 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-lg hover:bg-red-700 transition`}
                   >
                     <X className="w-4 h-4" />
                   </button>
                 </div>
               ))}
-
-              {/* + box for new image */}
               <label className="w-32 h-32 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center text-3xl text-gray-500 cursor-pointer hover:border-[#0E766E] hover:text-[#0E766E] transition bg-white">
                 <Plus className="w-6 h-6" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) =>
-                    e.target.files && setFacilityPics([...facilityPics, e.target.files[0]])
-                  }
-                  key={facilityPics.length}
-                />
+                <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files && setFacilityPics([...facilityPics, e.target.files[0]])} key={facilityPics.length} />
               </label>
             </div>
           </div>
         </section>
 
-        {/* 2. BASIC INFO & CATEGORY SECTION */}
+        {/* 2. BASIC INFO SECTION */}
         <section className="p-6 border border-gray-200 rounded-xl">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-            <Info className="w-6 h-6 mr-2 text-[#0E766E]" />
-            Basic Information
+            <Info className={`w-6 h-6 ${isRTL ? 'ml-2' : 'mr-2'} text-[#0E766E]`} />
+            {t("sections.basicInfo")}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <FormInput
-              label="Facility Name (English)"
-              placeholder="Name (EN)"
-              value={facility.nameEn}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("nameEn", e.target.value)}
-            />
-            <FormInput
-              label="Facility Name (Arabic)"
-              placeholder="Name (AR)"
-              value={facility.nameAr}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("nameAr", e.target.value)}
-            />
+            <FormInput label={t("fields.nameEn")} placeholder="Name (EN)" value={facility.nameEn} onChange={(e: any) => handleChange("nameEn", e.target.value)} />
+            <FormInput label={t("fields.nameAr")} placeholder="الاسم (AR)" value={facility.nameAr} onChange={(e: any) => handleChange("nameAr", e.target.value)} />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
-            <FormTextarea
-              label="Description (English)"
-              placeholder="Description (EN)"
-              value={facility.descriptionEn}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleChange("descriptionEn", e.target.value)}
-            />
-            <FormTextarea
-              label="Description (Arabic)"
-              placeholder="Description (AR)"
-              value={facility.descriptionAr}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleChange("descriptionAr", e.target.value)}
-            />
+            <FormTextarea label={t("fields.descEn")} placeholder="Description (EN)" value={facility.descriptionEn} onChange={(e: any) => handleChange("descriptionEn", e.target.value)} />
+            <FormTextarea label={t("fields.descAr")} placeholder="الوصف (AR)" value={facility.descriptionAr} onChange={(e: any) => handleChange("descriptionAr", e.target.value)} />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
-            <FormInput
-              label="Tax Number"
-              placeholder="Tax Number"
-              value={facility.taxNumber}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("taxNumber", e.target.value)}
-            />
-            <FormInput
-              label="Estimated Price/Cost"
-              placeholder="Price"
-              type="number"
-              value={facility.price}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("price", e.target.value)}
-            />
-            <FormSelect label="Main Category" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleChange("categoryId", e.target.value)}>
-              <option value="">{loadingCats ? "Loading Categories..." : "Select Category"}</option>
+            <FormInput label={t("fields.tax")} value={facility.taxNumber} onChange={(e: any) => handleChange("taxNumber", e.target.value)} />
+            <FormInput label={t("fields.price")} type="number" value={facility.price} onChange={(e: any) => handleChange("price", e.target.value)} />
+            <FormSelect label={t("fields.category")} isRTL={isRTL} onChange={(e: any) => handleChange("categoryId", e.target.value)} value={facility.categoryId}>
+              <option value="">{loadingCats ? t("media.loadingCats") : t("fields.selectCategory")}</option>
               {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name?.en || cat.name?.ar || cat.name}
-                </option>
+                <option key={cat.id} value={cat.id}>{cat.name[locale] || cat.name.en}</option>
               ))}
             </FormSelect>
           </div>
@@ -368,50 +295,23 @@ export function AddFacilityPage() {
         {/* 3. CONTACT & LOCATION SECTION */}
         <section className="p-6 border border-gray-200 rounded-xl">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-            <MapPin className="w-6 h-6 mr-2 text-[#0E766E]" />
-            Contact & Location
+            <MapPin className={`w-6 h-6 ${isRTL ? 'ml-2' : 'mr-2'} text-[#0E766E]`} />
+            {t("sections.contact")}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <FormInput
-              label="Email Address"
-              placeholder="Email"
-              type="email"
-              value={facility.email}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("email", e.target.value)}
-            />
-            <FormInput
-              label="Phone Number"
-              placeholder="Phone"
-              type="tel"
-              value={facility.phone}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("phone", e.target.value)}
-            />
+            <FormInput label={t("fields.email")} type="email" value={facility.email} onChange={(e: any) => handleChange("email", e.target.value)} />
+            <FormInput label={t("fields.phone")} type="tel" value={facility.phone} onChange={(e: any) => handleChange("phone", e.target.value)} />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
-            <FormInput
-              label="Website URL"
-              placeholder="Website"
-              value={facility.website}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("website", e.target.value)}
-            />
-            <FormInput
-              label="Detailed Address"
-              placeholder="Address"
-              value={facility.address}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("address", e.target.value)}
-            />
+            <FormInput label={t("fields.website")} value={facility.website} onChange={(e: any) => handleChange("website", e.target.value)} />
+            <FormInput label={t("fields.address")} value={facility.address} onChange={(e: any) => handleChange("address", e.target.value)} />
           </div>
           <div className="mt-5">
-            <FormInput
-              label="Google Maps URL (for coordinates extraction)"
-              placeholder="Google Maps URL (e.g., https://goo.gl/maps/@30.1234,31.5678)"
-              value={facility.mapUrl}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("mapUrl", e.target.value)}
-            />
-            {facility.lat && facility.lng && (
+            <FormInput label={t("fields.googleMaps")} placeholder="https://goo.gl/maps/..." value={facility.mapUrl} onChange={(e: any) => handleChange("mapUrl", e.target.value)} />
+            {facility.lat && (
               <p className="text-sm text-green-600 mt-2 flex items-center">
-                <MapPin className="w-4 h-4 mr-1" />
-                Coordinates extracted: Lat: **{facility.lat}**, Lng: **{facility.lng}**
+                <MapPin className={`w-4 h-4 ${isRTL ? 'ml-1' : 'mr-1'}`} />
+                {t("media.coordsExtracted")}: {facility.lat}, {facility.lng}
               </p>
             )}
           </div>
@@ -421,15 +321,12 @@ export function AddFacilityPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-[#0E766E] hover:bg-[#0A5D57] text-white px-6 py-3 rounded-xl w-full text-lg font-semibold transition duration-200 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+          className="bg-[#0E766E] hover:bg-[#0A5D57] text-white px-6 py-3 rounded-xl w-full text-lg font-semibold transition duration-200 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
         >
           {isSubmitting ? (
-            <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-              Submitting Facility...
-            </>
+            <><Loader2 className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} animate-spin`} />{t("buttons.submitting")}</>
           ) : (
-            "Confirm and Add Facility"
+            t("buttons.submit")
           )}
         </button>
       </form>

@@ -1,34 +1,39 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Bell, Search, User as UserIcon } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Bell, Search, User as UserIcon, ArrowRight, FileText, BadgeCheck, Loader2 } from "lucide-react";
 import LocaleSwitcher from "../local-switcher";
-
-interface User {
-  name: string;
-  email: string;
-  photo: string;
-}
+import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
 
 export default function Topbar() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
 
+  const locale = useLocale();
+  const t = useTranslations("providerTopbar");
+  const isRTL = locale === "ar";
+
+  // --- جلب بيانات المستخدم من الـ API ---
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await fetch("/api/authentication/current-user", {
           headers: { "Content-Type": "application/json" },
-          credentials: "include",
+          credentials: "include", // مهم جداً لإرسال الكوكيز/الجلسة
         });
 
         const result = await res.json();
+        
+        // بناءً على هيكلة الـ API الخاصة بك (result.data أو result.user)
         if (result?.data) {
-          const { name, email, image } = result.data;
+          const { name, image } = result.data;
           setUser({
             name: name || "Provider",
-            email: email || "user@email.com",
-            photo: image ? `/api/media?media=${image}` : "",
+            photo: image ? `/api/media?media=${image}` : null, // ربط مسار الميديا
           });
         }
       } catch (err) {
@@ -40,75 +45,122 @@ export default function Topbar() {
     fetchUser();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-between p-4 mb-5 animate-pulse bg-white/50 rounded-2xl">
-        <div className="flex items-center space-x-3 w-32 h-10 bg-gray-200 rounded-full" />
-        <div className="w-1/2 h-10 bg-gray-200 rounded-full" />
-      </div>
-    );
-  }
+  const searchItems = [
+    { id: 1, title: isRTL ? "لوحة التحكم" : "Dashboard", href: `/${locale}/providerview/dashBoardHome/dashBoard`, category: isRTL ? "عام" : "General" },
+    { id: 2, title: isRTL ? "مرافقي" : "My Facilities", href: `/${locale}/providerview/dashBoardHome/myFacilities`, category: isRTL ? "إدارة" : "Management" },
+    { id: 3, title: isRTL ? "التقويم" : "Calendar", href: `/${locale}/providerview/dashBoardHome/Calander`, category: isRTL ? "حجوزات" : "Bookings" },
+    { id: 4, title: isRTL ? "المالية" : "Finance", href: `/${locale}/providerview/dashBoardHome/Finance`, category: isRTL ? "حسابات" : "Accounts" },
+    { id: 5, title: isRTL ? "ملفي الشخصي" : "Profile", href: `/${locale}/providerview/dashBoardHome/myProfile`, category: isRTL ? "إعدادات" : "Settings" },
+  ];
+
+  const filteredResults = searchQuery 
+    ? searchItems.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    : [];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsSearchOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-white border border-gray-100 shadow-sm rounded-[2rem] p-3 mb-8 gap-4 mt-6 sm:mt-0 ltr:pr-6 rtl:pl-6">
+    <div 
+      className="relative z-50 flex flex-col md:flex-row md:items-center md:justify-between bg-white border border-gray-100 shadow-md shadow-gray-200/50 rounded-[2.5rem] p-4 mb-10 gap-5 transition-all duration-300" 
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       
-      {/* 1. Left Section: User Info (Fixed Image) */}
-      <div className="flex items-center gap-3 rtl:space-x-reverse px-2">
-        <div className="relative w-12 h-12 flex items-center justify-center bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 shadow-inner">
-          {user?.photo ? (
+      {/* 1. User Info Section (Enlarged & Connected to API) */}
+      <div className="flex items-center gap-4 px-3 shrink-0 border-gray-100 ltr:border-r rtl:border-l pr-6">
+        <div className="relative w-14 h-14 flex items-center justify-center bg-gradient-to-br from-teal-50 to-white rounded-2xl overflow-hidden border-2 border-[#0E766E]/10 shadow-sm group">
+          {loading ? (
+            <Loader2 className="w-6 h-6 text-[#0E766E] animate-spin" />
+          ) : user?.photo ? (
             <img
               src={user.photo}
               alt="User"
-              className="max-w-full max-h-full object-contain" // NO CROPPING
-              onError={(e) => (e.currentTarget.style.display = 'none')}
+              className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
             />
           ) : (
-            <UserIcon className="text-gray-300 w-6 h-6" />
+            <UserIcon className="text-[#0E766E] w-7 h-7" />
           )}
         </div>
         
-        <div className="flex flex-col text-left rtl:text-right">
-          <span className="font-bold text-gray-900 text-sm tracking-tight truncate max-w-[150px]">
-            {user?.name}
-          </span>
-          <span className="text-teal-600 text-[10px] font-black uppercase tracking-widest">
-            Verified Provider
+        <div className="flex flex-col">
+          <div className="flex items-center gap-1.5">
+            <span className="font-black text-gray-900 text-base tracking-tight truncate max-w-[160px]">
+              {loading ? "..." : user?.name || "Provider"}
+            </span>
+            {!loading && <BadgeCheck size={16} className="text-[#0E766E]" />}
+          </div>
+          <span className="text-[#0E766E] text-[10px] font-black uppercase tracking-[0.15em] opacity-70">
+            {t("verifiedStatus")}
           </span>
         </div>
       </div>
 
-      {/* 2. Right Section: Search + Actions */}
-      <div className="flex items-center gap-4 flex-1 justify-end max-w-full md:max-w-2xl w-full">
-        
-        {/* Modern Search Bar */}
-        <div className="relative flex-1 group">
-          <Search className="absolute left-4 rtl:left-auto rtl:right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-teal-600 transition-colors w-4 h-4" />
+      {/* 2. Global Search Section */}
+      <div className="flex items-center gap-6 flex-1 justify-end w-full md:max-w-3xl" ref={searchRef}>
+        <div className="relative flex-1 group max-w-lg">
+          <Search className={`absolute ${isRTL ? 'right-5' : 'left-5'} top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0E766E] w-5 h-5 transition-colors`} />
           <input
             type="text"
-            placeholder="Search platform..."
-            className="w-full bg-gray-50/50 border border-transparent rounded-2xl pl-11 pr-4 py-2.5 text-sm focus:bg-white focus:ring-4 focus:ring-teal-500/5 focus:border-teal-500/20 outline-none transition-all rtl:text-right"
+            value={searchQuery}
+            onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setIsSearchOpen(true);
+            }}
+            onFocus={() => setIsSearchOpen(true)}
+            placeholder={t("searchPlaceholder")}
+            className={`w-full bg-gray-50/80 border border-transparent rounded-[1.5rem] ${isRTL ? 'pr-14 pl-6' : 'pl-14 pr-6'} py-3.5 text-sm font-bold focus:bg-white focus:ring-4 focus:ring-teal-500/5 focus:border-[#0E766E]/20 outline-none transition-all shadow-inner`}
           />
+
+          {/* Search Dropdown */}
+          {isSearchOpen && searchQuery && (
+            <div className="absolute top-[110%] mt-2 w-full bg-white border border-gray-100 shadow-2xl rounded-[2rem] overflow-hidden py-3 animate-in fade-in zoom-in-95 duration-200">
+              {filteredResults.length > 0 ? (
+                filteredResults.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    onClick={() => { setIsSearchOpen(false); setSearchQuery(""); }}
+                    className="flex items-center justify-between px-6 py-4 hover:bg-teal-50 transition-all group"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="p-2.5 bg-gray-50 rounded-xl group-hover:bg-white transition-colors shadow-sm">
+                        <FileText size={16} className="text-gray-400 group-hover:text-[#0E766E]" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-black text-gray-800">{item.title}</p>
+                        <p className="text-[10px] text-[#0E766E] font-bold uppercase tracking-widest opacity-60">{item.category}</p>
+                      </div>
+                    </div>
+                    <ArrowRight size={18} className={`text-gray-300 group-hover:text-[#0E766E] transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
+                  </Link>
+                ))
+              ) : (
+                <div className="px-6 py-10 text-center">
+                  <p className="text-sm font-bold text-gray-400">{isRTL ? "لم يتم العثور على نتائج" : "No results found"}</p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2">
-          {/* Notification */}
-          <button className="p-2.5 hover:bg-gray-50 rounded-xl transition-colors relative group">
-            <Bell className="w-5 h-5 text-gray-500 group-hover:text-gray-900 transition-colors" />
-            <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 border-2 border-white rounded-full"></span>
-          </button>
+        {/* 3. Actions Section */}
+        <div className="flex items-center gap-3">        
+          <div className="w-[1px] h-8 bg-gray-100 mx-2 hidden lg:block"></div>
 
-          {/* Divider */}
-          <div className="w-[1px] h-6 bg-gray-100 mx-1 hidden sm:block"></div>
-
-          {/* Locale Switcher */}
-          <div className="flex items-center justify-center">
-            <LocaleSwitcher
-              bgColor="bg-transparent"
-              enableFlag="hidden"
-              enableLabel="hidden"
-              iconiHight="w-5 text-gray-600 hover:text-gray-900 transition-colors"
-              iconwidth="w-5"
+          <div className="hover:scale-110 transition-transform">
+            <LocaleSwitcher 
+                bgColor="bg-transparent" 
+                enableFlag="hidden" 
+                enableLabel="hidden" 
+                iconiHight="w-6 text-gray-400 hover:text-[#0E766E]" 
+                iconwidth="w-6" 
             />
           </div>
         </div>

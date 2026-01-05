@@ -12,9 +12,8 @@
   "LocaleSwitcher": {
     "label": "Change language",
     "locale": "{locale, select, ar {العربيه} en {English} other {Unknown}}",
-    "select_language":"Choose Language"
+    "select_language": "Choose Language"
   },
-  
   "loginWords": {
     "welcome": "Welcome Back",
     "tagline": "Log in to your account to manage your bookings and explore more.",
@@ -26,8 +25,7 @@
     "no_account": "Don't have an account?",
     "signup": "Sign Up Now"
   },
-
- "resetPassWords": {
+  "resetPassWords": {
     "reset": "Reset Password",
     "associated": "Enter the email address associated with your account and we'll send you a link to reset your password.",
     "email": "name@example.com",
@@ -39,7 +37,7 @@
     "secure_desc": "We use industry standard encryption to protect your recovery data.",
     "error_msg": "Could not send reset email. Please check the address."
   },
- "signup": {
+  "signup": {
     "title": "Create Account",
     "subtitle": "Join us today and enjoy exclusive features",
     "full_name": "Full Name",
@@ -104,15 +102,12 @@
     "guest": "Guest User",
     "language": "Language"
   },
-  
-  
   "hero": {
     "title": "Scava Rent, your success partner in finding facilities that suit your projects and activities",
     "easy_process": "Easy Process",
     "pay_easily": "Pay Easily",
     "providers": "Providers"
   },
-
   "categories": {
     "title": "Our Facilities",
     "all": "Some Facilities",
@@ -123,8 +118,8 @@
     "ok": "OK",
     "see_all": "See all"
   },
-   "card":{
-    "more":"More Details"
+  "card": {
+    "more": "More Details"
   },
   "map": {
     "title": "Discover Facilities Near You",
@@ -133,7 +128,6 @@
     "your_location": "Your Location",
     "status": "Active & Discovery",
     "day": "day"
-  
   },
   "trusted": {
     "trustedBy": "Trusted by top",
@@ -161,23 +155,22 @@
     "scanNow": "Scan to get the app now"
   },
   "profile": {
-  "sidebarTitle": "حسابي",
-  "myProfile": "الملف الشخصي",
-  "myReservations": "حجوزاتي",
-  "reviews": "التقييمات",
-  "favorites": "المفضلة"
-},
-  "proPhoto":{
-  "aboutTitle": "About me",
-  "choose": "Choose image",
-  "uploading": "Uploading...",
-  "save": "Save",
-  "completeTitle": "Complete your profile",
-  "completeDesc": "Add a profile picture and some info to complete your profile.",
-  "namePlaceholder": "Your name",
-  "getStarted": "Get Started"
-},
-
+    "sidebarTitle": "حسابي",
+    "myProfile": "الملف الشخصي",
+    "myReservations": "حجوزاتي",
+    "reviews": "التقييمات",
+    "favorites": "المفضلة"
+  },
+  "proPhoto": {
+    "aboutTitle": "About me",
+    "choose": "Choose image",
+    "uploading": "Uploading...",
+    "save": "Save",
+    "completeTitle": "Complete your profile",
+    "completeDesc": "Add a profile picture and some info to complete your profile.",
+    "namePlaceholder": "Your name",
+    "getStarted": "Get Started"
+  },
   "favorites": {
     "title": "My Favorites",
     "subTitle": "Manage your saved facilities",
@@ -191,7 +184,7 @@
     "colId": "ID",
     "rentButton": "Rent Now"
   },
-   "reservations": {
+  "reservations": {
     "title": "Past reservations",
     "loading": "Loading...",
     "emptyMessage": "You'll find your past reservations here after your first rent.",
@@ -207,45 +200,77 @@
     "review": "Review",
     "date": "Date"
   },
-
-  
- 
- 
   "footer": {
     "main": "Main Page",
     "mainLinks": [
-      { "label": "All Products", "href": "/products" },
-      { "label": "About Skillvera Rent", "href": "/userview/aboutUS" },
-      { "label": "Products Map", "href": "/map" },
-      { "label": "I'm an Owner!", "href": "/owner" }
+      {
+        "label": "All Products",
+        "href": "/products"
+      },
+      {
+        "label": "About Skillvera Rent",
+        "href": "/userview/aboutUS"
+      },
+      {
+        "label": "Products Map",
+        "href": "/map"
+      },
+      {
+        "label": "I'm an Owner!",
+        "href": "/owner"
+      }
     ],
-
     "about": "About Skillvera Rent",
     "aboutLinks": [
-      { "label": "About Skillvera Rent", "href": "/userview/aboutUS" },
-      { "label": "Team", "href": "/team" },
-      { "label": "Careers", "href": "/careers" },
-      { "label": "Blog", "href": "/blog" }
+      {
+        "label": "About Skillvera Rent",
+        "href": "/userview/aboutUS"
+      },
+      {
+        "label": "Team",
+        "href": "/team"
+      },
+      {
+        "label": "Careers",
+        "href": "/careers"
+      },
+      {
+        "label": "Blog",
+        "href": "/blog"
+      }
     ],
-
     "support": "Support",
     "supportLinks": [
-      { "label": "Contact Us", "href": "/userview/contactUs" },
-      { "label": "FAQ", "href": "/userview/FAQpage" },
-      { "label": "Terms & Conditions", "href": "/terms" },
-      { "label": "Help & Support", "href": "/support" }
+      {
+        "label": "Contact Us",
+        "href": "/userview/contactUs"
+      },
+      {
+        "label": "FAQ",
+        "href": "/userview/FAQpage"
+      },
+      {
+        "label": "Terms & Conditions",
+        "href": "/terms"
+      },
+      {
+        "label": "Help & Support",
+        "href": "/support"
+      }
     ],
-
     "apps": "Our Apps",
     "appsLinks": [
-      { "label": "App Store", "href": "https://apps.apple.com" },
-      { "label": "Google Play", "href": "https://play.google.com" }
+      {
+        "label": "App Store",
+        "href": "https://apps.apple.com"
+      },
+      {
+        "label": "Google Play",
+        "href": "https://play.google.com"
+      }
     ],
-
     "brand": "Skillvera Rent"
   },
-
-  
   "filters": {
     "category": "All Category",
     "location": "Location",
@@ -263,12 +288,11 @@
   "facility": {
     "priceUnit": "{price} R"
   },
-  
   "contact": {
     "title": "Contact Us",
     "subtitle": "We are here to help you and answer all your inquiries about our facilities.",
-    "teamDesc":"contact US with message or whatsapp to get information and support, we are here for you ",
-    "teamTitle":"Contact Our Team",
+    "teamDesc": "contact US with message or whatsapp to get information and support, we are here for you ",
+    "teamTitle": "Contact Our Team",
     "formTitle": "Send us a message",
     "formSubTitle": "We will get back to you as soon as possible",
     "fullName": "e.g. John Doe",
@@ -283,7 +307,6 @@
     "whatsappDesc": "Contact us directly via WhatsApp for an immediate response",
     "directChat": "Start Chatting Now"
   },
-  
   "about": {
     "badge": "About ScavaRent",
     "title": "Leadership in Providing Diverse Facilities",
@@ -306,7 +329,6 @@
     "feature2Desc": "A specialized team is present to handle any inquiry.",
     "feature3Title": "Operational Flexibility",
     "feature3Desc": "Diverse facilities to suit various projects and events."
- 
   },
   "benefits": {
     "responsable": "Responsible Team",
@@ -323,16 +345,14 @@
     "subtitle": "Happy Viewers",
     "title": "Why Choose Us"
   },
-  "rating":{
-  "title": "Guest Rating",
-  "description": "This facility is rated based on guest ratings and reviews."
+  "rating": {
+    "title": "Guest Rating",
+    "description": "This facility is rated based on guest ratings and reviews."
   },
-  
   "review": {
     "showMore": "Show More",
     "stayed": "Stayed {nights} nights"
   },
-  
   "thingsToKnow": {
     "title": "Things to know",
     "rulesTitle": "Facility rules",
@@ -345,90 +365,145 @@
     "policies": "Room was very clean and looked just like the photo. Quiet little hotel, especially during the day. Evening you hear some music from nearby places.",
     "showMore": "Show More"
   },
-  
   "facilityMap": {
-    "title": "This Facility is in : {location}",
-    "info": "Facility Information & Features",
-    "noFeatures": "No features added yet.",
-    "popup": "Facility location ({lat}, {lng})"
-  },
-  
-  "facilityHeader": {
-    "ratingCount": "({count})",
-    "priceUnit": "{price}/DAY",
-    "overview": "Overview",
-    "share": "Share",
-    "save": "Save"
-  },
-  
-  "FacilityCalendar": {
-    "selectCheckIn": "Select check-in date",
-    "clearDates": "Clear dates",
-    "forDays": "for {count} days",
-    "checkIn": "CHECK-IN",
-    "checkOut": "CHECK-OUT",
-    "pleaseSelect": "Please select your dates to rent",
-    "rentNow": "Rent now"
-  },
-  
-  "FAQ": {
-  "title": "FAQ",
-  "subtitle": "Common Questions",
-  "description": "Have questions about booking or managing a facility? Here are the most common answers.",
-  "readMore": "Read more",
-  "cta": "Request a Quote",
-  "items": [
-    {
-      "question": "How do I book a facility through the platform?",
-      "answer": "Simply select the desired facility, choose an available date and time, then confirm your booking via online payment for instant confirmation."
-    },
-    {
-      "question": "Can I cancel or reschedule my booking?",
-      "answer": "Yes, you can cancel or reschedule through your dashboard. Refund policies apply based on the time remaining before the booking starts."
-    },
-    {
-      "question": "What do the facility rental fees include?",
-      "answer": "Fees vary by facility, but usually include lighting, air conditioning, and the basic amenities listed in the facility description."
-    },
-    {
-      "question": "How can I ensure the facility's quality and cleanliness?",
-      "answer": "We conduct periodic quality checks, and you can view real user reviews, ratings, and up-to-date photos of the facility."
-    },
-    {
-      "question": "Can I list my own facility for rent?",
-      "answer": "Absolutely! You can register as a 'Facility Provider' and upload your space details and photos to start receiving bookings and generating revenue."
+    "title": "Location & Environment",
+    "info": "Key Features & Services",
+    "addressLabel": "Full Address",
+    "features": {
+      "support": "Customer Support",
+      "accessibility": "Easy Access",
+      "safety": "Safety & Security",
+      "quality": "Quality Guaranteed"
     }
-  ]
-},
-  
-  
+  },
+  "facilityHeader": {
+    "share": "Share",
+    "save": "Save to Favorites",
+    "rating": "Rating",
+    "currency": "SAR",
+    "perDay": "Per Day",
+    "overview": "Overview",
+    "taxNo": "Tax Number"
+  },
+  "Reviews": {
+    "loading": "Loading guest experiences...",
+    "noReviewsTitle": "No reviews yet",
+    "noReviewsDesc": "Be the first one to share your experience after staying!",
+    "guest": "Guest"
+  },
+  "FacilityCalendar": {
+    "selectCheckIn": "Select your dates",
+    "clearDates": "Reset selection",
+    "checkIn": "Arrival",
+    "checkOut": "Departure",
+    "forDays": "{count} nights stay",
+    "rentNow": "Confirm Booking",
+    "totalAmount": "Total Price",
+    "currency": "SAR",
+    "timezoneNote": "Prices are calculated based on local time",
+    "disclaimer": "You won't be charged yet. Availability will be confirmed in the next step.",
+    "available": "Available for booking!",
+    "notAvailable": "Selected dates are already booked.",
+    "errorCheck": "Error checking availability.",
+    "loading": "Loading..."
+  },
+  "ReservationCard": {
+    "noPhoto": "No Photo",
+    "guest": "Guest",
+    "reviews": "Reviews",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "freeCancellation": "Free Cancellation",
+    "cancelNotice": "Full refund if cancelled before",
+    "viewPolicy": "View Policy",
+    "totalPayment": "Total Payment",
+    "currency": "SR",
+    "change": "Change"
+  },
+  "ReservationSteps": {
+    "title": "Reservation Process",
+    "subtitle": "Follow the steps below to complete your booking",
+    "step1Title": "Identity Verification",
+    "step1Desc": "Must be logged in to proceed",
+    "loginBtn": "Log In",
+    "step2Title": "Secure Payment",
+    "step2Desc": "Complete transaction safely",
+    "paymentBtn": "Continue to Payment",
+    "processing": "Processing...",
+    "step3Title": "Review & Invoice",
+    "step3Desc": "Verify your request and download PDF",
+    "reviewBtn": "Review Request",
+    "invoiceTitle": "Reservation Invoice",
+    "facilityName": "Facility Name",
+    "userName": "User Name",
+    "checkPeriod": "Check Period",
+    "totalDue": "Total Due",
+    "currency": "SAR",
+    "downloadPdf": "Download PDF Invoice",
+    "secureGateway": "Secure Gateway",
+    "paymentError": "Payment link error",
+    "reserveError": "Error while reserving",
+    "status": "Booking Status",
+    "pendingPayment": "Pending Payment",
+    "inclusiveTax": "Inclusive of VAT",
+    "thankYouMsg": "Thank you for choosing us, have a great experience",
+    "close": "Closae Modal"
+  },
+  "FAQ": {
+    "title": "FAQ",
+    "subtitle": "Common Questions",
+    "description": "Have questions about booking or managing a facility? Here are the most common answers.",
+    "readMore": "Read more",
+    "cta": "Request a Quote",
+    "items": [
+      {
+        "question": "How do I book a facility through the platform?",
+        "answer": "Simply select the desired facility, choose an available date and time, then confirm your booking via online payment for instant confirmation."
+      },
+      {
+        "question": "Can I cancel or reschedule my booking?",
+        "answer": "Yes, you can cancel or reschedule through your dashboard. Refund policies apply based on the time remaining before the booking starts."
+      },
+      {
+        "question": "What do the facility rental fees include?",
+        "answer": "Fees vary by facility, but usually include lighting, air conditioning, and the basic amenities listed in the facility description."
+      },
+      {
+        "question": "How can I ensure the facility's quality and cleanliness?",
+        "answer": "We conduct periodic quality checks, and you can view real user reviews, ratings, and up-to-date photos of the facility."
+      },
+      {
+        "question": "Can I list my own facility for rent?",
+        "answer": "Absolutely! You can register as a 'Facility Provider' and upload your space details and photos to start receiving bookings and generating revenue."
+      }
+    ]
+  },
   "userprofile": {
-  "title": "Profile Settings",
-  "desc": "Update your personal information for a better experience",
-  "fullName": "Full Name",
-  "namePlaceholder": "Enter your name",
-  "phone": "Phone Number",
-  "dob": "Date of Birth",
-  "gender": "Gender",
-  "male": "Male",
-  "female": "Female",
-  "other": "Other",
-  "updateProfile": "Update Profile",
-  "saving": "Saving Changes...",
-  "locVerified": "Location Verified",
-  "locDetecting": "Detecting Location...",
-  "securityTip": "Security Tip",
-  "securityDesc": "Keep your profile information up to date to ensure accurate service delivery and booking confirmations.",
-  "invalidPhone": "Invalid phone number",
-  "dobRequired": "Date of birth is required",
-  "successTitle": "Success 🎉",
-  "successMsg": "Profile updated successfully!",
-  "errorTitle": "Error ❌",
-  "errorMsg": "Failed to update profile",
-  "letsGo": "Let's Go",
-  "tryAgain": "Try Again"
-},
-
+    "title": "Profile Settings",
+    "desc": "Update your personal information for a better experience",
+    "fullName": "Full Name",
+    "namePlaceholder": "Enter your name",
+    "phone": "Phone Number",
+    "dob": "Date of Birth",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "updateProfile": "Update Profile",
+    "saving": "Saving Changes...",
+    "locVerified": "Location Verified",
+    "locDetecting": "Detecting Location...",
+    "securityTip": "Security Tip",
+    "securityDesc": "Keep your profile information up to date to ensure accurate service delivery and booking confirmations.",
+    "invalidPhone": "Invalid phone number",
+    "dobRequired": "Date of birth is required",
+    "successTitle": "Success 🎉",
+    "successMsg": "Profile updated successfully!",
+    "errorTitle": "Error ❌",
+    "errorMsg": "Failed to update profile",
+    "letsGo": "Let's Go",
+    "tryAgain": "Try Again"
+  },
   "Search": {
     "place": "Location",
     "placeholderWhere": "Where are you going?",
@@ -444,7 +519,7 @@
     "noFacilities": "No Facilities Found",
     "adjustFilters": "Try adjusting your filters to find what you're looking for."
   },
-"verifyAccount": {
+  "verifyAccount": {
     "title": "Activate Account",
     "subtitle": "Almost there! Please enter the 4-digit code we sent to",
     "verify_btn": "Confirm & Activate",
@@ -502,7 +577,6 @@
     "footer_text": "Already have an account?",
     "footer_link": "Sign In"
   },
-  
   "Proverify": {
     "hero_title": "Almost there!",
     "hero_desc": "We've sent a verification code to your email to ensure your account security.",
@@ -517,15 +591,26 @@
     "error_failed": "Verification failed, the code might be incorrect",
     "error_resend": "Failed to resend, please try again later"
   },
-  
   "plans": {
     "step_badge": "Step 2: Business Scale",
     "hero_title": "Select Your Business Scale",
     "hero_subtitle": "Choose the tier that best fits your facility management needs. You can change this later from your settings.",
-    "individual": { "title": "Individual", "desc": "Perfect for freelancers. Up to 1 facility." },
-    "team": { "title": "Team", "desc": "Ideal for small teams. Up to 5 facilities." },
-    "org": { "title": "Organization", "desc": "For growing businesses. Up to 10 facilities." },
-    "enterprise": { "title": "Enterprise", "desc": "Unleashed power for 10+ facilities." },
+    "individual": {
+      "title": "Individual",
+      "desc": "Perfect for freelancers. Up to 1 facility."
+    },
+    "team": {
+      "title": "Team",
+      "desc": "Ideal for small teams. Up to 5 facilities."
+    },
+    "org": {
+      "title": "Organization",
+      "desc": "For growing businesses. Up to 10 facilities."
+    },
+    "enterprise": {
+      "title": "Enterprise",
+      "desc": "Unleashed power for 10+ facilities."
+    },
     "confirm_btn": "Confirm & Continue",
     "secure_footer": "Secure Step • 2 of 3",
     "error_missing_data": "Signup data missing. Redirecting...",
@@ -543,43 +628,36 @@
     "chatButton": "Direct chat"
   },
   "aboutus": {
-  "description": "At Skafa, we believe that choosing the right facility is the start of any project's success. That's why we provide over 1200 diverse facilities, applying the highest safety standards to ensure a reliable and seamless rental experience.",
-  "more": "Read More"
-},
-"howItWorks": {
-  "title": "Search Easily... Book with Confidence... Pay Securely",
-  "steps": {
-    "search": {
-      "title": "Search for a Facility",
-      "desc": "Enter the type of facility you need, set your location and date. All suitable options will be displayed instantly."
-    },
-    "compare": {
-      "title": "Compare Results",
-      "desc": "Check details, prices, and reviews to get a clear idea of the best options before making your choice."
-    },
-    "book": {
-      "title": "Book the Right One",
-      "desc": "Once you've found the perfect facility, simply click 'Book Now' and select your preferred date and time."
-    },
-    "pay": {
-      "title": "Complete Payment",
-      "desc": "Choose your preferred payment method and complete the process securely... your booking will then be ready and confirmed."
-    }
-  }
-},
-"AboutUser": {
-  "yourNamePlaceholder": "Your Name",
-  "accountType": "Personal Account",
-  "saveBtn": "Save Changes",
-  "saving": "Saving...",
-  "saved": "Updated Successfully",
-  "completeTitle": "Complete Your Profile to Get Started",
-  "completeDesc": "Adding your name and photo helps us provide a personalized experience and makes communication easier when booking facilities.",
-  "labelFullName": "Full Display Name",
-  "namePlaceholder": "Enter your full name",
-  "getStarted": "Get Started"
-},
-"Myreservations": {
+    "description": "At Skafa, we believe that choosing the right facility is the start of any project's success. That's why we provide over 1200 diverse facilities, applying the highest safety standards to ensure a reliable and seamless rental experience.",
+    "more": "Read More"
+  },
+  "HowItWorks": {
+    "mainTitle": "How Skafarent Works?",
+    "subTitle": "We share the steps to achieve goals together.",
+    "step1Title": "Create Your Account",
+    "step1Desc": "Add your personal information and complete your profile.",
+    "step2Title": "Account Activation",
+    "step2Desc": "Wait for Skafarent team to activate your account after verifying details.",
+    "step3Title": "Add Facility Details",
+    "step3Desc": "Add your facility photos, available dates, and times.",
+    "step4Title": "Receive Bookings",
+    "step4Desc": "Review booking requests, approve them, and manage sales invoices.",
+    "step5Title": "Request Your Profits",
+    "step5Desc": "Request to withdraw your earnings directly to your bank account."
+  },
+  "AboutUser": {
+    "yourNamePlaceholder": "Your Name",
+    "accountType": "Personal Account",
+    "saveBtn": "Save Changes",
+    "saving": "Saving...",
+    "saved": "Updated Successfully",
+    "completeTitle": "Complete Your Profile to Get Started",
+    "completeDesc": "Adding your name and photo helps us provide a personalized experience and makes communication easier when booking facilities.",
+    "labelFullName": "Full Display Name",
+    "namePlaceholder": "Enter your full name",
+    "getStarted": "Get Started"
+  },
+  "Myreservations": {
     "mainTitle": "My Reservations",
     "subTitle": "Manage your facility bookings",
     "tabUpcoming": "My Reservations",
@@ -627,20 +705,381 @@
     "verifiedStay": "Verified Stay",
     "noComment": "No written feedback provided.",
     "page": "Page"
+  },
+  "Facilities": {
+    "title": "Available Facilities",
+    "filter_label": "Filter by Category",
+    "select_category": "Select Category",
+    "all_categories": "All Categories",
+    "no_results": "No properties found",
+    "loading": "Loading Facilities...",
+    "page_info": "Page {current} of {total}",
+    "currency": "SAR"
+  },
+  "FaqPage": {
+    "mainTitle": "Frequently Asked Questions",
+    "mainSubtitle": "Find answers to the most common questions",
+    "tabs": {
+      "Rent": "Rent",
+      "Host": "Host",
+      "Payment": "Payment",
+      "Policies": "Policies"
+    },
+    "rentQ1": "Do We Get Electronic Invoice?",
+    "rentA1": "Yes, after booking confirmation you receive it by email.",
+    "rentQ2": "Can We Reschedule The Rent Date?",
+    "rentA2": "Yes, you can reschedule 24 hours before your booking.",
+    "rentQ3": "Can We Rent More Than One Facility?",
+    "rentA3": "Absolutely, multiple facilities can be booked at once.",
+    "rentQ4": "What Do We Need To Rent A Facility?",
+    "rentA4": "You need a valid ID and payment method.",
+    "hostQ1": "How To Register As A Host?",
+    "hostA1": "You can sign up using the Host Registration form.",
+    "hostQ2": "Can Hosts Edit Listings?",
+    "hostA2": "Yes, hosts can modify listing details anytime.",
+    "paymentQ1": "What Payment Methods Are Supported?",
+    "paymentA1": "We support Visa, MasterCard, and digital wallets.",
+    "paymentQ2": "Is My Payment Secure?",
+    "paymentA2": "Yes, all transactions are encrypted and secure.",
+    "policiesQ1": "What Is The Refund Policy?",
+    "policiesA1": "Refunds are available up to 48 hours before your booking date.",
+    "policiesQ2": "Are There Any Extra Fees?",
+    "policiesA2": "No hidden fees, only standard taxes may apply."
+  },
+  "HostHero": {
+    "brandName": "SKAFARENT",
+    "mainTitle": "Turn your facility into an investment project !!!",
+    "subTitle": "Ready to take your first steps toward profit !!",
+    "learnMore": "Learn More",
+    "registerNow": "Register Now"
+  },
+  "PartnerSection": {
+    "mainDescription": "We act as a trusted operating partner for your project, transforming facilities into productive assets through precise management and professional leasing.",
+    "footerNote": "With Skavarent, facilities transform into sustainable value. To learn more, contact us."
+  },
+  "FeaturesSection": {
+    "mainTitle": "Make your facilities generate profits easily!!",
+    "marketingTitle": "Marketing Provided",
+    "marketingDesc": "We develop professional marketing plans to increase the number of tenants",
+    "managementTitle": "Management Support",
+    "managementDesc": "We provide a collaborative team to support your booking management",
+    "rightsTitle": "Guaranteed Rights",
+    "rightsDesc": "We provide a usage policy between you and the tenant to ensure facility safety"
+  },
+  "GallerySection": {
+    "mainTitle": "Be one of the continuous investment partners with Skafarent",
+    "subTitle": "Register Now - for greater opportunities and higher profits",
+    "ctaButton": "Start Now"
+  },
+  "WhyChooseUs": {
+    "mainTitle": "Why Choose Skafarent?",
+    "supportTitle": "Collaborative Support",
+    "supportDesc": "We provide a complete team for fast response.",
+    "responseSpeed": "For fast response.",
+    "displayTitle": "Premium Display",
+    "displayDesc": "We showcase each facility professionally to increase booking chances.",
+    "profitTitle": "Continuous Profits",
+    "profitDesc": "We send you instant notifications for bookings and customer inquiries."
+  },
+  "providerSidebar": {
+    "dashboard": "Dashboard",
+    "facilities": "My Facilities",
+    "calendar": "Calendar",
+    "finance": "Finance",
+    "statistic": "Statistic",
+    "profile": "My Profile",
+    "cancelRequests": "Cancel Requests",
+    "settings": "Settings",
+    "logout": "Logout",
+    "provider": "Provider"
+  },
+  "providerTopbar": {
+    "verifiedStatus": "Verified Provider",
+    "searchPlaceholder": "Search platform..."
+  },
+  "StatsCards": {
+    "newClients": "New Clients",
+    "accountBalance": "Account Balance",
+    "activeUsers": "Active Users",
+    "conversions": "Conversions",
+    "live": "Live"
+  },
+  "MyFacilities": {
+    "title": "My Facilities",
+    "totalFacilities": "Total Facilities",
+    "searchPlaceholder": "Search by name or ID...",
+    "filter": "Filter",
+    "name": "Name",
+    "id": "ID",
+    "addNew": "Add New",
+    "loading": "Loading facilities...",
+    "errorLoad": "Failed to load facilities",
+    "noDescription": "No description available.",
+    "currency": "SAR / hr",
+    "noFacilities": "You haven't added any facilities yet",
+    "createFirst": "Create Your First Facility",
+    "active": "Active",
+  "pending": "Pending",
+  "inactive": "Inactive"
+  },
+  "FinancialSection": {
+    "mainTitle": "Reach financial goals faster 💰",
+    "description": "Monitor revenue, simplify transactions, and manage provider finances efficiently.",
+    "buttonText": "Update Financial Info",
+    "cardTitle": "Financial Overview",
+    "balanceLabel": "Total Balance",
+    "expiryLabel": "Valid Thru",
+    "ratingHeader": "All Rated Facilities",
+    "loading": "Loading rated facilities...",
+    "noRatings": "No rated facilities found in recent reservations list.",
+    "errorMsg": "Failed to load rated facilities."
+  },
+  "RevenueChart": {
+    "title": "Revenue",
+    "currency": "SR",
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    }
+  },
+  "AccountBalanceCard": {
+    "balanceTitle": "Account Balance",
+    "currency": "SR",
+    "recentReservations": "Recent Reservations",
+    "noReservations": "No recent reservations",
+    "loading": "Loading..."
+  },
+  "CurrentMonthRevenue": {
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    },
+    "calendar": {
+      "startDate": "start date of",
+      "endDate": "end date of",
+      "openCalendar": "Open calendar"
+    },
+    "actions": {
+      "title": "Your Actions",
+      "transport": "Public Transport",
+      "grocery": "Grocery Store",
+      "viewAll": "View all"
+    },
+    "revenue": {
+      "title": "Revenue this month",
+      "onTrack": "+2.45% On track"
+    },
+    "currency": "SR",
+    "loading": "Loading..."
+  },
+  "FacilitiesPage": {
+    "pageTitle": "My Facilities Management",
+    "tabs": {
+      "pending": "Pending",
+      "active": "Active"
+    },
+    "addNewBtn": "Add New Facility",
+    "loading": "Loading facility data...",
+    "noPhoto": "No Photo",
+    "noDescription": "No detailed description provided for this facility.",
+    "optionsAlert": "Options for facility",
+    "noData": {
+      "title": "Nothing here!",
+      "desc": "No facilities found in the"
+    },
+    "status": {
+      "pending": "Pending Review",
+      "rejected": "Rejected",
+      "rented": "Currently Rented",
+      "active": "Active"
+    }
+  },
+  "FacilityDashboard": {
+    "loading": "Loading Dashboard Data...",
+    "facilityId": "Facility ID",
+    "currency": "SR",
+    "days": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "metrics": {
+      "activeUsers": "Active Users",
+      "activeUsersSub": "Currently engaging",
+      "revenue": "Total Revenue",
+      "revenueSub": "All-time earnings",
+      "rating": "Average Rating",
+      "ratingSub": "Based on {count} reviews",
+      "price": "Current Price",
+      "priceSub": "Per session/unit"
+    },
+    "charts": {
+      "revenueTitle": "Weekly Revenue Trend"
+    },
+    "feedbacks": {
+      "title": "Customer Feedbacks",
+      "empty": "No recent feedbacks available.",
+      "anonymous": "Anonymous",
+      "commentPrefix": "Comment is",
+      "viewAll": "View All {count} Feedbacks"
+    },
+    "details": {
+      "title": "Facility Details",
+      "price": "Price",
+      "overallRate": "Overall Rate",
+      "status": "Active Status",
+      "online": "Online",
+      "offline": "Offline",
+      "description": "Description",
+      "noDesc": "No description available.",
+      "active": "Active",
+      "pending": "Pending",
+      "inactive": "Inactive"
+    },
+    "errors": {
+      "title": "Data Error",
+      "missingId": "Facility ID is missing from the URL.",
+      "fetchFailed": "Failed to fetch data, please try again later.",
+      "noData": "No facility data found."
+    }
+  },
+  "AddFacility": {
+    "title": "Add New Facility",
+    "subtitle": "Please fill in the details below to register a new facility.",
+    "sections": {
+      "images": "Facility Images",
+      "basicInfo": "Basic Information",
+      "contact": "Contact & Location"
+    },
+    "media": {
+      "coverLabel": "Cover Image (Required)",
+      "uploadPlaceholder": "Click to Upload",
+      "additionalLabel": "Additional Facility Images",
+      "loadingCats": "Loading Categories...",
+      "coordsExtracted": "Coordinates extracted"
+    },
+    "fields": {
+      "nameEn": "Facility Name (English)",
+      "nameAr": "Facility Name (Arabic)",
+      "descEn": "Description (English)",
+      "descAr": "Description (Arabic)",
+      "tax": "Tax Number",
+      "price": "Estimated Price/Cost",
+      "category": "Main Category",
+      "selectCategory": "Select Category",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "website": "Website URL",
+      "address": "Detailed Address",
+      "googleMaps": "Google Maps URL (for coordinates)"
+    },
+    "buttons": {
+      "submit": "Confirm and Add Facility",
+      "submitting": "Submitting Facility..."
+    },
+    "alerts": {
+      "coverRequired": "Cover Image is required before submission.",
+      "success": "Facility Created Successfully!",
+      "error": "Error creating facility. Check console for details."
+    }
+  },
+  "Calendar": {
+  "title": "Schedule",
+  "subtitle": "Manage your bookings and events",
+  "addEvent": "Add Event",
+  "agenda": "Agenda",
+  "noEvents": "No events for this month",
+  "newEvent": "New Event",
+  "selectDate": "Select a date",
+  "eventName": "Event Name",
+  "notes": "Notes",
+  "confirm": "Confirm Schedule",
+  "placeholderTitle": "e.g. Client Consultation",
+  "placeholderNotes": "Add more details...",
+  "errorLoad": "Failed to load calendar events",
+  "successAdd": "Event added successfully!",
+  "errorAdd": "Failed to add event",
+  "titleRequired": "Please provide an event title"
+},
+
+  "Finance": {
+    "title": "Financial Reports",
+    "subtitle": "Review provider earnings and cash flows",
+    "exportBtn": "Export Report (Excel)",
+    "chartTitle": "Annual Revenue Analysis",
+    "totalBalance": "Total Withdrawable Balance",
+    "withdrawBtn": "Withdraw Funds Now",
+    "comparisonText": "{percent} from last month",
+    "recentActivity": "Recent Transactions",
+    "netProfit": "Net Profit",
+    "noData": "No recorded reservations at the moment",
+    "updateNote": "* Financial data is updated every 24 hours to ensure banking report accuracy.",
+    "loading": "Processing financial data...",
+    "excelSheetName": "Financial Report",
+    "idLabel": "Transaction ID",
+    "facilityLabel": "Facility Name",
+    "dateLabel": "Creation Date",
+    "totalLabel": "Total Amount",
+    "profitLabel": "Net Profit",
+    "statusLabel": "Status",
+    "currencyLabel": "Currency"
+  },
+  
+  
+  "providerProfile": {
+    "title": "My Profile",
+    "providerIdentity": "Provider Identity",
+    "fullName": "Full Name",
+    "taxNumber": "Tax Number",
+    "dob": "Date of Birth",
+    "gender": {
+      "label": "Gender",
+      "select": "Select Gender",
+      "male": "Male",
+      "female": "Female",
+      "other": "Other"
+    },
+    "phone": "Phone",
+    "email": "Account Email",
+    "updateBtn": "Update Settings",
+    "updatedSuccess": "Profile Updated",
+    "locationRequired": "Location access is required.",
+    "noImage": "NO IMAGE",
+    "loading": "Loading data..."
+  },
+  "Validation": {
+    "nameRequired": "Full Name is required",
+    "emailInvalid": "Invalid email",
+    "emailRequired": "Email is required",
+    "phoneRequired": "Phone is required",
+    "taxRequired": "Tax Number is required",
+    "genderRequired": "Select a gender",
+    "dobRequired": "Date of Birth is required"
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -72,7 +72,7 @@ const FacilityCard = ({ item, isFavorite, onFavorite }: FacilityCardProps) => {
           <h3 className="font-bold text-gray-800 dark:text-white truncate pr-2">{title}</h3>
           <div className="flex items-center gap-1 text-amber-500 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded-lg">
             <Star size={14} className="fill-current" />
-            <span className="text-xs font-bold">{item.rate ?? 4.5}</span>
+            <span className="text-xs font-bold">{item.rate??0}</span>
           </div>
         </div>
 

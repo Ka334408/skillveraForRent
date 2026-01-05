@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function FAQSection() {
   const t = useTranslations("FAQ");
+  const router=useRouter();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFAQ = (index: number) => {
@@ -80,7 +82,9 @@ export default function FAQSection() {
 
         {/* CTA Button */}
         <div className="text-center mt-12">
-          <button className="px-8 py-4 bg-[#0E766E] hover:bg-[#0a5d56] text-white rounded-2xl font-bold shadow-lg shadow-[#0E766E]/20 transition-all hover:-translate-y-1 active:scale-95">
+          <button
+          onClick={()=>{router.push("/userview/contactUs")}}
+          className="px-8 py-4 bg-[#0E766E] hover:bg-[#0a5d56] text-white rounded-2xl font-bold shadow-lg shadow-[#0E766E]/20 transition-all hover:-translate-y-1 active:scale-95">
             {t("cta")}
           </button>
         </div>

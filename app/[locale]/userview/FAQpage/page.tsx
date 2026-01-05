@@ -3,74 +3,103 @@
 import Header from "@/app/components/header";
 import FaqHeader from "@/app/components/userview/faqHeader";
 import { useState } from "react";
-
-
-const faqData = {
-  Rent: [
-    { q: "Do We Get Electronic Invoice?", a: "Yes, after booking confirmation you receive it by email." },
-    { q: "Can We Reschedule The Rent Date?", a: "Yes, you can reschedule 24 hours before your booking." },
-    { q: "Can We Rent More Than One Facility?", a: "Absolutely, multiple facilities can be booked at once." },
-    { q: "What Do We Need To Rent A Facility?", a: "You need a valid ID and payment method." },
-  ],
-  Host: [
-    { q: "How To Register As A Host?", a: "You can sign up using the Host Registration form." },
-    { q: "Can Hosts Edit Listings?", a: "Yes, hosts can modify listing details anytime." },
-  ],
-  Payment: [
-    { q: "What Payment Methods Are Supported?", a: "We support Visa, MasterCard, and digital wallets." },
-    { q: "Is My Payment Secure?", a: "Yes, all transactions are encrypted and secure." },
-  ],
-  Policies: [
-    { q: "What Is The Refund Policy?", a: "Refunds are available up to 48 hours before your booking date." },
-    { q: "Are There Any Extra Fees?", a: "No hidden fees, only standard taxes may apply." },
-  ],
-};
+import { useLocale, useTranslations } from "next-intl";
+import { ChevronDown } from "lucide-react";
 
 export default function FaqPage() {
+  const locale = useLocale();
+  const t = useTranslations("FaqPage");
+  const isRTL = locale === "ar";
+
+  const faqData = {
+    Rent: [
+      { q: t("rentQ1"), a: t("rentA1") },
+      { q: t("rentQ2"), a: t("rentA2") },
+      { q: t("rentQ3"), a: t("rentA3") },
+      { q: t("rentQ4"), a: t("rentA4") },
+    ],
+    Host: [
+      { q: t("hostQ1"), a: t("hostA1") },
+      { q: t("hostQ2"), a: t("hostA2") },
+    ],
+    Payment: [
+      { q: t("paymentQ1"), a: t("paymentA1") },
+      { q: t("paymentQ2"), a: t("paymentA2") },
+    ],
+    Policies: [
+      { q: t("policiesQ1"), a: t("policiesA1") },
+      { q: t("policiesQ2"), a: t("policiesA2") },
+    ],
+  };
+
   const [activeTab, setActiveTab] = useState<keyof typeof faqData>("Rent");
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div>
-        <Header bgColor="bg-[#0E766E]"  loginLink="/auth/login"
-        signupLink="/auth/signUp" />
-    
-    <div className="min-h-screen bg-gray-50">
-      {/* Header Component */}
-      <FaqHeader
-        title="Frequently Asked Question"
-        subtitle="Did you find the question as you expected?"
-      />
+    <div dir={isRTL ? "rtl" : "ltr"} className="min-h-screen bg-gray-50">
+      <Header loginLink="/auth/login" signupLink="/auth/signUp" />
 
-      {/* Tabs */}
-      <div className="flex justify-center gap-8 mt-8 text-lg font-semibold text-[#0E766E]">
-        {Object.keys(faqData).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab as keyof typeof faqData)}
-            className={`pb-2 border-b-2 transition-all ${
-              activeTab === tab ? "border-[#0E766E]" : "border-transparent hover:border-[#0E766E]/50"
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+      <FaqHeader title={t("mainTitle")} subtitle={t("mainSubtitle")} />
 
-      {/* FAQ Accordion */}
-      <div className="max-w-2xl mx-auto mt-10 space-y-4 px-4">
-        {faqData[activeTab].map((faq, idx) => (
-          <details
-            key={idx}
-            className="border border-[#0E766E] rounded-lg p-4 bg-white shadow-sm"
-          >
-            <summary className="cursor-pointer font-medium text-[#0E766E]">
-              {faq.q}
-            </summary>
-            <p className="mt-2 text-gray-700">{faq.a}</p>
-          </details>
-        ))}
+      <div className="max-w-4xl mx-auto px-4 py-12">
+        {/* Tab Navigation */}
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8 border-b border-gray-200">
+          {Object.keys(faqData).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => {
+                setActiveTab(tab as keyof typeof faqData);
+                setOpenIndex(0);
+              }}
+              className={`pb-4 text-sm md:text-lg font-bold transition-all relative ${
+                activeTab === tab
+                  ? "text-[#0E766E]"
+                  : "text-gray-400 hover:text-gray-600"
+              }`}
+            >
+              {t(`tabs.${tab}`)}
+              {activeTab === tab && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#0E766E] rounded-full" />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* FAQ Accordion List */}
+        <div className="mt-10 space-y-4 max-w-3xl mx-auto">
+          {faqData[activeTab].map((faq, idx) => (
+            <div
+              key={idx}
+              className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                className="w-full flex items-center justify-between p-5 text-start"
+              >
+                <span className={`font-bold transition-colors ${openIndex === idx ? "text-[#0E766E]" : "text-gray-700"}`}>
+                  {faq.q}
+                </span>
+                <ChevronDown
+                  className={`transition-transform duration-300 ${
+                    openIndex === idx ? "rotate-180 text-[#0E766E]" : "text-gray-400"
+                  }`}
+                  size={20}
+                />
+              </button>
+              
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  openIndex === idx ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="p-5 pt-0 text-gray-500 text-sm leading-relaxed border-t border-gray-50">
+                  {faq.a}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
     </div>
   );
 }

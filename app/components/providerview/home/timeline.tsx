@@ -1,129 +1,103 @@
 "use client";
 
-import Image from "next/image";
-import step1 from "@/public/blackHouse.png";
+import { useLocale, useTranslations } from "next-intl";
+import { UserPlus, UserCheck, LayoutGrid, MessageSquare, Wallet } from "lucide-react";
 
-export default function EasyAsWaterTop() {
+export default function HowItWorks() {
+  const locale = useLocale();
+  const t = useTranslations("HowItWorks");
+  const isRTL = locale === "ar";
+
+  const steps = [
+    {
+      id: 1,
+      icon: <UserPlus size={40} className="text-white" />,
+      title: t("step1Title"),
+      desc: t("step1Desc"),
+      position: "left",
+    },
+    {
+      id: 2,
+      icon: <UserCheck size={40} className="text-white" />,
+      title: t("step2Title"),
+      desc: t("step2Desc"),
+      position: "right",
+    },
+    {
+      id: 3,
+      icon: <LayoutGrid size={40} className="text-white" />,
+      title: t("step3Title"),
+      desc: t("step3Desc"),
+      position: "left",
+    },
+    {
+      id: 4,
+      icon: <MessageSquare size={40} className="text-white" />,
+      title: t("step4Title"),
+      desc: t("step4Desc"),
+      position: "right",
+    },
+    {
+      id: 5,
+      icon: <Wallet size={40} className="text-white" />,
+      title: t("step5Title"),
+      desc: t("step5Desc"),
+      position: "left",
+    },
+  ];
+
   return (
-    <section className="py-20 bg-white dark:bg-[#0a0a0a] relative">
-      <h2 className="text-3xl font-bold text-center mb-16 text-gray-900 dark:text-white">
-        Easy As Water
-      </h2>
-
-      {/*-------------------- Section 1 */}
-      <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
-        <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full"></div>
-          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] my-1 rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
+    <section className="w-full bg-white py-20 px-6" dir={isRTL ? "rtl" : "ltr"}>
+      <div className="max-w-5xl mx-auto">
+        
+        {/* Header */}
+        <div className="text-center mb-20 space-y-4">
+          <h2 className="text-2xl md:text-4xl font-black text-gray-900 tracking-tight">
+            {t("mainTitle")}
+          </h2>
+          <div className="w-24 h-1.5 bg-[#0E766E] mx-auto rounded-full" />
+          <p className="text-gray-500 font-bold text-sm md:text-base">
+            {t("subTitle")}
+          </p>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left md:pl-[52%]">
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
-              Create Your <br /> Host Account
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-base mt-2">
-              Sign up easily and start your hosting journey
-            </p>
-          </div>
+        {/* Timeline Container */}
+        <div className="relative">
+          {/* Central Vertical Line */}
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1.5 bg-[#0E766E] rounded-full hidden md:block" />
 
-          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
-            <Image src={step1} alt="Create Host Account" fill className="object-cover" />
-          </div>
-        </div>
-      </div>
+          <div className="space-y-12 md:space-y-0">
+            {steps.map((step, index) => (
+              <div 
+                key={step.id} 
+                className={`relative flex flex-col md:flex-row items-center w-full ${
+                  step.position === "right" ? "md:flex-row-reverse" : ""
+                } md:mb-16`}
+              >
+                {/* Content Side */}
+                <div className="w-full md:w-1/2 flex justify-center md:justify-end px-4 md:px-12 text-center md:text-start">
+                  <div className={`space-y-2 ${step.position === "right" ? "md:text-start" : "md:text-end"}`}>
+                    <h3 className="text-lg md:text-xl font-black text-gray-900">{step.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-500 font-bold leading-relaxed max-w-[250px] mx-auto md:mx-0">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
 
-      {/*-------------------- Section 2 */}
-      <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
-        <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
-        </div>
+                {/* Center Circle Indicator */}
+                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-4 border-[#0E766E] rounded-full z-20 hidden md:block" />
 
-        <div className="flex flex-col md:flex-row-reverse items-center gap-6 text-center md:text-left md:pr-[52%]">
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
-              Add Your <br /> Property Details
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-base mt-2">
-              Provide all the key information about your listing
-            </p>
-          </div>
-
-          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
-            <Image src={step1} alt="Add Property Details" fill className="object-cover" />
-          </div>
-        </div>
-      </div>
-
-      {/*-------------------- Section 3 */}
-      <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
-        <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left md:pl-[52%]">
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
-              Complete Your <br /> Profile Setup
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-base mt-2">
-              Add all your personal and contact information
-            </p>
-          </div>
-
-          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
-            <Image src={step1} alt="Profile Setup" fill className="object-cover" />
+                {/* Icon Box Side */}
+                <div className={`w-full md:w-1/2 flex justify-center md:justify-start px-4 md:px-12 mt-6 md:mt-0`}>
+                  <div className="w-32 h-32 md:w-40 md:h-28 bg-[#0E766E] rounded-[1.5rem] flex items-center justify-center shadow-xl shadow-[#0E766E]/20 transition-transform hover:scale-105">
+                    {step.icon}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/*-------------------- Section 4 */}
-      <div className="relative max-w-5xl mx-auto flex justify-center mb-12">
-        <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
-        </div>
-
-        <div className="flex flex-col md:flex-row-reverse items-center gap-6 text-center md:text-left md:pr-[52%]">
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
-              Manage Your <br /> Listings Easily
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-base mt-2">
-              Edit, update, and control your property anytime
-            </p>
-          </div>
-
-          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
-            <Image src={step1} alt="Manage Listings" fill className="object-cover" />
-          </div>
-        </div>
-      </div>
-
-      {/*-------------------- Section 5 */}
-      <div className="relative max-w-5xl mx-auto flex justify-center">
-        <div className="absolute left-1/2 top-0 flex flex-col items-center -translate-x-1/2 z-0">
-          <div className="hidden sm:block w-[4px] h-28 bg-[#0E766E] rounded-full"></div>
-          <div className="hidden sm:block w-3 h-3 bg-[#0E766E] rounded-full mt-1"></div>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left md:pl-[52%]">
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
-              Start Hosting <br /> and Earn Today
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-base mt-2">
-              Begin accepting guests and grow your income fast
-            </p>
-          </div>
-
-          <div className="w-32 h-32 relative rounded-xl overflow-hidden shadow-md">
-            <Image src={step1} alt="Start Hosting" fill className="object-cover" />
-          </div>
-        </div>
       </div>
     </section>
   );
