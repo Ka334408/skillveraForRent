@@ -1,35 +1,48 @@
 "use client";
 
-import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 
-export default function HowItWorks() {
+export default function GallerySection() {
+  const locale = useLocale();
+  const t = useTranslations("GallerySection");
+  const isRTL = locale === "ar";
+
   return (
-    <section className="flex flex-col items-start justify-center px-8 sm:px-12 lg:px-24 py-20 bg-white">
-      <div className="max-w-xl text-left ml-6 sm:ml-10 lg:ml-20">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-          How It Works
-        </h2>
+    <section 
+      className="w-full bg-white dark:bg-zinc-950 py-16 px-6" 
+      dir={isRTL ? "rtl" : "ltr"}
+    >
+      <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-10">
+        
+        {/* Top Text Content */}
+        <div className="space-y-4">
+          <h2 className="text-xl md:text-3xl font-black text-gray-900 dark:text-white leading-tight">
+            {t("mainTitle")}
+          </h2>
+          <p className="text-lg md:text-xl font-bold text-[#0E766E]">
+            {t("subTitle")}
+          </p>
+        </div>
 
-        <p className="text-lg sm:text-xl font-semibold text-gray-800">
-          Getting Skava Is Easy.
-        </p>
+        {/* The Gallery Image (Single Image containing all 6 photos) */}
+        <div className="relative w-full max-w-5xl rounded-[3rem] overflow-hidden shadow-2xl group">
+          {/* Subtle Green Overlay on the whole image */}
+          <div className="absolute inset-0 bg-[#0E766E]/5 group-hover:bg-transparent transition-colors duration-500 z-10" />
+          
+          <img 
+            src="/samples.png" // ضع هنا الصورة الواحدة التي تجمع الـ 6 صور
+            alt="Our Facilities Grid" 
+            className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105"
+          />
 
-        <p className="text-gray-500 mt-2 text-base sm:text-lg">
-          We Handle Everything.
-          <br />
-          You Decide What To Do With It.
-        </p>
-      </div>
+          {/* Optional: Branding watermark overlay if needed */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+             <h2 className="text-8xl font-black text-[#0E766E] rotate-12">SKAFARENT</h2>
+          </div>
+        </div>
 
-      <div className="relative w-full mt-12 flex justify-center">
-        <Image
-          src="/blackHouse.png" 
-          alt="Modern House"
-          width={1200}
-          height={600}
-          className="w-[95%] sm:w-[90%] lg:w-[80%] max-w-6xl h-auto object-contain"
-          priority
-        />
+       
+
       </div>
     </section>
   );

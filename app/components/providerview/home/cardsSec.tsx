@@ -1,52 +1,66 @@
-import Image from "next/image";
+"use client";
 
-export default function SkavaOverview() {
+import { useLocale, useTranslations } from "next-intl";
+
+export default function PartnerSection() {
+  const locale = useLocale();
+  const t = useTranslations("PartnerSection");
+  const isRTL = locale === "ar";
+
   return (
-    <section className="px-6 md:px-16 py-20 bg-white">
-      <div className="max-w-5xl mx-auto text-left">
-        <div className="flex items-center gap-3">
-          <h2 className="text-3xl md:text-5xl font-semibold text-gray-900">
-            Skava Is A
-          </h2>
-          <Image
-            src="/blackHouse.png" 
-            alt="Black House"
-            width={150}
-            height={150}
-            className="object-contain"
-          />
-        </div>
-
-        <h2 className="text-3xl md:text-5xl font-semibold text-gray-900 leading-tight mt-2">
-          Super Simple, Smartly <br />
-          Customizable, All-Type Of <br />
-          Facilities Listing From Skillvera.
-        </h2>
-
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-8">
-          <div>
-            <p className="text-lg text-gray-800 font-medium">
-              We Handle Everything, From Listing To Financing.
-            </p>
-
-            <p className="mt-2 text-gray-500 text-sm">
-              Available Now In Riyadh. Not In Riyadh?{" "}
-              <a href="#" className="text-gray-800 underline font-medium">
-                Tell Us Where To Be Next
-              </a>
-            </p>
-          </div>
-
-          <div className="mt-6 md:mt-0">
-            <Image
-              src="/blackHouse.png" 
-              alt="White House"
-              width={180}
-              height={100}
-              className="object-contain"
+    <section 
+      className="w-full bg-white dark:bg-zinc-950 py-12 px-6" 
+      dir={isRTL ? "rtl" : "ltr"}
+    >
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+        
+        {/* Left Side: Overlapping Images */}
+        <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center">
+          
+          {/* Layer 1: The Logo (Base Image) */}
+          <div className="relative w-full h-full z-10 flex items-center justify-center">
+            <img 
+              src="/logo.png"
+              alt="Logo Base" 
+              className="w-full h-full object-contain"
             />
+            
+            {/* Layer 2: The Inner Image (Positioned inside the logo) */}
+            <div className="absolute inset-0 flex items-center justify-center p-[12%]"> 
+              
+              <div className="w-full h-full rounded-[2rem] overflow-hidden relative">
+                {/* Green Overlay */}
+                <div className="absolute inset-0 bg-[#0E766E]/30 mix-blend-multiply z-20" />
+                <img 
+                  src="/partener.png" 
+                  alt="Partnership" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Decorative background shadow */}
+          <div className="absolute top-4 -left-4 w-full h-full bg-gray-50 dark:bg-zinc-900 rounded-[3rem] -z-10" />
+        </div>
+
+        {/* Right Side: Content */}
+        <div className="flex-1 space-y-5 text-center lg:text-start">
+          <div className="space-y-4">
+            {/* Main Description (Smaller font size) */}
+            <h2 className="text-lg md:text-2xl font-black text-gray-900 dark:text-white leading-relaxed tracking-tight">
+              {t("mainDescription")}
+            </h2>
+            
+            {/* Footer Note (Small and subtle) */}
+            <div className="pt-4 border-t border-gray-100 dark:border-zinc-800">
+               <p className="text-[#0E766E] font-bold text-xs md:text-sm opacity-80 leading-relaxed">
+                 {t("footerNote")}
+               </p>
+            </div>
           </div>
         </div>
+
       </div>
     </section>
   );

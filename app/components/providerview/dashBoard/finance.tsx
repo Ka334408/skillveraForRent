@@ -1,268 +1,200 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import html2canvas from "html2canvas";
+import React, { useEffect, useState } from "react";
+import api from "@/lib/axiosInstance";
+import * as XLSX from "xlsx";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  CartesianGrid,
+  AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
 } from "recharts";
-import {
-  ArrowUpRight,
-  Wallet,
-  Banknote,
-  CreditCard,
-  RefreshCw,
-  DollarSign,
-  TrendingUp,
-  Users,
-  Building2,
-  CalendarCheck,
-  ChevronDown,
-  Download,
-  Loader2,
+import { 
+  Wallet, TrendingUp, Calendar, 
+  Loader2, History, CreditCard, FileSpreadsheet 
 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
-// --- Mock Data ---
-const chartData = [
-  { name: "Jan", earning: 4000, expense: 2400 },
-  { name: "Feb", earning: 3000, expense: 1398 },
-  { name: "Mar", earning: 2000, expense: 8800 },
-  { name: "Apr", earning: 2780, expense: 3908 },
-  { name: "May", earning: 1890, expense: 4800 },
-  { name: "Jun", earning: 2390, expense: 3800 },
-  { name: "Jul", earning: 3490, expense: 4300 },
-];
+export default function ProviderFinancePage() {
+  const locale = useLocale();
+  const t = useTranslations("Finance"); // استخدام سياق Finance
+  const isRTL = locale === "ar";
+  
+  const [loading, setLoading] = useState(true);
+  const [revenueStats, setRevenueStats] = useState([]);
+  const [balance, setBalance] = useState(0);
+  const [reservations, setReservations] = useState([]);
 
-const transactions = [
-  { icon: Wallet, title: "Wallet", subtitle: "Starbucks Coffee", amount: "-$74.00", color: "text-rose-500", bg: "bg-rose-50" },
-  { icon: Banknote, title: "Bank Transfer", subtitle: "Monthly Salary", amount: "+$4,800.00", color: "text-emerald-600", bg: "bg-emerald-50" },
-  { icon: DollarSign, title: "Paypal", subtitle: "Freelance Project", amount: "+$590.00", color: "text-emerald-600", bg: "bg-emerald-50" },
-  { icon: CreditCard, title: "Mastercard", subtitle: "Uber Eats", amount: "-$23.50", color: "text-rose-500", bg: "bg-rose-50" },
-  { icon: RefreshCw, title: "Transfer", subtitle: "Tax Refund", amount: "+$98.00", color: "text-emerald-600", bg: "bg-emerald-50" },
-];
+  useEffect(() => {
+    const fetchFinanceData = async () => {
+      try {
+        setLoading(true);
+        const [balRes, resRes, chartRes] = await Promise.all([
+          api.get("/provider/balance"),
+          api.get("/provider/recent-reservations"),
+          api.get("/provider/revenue-per-month-chart")
+        ]);
 
-// --- Sub-Components ---
-const StatCard = ({ icon: Icon, label, value, trend, colorClass }: any) => (
-  <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-md transition-all">
-    <div className="flex items-center gap-4">
-      <div className={`p-4 rounded-2xl ${colorClass}`}>
-        <Icon size={24} />
-      </div>
-      <div>
-        <p className="text-sm font-medium text-gray-400">{label}</p>
-        <h3 className="text-2xl font-bold text-gray-900">{value}</h3>
-        {trend && (
-          <span className="text-xs font-bold text-emerald-600 flex items-center gap-0.5 mt-1">
-            <ArrowUpRight size={14}/> {trend}
-          </span>
-        )}
-      </div>
-    </div>
-  </div>
-);
+        setBalance(balRes.data?.data?.balance || 0);
+        setReservations(Array.isArray(resRes.data?.data) ? resRes.data.data : []);
 
-export default function FinancePage() {
-  const [isDownloading, setIsDownloading] = useState(false);
-  const dashboardRef = useRef<HTMLDivElement>(null);
+        const monthNames = isRTL 
+          ? ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
+          : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        
+        const formattedChartData = (chartRes.data?.data || []).map((item: any) => ({
+          name: monthNames[item.month - 1] || `M${item.month}`,
+          revenue: item.totalRevenue
+        }));
+        setRevenueStats(formattedChartData);
+      } catch (error) {
+        console.error("Finance Page Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFinanceData();
+  }, [isRTL]);
 
-  // --- Screenshot Logic ---
-  const downloadReport = async () => {
-    if (!dashboardRef.current) return;
-    setIsDownloading(true);
+  const handleExportExcel = () => {
+    if (reservations.length === 0) return;
 
-    try {
-      const canvas = await html2canvas(dashboardRef.current, {
-        scale: 2, // High resolution
-        useCORS: true,
-        backgroundColor: "#FAFBFF",
-        logging: false,
-      });
+    // استخدام الترجمات داخل ملف الاكسل أيضاً
+    const dataToExport = reservations.map((res: any) => ({
+      [t("idLabel")]: res.id,
+      [t("facilityLabel")]: isRTL ? res.facility?.name?.ar : res.facility?.name?.en,
+      [t("dateLabel")]: new Date(res.createdAt).toLocaleDateString(isRTL ? "ar-EG" : "en-US"),
+      [t("totalLabel")]: res.totalAmount,
+      [t("profitLabel")]: res.providerRevenue,
+      [t("statusLabel")]: res.status,
+      [t("currencyLabel")]: res.paymentCurrency || "N/A"
+    }));
 
-      const image = canvas.toDataURL("image/png", 1.0);
-      const link = document.createElement("a");
-      link.href = image;
-      link.download = `Finance-Report-${new Date().toLocaleDateString()}.png`;
-      link.click();
-    } catch (err) {
-      console.error("Capture failed:", err);
-    } finally {
-      setIsDownloading(false);
-    }
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, t("excelSheetName"));
+    XLSX.writeFile(workbook, `Finance_Report_${new Date().toISOString().split('T')[0]}.xlsx`);
   };
 
+  if (loading) return (
+    <div className="flex h-screen w-full flex-col items-center justify-center bg-[#FAFBFF]">
+      <Loader2 className="animate-spin text-[#0E766E] mb-4" size={48} />
+      <p className="text-gray-400 font-bold tracking-widest animate-pulse">{t("loading")}</p>
+    </div>
+  );
+
   return (
-    <main 
-      ref={dashboardRef}
-      className="flex-1 bg-[#FAFBFF] min-h-screen p-6 md:p-10 text-gray-900"
-    >
-      {/* Header Section */}
+    <main className="min-h-screen bg-[#FDFDFF] p-6 md:p-12" dir={isRTL ? "rtl" : "ltr"}>
+      
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
         <div>
-          <h1 className="text-4xl font-black tracking-tight text-gray-900">Finance Dashboard</h1>
-          <p className="text-gray-500 font-medium mt-1">Real-time analytics and transaction history.</p>
+          <h1 className="text-4xl font-black text-gray-900 tracking-tight">{t("title")}</h1>
+          <p className="text-gray-500 font-medium mt-2 italic">{t("subtitle")}</p>
         </div>
-        
-        <div className="flex gap-3" data-html2canvas-ignore>
-          <button className="flex items-center gap-2 bg-white border border-gray-200 px-5 py-3 rounded-2xl font-bold text-sm hover:bg-gray-50 transition shadow-sm">
-            Monthly <ChevronDown size={18} />
-          </button>
-          <button 
-            onClick={downloadReport}
-            disabled={isDownloading}
-            className="flex items-center gap-2 bg-[#0E766E] text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-[#0A5D57] transition shadow-xl shadow-[#0E766E]/20 disabled:opacity-70"
-          >
-            {isDownloading ? (
-              <Loader2 size={18} className="animate-spin" />
-            ) : (
-              <Download size={18} />
-            )}
-            {isDownloading ? "Generating..." : "Download Report"}
-          </button>
-        </div>
+        <button 
+          onClick={handleExportExcel}
+          className="group flex items-center gap-3 bg-[#0E766E] text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-[#0E766E]/20 hover:bg-[#0A5D57] transition-all active:scale-95"
+        >
+          <FileSpreadsheet size={20} className="group-hover:rotate-12 transition-transform" />
+          {t("exportBtn")}
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
-        {/* Left Side: Stats and Charts */}
-        <div className="xl:col-span-3 space-y-8">
-          
-          {/* Top Row: Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <StatCard icon={CalendarCheck} label="Reservations" value="1,240" trend="+12.5%" colorClass="bg-purple-100 text-purple-600" />
-            <StatCard icon={Users} label="New Users" value="852" trend="+8.2%" colorClass="bg-blue-100 text-blue-600" />
-            <StatCard icon={Building2} label="Facilities" value="42" colorClass="bg-rose-100 text-rose-600" />
-            <StatCard icon={TrendingUp} label="Total Profit" value="$84,120" trend="+18%" colorClass="bg-emerald-100 text-emerald-600" />
-          </div>
+      <div className="grid grid-cols-12 gap-8">
+        <div className="col-span-12 lg:col-span-8 space-y-8">
+          {/* Chart */}
+          <section className="bg-white rounded-[3rem] p-8 border border-gray-100 shadow-sm relative overflow-hidden">
+            <div className="flex justify-between items-center mb-10">
+              <h3 className="text-xl font-black text-gray-800">{t("chartTitle")}</h3>
+              <div className="bg-emerald-50 text-[#0E766E] px-4 py-1.5 rounded-xl text-xs font-black">2026</div>
+            </div>
+            <div className="h-[350px] w-full" dir="ltr">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={revenueStats}>
+                  <defs>
+                    <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#0E766E" stopOpacity={0.15}/>
+                      <stop offset="95%" stopColor="#0E766E" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94A3B8', fontSize: 12, fontWeight: 600}} />
+                  <Tooltip contentStyle={{borderRadius: '20px', border: 'none', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)', fontWeight: 'bold'}} />
+                  <Area type="monotone" dataKey="revenue" stroke="#0E766E" strokeWidth={4} fillOpacity={1} fill="url(#chartGradient)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </section>
 
-          {/* Middle Row: Revenue Chart */}
-          <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-xl font-bold text-gray-800">Revenue Stream</h2>
-              <div className="flex gap-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-[#0E766E]" />
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-tighter">Earnings</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-[#f59e0b]" />
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-tighter">Expenses</span>
+          {/* Balance Card */}
+          <div className="bg-gradient-to-r from-[#0E766E] to-[#0A5D57] rounded-[3rem] p-10 text-white relative shadow-2xl shadow-[#0E766E]/30">
+            <div className="relative z-10">
+              <p className="text-white/70 font-bold mb-2 text-sm">{t("totalBalance")}</p>
+              <h2 className="text-6xl font-black tracking-tighter mb-8 tabular-nums">
+                ${balance.toLocaleString()}
+              </h2>
+              <div className="flex gap-4">
+                <button className="bg-white text-[#0E766E] px-10 py-4 rounded-2xl font-black text-sm hover:scale-105 transition-transform active:scale-95">
+                  {t("withdrawBtn")}
+                </button>
+                <div className="hidden sm:flex items-center gap-2 bg-black/10 px-4 py-2 rounded-2xl border border-white/10 backdrop-blur-sm">
+                  <TrendingUp size={16} className="text-emerald-400" />
+                  <span className="text-xs font-bold">{t("comparisonText", { percent: "+12%" })}</span>
                 </div>
               </div>
             </div>
-            
-            <div className="h-[380px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData} barGap={12}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
-                  <XAxis 
-                    dataKey="name" 
-                    axisLine={false} 
-                    tickLine={false} 
-                    tick={{fill: '#94A3B8', fontSize: 13, fontWeight: 600}} 
-                    dy={10}
-                  />
-                  <YAxis hide />
-                  <Tooltip 
-                    cursor={{fill: '#F8FAFC'}} 
-                    contentStyle={{borderRadius: '20px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)'}}
-                  />
-                  <Bar dataKey="earning" fill="#0E766E" radius={[10, 10, 10, 10]} barSize={20} />
-                  <Bar dataKey="expense" fill="#f59e0b" radius={[10, 10, 10, 10]} barSize={20} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Bottom Row: Balance and Goal */}
-          <div className="grid md:grid-cols-2 gap-8">
-             <div className="bg-[#0E766E] rounded-[2.5rem] p-10 text-white relative overflow-hidden flex flex-col justify-between min-h-[250px]">
-                <div className="relative z-10">
-                  <p className="opacity-70 font-medium mb-1">Total Account Balance</p>
-                  <h3 className="text-5xl font-black">$142,582.00</h3>
-                </div>
-                <div className="relative z-10 flex gap-4" data-html2canvas-ignore>
-                  <button className="bg-white text-[#0E766E] px-8 py-3 rounded-2xl font-bold hover:bg-gray-100 transition">
-                    Withdraw
-                  </button>
-                  <button className="bg-white/20 backdrop-blur-md border border-white/30 px-8 py-3 rounded-2xl font-bold hover:bg-white/30 transition">
-                    Invest
-                  </button>
-                </div>
-                <div className="absolute -right-16 -bottom-16 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-             </div>
-
-             <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm flex items-center justify-between">
-                <div>
-                  <p className="text-gray-400 font-bold text-sm uppercase mb-1">Monthly Goal</p>
-                  <h3 className="text-4xl font-black text-gray-900">$10,000</h3>
-                  <p className="text-emerald-600 font-bold text-sm mt-2 flex items-center gap-1">
-                    <TrendingUp size={16}/> 68% Completed
-                  </p>
-                </div>
-                <div className="relative">
-                  <PieChart width={140} height={140}>
-                    <Pie
-                      data={[{ value: 68 }, { value: 32 }]}
-                      innerRadius={45}
-                      outerRadius={60}
-                      paddingAngle={8}
-                      dataKey="value"
-                      startAngle={90}
-                      endAngle={450}
-                    >
-                      <Cell fill="#0E766E" stroke="none" />
-                      <Cell fill="#F1F5F9" stroke="none" />
-                    </Pie>
-                  </PieChart>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-lg font-black text-[#0E766E]">68%</span>
-                  </div>
-                </div>
-             </div>
+            <Wallet size={160} className="absolute -right-8 -bottom-8 opacity-10 rotate-12" />
           </div>
         </div>
 
-        {/* Right Side: Transactions */}
-        <div className="xl:col-span-1">
-          <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm h-full">
+        {/* Recent Activity Feed */}
+        <div className="col-span-12 lg:col-span-4">
+          <div className="bg-white rounded-[3rem] p-8 border border-gray-100 shadow-sm h-full flex flex-col">
             <div className="flex justify-between items-center mb-10">
-              <h2 className="text-2xl font-black text-gray-900">Activity</h2>
-              <button className="text-[#0E766E] text-xs font-black uppercase tracking-widest hover:underline" data-html2canvas-ignore>
-                History
-              </button>
-            </div>
-            
-            <div className="space-y-8">
-              {transactions.map((t, i) => (
-                <div key={i} className="flex items-center justify-between group cursor-pointer">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-14 h-14 ${t.bg} rounded-2xl flex items-center justify-center transition-all group-hover:scale-110 shadow-sm`}>
-                      <t.icon className={`w-7 h-7 ${t.color}`} />
-                    </div>
-                    <div>
-                      <p className="text-gray-900 font-bold text-sm">{t.title}</p>
-                      <p className="text-gray-400 font-medium text-xs">{t.subtitle}</p>
-                    </div>
-                  </div>
-                  <span className={`font-bold text-sm ${t.color}`}>{t.amount}</span>
-                </div>
-              ))}
+              <h3 className="text-2xl font-black text-gray-900">{t("recentActivity")}</h3>
+              <History size={24} className="text-gray-200" />
             </div>
 
-            <div className="mt-12 p-8 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200 text-center">
-               <p className="text-xs text-gray-400 font-bold leading-relaxed px-4">
-                 Tired of manual tracking? Enable <span className="text-[#0E766E]">Auto-Sync</span> for your bank accounts.
-               </p>
-               <button className="w-full mt-6 bg-gray-900 text-white py-4 rounded-2xl font-bold text-sm hover:bg-black transition shadow-lg" data-html2canvas-ignore>
-                 Connect Now
-               </button>
+            <div className="space-y-5 flex-1 overflow-y-auto pr-2 custom-scrollbar max-h-[700px]">
+              {reservations.length > 0 ? (
+                reservations.map((res: any) => (
+                  <div key={res.id} className="p-5 rounded-[2rem] bg-[#F8FAFC] border border-gray-50 hover:bg-white hover:border-emerald-100 hover:shadow-lg transition-all group">
+                    <div className="flex justify-between items-start">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-[#0E766E] group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                          <CreditCard size={20} />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">ID: #{res.id}</p>
+                          <h4 className="font-black text-[13px] text-gray-800 truncate leading-none">
+                            {isRTL ? res.facility?.name?.ar : res.facility?.name?.en}
+                          </h4>
+                        </div>
+                      </div>
+                      <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase ${
+                        res.status === 'PENDING' ? 'bg-amber-100 text-amber-600' : 'bg-red-100 text-red-600'
+                      }`}>
+                        {res.status}
+                      </span>
+                    </div>
+                    <div className="mt-5 pt-4 border-t border-gray-100 flex justify-between items-center">
+                       <div className="text-gray-400 font-bold text-[11px] flex items-center gap-1">
+                          <Calendar size={12} />
+                          {new Date(res.createdAt).toLocaleDateString(isRTL ? 'ar-EG' : 'en-US')}
+                       </div>
+                       <div className="text-right">
+                          <p className="text-[10px] text-gray-300 font-bold leading-none">{t("netProfit")}</p>
+                          <p className="text-xl font-black text-emerald-600 mt-1 tracking-tighter">+${res.providerRevenue}</p>
+                       </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-gray-300 opacity-50 italic">
+                   <p>{t("noData")}</p>
+                </div>
+              )}
+            </div>
+            <div className="mt-8 p-6 bg-emerald-50 rounded-[2rem] border border-emerald-100">
+               <p className="text-xs font-bold text-[#0E766E] leading-relaxed">{t("updateNote")}</p>
             </div>
           </div>
         </div>

@@ -4,23 +4,26 @@ import { useEffect, useState } from "react";
 import { Users, BarChart3, TrendingUp, TrendingDown, DollarSign, Target, Loader2 } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
 import axiosInstance from "@/lib/axiosInstance";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function StatsCards() {
   const [balance, setBalance] = useState<string | number>("...");
   const [balanceLoading, setBalanceLoading] = useState(true);
+  
+  const locale = useLocale();
+  const t = useTranslations("StatsCards");
+  const isRTL = locale === "ar";
 
-  // 1. Fetch the real balance from your API
   useEffect(() => {
     const fetchBalance = async () => {
       try {
         const res = await axiosInstance.get("/provider/balance");
-        // Adjust "res.data.balance" based on your actual API response structure
         const amount = res.data?.data?.balance || res.data?.balance || 0;
         
-        // Format as currency
-        setBalance(new Intl.NumberFormat('en-US', {
+        // تنسيق العملة بناءً على اللغة
+        setBalance(new Intl.NumberFormat(locale === 'ar' ? 'ar-EG' : 'en-US', {
           style: 'currency',
-          currency: 'USD',
+          currency: 'SAR',
         }).format(amount));
       } catch (err) {
         console.error("Balance fetch error:", err);
@@ -31,12 +34,12 @@ export default function StatsCards() {
     };
 
     fetchBalance();
-  }, []);
+  }, [locale]);
 
   const statsData = [
     {
       id: 1,
-      title: "New Clients",
+      title: t("newClients"),
       value: "321",
       change: "+12.5%",
       trend: "up",
@@ -47,9 +50,9 @@ export default function StatsCards() {
     },
     {
       id: 2,
-      title: "Account Balance",
-      value: balance, // REAL DATA
-      change: "Live",
+      title: t("accountBalance"),
+      value: balance,
+      change: t("live"),
       trend: "up",
       icon: <DollarSign className="text-teal-600 w-5 h-5" />,
       bgColor: "bg-teal-50",
@@ -59,7 +62,7 @@ export default function StatsCards() {
     },
     {
       id: 3,
-      title: "Active Users",
+      title: t("activeUsers"),
       value: "1.2k",
       change: "-2.4%",
       trend: "down",
@@ -70,7 +73,7 @@ export default function StatsCards() {
     },
     {
       id: 4,
-      title: "Conversions",
+      title: t("conversions"),
       value: "8.5%",
       change: "+4.1%",
       trend: "up",
@@ -82,7 +85,7 @@ export default function StatsCards() {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full py-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full py-4" dir={isRTL ? "rtl" : "ltr"}>
       {statsData.map((item) => (
         <div
           key={item.id}
@@ -92,7 +95,8 @@ export default function StatsCards() {
             <div className={`w-12 h-12 ${item.bgColor} flex items-center justify-center rounded-2xl transition-transform group-hover:scale-110 duration-300`}>
               {item.icon}
             </div>
-            <div className="w-16 h-8 opacity-60 group-hover:opacity-100 transition-opacity">
+            {/* تم عكس اتجاه الرسم البياني في الـ RTL ليبدأ من اليمين */}
+            <div className={`w-16 h-8 opacity-60 group-hover:opacity-100 transition-opacity ${isRTL ? 'scale-x-[-1]' : ''}`}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={item.chartData}>
                   <Line
@@ -122,8 +126,8 @@ export default function StatsCards() {
               <div className={`flex items-center text-[10px] font-bold ${
                 item.trend === 'up' ? 'text-green-500' : 'text-red-500'
               }`}>
-                {item.trend === 'up' ? <TrendingUp size={10} className="mr-0.5"/> : <TrendingDown size={10} className="mr-0.5"/>}
-                {item.change}
+                {item.trend === 'up' ? <TrendingUp size={10} className={isRTL ? "ml-1" : "mr-1"}/> : <TrendingDown size={10} className={isRTL ? "ml-1" : "mr-1"}/>}
+                <span dir="ltr">{item.change}</span>
               </div>
             </div>
           </div>

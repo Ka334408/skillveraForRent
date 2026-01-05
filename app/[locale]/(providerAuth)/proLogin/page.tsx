@@ -131,7 +131,7 @@ export default function Login() {
                 <label className="text-xs font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
                   {t("password_label")}
                 </label>
-                <Link href="/auth/resetPass" className="text-xs font-bold text-[#0E766E] hover:underline">
+                <Link href="/proforgetpass" className="text-xs font-bold text-[#0E766E] hover:underline">
                   {t("forgot")}
                 </Link>
               </div>

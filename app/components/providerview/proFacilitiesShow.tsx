@@ -1,264 +1,239 @@
 "use client";
 
 import { useEffect, useState, useCallback, KeyboardEvent } from "react";
-import { Filter, Search, Plus, DollarSign } from "lucide-react";
+import { Filter, Search, Plus, Building2, ArrowRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosInstance";
-
-// Define the primary color for reusability
-const PRIMARY_COLOR = "#0E766E";
-
-interface Facility {
-  id: number;
-  name: { en: string; ar: string };
-  cover?: string | null;
-  description?: { en: string; ar: string } | null;
-  price?: number | null;
-}
+import { useLocale, useTranslations } from "next-intl";
 
 export default function MyFacilities() {
-  const [facilities, setFacilities] = useState<Facility[]>([]);
+  const [facilities, setFacilities] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
-  // 🚀 Initializing filter to null for clearer search state
-  const [filter, setFilter] = useState<"name" | "id" | null>(null); 
+  const [filter, setFilter] = useState<"name" | "id" | null>(null);
   const [showFilter, setShowFilter] = useState(false);
 
+  const locale = useLocale();
+  const t = useTranslations("MyFacilities");
+  const isRTL = locale === "ar";
   const router = useRouter();
 
-  // 🚀 Memoized function to fetch facilities
   const fetchFacilities = useCallback(async (searchValue: string, filterBy: "name" | "id" | null) => {
     try {
       setLoading(true);
       setError(null);
-
       const params: Record<string, string | number> = {};
-      
       const isNumber = /^\d+$/.test(searchValue);
-      
-      // Determine how to apply search based on the filter setting
+
       if (searchValue) {
         if (filterBy === "id" || (filterBy === null && isNumber)) {
-            // Priority given to ID if explicitly filtered or if the input is purely numeric
-            params.id = Number(searchValue);
-            params.search = ""; // Ensure search parameter is not mixed up if using ID
+          params.id = Number(searchValue);
         } else {
-            // Default to search by name/general search
-            params.search = searchValue;
-            params.id = "";
+          params.search = searchValue;
         }
       }
 
-      const res = await axiosInstance.get(`/provider-facility?limit=${4}`, {
+      const res = await axiosInstance.get(`/provider-facility?limit=10`, {
         params,
         withCredentials: true,
       });
 
-      let facilitiesArray = res.data?.data?.data || [];
-      if (!Array.isArray(facilitiesArray)) facilitiesArray = [];
-      setFacilities(facilitiesArray);
+      setFacilities(res.data?.data?.data || []);
     } catch (err: any) {
-      console.error("Failed to fetch facilities:", err);
-      setError(err?.response?.data?.message || "Failed to load facilities");
+      setError(t("errorLoad"));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
-  // Initial fetch on mount
   useEffect(() => {
     fetchFacilities(search, filter);
   }, [fetchFacilities]);
 
-
-  // 🚀 Function to handle applying search/filter
   const handleApply = () => {
     fetchFacilities(search, filter);
-    setShowFilter(false); // Close filter dropdown after applying
+    setShowFilter(false);
   };
 
-  // 🚀 Function to handle search input key press (Enter)
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-        handleApply();
+    if (e.key === 'Enter') handleApply();
+  };
+
+  // دالة مساعدة لتحديد لون الحالة
+  const getStatusStyles = (status: string) => {
+    switch (status) {
+      case "APPROVED":
+        return "bg-green-500/20 text-green-700 border-green-500/30";
+      case "PENDING":
+        return "bg-orange-500/20 text-orange-700 border-orange-500/30";
+      default:
+        return "bg-red-500/20 text-red-700 border-red-500/30";
     }
   };
 
-  // 🚀 Function to handle click and navigation
-  const handleFacilityClick = (facilityId: number) => {
-    router.push(`/providerview/dashBoardHome/myFacilities/${facilityId}`);
-  };
-
   return (
-    <section className="bg-white p-6 md:p-8 rounded-2xl shadow-xl w-full my-6 min-h-[400px]">
-      
-      {/* Header and Controls */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4 border-b pb-4">
-        <h2 className="text-3xl font-extrabold text-gray-900">My Facilities</h2>
+    <section className="bg-white p-6 md:p-10 rounded-[2.5rem] border border-gray-100 shadow-sm w-full my-6 min-h-[500px]" dir={isRTL ? "rtl" : "ltr"}>
 
-        <div className="flex gap-3 items-center flex-wrap">
-          
-          {/* Search Input and Apply Button */}
-          <div className="flex relative">
+      {/* Header Section */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-10 gap-6">
+        <div>
+          <h2 className="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-3">
+            <Building2 className="text-[#0E766E] w-8 h-8" />
+            {t("title")}
+          </h2>
+          <p className="text-gray-400 text-sm font-bold mt-1 opacity-80 uppercase tracking-widest">
+            {facilities.length} {t("totalFacilities")}
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-3 items-center">
+          {/* Search Bar */}
+          <div className="flex relative items-center group">
+            <div className={`absolute ${isRTL ? 'right-4' : 'left-4'} text-gray-400 group-focus-within:text-[#0E766E] transition-colors`}>
+              <Search className="w-4 h-4" />
+            </div>
             <input
               type={filter === 'id' ? 'number' : 'text'}
-              placeholder={`Search by ${filter || 'name'}...`}
+              placeholder={t("searchPlaceholder")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="border rounded-l-lg px-4 py-2.5 text-sm w-52 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
-              aria-label={`Search facility by ${filter || 'name'}`}
+              className={`border-none bg-gray-50 rounded-2xl ${isRTL ? 'pr-12 pl-4' : 'pl-12 pr-4'} py-3 text-sm w-full md:w-64 focus:ring-4 focus:ring-teal-500/5 focus:bg-white transition-all font-bold outline-none shadow-inner`}
             />
-            <button
-              onClick={handleApply}
-              className={`bg-gray-800 text-white px-4 py-2.5 rounded-r-lg hover:bg-gray-700 transition text-sm flex items-center gap-1`}
-              aria-label="Apply search filter"
-            >
-                <Search className="w-4 h-4" />
-                Apply
-            </button>
           </div>
-          
+
           {/* Filter Dropdown */}
           <div className="relative">
             <button
               onClick={() => setShowFilter(!showFilter)}
-              className="flex items-center gap-2 border border-gray-300 rounded-lg px-3 py-2.5 text-sm hover:bg-gray-100 transition text-gray-700"
-              aria-expanded={showFilter}
-              aria-controls="filter-menu"
+              className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-5 py-3 text-sm font-black hover:bg-gray-50 transition shadow-sm"
             >
-              <Filter className="w-4 h-4 text-teal-600" />
-              <span className="font-medium">{filter ? filter.charAt(0).toUpperCase() + filter.slice(1) : 'Filter'}</span>
+              <Filter className="w-4 h-4 text-[#0E766E]" />
+              {filter ? t(filter) : t("filter")}
             </button>
 
             {showFilter && (
-              <div id="filter-menu" className="absolute right-0 top-full mt-2 border border-gray-200 rounded-lg shadow-xl bg-white p-2 z-50 w-32">
+              <div className={`absolute ${isRTL ? 'left-0' : 'right-0'} top-full mt-2 border border-gray-50 rounded-2xl shadow-2xl bg-white p-2 z-50 w-40 animate-in fade-in slide-in-from-top-2`}>
                 <button
-                    onClick={() => { setFilter("name"); setShowFilter(false); }}
-                    className={`w-full text-left px-3 py-1.5 rounded-md text-sm ${filter === 'name' ? 'bg-teal-100 text-teal-800 font-semibold' : 'hover:bg-gray-100'}`}
+                  onClick={() => { setFilter("name"); setShowFilter(false); }}
+                  className={`w-full ${isRTL ? 'text-right' : 'text-left'} px-4 py-2.5 rounded-xl text-xs font-black transition ${filter === 'name' ? 'bg-teal-50 text-[#0E766E]' : 'hover:bg-gray-50 text-gray-600'}`}
                 >
-                    Name
+                  {t("name")}
                 </button>
                 <button
-                    onClick={() => { setFilter("id"); setShowFilter(false); }}
-                    className={`w-full text-left px-3 py-1.5 rounded-md text-sm ${filter === 'id' ? 'bg-teal-100 text-teal-800 font-semibold' : 'hover:bg-gray-100'}`}
+                  onClick={() => { setFilter("id"); setShowFilter(false); }}
+                  className={`w-full ${isRTL ? 'text-right' : 'text-left'} px-4 py-2.5 rounded-xl text-xs font-black transition ${filter === 'id' ? 'bg-teal-50 text-[#0E766E]' : 'hover:bg-gray-50 text-gray-600'}`}
                 >
-                    ID
+                  {t("id")}
                 </button>
               </div>
             )}
           </div>
 
-          {/* Add New Facility Button */}
           <button
-            onClick={() => router.push("/providerview/dashBoardHome/myFacilities/addNewFacility")}
-            className={`bg-teal-600 text-white px-4 py-2.5 rounded-lg hover:bg-teal-700 transition text-sm font-semibold flex items-center gap-2`}
+            onClick={() => router.push(`/${locale}/providerview/dashBoardHome/myFacilities/addNewFacility`)}
+            className="bg-[#0E766E] text-white px-6 py-3 rounded-2xl hover:bg-[#0c635d] transition shadow-lg shadow-teal-900/10 text-sm font-black flex items-center gap-2"
           >
-             <Plus className="w-4 h-4" />
-            Add New
+            <Plus className="w-5 h-5" />
+            {t("addNew")}
           </button>
         </div>
       </div>
 
-      {/* Loading */}
+      {/* Loading State */}
       {loading && (
-        <div className="flex items-center justify-center h-48">
-          <p className="text-xl text-gray-500 animate-pulse">Loading facilities...</p>
+        <div className="flex flex-col items-center justify-center h-64 gap-4">
+          <Loader2 className="w-10 h-10 text-[#0E766E] animate-spin" />
+          <p className="text-gray-400 font-bold animate-pulse">{t("loading")}</p>
         </div>
       )}
 
-      {/* Error */}
+      {/* Error State */}
       {error && (
         <div className="flex items-center justify-center h-48">
-          <p className="text-red-600 bg-red-100 p-4 rounded-lg border border-red-300 font-medium">{error}</p>
+          <p className="text-red-500 bg-red-50 px-6 py-4 rounded-2xl border border-red-100 font-black text-sm">{error}</p>
         </div>
       )}
 
       {/* Facilities Grid */}
       {!loading && facilities.length > 0 ? (
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {facilities.map((facility) => (
-            // 🚀 The facility card is now clickable
             <div
               key={facility.id}
-              onClick={() => handleFacilityClick(facility.id)}
-              className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden 
-                         cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:border-teal-400"
+              onClick={() => router.push(`/${locale}/providerview/dashBoardHome/myFacilities/${facility.id}`)}
+              className="group bg-white rounded-[2rem] border border-gray-100 overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-teal-900/5 hover:-translate-y-2"
             >
-              
-              {/* Image and ID */}
-              <div className="h-40 bg-gray-200 flex items-center justify-center relative">
-                {/* ID Badge */}
-                <span className="absolute top-2 left-2 bg-black bg-opacity-40 text-white text-xs font-bold px-2 py-0.5 rounded-full z-10">
+              {/* Image Container */}
+              <div className="h-48 bg-gray-100 relative overflow-hidden">
+                {/* Badges Overlay */}
+                <div className="absolute top-4 inset-x-4 flex justify-between items-start z-10">
+                  <span className="bg-black/30 backdrop-blur-md text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-white/10">
                     ID: {facility.id}
-                </span>
+                  </span>
+                  
+                  {/* Status Badge */}
+                  <span className={`backdrop-blur-md text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border shadow-sm transition-colors ${getStatusStyles(facility.status)}`}>
+                    {facility.status === "APPROVED" 
+                      ? t("active") 
+                      : facility.status === "PENDING" 
+                      ? t("pending") 
+                      : t("inactive")}
+                  </span>
+                </div>
 
                 {facility.cover ? (
                   <img
-                    src={
-                      facility.cover.startsWith("http")
-                        ? facility.cover
-                        : `/api/media?media=${facility.cover}`
-                    }
-                    alt={facility.name.en}
-                    className="w-full h-full object-cover"
+                    src={facility.cover.startsWith("http") ? facility.cover : `/api/media?media=${facility.cover}`}
+                    alt={facility.name[locale as 'en' | 'ar']}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 ) : (
-                  <span className="text-gray-500 font-semibold">{facility.name.en}</span>
+                  <div className="w-full h-full flex items-center justify-center bg-teal-50">
+                    <Building2 className="w-12 h-12 text-[#0E766E] opacity-20" />
+                  </div>
                 )}
               </div>
 
-              {/* Content */}
-              <div className="p-4 flex flex-col justify-between h-[120px]"> 
-                <h3 className="font-extrabold text-lg text-gray-900 line-clamp-1">{facility.name.en}</h3>
+              {/* Content Container */}
+              <div className="p-6">
+                <h3 className="font-black text-lg text-gray-900 line-clamp-1 mb-2 group-hover:text-[#0E766E] transition-colors">
+                  {facility.name[locale as 'en' | 'ar']}
+                </h3>
                 
-                {/* Description - Safely accessing .en */}
-                {facility.description && (
-                  <p className="text-gray-500 text-sm mt-1 line-clamp-2">
-                    {facility.description.en || (typeof facility.description === 'string' ? facility.description : 'No detailed description.')}
-                  </p>
-                )}
+                <p className="text-gray-400 text-xs font-medium line-clamp-2 h-8 leading-relaxed">
+                  {facility.description?.[locale as 'en' | 'ar'] || t("noDescription")}
+                </p>
                 
-                {/* Price Badge */}
-                {facility.price !== null && facility.price !== undefined && (
-                  <p className="text-sm font-bold mt-2 flex items-center gap-1">
-                    <DollarSign className="w-4 h-4 text-teal-600" />
-                    <span className="text-teal-600 text-base">{facility.price}</span> SR
-                  </p>
-                )}
+                <div className="mt-6 pt-4 border-t border-gray-50 flex items-center justify-between">
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm font-black text-[#0E766E]">{facility.price || 0}</span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">{t("currency")}</span>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#0E766E] group-hover:text-white transition-all">
+                    <ArrowRight size={14} className={isRTL ? "rotate-180" : ""} />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
       ) : null}
 
-      {/* No Facilities */}
+      {/* Empty State */}
       {!loading && facilities.length === 0 && !error && (
-        <div className="flex flex-col items-center justify-center h-64 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 mt-8">
-          <p className="text-gray-600 text-xl font-medium mb-4">You haven&apos;t added any facilities yet.</p>
+        <div className="flex flex-col items-center justify-center h-80 border-2 border-dashed border-gray-100 rounded-[3rem] bg-gray-50/50 mt-8 group transition-colors hover:border-teal-200">
+          <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
+             <Building2 className="text-[#0E766E] w-10 h-10 opacity-40" />
+          </div>
+          <p className="text-gray-500 text-lg font-black mb-6">{t("noFacilities")}</p>
           <button
-            onClick={() => router.push("/providerview/dashBoardHome/myFacilities/addNewFacility")}
-            className="bg-teal-600 text-white px-8 py-3 rounded-xl hover:bg-teal-700 transition shadow-md font-semibold"
+            onClick={() => router.push(`/${locale}/providerview/dashBoardHome/myFacilities/addNewFacility`)}
+            className="bg-[#0E766E] text-white px-10 py-4 rounded-2xl hover:bg-[#0c635d] transition shadow-xl shadow-teal-900/10 font-black text-sm"
           >
-            <Plus className="inline w-5 h-5 mr-2" />
-            Create Your First Facility
-          </button>
-        </div>
-      )}
-
-      {/* View All (Simplified, since this component likely views all by default) */}
-      {facilities.length > 0 && search && (
-        <div className="mt-6 text-center border-t pt-4">
-          <button
-            className="text-gray-500 font-medium hover:text-teal-600 transition"
-            onClick={() => {
-                setSearch("");
-                setFilter(null);
-                fetchFacilities("", null); // Reset and fetch all
-            }}
-          >
-            Clear Search and View All Facilities
+            <Plus className="inline w-5 h-5 ltr:mr-2 rtl:ml-2" />
+            {t("createFirst")}
           </button>
         </div>
       )}
