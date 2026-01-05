@@ -40,10 +40,10 @@ export default function FacilityHeader() {
             rate: data.rate ?? 0,
             category: {
               id: data.category?.id ?? "0",
-              name: { en: data.category?.name?.en || "No Category", ar: data.category?.name?.ar||"لا اسم " },
+              name: { en: data.category?.name?.en || "No Category", ar: data.category?.name?.ar },
             },
             description: { 
-              en: data.description?.en || data.overview?.en || "ى", 
+              en: data.description?.en || data.overview?.en || "", 
               ar: data.description?.ar || data.overview?.ar || "" 
             },
             price: data.price,
@@ -73,8 +73,8 @@ export default function FacilityHeader() {
     );
   }
 
-  const facilityName = isRTL ? facility.name?.ar : facility.name?.en;
-  const facilityDesc = isRTL ? facility.description?.ar : facility.description?.en;
+  const facilityName = isRTL ? facility.name?.ar? facility.name?.ar : facility.name?.en:facility.name?.en;
+  const facilityDesc = isRTL ? facility.description?.ar?facility.description?.ar : facility.description?.en:facility.description?.en;
   
   const allImages: string[] = [
     ...(facility.coverImage ? [facility.coverImage] : []),
@@ -125,7 +125,7 @@ export default function FacilityHeader() {
           <div className="space-y-5">
             <div>
               <span className="bg-[#0E766E]/10 text-[#0E766E] text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
-                {isRTL ? facility.category?.name?.ar : facility.category?.name?.en}
+                {isRTL ? facility.category?.name?.ar? facility.category?.name?.ar : facility.category?.name?.en : facility.category?.name?.en}
               </span>
               <h1 className="text-2xl font-black text-gray-900 dark:text-white leading-tight mt-3">
                 {facilityName}
