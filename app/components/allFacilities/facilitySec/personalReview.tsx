@@ -145,7 +145,7 @@ export default function ReviewsSlider() {
 
           {/* نص التقييم */}
           <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg font-medium mb-8 leading-relaxed italic min-h-[80px] flex items-center justify-center text-center">
-            "{currentRate.comment}"
+           &rdquo;{currentRate.comment}&rdquo;
           </p>
           
           <div className="mb-8 text-center">
