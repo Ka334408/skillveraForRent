@@ -63,7 +63,7 @@ export default function ResetPassword() {
 
       localStorage.removeItem("resetToken");
       setSuccess(t("success"));
-      setTimeout(() => router.push("/proLogin"), 2000);
+      setTimeout(() => router.push(`/${locale}/proLogin`), 2000);
     } catch (err: any) {
       setError(err.response?.data?.message || t("error_reset"));
     } finally {

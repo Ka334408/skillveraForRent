@@ -213,7 +213,7 @@ export default function SearchSection() {
                             </div>
                           </td>
                           <td className="px-8 py-5 text-end">
-                            <Link href={`/userview/allFacilities/${item.id}`}>
+                            <Link href={`/${locale}/userview/allFacilities/${item.id}`}>
                               <button className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 p-2.5 rounded-xl text-[#0E766E] hover:bg-[#0E766E] hover:text-white hover:border-[#0E766E] transition-all shadow-sm">
                                 <ExternalLink className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                               </button>

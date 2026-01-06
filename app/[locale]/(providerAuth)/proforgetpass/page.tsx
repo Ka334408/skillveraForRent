@@ -14,6 +14,8 @@ export default function ResetPassword() {
   const locale = useLocale();
   const router = useRouter();
   const isRTL = locale === "ar";
+  const loginUrl = `/${locale}/auth/login`;
+  
 
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,7 +34,7 @@ export default function ResetPassword() {
         { email }
       );
       setResetEmail(email);
-      router.push("/proVerifyCode");
+      router.push(`/${locale}/proVerifyCode`);
     } catch (err: any) {
       setError(err.response?.data?.message || t("error_msg"));
     } finally {
@@ -108,7 +110,7 @@ export default function ResetPassword() {
 
             <div className="mt-10 flex justify-center">
               <Link 
-                href="/proLogin" 
+                href={loginUrl}
                 className="group flex items-center gap-2 text-zinc-500 hover:text-[#0E766E] font-bold text-sm transition-colors"
               >
                 {isRTL ? <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /> : <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />}

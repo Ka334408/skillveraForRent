@@ -70,7 +70,7 @@ export default function VerifyCode() {
       if (!token) throw new Error("Token missing");
 
       localStorage.setItem("resetToken", token);
-      router.push("/proSetNewPass");
+      router.push(`/${locale}/proSetNewPass`);
     } catch (err: any) {
       setError(err.response?.data?.message || t("error_invalid"));
     } finally {

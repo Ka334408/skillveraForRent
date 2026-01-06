@@ -52,7 +52,7 @@ export default function AboutSection() {
 
               <div className={`pt-4 flex ${isRTL ? "justify-start" : "justify-end"}`}>
                 <button
-                onClick={()=>router.push("/userview/aboutUs")}
+                onClick={()=>router.push(`/${locale}/userview/aboutUs`)}
                 className="group relative px-8 py-3 bg-[#0E766E] text-white rounded-xl font-bold shadow-lg shadow-[#0E766E]/20 overflow-hidden transition-all hover:pr-12 active:scale-95">
                   <span className="relative z-10">{t("more")}</span>
                   <div className={`absolute top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 ${isRTL ? "left-4" : "right-4"}`}>

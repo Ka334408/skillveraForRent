@@ -8,18 +8,22 @@ import Aboutme from "@/app/components/useraccount/Aboutme";
 import Reviews from "@/app/components/useraccount/myreviews";
 import Favorites from "@/app/components/useraccount/myfavourits";
 import ProtectedPage from "@/app/components/protectedpages/protectedPage";
+import { useLocale } from "next-intl";
 
 
 export default function UserAccountLayout() {
   const [active, setActive] = useState("about");
+  const locale = useLocale();
+  const loginUrl = `/${locale}/auth/login`;
+  const signupUrl = `/${locale}/auth/signUp`;
 
   return (
     <div className="min-h-screen flex flex-col">
       
       <Header
         bgColor="bg-white border-b-gray-200 border-2" 
-        loginLink="/auth/login"
-        signupLink="/auth/signUp"
+        loginLink={loginUrl}
+          signupLink={signupUrl}
       />
 
       

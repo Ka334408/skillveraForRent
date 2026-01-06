@@ -121,7 +121,7 @@ export default function ProfilePage() {
             <button
               onClick={() => {
                 setModal({ open: false, title: "", message: "" });
-                if (modal.title === t("successTitle")) router.push("/userview/Home");
+                if (modal.title === t("successTitle")) router.push(`/${locale}/userview/Home`);
               }}
               className="w-full bg-[#0E766E] text-white py-4 rounded-2xl font-bold hover:shadow-lg hover:shadow-teal-100 transition-all flex items-center justify-center gap-2"
             >

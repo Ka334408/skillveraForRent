@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import RatingCard from "@/app/components/allFacilities/facilitySec/facilityReview";
 import ReviewsList from "@/app/components/allFacilities/facilitySec/personalReview";
 import ThingsToKnow from "@/app/components/allFacilities/facilitySec/aboutFacility";
+import { useLocale } from "next-intl";
 
 // ✅ منع SSR
 const FacilityMapSection = dynamic(
@@ -67,13 +68,16 @@ export default function FacilityPage({ params }: { params: { id: string } }) {
   const facility = facilitiesData.find((f) => f.id === facilityId);
 
   if (!facility) return notFound();
+  const locale = useLocale();
+  const loginUrl = `/${locale}/auth/login`;
+  const signupUrl = `/${locale}/auth/signUp`;
 
   return (
     <div>
       <Header
         bgColor="bg-white border-b-gray-200 border-2"
-        loginLink="/auth/login"
-        signupLink="/auth/signUp"
+        loginLink={loginUrl}
+          signupLink={signupUrl}
       />
 
       <div className="container mx-auto px-4 py-8">

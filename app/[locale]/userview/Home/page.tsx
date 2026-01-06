@@ -20,22 +20,22 @@ import AboutSection from "@/app/components/userview/aboutSkillavera";
 export default function HomePage() {
   const [needsProfile, setNeedsProfile] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { isHydrated}=useUserStore();
+  const { isHydrated } = useUserStore();
 
   const locale = useLocale();
-  const router = useRouter();
 
   const { user, setUser } = useUserStore();
 
-
+  const loginUrl = `/${locale}/auth/login`;
+  const signupUrl = `/${locale}/auth/signUp`;
 
   return (
     <main dir={locale === "ar" ? "rtl" : "ltr"} className="relative bg-[#f3f4f4]">
       <div>
         <Header
-          bgColor="bg-[#f3f4f4] border-b-gray-200 "
-          loginLink="/auth/login"
-        signupLink="/auth/signUp"
+          bgColor="bg-[#f3f4f4] border-b-gray-200"
+          loginLink={loginUrl}
+          signupLink={signupUrl}
         />
 
         <HeroSection />
@@ -44,12 +44,10 @@ export default function HomePage() {
         <NearestMap />
         <TrustedSection />
         <FAQSection />
-        <ContactSection/>
+        <ContactSection />
         <FeaturesSection />
         <AboutSection />
       </div>
-
-      
     </main>
   );
 }

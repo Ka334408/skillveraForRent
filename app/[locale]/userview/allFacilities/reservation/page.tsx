@@ -3,6 +3,7 @@
 import ReservationCard from "@/app/components/allFacilities/Reservation/ReservationDetails";
 import ReservationSteps from "@/app/components/allFacilities/Reservation/reservationSteps";
 import Header from "@/app/components/header";
+import { useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 
 export default function ReservationPage() {
@@ -13,23 +14,24 @@ export default function ReservationPage() {
   const image = searchParams.get("image") || "/placeholder.jpg";
   const start = searchParams.get("start") || "-";
   const end = searchParams.get("end") || "-";
+  const locale = useLocale();
+  const loginUrl = `/${locale}/auth/login`;
+  const signupUrl = `/${locale}/auth/signUp`;
 
 
   return (
     <div>
       <Header
         bgColor="bg-white border-b-gray-200 border-2"
-        loginLink="/auth/login"
-        signupLink="/auth/signUp"
+        loginLink={loginUrl}
+          signupLink={signupUrl}
       />
 
       <div className=" bg-gray-100 px-6 py-10">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* الخطوات */}
+          
           <ReservationSteps />
-
-          {/* الكارت */}
           <ReservationCard
           />
         </div>

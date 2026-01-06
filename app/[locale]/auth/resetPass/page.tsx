@@ -20,6 +20,7 @@ export default function ResetPassword() {
   const [error, setError] = useState<string | null>(null);
 
   const setResetEmail = useUserStore((state) => state.setResetEmail);
+  const loginUrl = `/${locale}/auth/login`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ export default function ResetPassword() {
         { email }
       );
       setResetEmail(email);
-      router.push("/auth/varCode");
+      router.push(`/${locale}/auth/varCode`);
     } catch (err: any) {
       setError(err.response?.data?.message || t("error_msg"));
     } finally {
@@ -108,7 +109,7 @@ export default function ResetPassword() {
 
             <div className="mt-10 flex justify-center">
               <Link 
-                href="/auth/login" 
+                href={loginUrl} 
                 className="group flex items-center gap-2 text-zinc-500 hover:text-[#0E766E] font-bold text-sm transition-colors"
               >
                 {isRTL ? <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /> : <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />}

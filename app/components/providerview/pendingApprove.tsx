@@ -1,9 +1,11 @@
 "use client";
 
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 
 export default function PendingApproval() {
     const router=useRouter();
+    const locale = useLocale;
     
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center p-6">
@@ -36,7 +38,7 @@ export default function PendingApproval() {
 
       {/* Button */}
       <button
-      onClick={()=>router.push("/providerview/dashBoardHome/dashBoard")}
+      onClick={()=>router.push(`/${locale}/providerview/dashBoardHome/dashBoard`)}
       className="px-6 py-2 bg-[#0E766E] text-white rounded-lg shadow">
         back to Home Dashboard
       </button>

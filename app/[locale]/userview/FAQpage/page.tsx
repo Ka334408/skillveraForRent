@@ -10,6 +10,8 @@ export default function FaqPage() {
   const locale = useLocale();
   const t = useTranslations("FaqPage");
   const isRTL = locale === "ar";
+  const loginUrl = `/${locale}/auth/login`;
+  const signupUrl = `/${locale}/auth/signUp`;
 
   const faqData = {
     Rent: [
@@ -34,10 +36,12 @@ export default function FaqPage() {
 
   const [activeTab, setActiveTab] = useState<keyof typeof faqData>("Rent");
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"} className="min-h-screen bg-gray-50">
-      <Header loginLink="/auth/login" signupLink="/auth/signUp" />
+      <Header loginLink={loginUrl}
+          signupLink={signupUrl}/>
 
       <FaqHeader title={t("mainTitle")} subtitle={t("mainSubtitle")} />
 

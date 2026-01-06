@@ -48,7 +48,7 @@ export default function SignUp() {
 
       await api.post("/authentication/request-verification", { email });
       useUserStore.getState().setVerificationEmail(email);
-      router.push(`/auth/verifyAccount`);
+      router.push(`/${locale}/auth/verifyAccount`);
     } catch (err: any) {
       setError(err.response?.data?.message || t("error_msg"));
     } finally {
@@ -162,7 +162,7 @@ export default function SignUp() {
 
             <p className="mt-8 text-sm text-zinc-500 text-center">
               {t("have_account")}{" "}
-              <Link href="/auth/login" className="text-[#0E766E] font-bold hover:underline">
+              <Link href={`/${locale}/auth/login`} className="text-[#0E766E] font-bold hover:underline">
                 {t("login_link")}
               </Link>
             </p>

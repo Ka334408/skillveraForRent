@@ -76,7 +76,7 @@ const FacilityCard = ({ item, isFavorite, onFavorite }: FacilityCardProps) => {
           </div>
         </div>
 
-        <Link href={`/userview/allFacilities/${item._id}`}>
+        <Link href={`/${locale}/userview/allFacilities/${item._id}`}>
           <button className="w-full bg-[#0E766E] text-white py-3.5 rounded-2xl font-bold hover:bg-[#0a5c56] transition-all flex items-center justify-center gap-2 group/btn shadow-md shadow-teal-900/10">
             {t("more")}
             <ArrowUpRight size={18} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
@@ -192,7 +192,7 @@ export default function CategoriesSection() {
             <h2 className="text-3xl font-black text-[#0E766E] dark:text-teal-500">{t("title")}</h2>
             <div className="h-1 w-12 bg-teal-200 dark:bg-teal-900 rounded-full" />
           </div>
-          <button onClick={() => router.push("/userview/allFacilities")} className="hidden md:flex items-center gap-1.5 text-[#0E766E] dark:text-teal-400 font-bold hover:opacity-70 transition">
+          <button onClick={() => router.push(`/${locale}/userview/allFacilities`)} className="hidden md:flex items-center gap-1.5 text-[#0E766E] dark:text-teal-400 font-bold hover:opacity-70 transition">
             {t("see_all")} <ArrowUpRight size={18} />
           </button>
         </div>
