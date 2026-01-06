@@ -21,6 +21,8 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const { setUser, setToken } = useUserStore();
+  const forgetUrl = `/${locale}/proforgetpass`;
+  const signupUrl = `/${locale}/providerRegistration`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +48,7 @@ export default function Login() {
       setUser(user);
       setToken(token);
 
-      router.push("/providerview/dashBoardHome/dashBoard");
+      router.push(`/${locale}/providerview/dashBoardHome/dashBoard`);
     } catch (err: any) {
       setError(err?.response?.data?.message || t("login_failed"));
     } finally {
@@ -131,7 +133,7 @@ export default function Login() {
                 <label className="text-xs font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
                   {t("password_label")}
                 </label>
-                <Link href="/proforgetpass" className="text-xs font-bold text-[#0E766E] hover:underline">
+                <Link href={forgetUrl} className="text-xs font-bold text-[#0E766E] hover:underline">
                   {t("forgot")}
                 </Link>
               </div>
@@ -173,7 +175,7 @@ export default function Login() {
           <div className="mt-10 flex flex-col items-center gap-4">
             <div className="flex items-center gap-2 text-sm font-medium">
               <span className="text-zinc-500 dark:text-zinc-400">{t("no_account")}</span>
-              <Link href="/providerRegistration" className="text-[#0E766E] font-bold hover:underline">
+              <Link href={signupUrl} className="text-[#0E766E] font-bold hover:underline">
                 {t("signup")}
               </Link>
             </div>

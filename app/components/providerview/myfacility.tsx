@@ -79,7 +79,7 @@ export default function FacilitiesPage() {
   const facilities = facilitiesData[activeTab];
 
   const handleFacilityClick = (facilityId: number) => {
-    router.push(`/providerview/dashBoardHome/myFacilities/${facilityId}`);
+    router.push(`/${locale}/providerview/dashBoardHome/myFacilities/${facilityId}`);
   };
 
   return (
@@ -110,7 +110,7 @@ export default function FacilitiesPage() {
           {/* Add New Facility Button */}
           <button
             onClick={() =>
-              router.push("/providerview/dashBoardHome/myFacilities/addNewFacility")
+              router.push(`/${locale}/providerview/dashBoardHome/myFacilities/addNewFacility`)
             }
             className={`${isRTL ? 'mr-auto' : 'ml-auto'} px-4 py-2.5 rounded-full bg-white border-2 border-dashed border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 transition flex items-center gap-2`}
             aria-label="Add facility"

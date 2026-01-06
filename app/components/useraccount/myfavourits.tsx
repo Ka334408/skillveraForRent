@@ -61,7 +61,7 @@ export default function Favorites() {
         <div className="bg-white rounded-3xl border border-dashed border-gray-200 py-16 flex flex-col items-center text-center px-4">
           <Heart size={40} className="text-gray-200 mb-4" />
           <p className="text-gray-600 font-medium mb-6">{t("emptyMessage")}</p>
-          <Link href="/userview/allFacilities" className="bg-[#0E766E] text-white px-8 py-3 rounded-2xl font-bold hover:bg-[#095F59] transition-all w-full md:w-auto">
+          <Link href={`/${locale}/userview/allFacilities`} className="bg-[#0E766E] text-white px-8 py-3 rounded-2xl font-bold hover:bg-[#095F59] transition-all w-full md:w-auto">
             {t("exploreButton")}
           </Link>
         </div>
@@ -133,7 +133,7 @@ const DesktopRow = ({ fav, locale, isRTL, t }: any) => {
         </p>
       </td>
       <td className={`px-6 py-4 border-y border-gray-50 ${isRTL ? "rounded-l-2xl border-l text-left" : "rounded-r-2xl border-r text-right"}`}>
-        <Link href={`/userview/allFacilities/${facility?.id}`} className="inline-flex items-center gap-2 bg-[#0E766E] text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-[#095F59] transition-colors">
+        <Link href={`/${locale}/userview/allFacilities/${facility?.id}`} className="inline-flex items-center gap-2 bg-[#0E766E] text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-[#095F59] transition-colors">
           {t("rentButton")} <ExternalLink size={12} className={isRTL ? "rotate-180" : ""} />
         </Link>
       </td>
@@ -159,7 +159,7 @@ const MobileCard = ({ fav, locale, isRTL, t }: any) => {
         {facility?.description?.[locale] || facility?.overview?.[locale] || facility?.description?.en}
       </p>
       <div className="flex gap-2 mt-2">
-        <Link href={`/userview/allFacilities/${facility?.id}`} className="flex-1 bg-[#0E766E] text-white text-center py-3 rounded-xl text-xs font-bold">
+        <Link href={`/${locale}/userview/allFacilities/${facility?.id}`} className="flex-1 bg-[#0E766E] text-white text-center py-3 rounded-xl text-xs font-bold">
           {t("rentButton")}
         </Link>
         <button className="p-3 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-colors">

@@ -1,6 +1,6 @@
 import { Heart, Star } from "lucide-react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 
 interface CardProps {
@@ -26,6 +26,7 @@ export default function Card({
   onFavorite,
 }: CardProps) {
   const t = useTranslations("card");
+  const locale =useLocale();
   
   // 💡 تحديد الارتفاع القياسي
   const imageDisplayHeight = 192; // equivalent to h-48 in Tailwind CSS (12 * 16px)
@@ -85,7 +86,7 @@ export default function Card({
             {rating} ({reviewsCount})
           </span>
         </div>
-        <Link href={`/userview/allFacilities/${id}`}>
+        <Link href={`/${locale}/userview/allFacilities/${id}`}>
           <button className="bg-white text-black border-2 border-[##0E766E] px-4 py-2 rounded-2xl w-full hover:bg-[#0E766E] dark:bg-[#0a0a0a] dark:text-[#2C70E2] dark:hover:bg-white dark:hover:text-black">
             {t("more")}
           </button>

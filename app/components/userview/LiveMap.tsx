@@ -150,7 +150,7 @@ export default function LiveMap() {
                     <div className="flex items-center justify-between mt-2">
                       <span className="text-[#0E766E] font-black text-lg">${selectedPlace.price}<span className="text-[9px] text-zinc-400 font-medium">/day</span></span>
                       
-                      <Link href={`/userview/allFacilities/${selectedPlace.id}`}>
+                      <Link href={`/${locale}/userview/allFacilities/${selectedPlace.id}`}>
                         <button className="bg-[#0E766E] text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 hover:bg-[#0a5d56] transition-colors">
                           Details
                           <ChevronRight size={14} className={isRTL ? 'rotate-180' : ''} />

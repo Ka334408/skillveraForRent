@@ -25,6 +25,7 @@ export default function SignUp() {
   const [phoneError, setPhoneError] = useState("");
 
   const { setSignupData, setVerificationEmail } = useProviderStore() as any;
+  const loginUrl = `/${locale}/proLogin`;
 
   const rules = [
     { id: 1, label: t("rules.min"), test: (p: string) => p.length >= 8 },
@@ -44,7 +45,7 @@ export default function SignUp() {
     const providerData = { name, email, phone: `+${phone}`, password };
     setSignupData(providerData);
     setVerificationEmail(email);
-    router.push("providerview/providerType");
+    router.push(`/${locale}/providerview/providerType`);
   };
 
   const isFormValid = name.trim() !== "" && email.trim() !== "" && phoneError === "" && rules.every(r => r.test(password));
@@ -179,7 +180,7 @@ export default function SignUp() {
             <div className="mt-6 text-center">
               <p className="text-xs font-medium text-zinc-500">
                 {t("footer_text")}{" "}
-                <Link href="/proLogin" className="text-[#0E766E] font-black hover:underline">{t("footer_link")}</Link>
+                <Link href={loginUrl} className="text-[#0E766E] font-black hover:underline">{t("footer_link")}</Link>
               </p>
             </div>
           </div>

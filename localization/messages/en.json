@@ -155,12 +155,12 @@
     "scanNow": "Scan to get the app now"
   },
   "profile": {
-    "sidebarTitle": "حسابي",
-    "myProfile": "الملف الشخصي",
-    "myReservations": "حجوزاتي",
-    "reviews": "التقييمات",
-    "favorites": "المفضلة"
-  },
+    "sidebarTitle": "My Account",
+    "myProfile": "Profile",
+    "myReservations": "My Reservations",
+    "reviews": "Reviews",
+    "favorites": "Favorites"
+},
   "proPhoto": {
     "aboutTitle": "About me",
     "choose": "Choose image",
@@ -655,7 +655,8 @@
     "completeDesc": "Adding your name and photo helps us provide a personalized experience and makes communication easier when booking facilities.",
     "labelFullName": "Full Display Name",
     "namePlaceholder": "Enter your full name",
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "tooltip":"You must click Get Started to save all changes"
   },
   "Myreservations": {
     "mainTitle": "My Reservations",

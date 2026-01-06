@@ -22,6 +22,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const { setUser, setToken } = useUserStore();
+  const resetpassUrl=`/${locale}/auth/resetPass`
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +50,7 @@ export default function Login() {
 
       const role = user.type.toLowerCase();
       switch (role) {
-        case "user": router.replace("/userview/Home"); break;
+        case "user": router.replace(`/${locale}/userview/Home`); break;
         default: router.replace("/");
       }
     } catch (err: any) {

@@ -38,8 +38,6 @@ export default function Navbar({
 
   const isLoggedIn = !!user;
 
-  console.log(user);
-
   const handleProtectedAction = (targetPath: string) => {
     if (isLoggedIn) {
       router.push(targetPath);

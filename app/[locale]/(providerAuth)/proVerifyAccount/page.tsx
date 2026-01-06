@@ -24,6 +24,7 @@ export default function VerifyAccount() {
   const [message, setMessage] = useState<string | null>(null);
 
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+   const signupUrl = `/${locale}/providerRegistration`;
 
   useEffect(() => {
     inputsRef.current[0]?.focus();
@@ -65,7 +66,7 @@ export default function VerifyAccount() {
         { email: verificationEmail, code: verificationCode },
         { withCredentials: true }
       );
-      router.push("/proLogin");
+      router.push(`/${locale}/proLogin`);
     } catch (err: any) {
       setError(err.response?.data?.message || t("error_failed"));
     } finally {
@@ -178,7 +179,7 @@ export default function VerifyAccount() {
                 {resending ? t("resending") : t("resend_link")}
               </button>
 
-              <Link href="/providerRegistration" className="flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
+              <Link href={signupUrl} className="flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
                 {isRTL ? <ArrowRight size={14} /> : <ArrowLeft size={14} />}
                 {t("back_to_signup")}
               </Link>

@@ -6,16 +6,21 @@ import EasyAsWaterSection from '@/app/components/providerview/home/timeline'
 import ToolsSection from '@/app/components/providerview/home/toolsSec'
 import WhyChooseUs from '@/app/components/providerview/home/whyChooseUs'
 import FAQSection from '@/app/components/userview/FAQSec'
+import { useLocale } from 'next-intl'
 
 import React from 'react'
 
 export default function page() {
+
+  const locale = useLocale();
+  const loginUrl = `/${locale}/proLogin`;
+  const signupUrl = `/${locale}/providerRegistration`;
   return (
     <div>
       <Header
         bgColor="bg-white border-b-gray-200 "
-        loginLink="/proLogin"
-        signupLink="/providerRegistration"
+       loginLink={loginUrl}
+          signupLink={signupUrl}
       />
       <HeroSection />
       <SkavaIntro />

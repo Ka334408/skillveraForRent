@@ -66,7 +66,7 @@ export default function VerifyAccount() {
         { email: verificationEmail, code: verificationCode },
         { withCredentials: true } 
       );
-      router.push("/auth/login");
+      router.push(`/${locale}/auth/login`);
     } catch (err: any) {
       setError(err.response?.data?.message || t("error_failed"));
     } finally {
