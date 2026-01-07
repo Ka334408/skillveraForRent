@@ -22,7 +22,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: "Skillvera",
+  title: "SKVrent",
   description: "Skillvera - Facility Rental Platform",
 };
 
