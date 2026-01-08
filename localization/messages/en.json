@@ -119,7 +119,9 @@
     "see_all": "See all"
   },
   "card": {
-    "more": "More Details"
+    "more": "More Details",
+    "day": "day",
+    "sar": "SAR"
   },
   "map": {
     "title": "Discover Facilities Near You",
@@ -821,7 +823,8 @@
     "createFirst": "Create Your First Facility",
     "active": "Active",
   "pending": "Pending",
-  "inactive": "Inactive"
+  "inactive": "Inactive",
+  "noName": "No Name"
   },
   "FinancialSection": {
     "mainTitle": "Reach financial goals faster 💰",

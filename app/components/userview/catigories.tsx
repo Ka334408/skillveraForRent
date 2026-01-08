@@ -53,7 +53,7 @@ const FacilityCard = ({ item, isFavorite, onFavorite }: FacilityCardProps) => {
         
         <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-zinc-800/90 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
            <span className="text-[#0E766E] dark:text-teal-400 font-bold text-sm">
-             ${item.price} <span className="text-[10px] font-normal opacity-70">/ Day</span>
+              {item.price} {t("sar")} <span className="text-[10px] font-normal opacity-70">/ {t("day")}</span>
            </span>
         </div>
 
@@ -115,7 +115,7 @@ export default function CategoriesSection() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axiosInstance.get("/category/categories");
+        const res = await axiosInstance.get("/category/categories?limit=4");
         const raw = res.data?.data ?? [];
         const parsed: CategoryItem[] = raw.map((c: any) => ({
           _id: toNumberSafe(c.id) ?? -1,

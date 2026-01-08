@@ -8,17 +8,16 @@ import ThemeProvider from "../components/ThemeProvider";
 import "../globals.css";
 import Footer from "../components/footer";
 
-// إعداد خط Inter للإنجليزية
+
 const inter = Inter({ 
   subsets: ["latin"],
-  variable: '--font-inter', // استخدام متغير CSS
+  variable: '--font-inter', 
 });
 
-// إعداد خط Cairo للسعودية/العربية
 const cairo = Cairo({ 
   subsets: ["arabic"],
   weight: ["300", "400", "500", "700", "900"],
-  variable: '--font-cairo', // استخدام متغير CSS
+  variable: '--font-cairo', 
 });
 
 export const metadata: Metadata = {
@@ -41,7 +40,6 @@ export default async function LocaleLayout({
       <head>
         <link rel="icon" href="/logo.png" />
       </head>
-      {/* دمج الخطين معاً في الـ body */}
       <body className={`${locale === 'ar' ? cairo.className : inter.className} antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AOSProvider>

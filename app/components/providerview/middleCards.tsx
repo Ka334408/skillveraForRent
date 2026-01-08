@@ -127,7 +127,7 @@ export default function FinancialSection() {
             {t("description")}
           </p>
           <button className="px-8 py-3 bg-[#0E766E] text-white font-semibold rounded-xl shadow-lg hover:bg-[#075d55] transition transform hover:scale-[1.02]">
-            <DollarSign className={`inline w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+           <img src="/real.svg" alt="Finance Icon" className="inline w-5 h-5 rtl:ml-4 ltr:mr-4 -mt-1" />
             {t("buttonText")}
           </button>
         </div>
