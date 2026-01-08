@@ -34,7 +34,7 @@ export default function MyFacilities() {
         }
       }
 
-      const res = await axiosInstance.get(`/provider-facility?limit=10`, {
+      const res = await axiosInstance.get(`/provider-facility?limit=4`, {
         params,
         withCredentials: true,
       });
@@ -199,7 +199,7 @@ export default function MyFacilities() {
               {/* Content Container */}
               <div className="p-6">
                 <h3 className="font-black text-lg text-gray-900 line-clamp-1 mb-2 group-hover:text-[#0E766E] transition-colors">
-                  {facility.name[locale as 'en' | 'ar']}
+                  {facility.name[locale as 'en' | 'ar'] || t("noName")}
                 </h3>
                 
                 <p className="text-gray-400 text-xs font-medium line-clamp-2 h-8 leading-relaxed">

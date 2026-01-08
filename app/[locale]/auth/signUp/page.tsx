@@ -64,7 +64,6 @@ export default function SignUp() {
       >
         <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-5xl min-h-[650px] flex flex-col md:flex-row overflow-hidden dark:bg-zinc-900 border dark:border-zinc-800">
           
-          {/* الجانب الأيسر - الفورم */}
           <div className="flex flex-col justify-center p-8 md:p-14 md:w-1/2 w-full text-start">
             <h1 className="text-[#0E766E] text-4xl font-black mb-2 tracking-tight">
               {t("title")}
@@ -92,11 +91,9 @@ export default function SignUp() {
                 required
               />
 
-              {/* حقل رقم الهاتف المطور */}
               <div className="relative phone-input-container" dir="ltr"> 
-                {/* ملاحظة: حقل الهاتف يفضل دائماً أن يظل ltr لمنع تداخل الأرقام */}
                 <PhoneInput
-                  country={"eg"}
+                  country={"sa"}
                   value={phone}
                   onChange={(value) => setPhone(value)}
                   placeholder={t("phone_placeholder")}

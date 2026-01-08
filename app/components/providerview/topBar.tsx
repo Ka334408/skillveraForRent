@@ -23,17 +23,16 @@ export default function Topbar() {
       try {
         const res = await fetch("/api/authentication/current-user", {
           headers: { "Content-Type": "application/json" },
-          credentials: "include", // مهم جداً لإرسال الكوكيز/الجلسة
+          credentials: "include", 
         });
 
         const result = await res.json();
         
-        // بناءً على هيكلة الـ API الخاصة بك (result.data أو result.user)
         if (result?.data) {
           const { name, image } = result.data;
           setUser({
             name: name || "Provider",
-            photo: image ? `/api/media?media=${image}` : null, // ربط مسار الميديا
+            photo: image ? `/api/media?media=${image}` : null, 
           });
         }
       } catch (err) {

@@ -132,7 +132,7 @@ export default function SignUp() {
                 <div className="relative" dir="ltr">
                   <div className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl focus-within:border-[#0E766E] transition-all">
                     <PhoneInput
-                      country={"eg"} value={phone}
+                      country={"sa"} value={phone}
                       onChange={(val) => { setPhone(val); setPhoneError(val.length < 10 ? t("errors.phone") : ""); }}
                     />
                   </div>

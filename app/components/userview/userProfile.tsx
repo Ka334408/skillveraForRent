@@ -199,7 +199,7 @@ export default function ProfilePage() {
                 </label>
                 <div dir="ltr">
                   <PhoneInput
-                    country={"eg"}
+                    country={"sa"}
                     value={phone}
                     onChange={(value) => setPhone("+" + value)}
                     containerClass="!w-full"
