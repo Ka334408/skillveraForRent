@@ -24,7 +24,6 @@ export default function Footer() {
     >
       <div className="max-w-7xl mx-auto px-6">
 
-        {/* الأقسام */}
         <div
           className={clsx(
             "grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
@@ -54,7 +53,6 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* اللوجو تحت قبل الفاصل */}
         <div
           className={clsx(
             "flex items-center mt-10 mb-6",
@@ -65,7 +63,7 @@ export default function Footer() {
              <div className="font-bold text-lg">
           <Link href={`/${locale}/userview/Home`}>
             <Image
-              src="/logo.png"   // مسار الصورة داخل public/
+              src="/logo.png"   
               alt="Logo"
               width={120}
               height={40}

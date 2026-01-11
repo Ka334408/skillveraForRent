@@ -207,7 +207,7 @@
     "mainLinks": [
       {
         "label": "كل المنتجات",
-        "href": "/products"
+        "href": "/userview/allFacilities"
       },
       {
         "label": "عن سكيلفرا رنت",
@@ -219,7 +219,7 @@
       },
       {
         "label": "أنا مالك منتج!",
-        "href": "/owner"
+        "href": "/userview/aboutUS"
       }
     ],
     "about": "عن سكيلفرا رنت",
@@ -230,15 +230,15 @@
       },
       {
         "label": "الفريق",
-        "href": "/team"
+        "href": "/userview/aboutUS"
       },
       {
         "label": "الوظائف",
-        "href": "/careers"
+        "href": "/userview/aboutUS"
       },
       {
         "label": "المدونة",
-        "href": "/blog"
+        "href": "/userview/aboutUS"
       }
     ],
     "support": "الدعم والمساعدة",
@@ -253,11 +253,11 @@
       },
       {
         "label": "الشروط والأحكام",
-        "href": "/terms"
+        "href": "/userview/FAQpage"
       },
       {
         "label": "الدعم والمساعدة",
-        "href": "/support"
+        "href": "/userview/contactUS"
       }
     ],
     "apps": "تطبيقاتنا",

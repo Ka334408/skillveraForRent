@@ -207,7 +207,7 @@
     "mainLinks": [
       {
         "label": "All Products",
-        "href": "/products"
+        "href": "/userview/allFacilities"
       },
       {
         "label": "About Skillvera Rent",
@@ -215,11 +215,11 @@
       },
       {
         "label": "Products Map",
-        "href": "/map"
+        "href": "/userview/allFacilities"
       },
       {
         "label": "I'm an Owner!",
-        "href": "/owner"
+        "href": "/userview/aboutUS"
       }
     ],
     "about": "About Skillvera Rent",
@@ -230,15 +230,15 @@
       },
       {
         "label": "Team",
-        "href": "/team"
+        "href": "/userview/aboutUS"
       },
       {
         "label": "Careers",
-        "href": "/careers"
+        "href": "/userview/aboutUS"
       },
       {
         "label": "Blog",
-        "href": "/blog"
+        "href": "/userview/aboutUS"
       }
     ],
     "support": "Support",
@@ -253,11 +253,11 @@
       },
       {
         "label": "Terms & Conditions",
-        "href": "/terms"
+        "href": "/userview/FAQpage"
       },
       {
         "label": "Help & Support",
-        "href": "/support"
+        "href": "/userview/contactUs"
       }
     ],
     "apps": "Our Apps",
