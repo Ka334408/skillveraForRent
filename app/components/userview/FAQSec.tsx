@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function FAQSection() {
   const t = useTranslations("FAQ");
-  const router=useRouter();
+  const router = useRouter();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const locale = useLocale();
 
@@ -16,6 +16,52 @@ export default function FAQSection() {
   };
 
   const faqs = t.raw("items") as { question: string; answer: string }[];
+
+  const midPoint = Math.ceil(faqs.length / 2);
+  const leftColumn = faqs.slice(0, midPoint);
+  const rightColumn = faqs.slice(midPoint);
+
+  const FAQItem = ({ faq, index }: { faq: any; index: number }) => {
+    const isOpen = openIndex === index;
+    return (
+      <div
+        className={`group border rounded-[1.5rem] transition-all duration-500 h-fit mb-4 ${
+          isOpen
+            ? "border-[#0E766E]/40 dark:bg-zinc-900/50 shadow-sm"
+            : "border-gray-500 dark:border-white/5 hover:border-zinc-200 dark:hover:border-white/10"
+        }`}
+      >
+        <button
+          onClick={() => toggleFAQ(index)}
+          className="w-full flex justify-between items-center p-5 text-start gap-4"
+        >
+          <span className={`font-bold text-sm md:text-base transition-colors duration-300 ${
+            isOpen ? "text-[#0E766E]" : "text-zinc-800 dark:text-zinc-200"
+          }`}>
+            {faq.question}
+          </span>
+          <div className={`shrink-0 p-1.5 rounded-full transition-all duration-500 ${
+            isOpen ? "rotate-180 bg-[#0E766E] text-white" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400"
+          }`}>
+            <ChevronDown size={16} />
+          </div>
+        </button>
+
+        <div
+          className={`overflow-hidden transition-all duration-500 ease-in-out ${
+            isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="px-5 pb-5 text-zinc-600 dark:text-zinc-400 text-xs md:text-sm leading-relaxed border-t border-zinc-100 dark:border-white/5 pt-4">
+            {faq.answer}
+            <div className="mt-3 inline-flex items-center gap-1 text-[#0E766E] font-bold cursor-pointer hover:opacity-80 transition-opacity">
+              {t("readMore")}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <section className="py-20 dark:bg-[#0a0a0a] transition-colors">
@@ -34,58 +80,26 @@ export default function FAQSection() {
           </p>
         </div>
 
-        {/* FAQ Grid - Two Columns on Desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={index}
-                className={`group border rounded-[1.5rem] transition-all duration-500 h-fit ${
-                  isOpen 
-                    ? "border-[#0E766E]/40 dark:bg-zinc-900/50 shadow-sm" 
-                    : "border-gray-500 dark:border-white/5 hover:border-zinc-200 dark:hover:border-white/10"
-                }`}
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex justify-between items-center p-5 text-start gap-4"
-                >
-                  <span className={`font-bold text-sm md:text-base transition-colors duration-300 ${
-                    isOpen ? "text-[#0E766E]" : "text-zinc-800 dark:text-zinc-200"
-                  }`}>
-                    {faq.question}
-                  </span>
-                  <div className={`shrink-0 p-1.5 rounded-full transition-all duration-500 ${
-                    isOpen ? "rotate-180 bg-[#0E766E] text-white" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400"
-                  }`}>
-                    <ChevronDown size={16} />
-                  </div>
-                </button>
+        {/* FAQ Columns Wrapper */}
+        <div className="flex flex-col md:flex-row gap-4 items-start">
+          <div className="w-full md:w-1/2">
+            {leftColumn.map((faq, index) => (
+              <FAQItem key={index} faq={faq} index={index} />
+            ))}
+          </div>
 
-                {/* Animated Answer */}
-                <div 
-                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    isOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="px-5 pb-5 text-zinc-600 dark:text-zinc-400 text-xs md:text-sm leading-relaxed border-t border-zinc-100 dark:border-white/5 pt-4">
-                    {faq.answer}
-                    <div className="mt-3 inline-flex items-center gap-1 text-[#0E766E] font-bold cursor-pointer hover:opacity-80 transition-opacity">
-                      {t("readMore")}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          <div className="w-full md:w-1/2">
+            {rightColumn.map((faq, index) => (
+              <FAQItem key={index + midPoint} faq={faq} index={index + midPoint} />
+            ))}
+          </div>
         </div>
 
         {/* CTA Button */}
         <div className="text-center mt-12">
           <button
-          onClick={()=>{router.push(`${locale}/userview/contactUs`)}}
-          className="px-8 py-4 bg-[#0E766E] hover:bg-[#0a5d56] text-white rounded-2xl font-bold shadow-lg shadow-[#0E766E]/20 transition-all hover:-translate-y-1 active:scale-95">
+            onClick={() => { router.push(`${locale}/userview/contactUs`) }}
+            className="px-8 py-4 bg-[#0E766E] hover:bg-[#0a5d56] text-white rounded-2xl font-bold shadow-lg shadow-[#0E766E]/20 transition-all hover:-translate-y-1 active:scale-95">
             {t("cta")}
           </button>
         </div>
