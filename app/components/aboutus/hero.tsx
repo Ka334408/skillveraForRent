@@ -1,6 +1,8 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react"; 
 
 export default function Hero() {
   const t = useTranslations("about");
@@ -12,7 +14,6 @@ export default function Hero() {
       className="bg-[#0E766E] text-white py-20 md:py-32 px-6 rounded-b-[50px] md:rounded-b-[100px] relative overflow-hidden" 
       dir={isRTL ? "rtl" : "ltr"}
     >
-      {/* لمسة ديكور خفيفة في الخلفية (دوائر شفافة) */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-[0.03] rounded-full -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-black opacity-[0.05] rounded-full translate-x-1/3 translate-y-1/3"></div>
 
@@ -38,8 +39,22 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* خط جمالي بسيط تحت النص */}
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-teal-300 to-transparent opacity-50 mt-4"></div>
+          {/* Button Section */}
+          <div className="pt-6">
+            <Link 
+              href="https://skillvera.sa" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center gap-3 bg-white text-[#0E766E] px-8 py-4 rounded-2xl font-black text-sm md:text-base shadow-xl hover:bg-teal-50 transition-all hover:-translate-y-1 active:scale-95"
+            >
+              {t("more_about_us") || "More About Us"}
+              <div className={`p-1 bg-teal-50 rounded-lg group-hover:bg-[#0E766E] group-hover:text-white transition-colors`}>
+                <ArrowUpRight size={18} />
+              </div>
+            </Link>
+          </div>
+
+          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-teal-300 to-transparent opacity-30 mt-4"></div>
         </div>
       </div>
     </section>

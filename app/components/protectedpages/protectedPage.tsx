@@ -25,7 +25,7 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
     return (
       <div className="w-full h-screen flex items-center justify-center bg-white">
         <h1 className="text-4xl md:text-5xl font-extrabold text-[#0E766E] animate-bounce">
-          Skillvera
+          SkV Rent
         </h1>
       </div>
     );

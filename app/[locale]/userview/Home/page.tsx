@@ -43,7 +43,7 @@ export default function HomePage() {
         <CategoriesSection />
         <NearestMap />
         <TrustedSection />
-        <FAQSection />
+        <FAQSection questions="FAQ" />
         <ContactSection />
         <FeaturesSection />
         <AboutSection />

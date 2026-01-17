@@ -31,8 +31,8 @@ export default function Login() {
 
     try {
       const res = await api.post(
-        "/authentication/user/login",
-        { email, password },
+        `/authentication/user/login`,
+        { email, password  },
         { withCredentials: true }
       );
 
@@ -54,7 +54,7 @@ export default function Login() {
         default: router.replace("/");
       }
     } catch (err: any) {
-      setError(err?.response?.data?.message || err.message || "Login failed");
+      setError(err?.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }

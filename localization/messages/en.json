@@ -210,7 +210,7 @@
         "href": "/userview/allFacilities"
       },
       {
-        "label": "About Skillvera Rent",
+        "label": "About SKV Rent",
         "href": "/userview/aboutUS"
       },
       {
@@ -222,10 +222,10 @@
         "href": "/userview/aboutUS"
       }
     ],
-    "about": "About Skillvera Rent",
+    "about": "About SKV Rent",
     "aboutLinks": [
       {
-        "label": "About Skillvera Rent",
+        "label": "About SKV Rent",
         "href": "/userview/aboutUS"
       },
       {
@@ -271,7 +271,7 @@
         "href": "https://play.google.com"
       }
     ],
-    "brand": "Skillvera Rent"
+    "brand": "SKV Rent"
   },
   "filters": {
     "category": "All Category",
@@ -330,7 +330,8 @@
     "feature2Title": "Continuous Technical Support",
     "feature2Desc": "A specialized team is present to handle any inquiry.",
     "feature3Title": "Operational Flexibility",
-    "feature3Desc": "Diverse facilities to suit various projects and events."
+    "feature3Desc": "Diverse facilities to suit various projects and events.",
+    "more_about_us": "More about SKV Rent"
   },
   "benefits": {
     "responsable": "Responsible Team",
@@ -452,34 +453,67 @@
     "close": "Closae Modal"
   },
   "FAQ": {
-    "title": "FAQ",
-    "subtitle": "Common Questions",
-    "description": "Have questions about booking or managing a facility? Here are the most common answers.",
-    "readMore": "Read more",
-    "cta": "Request a Quote",
+    "title": "Most Frequently Asked Questions",
+    "subtitle": "Everything you need to know about facility booking",
+    "description": "Have an inquiry about how to book or manage your facility? Here are the most common answers.",
+    "readMore": "Read More (Link to Policies)",
+    "cta": "Contact Us for Booking",
     "items": [
       {
-        "question": "How do I book a facility through the platform?",
-        "answer": "Simply select the desired facility, choose an available date and time, then confirm your booking via online payment for instant confirmation."
+        "question": "How do I book the facility I want?",
+        "answer": "Select the facility, click on book, set the date and time, then follow the payment steps to confirm your reservation."
       },
       {
-        "question": "Can I cancel or reschedule my booking?",
-        "answer": "Yes, you can cancel or reschedule through your dashboard. Refund policies apply based on the time remaining before the booking starts."
+        "question": "What are the available payment methods?",
+        "answer": "We provide payment via credit cards, bank transfers, and digital wallets easily and securely."
       },
       {
-        "question": "What do the facility rental fees include?",
-        "answer": "Fees vary by facility, but usually include lighting, air conditioning, and the basic amenities listed in the facility description."
+        "question": "Is the booking guaranteed and secure?",
+        "answer": "Yes, all facilities are verified, and all data and payment transactions are fully secured according to platform policies."
       },
       {
-        "question": "How can I ensure the facility's quality and cleanliness?",
-        "answer": "We conduct periodic quality checks, and you can view real user reviews, ratings, and up-to-date photos of the facility."
+        "question": "What are the facility usage policies?",
+        "answer": "Facility usage policies are managed by the Providers, and SKV Rent is committed to displaying them transparently before completing the booking."
       },
       {
-        "question": "Can I list my own facility for rent?",
-        "answer": "Absolutely! You can register as a 'Facility Provider' and upload your space details and photos to start receiving bookings and generating revenue."
+        "question": "Can I modify or cancel my booking?",
+        "answer": "You can modify or cancel according to the facility's policy directly from your personal dashboard."
       }
     ]
-  },
+},
+"providerFAQ": {
+    "title": "Providers Frequently Asked Questions",
+    "subtitle": "Everything you need to know as a facility owner",
+    "description": "We are here to help you manage your investments and facilitate the leasing of your facilities through SKV Rent.",
+    "readMore": "Read More",
+    "cta": "Start Leasing Now",
+    "items": [
+      {
+        "question": "What types of facilities can be leased via SKV Rent?",
+        "answer": "You can lease various types of facilities such as halls, playgrounds, studios, office spaces, and recreational facilities according to applicable regulations."
+      },
+      {
+        "question": "Can I control prices and schedules?",
+        "answer": "Yes, you have full control over setting prices, offers, and availability hours for each facility at any time."
+      },
+      {
+        "question": "How do I receive bookings?",
+        "answer": "You will receive instant notifications for new bookings, and you can easily manage all reservations through your dashboard."
+      },
+      {
+        "question": "How do I receive my earnings?",
+        "answer": "Earnings are transferred to your bank account or the payment method you linked, according to the platform's approved transfer schedule."
+      },
+      {
+        "question": "What happens if a booking is cancelled?",
+        "answer": "Cancellations are subject to the cancellation policy you set as a lessor, which is displayed to the tenant before booking."
+      },
+      {
+        "question": "Can I temporarily deactivate a facility?",
+        "answer": "Yes, you can temporarily stop displaying any facility or modify its availability at any time from the dashboard."
+      }
+    ]
+},
   "userprofile": {
     "title": "Profile Settings",
     "desc": "Update your personal information for a better experience",
@@ -620,11 +654,11 @@
   },
   "contactUs": {
     "mainTitle": "Contact Our Team",
-    "description": "Contact us via whatsapp or email message for more information and support, Skillvera work for you.",
+    "description": "Contact us via whatsapp or email message for more information and support, SKV Rent work for you.",
     "fullName": "Full Name",
     "email": "Email",
     "message": "Your message",
-    "terms": "I agree to Skillvera's Terms of Service and Privacy Policy.",
+    "terms": "I agree to SKV Rent's Terms of Service and Privacy Policy.",
     "sendButton": "Contact Us",
     "chatSubtext": "Prefer real-time conversation?",
     "chatButton": "Direct chat"
@@ -717,7 +751,9 @@
     "no_results": "No properties found",
     "loading": "Loading Facilities...",
     "page_info": "Page {current} of {total}",
-    "currency": "SAR"
+    "currency": "SAR",
+    "map_label": "Facilities Found",
+  "details": "Details"
   },
   "FaqPage": {
     "mainTitle": "Frequently Asked Questions",
@@ -800,12 +836,14 @@
     "verifiedStatus": "Verified Provider",
     "searchPlaceholder": "Search platform..."
   },
-  "StatsCards": {
-    "newClients": "New Clients",
-    "accountBalance": "Account Balance",
-    "activeUsers": "Active Users",
-    "conversions": "Conversions",
-    "live": "Live"
+ "StatsCards": {
+    "totalFacilities": "إجمالي المرافق",
+    "accountBalance": "رصيد الحساب",
+    "recentReservations": "الحجوزات الأخيرة",
+    "conversions": "نسبة التحويل",
+    "live": "مباشر",
+    "newClients": "عملاء جدد",
+    "activeUsers": "المستخدمين النشطين"
   },
   "MyFacilities": {
     "title": "My Facilities",
@@ -900,7 +938,8 @@
     "pageTitle": "My Facilities Management",
     "tabs": {
       "pending": "Pending",
-      "active": "Active"
+      "active": "Active",
+      "rejected": "Rejected"
     },
     "addNewBtn": "Add New Facility",
     "loading": "Loading facility data...",
@@ -971,46 +1010,52 @@
       "noData": "No facility data found."
     }
   },
+  
   "AddFacility": {
     "title": "Add New Facility",
-    "subtitle": "Please fill in the details below to register a new facility.",
+    "subtitle": "Fill in the details below to create your facility",
     "sections": {
-      "images": "Facility Images",
+      "images": "Facility Media",
       "basicInfo": "Basic Information",
-      "contact": "Contact & Location"
-    },
-    "media": {
-      "coverLabel": "Cover Image (Required)",
-      "uploadPlaceholder": "Click to Upload",
-      "additionalLabel": "Additional Facility Images",
-      "loadingCats": "Loading Categories...",
-      "coordsExtracted": "Coordinates extracted"
+      "additionalDetails": "Additional Details",
+      "contact": "Location & Contact"
     },
     "fields": {
-      "nameEn": "Facility Name (English)",
-      "nameAr": "Facility Name (Arabic)",
-      "descEn": "Description (English)",
-      "descAr": "Description (Arabic)",
+      "nameEn": "Facility Name (EN)",
+      "nameAr": "Facility Name (AR)",
+      "descEn": "Description (EN)",
+      "descAr": "Description (AR)",
       "tax": "Tax Number",
-      "price": "Estimated Price/Cost",
-      "category": "Main Category",
-      "selectCategory": "Select Category",
+      "price": "Base Price",
+      "category": "Category",
+      "selectCategory": "Select a category",
+      "policy": "Policy",
+      "features": "Features",
+      "overview": "Overview",
       "email": "Email Address",
       "phone": "Phone Number",
-      "website": "Website URL",
-      "address": "Detailed Address",
-      "googleMaps": "Google Maps URL (for coordinates)"
+      "website": "Website",
+      "address": "Physical Address",
+      "googleMaps": "Google Maps URL"
+    },
+    "media": {
+      "coverLabel": "Cover Image",
+      "additionalLabel": "Additional Gallery Images",
+      "uploadPlaceholder": "Click to upload image",
+      "loadingCats": "Loading categories...",
+      "coordsExtracted": "Coordinates extracted successfully"
     },
     "buttons": {
-      "submit": "Confirm and Add Facility",
-      "submitting": "Submitting Facility..."
+      "submit": "Create Facility Now",
+      "submitting": "Saving..."
     },
     "alerts": {
-      "coverRequired": "Cover Image is required before submission.",
-      "success": "Facility Created Successfully!",
-      "error": "Error creating facility. Check console for details."
+      "coverRequired": "Please upload a cover image first",
+      "success": "Facility created successfully!",
+      "error": "Error creating facility, please try again"
     }
-  },
+  }
+,
   "Calendar": {
   "title": "Schedule",
   "subtitle": "Manage your bookings and events",
@@ -1083,7 +1128,38 @@
     "taxRequired": "Tax Number is required",
     "genderRequired": "Select a gender",
     "dobRequired": "Date of Birth is required"
+  },
+  
+  "CancellationRequests": {
+    "title": "Cancellation Requests",
+    "subtitle": "Review user cancellations and process refunds",
+    "noRequests": "No pending requests found.",
+    "table": {
+      "user": "User",
+      "reason": "Reason",
+      "amountPaid": "Amount Paid",
+      "action": "Action",
+      "noReason": "No reason"
+    },
+    "buttons": {
+      "approveRefund": "Approve & Refund",
+      "cancel": "Cancel",
+      "confirmApprove": "Confirm & Approve"
+    },
+    "modal": {
+      "title": "Process Refund",
+      "userPaid": "User Paid",
+      "refundAmount": "Refund Amount",
+      "statusNote": "The status will be updated to <span class=\"text-green-600 font-bold\">APPROVED</span> upon confirmation."
+    },
+    "messages": {
+      "fetchError": "Failed to load requests",
+      "negativeAmount": "Refund amount cannot be negative",
+      "success": "Refund processed and approved successfully",
+      "processError": "Failed to process refund"
+    }
   }
+
 
 
 
