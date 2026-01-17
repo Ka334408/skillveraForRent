@@ -28,7 +28,7 @@ export default function page() {
       <HowItWorks />
       <EasyAsWaterSection />
       <WhyChooseUs />
-      <FAQSection />
+      <FAQSection questions="providerFAQ"/>
     </div>
   )
 }

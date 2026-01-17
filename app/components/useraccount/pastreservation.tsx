@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { useTranslations, useLocale } from "next-intl"; // تم إضافة useLocale
+import { useTranslations, useLocale } from "next-intl";
 import axiosInstance from "@/lib/axiosInstance";
-import { Loader2, Calendar, Star, XCircle, ChevronLeft, ChevronRight, Clock, Send } from "lucide-react";
+import { Loader2, Calendar, Star, XCircle, ChevronLeft, ChevronRight, Clock, Send, CreditCard } from "lucide-react";
 import { toast, Toaster } from "react-hot-toast";
 import Image from "next/image";
 
@@ -20,6 +20,7 @@ export default function Reservations() {
   const [totalPages, setTotalPages] = useState(1);
   const [activeTab, setActiveTab] = useState<TabType>("UPCOMING");
 
+  // States الخاصة بالدفع والتقييم والإلغاء
   const [showPopup, setShowPopup] = useState(false);
   const [selectedReservation, setSelectedReservation] = useState<any>(null);
   const [rate, setRating] = useState(0);
@@ -28,6 +29,11 @@ export default function Reservations() {
   const [cancelReason, setCancelReason] = useState("");
   const [cancellingId, setCancellingId] = useState<string | null>(null);
   const [isSubmitingCancel, setIsSubmitingCancel] = useState(false);
+
+  // States الدفع الجديد
+  const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
+  const [showPaymentIframe, setShowPaymentIframe] = useState(false);
+  const [isPayingId, setIsPayingId] = useState<string | null>(null);
 
   const fetchReservations = async (currentPage: number) => {
     setLoading(true);
@@ -55,6 +61,27 @@ export default function Reservations() {
       return activeTab === "PAST" ? endDate < now : endDate >= now;
     });
   }, [reservations, activeTab]);
+
+  // وظيفة الدفع
+  const handlePayment = async (id: string) => {
+    setIsPayingId(id);
+    try {
+      const { data } = await axiosInstance.get(`/user-reservation/${id}`);
+      // استخراج الرابط بناءً على هيكلة الـ API المتوقعة
+      const url = data?.data?.paymentTransactionUrl || data?.url || data?.payment_link;
+
+      if (url) {
+        setPaymentUrl(url);
+        setShowPaymentIframe(true);
+      } else {
+        toast.error(isRTL ? "عذراً، رابط الدفع غير متاح حالياً" : "Payment link not available");
+      }
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || (isRTL ? "خطأ في جلب بيانات الدفع" : "Error fetching payment data"));
+    } finally {
+      setIsPayingId(null);
+    }
+  };
 
   const openCancelModal = (id: string) => {
     setCancellingId(id);
@@ -95,6 +122,8 @@ export default function Reservations() {
 
   return (
     <div className="w-full px-2 md:px-4 py-4" dir={isRTL ? "rtl" : "ltr"}>
+      <Toaster position="top-center" containerStyle={{ zIndex: 9999 }} />
+
       {/* HEADER & TABS */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-6">
         <div className={isRTL ? "text-right" : "text-left"}>
@@ -139,7 +168,7 @@ export default function Reservations() {
                   <th className={`px-6 py-2 ${isRTL ? "text-right" : "text-left"}`}>{t("colDates")}</th>
                   <th className="px-6 py-2 text-center">{t("colAmount")}</th>
                   <th className="px-6 py-2 text-center">{t("colStatus")}</th>
-                  <th className={`px-6 py-2 ${isRTL ? "text-right" : "text-right"}`}>{t("colAction")}</th>
+                  <th className={`px-6 py-2 ${isRTL ? "text-left" : "text-right"}`}>{t("colAction")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -147,11 +176,11 @@ export default function Reservations() {
                   <tr key={r.id} className="bg-white shadow-sm hover:shadow-md transition-shadow group">
                     <td className={`px-6 py-5 border-y border-gray-50 ${isRTL ? "rounded-r-3xl border-r" : "rounded-l-3xl border-l"}`}>
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center relative">
                           {r.facility.cover ? (
                             <Image src={`/api/media?media=${r.facility.cover}`} alt="cover" width={48} height={48} className="object-cover w-full h-full" />
                           ) : (
-                            <span className="text-[#0E766E] font-bold text-lg">{r.facility?.name?.[locale] || r.facility?.name?.en?.charAt(0)}</span>
+                            <span className="text-[#0E766E] font-bold text-lg">{r.facility?.name?.[locale]?.charAt(0) || "F"}</span>
                           )}
                         </div>
                         <div>
@@ -164,11 +193,11 @@ export default function Reservations() {
                       <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2 text-xs text-gray-700 font-medium">
                           <Calendar size={12} className="text-[#0E766E]" />
-                          {new Date(r.startDate).toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-GB')}
+                          {new Date(r.startDate).toLocaleDateString(isRTL ? 'ar-EG' : 'en-GB')}
                         </div>
                         <div className="flex items-center gap-2 text-[10px] text-gray-400">
                           <Clock size={12} />
-                          {t("ends")}: {new Date(r.endDate).toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-GB')}
+                          {t("ends")}: {new Date(r.endDate).toLocaleDateString(isRTL ? 'ar-EG' : 'en-GB')}
                         </div>
                       </div>
                     </td>
@@ -180,17 +209,29 @@ export default function Reservations() {
                       <StatusBadge status={r.status} t={t} />
                     </td>
                     <td className={`px-6 py-5 border-y border-gray-50 ${isRTL ? "rounded-l-3xl border-l text-left" : "rounded-r-3xl border-r text-right"}`}>
-                      <div className={`flex items-center ${isRTL ? "justify-start" : "justify-end"}`}>
+                      <div className={`flex items-center gap-2 ${isRTL ? "justify-start" : "justify-end"}`}>
                         {activeTab === "PAST" ? (
-                          <button onClick={() => { setSelectedReservation(r); setShowPopup(true); }} className="group relative overflow-hidden flex items-center justify-center gap-2 bg-[#0E766E] text-white px-5 py-2.5 rounded-2xl text-xs font-bold transition-all hover:pr-8 active:scale-95 shadow-lg shadow-teal-100">
+                          <button onClick={() => { setSelectedReservation(r); setShowPopup(true); }} className="flex items-center justify-center gap-2 bg-[#0E766E] text-white px-5 py-2.5 rounded-2xl text-xs font-bold transition-all active:scale-95 shadow-lg shadow-teal-100">
                             <Star size={14} className="fill-yellow-400 text-yellow-400" />
                             <span>{t("btnRate")}</span>
                           </button>
                         ) : (
-                          <button disabled={r.status === 'CANCELLED'} onClick={() => openCancelModal(r.id)} className="flex items-center justify-center gap-2 bg-white text-red-500 border border-red-100 px-5 py-2.5 rounded-2xl text-xs font-bold transition-all hover:bg-red-50 hover:border-red-500 active:scale-95 disabled:opacity-30">
-                            <XCircle size={14} />
-                            <span>{t("btnCancel")}</span>
-                          </button>
+                          <>
+                            {r.status === "PENDING" && (
+                              <button 
+                                onClick={() => handlePayment(r.id)}
+                                disabled={isPayingId === r.id}
+                                className="flex items-center gap-2 bg-amber-500 text-white px-5 py-2.5 rounded-2xl text-xs font-bold hover:bg-amber-600 transition-all active:scale-95 disabled:opacity-50 shadow-lg shadow-amber-100"
+                              >
+                                {isPayingId === r.id ? <Loader2 size={14} className="animate-spin" /> : <CreditCard size={14} />}
+                                <span>{isRTL ? "ادفع الآن" : "Pay Now"}</span>
+                              </button>
+                            )}
+                            <button disabled={r.status === 'CANCELLED'} onClick={() => openCancelModal(r.id)} className="flex items-center justify-center gap-2 bg-white text-red-500 border border-red-100 px-5 py-2.5 rounded-2xl text-xs font-bold transition-all hover:bg-red-50 hover:border-red-500 active:scale-95 disabled:opacity-30">
+                              <XCircle size={14} />
+                              <span>{t("btnCancel")}</span>
+                            </button>
+                          </>
                         )}
                       </div>
                     </td>
@@ -200,7 +241,7 @@ export default function Reservations() {
             </table>
           </div>
 
-          {/* MOBILE VIEW (نفس التعديلات لتدعم RTL) */}
+          {/* MOBILE VIEW */}
           <div className="grid grid-cols-1 gap-4 md:hidden">
             {filteredReservations.map((r) => (
               <div key={r.id} className="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm flex flex-col gap-4">
@@ -219,7 +260,7 @@ export default function Reservations() {
                 <div className="grid grid-cols-2 gap-2 py-3 border-y border-gray-50 border-dashed">
                   <div className={`flex flex-col gap-1 ${isRTL ? "text-right" : "text-left"}`}>
                     <span className="text-[10px] text-gray-400 uppercase font-bold">{t("colDates")}</span>
-                    <span className="text-xs font-semibold text-gray-700">{new Date(r.startDate).toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-GB')}</span>
+                    <span className="text-xs font-semibold text-gray-700">{new Date(r.startDate).toLocaleDateString(isRTL ? 'ar-EG' : 'en-GB')}</span>
                   </div>
                   <div className={`flex flex-col gap-1 ${isRTL ? "text-left" : "text-right"}`}>
                     <span className="text-[10px] text-gray-400 uppercase font-bold">{t("colAmount")}</span>
@@ -228,9 +269,21 @@ export default function Reservations() {
                 </div>
                 <div className="flex gap-2">
                   {activeTab === "PAST" ? (
-                    <button onClick={() => { setSelectedReservation(r); setShowPopup(true); }} className="mobile-btn-rate flex-1 py-3 bg-[#0E766E] text-white rounded-xl text-xs font-bold">{t("btnRate")}</button>
+                    <button onClick={() => { setSelectedReservation(r); setShowPopup(true); }} className="flex-1 py-3 bg-[#0E766E] text-white rounded-xl text-xs font-bold">{t("btnRate")}</button>
                   ) : (
-                    <button disabled={r.status === 'CANCELLED'} onClick={() => openCancelModal(r.id)} className="mobile-btn-cancel flex-1 py-3 bg-red-50 text-red-600 rounded-xl text-xs font-bold disabled:opacity-30">{t("btnCancel")}</button>
+                    <>
+                      {r.status === "PENDING" && (
+                        <button 
+                          onClick={() => handlePayment(r.id)}
+                          disabled={isPayingId === r.id}
+                          className="flex-1 py-3 bg-amber-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2"
+                        >
+                          {isPayingId === r.id ? <Loader2 size={16} className="animate-spin" /> : <CreditCard size={16} />}
+                          {isRTL ? "ادفع" : "Pay"}
+                        </button>
+                      )}
+                      <button disabled={r.status === 'CANCELLED'} onClick={() => openCancelModal(r.id)} className="flex-1 py-3 bg-red-50 text-red-600 rounded-xl text-xs font-bold disabled:opacity-30">{t("btnCancel")}</button>
+                    </>
                   )}
                 </div>
               </div>
@@ -250,6 +303,26 @@ export default function Reservations() {
             </div>
           )}
         </>
+      )}
+
+      {/* PAYMENT IFRAME MODAL */}
+      {showPaymentIframe && paymentUrl && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex justify-center items-center z-[200] p-4 md:p-10">
+          <div className="bg-white w-full h-full max-w-5xl rounded-[32px] overflow-hidden flex flex-col relative shadow-2xl">
+            <div className="p-4 border-b flex justify-between items-center bg-gray-50">
+              <h3 className="font-bold text-gray-800">{isRTL ? "إتمام عملية الدفع" : "Complete Payment"}</h3>
+              <button 
+                onClick={() => { setShowPaymentIframe(false); setPaymentUrl(null); fetchReservations(page); }}
+                className="p-2 hover:bg-gray-200 rounded-full transition-colors text-red-500"
+              >
+                <XCircle size={24} />
+              </button>
+            </div>
+            <div className="flex-1 w-full h-full bg-white">
+              <iframe src={paymentUrl} className="w-full h-full border-none" title="Payment Gateway" />
+            </div>
+          </div>
+        </div>
       )}
 
       {/* CANCELLATION MODAL */}
@@ -306,7 +379,6 @@ export default function Reservations() {
         </div>
       )}
 
-      <Toaster position="top-center" containerStyle={{ zIndex: 9999 }} />
       <style jsx>{`
         .pag-btn { @apply p-2.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-20 transition-all shadow-sm; }
       `}</style>
@@ -314,7 +386,6 @@ export default function Reservations() {
   );
 }
 
-// StatusBadge Component with Translation Support
 const StatusBadge = ({ status, t }: { status: string; t: any }) => {
   const styles: Record<string, string> = {
     APPROVED: "bg-green-50 text-green-600 border-green-100",

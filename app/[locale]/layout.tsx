@@ -21,8 +21,8 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: "SKVrent",
-  description: "Skillvera - Facility Rental Platform",
+  title: "SKV Rent",
+  description: "SKV Rent - Facility Rental Platform",
 };
 
 export default async function LocaleLayout({
@@ -46,7 +46,6 @@ export default async function LocaleLayout({
             <ThemeProvider>
               <div className="flex flex-col min-h-screen">
                 <main className="flex-1">{children}</main>
-                <Footer />
               </div>
             </ThemeProvider>
           </AOSProvider>

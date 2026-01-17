@@ -30,7 +30,7 @@ export default function GallerySection() {
           <div className="absolute inset-0 bg-[#0E766E]/5 group-hover:bg-transparent transition-colors duration-500 z-10" />
           
           <img 
-            src="/samples.png" // ضع هنا الصورة الواحدة التي تجمع الـ 6 صور
+            src="/pro3sec.svg" // ضع هنا الصورة الواحدة التي تجمع الـ 6 صور
             alt="Our Facilities Grid" 
             className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105"
           />

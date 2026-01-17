@@ -6,7 +6,7 @@ import axiosInstance from "@/lib/axiosInstance";
 import { useLocale, useTranslations } from "next-intl";
 
 // 🚀 Imports for Icons
-import { FaPlus, FaClock, FaCheckCircle, FaTimes, FaHome, FaEllipsisV } from "react-icons/fa";
+import { FaPlus, FaClock, FaCheckCircle, FaTimes, FaHome } from "react-icons/fa";
 
 // 🚀 Renamed the primary teal color for clarity
 const PRIMARY_COLOR = "#0E766E"; 
@@ -20,11 +20,12 @@ type Facility = {
 };
 
 export default function FacilitiesPage() {
-  const [activeTab, setActiveTab] = useState<"pending" | "active">("pending");
+  const [activeTab, setActiveTab] = useState<"pending" | "active" | "rejected">("active");
   const [facilitiesData, setFacilitiesData] = useState<{
     pending: Facility[];
     active: Facility[];
-  }>({ pending: [], active: [] });
+    rejected: Facility[];
+  }>({ pending: [], active: [], rejected: [] });
   const [loading, setLoading] = useState(true);
 
   const locale = useLocale();
@@ -32,7 +33,7 @@ export default function FacilitiesPage() {
   const isRTL = locale === "ar";
   const router = useRouter();
 
-  // 🚀 Enhanced Status Logic for Icons and Text with Localization
+  // 🚀 Status Logic for Icons and Text
   const statusInfo = (s: Facility["status"]): { color: string, icon: JSX.Element, text: string } => {
     switch (s) {
       case "PENDING":
@@ -56,16 +57,19 @@ export default function FacilitiesPage() {
 
         const pending: Facility[] = [];
         const active: Facility[] = [];
+        const rejected: Facility[] = [];
 
         allFacilities.forEach((f) => {
-          if (f.status === "PENDING" || f.status === "REJECTED" || f.status === "RENTED") {
+          if (f.status === "PENDING" || f.status === "RENTED") {
             pending.push(f);
           } else if (f.status === "APPROVED") {
             active.push(f);
+          } else if (f.status === "REJECTED") {
+            rejected.push(f);
           }
         });
 
-        setFacilitiesData({ pending, active });
+        setFacilitiesData({ pending, active, rejected });
       } catch (err) {
         console.error("Failed to fetch facilities:", err);
       } finally {
@@ -88,21 +92,21 @@ export default function FacilitiesPage() {
       <div className="mb-8 border-b pb-4">
         <h2 className="text-3xl font-extrabold text-gray-800 mb-4">{t("pageTitle")}</h2>
 
-        {/* Tabs under title */}
-        <div className="flex items-center gap-4">
-          
+        <div className="flex items-center gap-4 flex-wrap">
           {/* Tabs */}
-          {(["pending", "active"] as const).map((tab) => (
+          {(["active", "pending", "rejected"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-5 py-2.5 rounded-full font-bold text-sm transition-all shadow-md flex items-center gap-2 ${
                 activeTab === tab
-                  ? `bg-[${PRIMARY_COLOR}] text-green-600 shadow-lg`
+                  ? `bg-[#0E766E] text-white shadow-lg`
                   : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
               }`}
             >
-              {tab === "pending" ? <FaClock /> : <FaCheckCircle />}
+              {tab === "active" && <FaCheckCircle />}
+              {tab === "pending" && <FaClock />}
+              {tab === "rejected" && <FaTimes />}
               {t(`tabs.${tab}`)} ({facilitiesData[tab].length})
             </button>
           ))}
@@ -113,7 +117,6 @@ export default function FacilitiesPage() {
               router.push(`/${locale}/providerview/dashBoardHome/myFacilities/addNewFacility`)
             }
             className={`${isRTL ? 'mr-auto' : 'ml-auto'} px-4 py-2.5 rounded-full bg-white border-2 border-dashed border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 transition flex items-center gap-2`}
-            aria-label="Add facility"
           >
             <FaPlus className="w-4 h-4" />
             <span>{t("addNewBtn")}</span>
@@ -149,9 +152,7 @@ export default function FacilitiesPage() {
                                    hover:shadow-2xl hover:border-teal-400 transition-all duration-300 cursor-pointer"
                         onClick={() => handleFacilityClick(f.id)}
                     >
-                        {/* Image/Cover Section */}
                         <div className="w-full h-40 bg-gray-200 overflow-hidden flex items-center justify-center relative">
-                            {/* Status Badge */}
                             <div className={`absolute top-3 ${isRTL ? 'right-3' : 'left-3'} px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow ${info.color}`}>
                                 {info.icon}
                                 {info.text}
@@ -159,24 +160,16 @@ export default function FacilitiesPage() {
                             
                             {f.cover ? (
                                 <img
-                                    src={
-                                        f.cover.startsWith("http")
-                                            ? f.cover
-                                            : `/api/media?media=${f.cover}`
-                                    }
+                                    src={f.cover.startsWith("http") ? f.cover : `/api/media?media=${f.cover}`}
                                     alt={f.name[locale as 'en' | 'ar']}
-                                    onError={(e) =>
-                                        (e.currentTarget.src =
-                                            "https://via.placeholder.com/600x400/0E766E/FFFFFF?text=Facility+Image")
-                                    }
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    onError={(e) => (e.currentTarget.src = "https://via.placeholder.com/600x400/0E766E/FFFFFF?text=Facility")}
+                                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                                 />
                             ) : (
                                 <span className="text-gray-500 text-sm">{t("noPhoto")}</span>
                             )}
                         </div>
 
-                        {/* Content */}
                         <div className="p-4 flex flex-col gap-2">
                             <div className="flex justify-between items-center">
                                 <h3 className="text-xl font-extrabold text-gray-900 leading-tight">
@@ -188,10 +181,6 @@ export default function FacilitiesPage() {
                             <p className="text-sm text-gray-600 line-clamp-2 grow">
                                 {f.description?.[locale as 'en' | 'ar'] || t("noDescription")}
                             </p>
-
-                            <div className="mt-3 pt-3 border-t border-gray-100 flex justify-end">
-                                
-                            </div>
                         </div>
                     </article>
                 );

@@ -76,7 +76,7 @@ export default function ProfileCard() {
   if (loading) return (
     <div className="w-full h-[60vh] flex flex-col items-center justify-center">
       <Loader2 className="animate-spin text-[#0E766E] mb-4" size={48} />
-      <h1 className="text-2xl font-black text-gray-800 tracking-tight">Skillvera</h1>
+      <h1 className="text-2xl font-black text-gray-800 tracking-tight">SKV Rent</h1>
     </div>
   );
 

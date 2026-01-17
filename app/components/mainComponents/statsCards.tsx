@@ -1,97 +1,107 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Users, BarChart3, TrendingUp, TrendingDown, Target, Loader2 } from "lucide-react";
+import { Home, CalendarCheck, Wallet, BarChart3, TrendingUp, TrendingDown, Loader2 } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
 import axiosInstance from "@/lib/axiosInstance";
 import { useLocale, useTranslations } from "next-intl";
 
 export default function StatsCards() {
-  const [balance, setBalance] = useState<string | number>("...");
-  const [balanceLoading, setBalanceLoading] = useState(true);
+  const [stats, setStats] = useState({
+    balance: "0",
+    facilitiesCount: "0",
+    reservationsCount: "0",
+  });
+  const [loading, setLoading] = useState(true);
   
   const locale = useLocale();
   const t = useTranslations("StatsCards");
   const isRTL = locale === "ar";
 
   useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        const res = await axiosInstance.get("/provider/balance");
-        const amount = res.data?.data?.balance || res.data?.balance || 0;
-        
-        setBalance(new Intl.NumberFormat(locale === 'ar' ? 'ar-EG' : 'en-US', {
-          style: 'currency',
-          currency: 'SAR',
-        }).format(amount));
-      } catch (err) {
-        console.error("Balance fetch error:", err);
-        setBalance("SAR 0.00");
-      } finally {
-        setBalanceLoading(false);
-      }
-    };
+    const fetchAllStats = async () => {
+  setLoading(true);
+  try {
+    const [balanceRes, facilitiesRes, reservationsRes] = await Promise.all([
+      axiosInstance.get("/provider/balance"),
+      axiosInstance.get("/provider-facility"),
+      axiosInstance.get("/provider/recent-reservations")
+    ]);
 
-    fetchBalance();
+    // 1. معالجة الرصيد
+    const balanceAmount = balanceRes.data?.data?.balance || balanceRes.data?.balance || 0;
+    const formattedBalance = new Intl.NumberFormat(locale === 'ar' ? 'ar-EG' : 'en-US', {
+      style: 'currency',
+      currency: 'SAR',
+    }).format(balanceAmount);
+
+    // 2. معالجة المرافق (بناءً على الريسبونس اللي بعته)
+    // المسار هو res.data.data.total
+    const facilitiesTotal = facilitiesRes.data?.data?.total || 0;
+
+    // 3. معالجة الحجوزات الأخيرة (استخدام طول المصفوفة)
+    const reservationsArray = reservationsRes.data?.data || [];
+    const reservationsCount = Array.isArray(reservationsArray) ? reservationsArray.length : 0;
+
+    setStats({
+      balance: formattedBalance,
+      facilitiesCount: facilitiesTotal.toString(), // هيعرض رقم 6
+      reservationsCount: reservationsCount.toString(),
+    });
+  } catch (err) {
+    console.error("Error fetching stats:", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+    fetchAllStats();
   }, [locale]);
 
   const statsData = [
     {
       id: 1,
-      title: t("newClients"),
-      value: "321",
-      change: "+12.5%",
+      title: t("totalFacilities") || "Total Facilities", // تأكد من إضافة المفتاح في الـ JSON
+      value: stats.facilitiesCount,
+      change: "+2", 
       trend: "up",
-      icon: Users, 
+      icon: Home, 
       iconColor: "text-blue-600",
       bgColor: "bg-blue-50",
       stroke: "#2563eb",
-      chartData: [{ value: 20 }, { value: 40 }, { value: 30 }, { value: 50 }, { value: 70 }, { value: 60 }],
+      chartData: [{ value: 10 }, { value: 15 }, { value: 12 }, { value: 20 }, { value: 25 }],
     },
     {
       id: 2,
       title: t("accountBalance"),
-      value: balance,
+      value: stats.balance,
       change: t("live"),
       trend: "up",
-      icon: "/real.svg", 
+      icon: Wallet, 
       iconColor: "text-teal-600",
-      bgColor: "bg-teal-500",
+      bgColor: "bg-teal-50",
       stroke: "#0e766e",
       chartData: [{ value: 10 }, { value: 20 }, { value: 15 }, { value: 40 }, { value: 35 }, { value: 50 }],
-      isLoading: balanceLoading
     },
     {
       id: 3,
-      title: t("activeUsers"),
-      value: "1.2k",
-      change: "-2.4%",
-      trend: "down",
-      icon: Target,
+      title: t("recentReservations") || "Recent Reservations",
+      value: stats.reservationsCount,
+      change: "New",
+      trend: "up",
+      icon: CalendarCheck,
       iconColor: "text-purple-600",
       bgColor: "bg-purple-50",
       stroke: "#9333ea",
-      chartData: [{ value: 15 }, { value: 25 }, { value: 20 }, { value: 30 }, { value: 50 }, { value: 40 }],
+      chartData: [{ value: 5 }, { value: 10 }, { value: 8 }, { value: 15 }, { value: 20 }],
     },
-    {
-      id: 4,
-      title: t("conversions"),
-      value: "8.5%",
-      change: "+4.1%",
-      trend: "up",
-      icon: BarChart3,
-      iconColor: "text-orange-600",
-      bgColor: "bg-orange-50",
-      stroke: "#ea580c",
-      chartData: [{ value: 5 }, { value: 15 }, { value: 10 }, { value: 20 }, { value: 18 }, { value: 25 }],
-    },
+    
   ];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full py-4" dir={isRTL ? "rtl" : "ltr"}>
       {statsData.map((item) => {
         const IconComponent = item.icon;
-        const isImage = typeof IconComponent === "string";
 
         return (
           <div
@@ -100,11 +110,7 @@ export default function StatsCards() {
           >
             <div className="flex items-center justify-between mb-4">
               <div className={`w-12 h-12 ${item.bgColor} flex items-center justify-center rounded-2xl transition-transform group-hover:scale-110 duration-300 p-2.5`}>
-                {isImage ? (
-                  <img src={IconComponent} alt="icon" className="w-full h-full object-cover" />
-                ) : (
-                  <IconComponent className={`${item.iconColor} w-5 h-5`} />
-                )}
+                <IconComponent className={`${item.iconColor} w-5 h-5`} />
               </div>
               
               <div className={`w-16 h-8 opacity-60 group-hover:opacity-100 transition-opacity ${isRTL ? 'scale-x-[-1]' : ''}`}>
@@ -127,10 +133,10 @@ export default function StatsCards() {
                 {item.title}
               </p>
               <div className="flex items-baseline gap-2">
-                {item.isLoading ? (
+                {loading ? (
                   <Loader2 className="animate-spin text-gray-300 w-5 h-5 mb-1" />
                 ) : (
-                  <h3 className="text-2xl font-black text-gray-900 tracking-tight">
+                  <h3 className="text-xl font-black text-gray-900 tracking-tight break-all">
                     {item.value}
                   </h3>
                 )}

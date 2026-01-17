@@ -9,4 +9,17 @@ const api = axios.create({
   },
 });
 
+api.interceptors.request.use((config) => {
+  if (typeof window !== "undefined") {
+    const pathname = window.location.pathname;
+    const isEnglish = pathname.includes("en");
+    const currentLocale = isEnglish ? "en" : "ar";
+
+    config.headers['Locale'] = currentLocale;
+    
+    config.headers['Accept-Language'] = currentLocale;
+  }
+  return config;
+});
+
 export default api;

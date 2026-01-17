@@ -87,7 +87,7 @@ export const useUserStore = create<UserStore>()(
     }),
 
     {
-      name: "skillvera-user-storage",
+      name: "SKVRent-user-storage",
 
       partialize: (state) => ({
         user: state.user,

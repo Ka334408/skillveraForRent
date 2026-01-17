@@ -14,11 +14,9 @@ export default function HeroSection() {
       dir={isRTL ? "rtl" : "ltr"}
       className="relative bg-[#f8f9f9] dark:bg-zinc-950 pt-16 pb-32 overflow-hidden rounded-bl-[60px] md:rounded-bl-[120px] border-b border-zinc-200 dark:border-white/5"
     >
-      {/* خلفية جمالية خفيفة */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-500/5 via-transparent to-transparent -z-10" />
 
       <div className="max-w-7xl mx-auto px-6 text-center">
-        {/* Badge صغير فوق العنوان */}
         <div 
           className="inline-flex items-center gap-2 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 px-4 py-2 rounded-full mb-8"
           data-aos="fade-down"
@@ -29,7 +27,6 @@ export default function HeroSection() {
           </span>
         </div>
 
-        {/* العنوان الرئيسي - تم تقليل السمك (font-bold بدل font-black) وتصغير الخط قليلاً */}
         <h1 
           className="mx-auto max-w-4xl text-3xl md:text-5xl font-bold text-[#0E766E] dark:text-emerald-400 mb-16 leading-[1.3] md:leading-[1.2] tracking-tight"
           data-aos="zoom-in"
@@ -37,13 +34,12 @@ export default function HeroSection() {
           {t("title")}
         </h1>
 
-        {/* منطقة الصورة - أضفنا كلاس group هنا للتحكم في ظهور المزايا */}
         <div className="relative inline-block mt-8 group" data-aos="fade-up" data-aos-delay="200">
           
           {/* الـ Image Container */}
           <div className="relative z-10 rounded-[2.5rem] p-2 bg-white dark:bg-zinc-900 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)] border border-zinc-200 dark:border-white/10 transition-transform duration-700 group-hover:scale-[1.02]">
             <Image
-              src="/user-hero.png"
+              src="/homehero.svg"
               alt="Modern Building"
               width={1000}
               height={600}

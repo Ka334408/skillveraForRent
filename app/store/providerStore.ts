@@ -92,7 +92,7 @@ export const useProviderStore = create<ProviderStore>()(
         }),
     }),
     {
-      name: "skillvera-provider-storage",
+      name: "SKV Rent-provider-storage",
       partialize: (state) => ({
         provider: state.provider,
         token: state.token,
