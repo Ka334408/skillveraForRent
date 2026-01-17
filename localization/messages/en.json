@@ -1026,7 +1026,7 @@
       "descEn": "Description (EN)",
       "descAr": "Description (AR)",
       "tax": "Tax Number",
-      "price": "Base Price",
+      "price": "Base Price (SAR per hour)",
       "category": "Category",
       "selectCategory": "Select a category",
       "policy": "Policy",
