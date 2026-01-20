@@ -167,7 +167,7 @@ export default function ContactSection() {
                     {t("chatSubtext") || "Prefer real-time conversation?"}
                 </p>
                 <button 
-                  onClick={() => window.open('https://wa.me/YOUR_PHONE_NUMBER', '_blank')}
+                  onClick={() => window.open('https://wa.me/966546223099', '_blank')}
                   className="w-full max-w-[260px] mx-auto py-3 border-2 border-[#117a72] text-[#117a72] rounded-xl text-sm font-black hover:bg-[#117a72] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group"
                 >
                     <MessageSquare size={18} className="group-hover:animate-bounce" />
