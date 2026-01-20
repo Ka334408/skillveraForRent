@@ -296,7 +296,7 @@ export default function FacilitiesSection() {
         {/* العمود الأيمن: الخريطة التفاعلية */}
         <div className="lg:w-[45%] w-full h-[550px] lg:h-[750px] sticky top-8 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] z-10 border-4 border-white dark:border-zinc-900 bg-zinc-100">
           {icons && (
-            <MapContainer center={[24.7136, 46.6753]} zoom={12} scrollWheelZoom={false} className="h-full w-full" zoomControl={false}>
+            <MapContainer center={[24.7136, 46.6753]} zoom={12} scrollWheelZoom={true} className="h-full w-full" zoomControl={false}>
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               <MapUpdater facilities={facilities} />
               

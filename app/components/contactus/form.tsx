@@ -44,7 +44,6 @@ export default function ContactFormSection() {
     try {
       await axiosInstance.post("/user-contact-us", formData);
       
-      // رسالة النجاح بالتوست
       toast.success(isRTL ? "تم إرسال رسالتك بنجاح!" : "Message sent successfully!", {
         style: {
           borderRadius: '15px',
@@ -55,7 +54,6 @@ export default function ContactFormSection() {
 
       setFormData((prev) => ({ ...prev, message: "", phone: "" })); 
     } catch (error) {
-      // رسالة الخطأ بالتوست
       toast.error(isRTL ? "حدث خطأ أثناء الإرسال" : "Error sending message");
     } finally {
       setLoading(false);
@@ -67,7 +65,6 @@ export default function ContactFormSection() {
       className="py-16 px-6 container mx-auto grid grid-cols-1 md:grid-cols-2 gap-10" 
       dir={isRTL ? "rtl" : "ltr"}
     >
-      {/* تأكد من وجود الـ Toaster في الكومبوننت */}
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="bg-white border-2 border-gray-100 p-8 rounded-[32px] shadow-xl shadow-gray-100/50">
@@ -153,7 +150,9 @@ export default function ContactFormSection() {
         </div>
         <h3 className="text-white text-2xl font-bold mb-2">{t("whatsappTitle")}</h3>
         <p className="text-teal-50/80 text-sm max-w-xs mb-8">{t("whatsappDesc")}</p>
-        <button className="w-full md:w-auto bg-white px-10 py-4 rounded-2xl font-bold text-[#0E766E] hover:bg-teal-50 transition-all shadow-xl">
+        <button 
+         onClick={() => window.open('https://wa.me/966546223099', '_blank')}
+        className="w-full md:w-auto bg-white px-10 py-4 rounded-2xl font-bold text-[#0E766E] hover:bg-teal-50 transition-all shadow-xl">
           {t("directChat")}
         </button>
       </div>
