@@ -6,7 +6,7 @@ import { useTranslations, useLocale } from "next-intl";
 import GuestPage from "@/app/components/protectedpages/guestPage";
 import axiosInstance from "@/lib/axiosInstance";
 import { useProviderStore } from "@/app/store/providerStore";
-import { ShieldCheck, Mail, ArrowLeft, ArrowRight, RefreshCcw, Loader2, AlertCircle, CheckCircle } from "lucide-react";
+import { ShieldCheck, Mail, ArrowLeft, ArrowRight, RefreshCcw, Loader2, AlertCircle, CheckCircle, Clock } from "lucide-react"; // تم إضافة Clock
 import Link from "next/link";
 
 export default function VerifyAccount() {
@@ -22,13 +22,34 @@ export default function VerifyAccount() {
   const [resending, setResending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  
+  // 1. حالة التايمر (60 ثانية)
+  const [timer, setTimer] = useState(60);
 
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
-   const signupUrl = `/${locale}/providerRegistration`;
+  const signupUrl = `/${locale}/providerRegistration`;
 
   useEffect(() => {
     inputsRef.current[0]?.focus();
   }, []);
+
+  // 2. منطق العد التنازلي
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  // دالة لتنسيق الوقت (01:00)
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const handleChange = (value: string, index: number) => {
     if (/^[0-9]?$/.test(value)) {
@@ -75,6 +96,9 @@ export default function VerifyAccount() {
   };
 
   const handleResend = async () => {
+    // منع الضغط إذا كان العداد يعمل
+    if (timer > 0) return;
+
     setError(null);
     setMessage(null);
     setResending(true);
@@ -85,6 +109,8 @@ export default function VerifyAccount() {
         { withCredentials: true }
       );
       setMessage(t("resend_success"));
+      // 3. إعادة ضبط التايمر عند النجاح
+      setTimer(60);
     } catch (err: any) {
       setError(err.response?.data?.message || t("error_resend"));
     } finally {
@@ -117,7 +143,7 @@ export default function VerifyAccount() {
             </div>
           </div>
 
-          {/* الجانب الأيمن - حقول التحقق (توسيط كامل) */}
+          {/* الجانب الأيمن - حقول التحقق */}
           <div className="md:w-7/12 w-full p-8 lg:p-12 flex flex-col justify-center items-center bg-white dark:bg-zinc-950">
             <div className="mb-10 text-center w-full max-w-[360px]">
               <h2 className="text-2xl font-black text-zinc-800 dark:text-white mb-2">{t("form_title")}</h2>
@@ -125,7 +151,6 @@ export default function VerifyAccount() {
             </div>
 
             <form onSubmit={handleSubmit} className="w-full max-w-[360px] space-y-8">
-              {/* توسيط الأرقام الأربعة */}
               <div className="flex justify-center gap-3 sm:gap-4" dir="ltr">
                 {code.map((digit, index) => (
                   <input
@@ -170,13 +195,27 @@ export default function VerifyAccount() {
             </form>
 
             <div className="mt-12 w-full max-w-[360px] flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-zinc-100 dark:border-zinc-800 pt-8">
+              {/* 4. تحديث زر إعادة الإرسال */}
               <button
                 onClick={handleResend}
-                disabled={resending}
-                className="group flex items-center gap-2 text-sm font-black text-[#0E766E] hover:text-[#0A5D57] transition-colors disabled:opacity-50"
+                disabled={resending || timer > 0}
+                className={`group flex items-center gap-2 text-sm font-black transition-colors ${
+                  timer > 0 
+                    ? "text-zinc-400 cursor-not-allowed" 
+                    : "text-[#0E766E] hover:text-[#0A5D57]"
+                }`}
               >
-                <RefreshCcw size={16} className={`${resending ? "animate-spin" : "group-hover:rotate-180 transition-transform duration-500"}`} />
-                {resending ? t("resending") : t("resend_link")}
+                {timer > 0 ? (
+                  <>
+                    <Clock size={16} className="animate-pulse" />
+                    <span dir="ltr">{formatTime(timer)}</span>
+                  </>
+                ) : (
+                  <>
+                    <RefreshCcw size={16} className={`${resending ? "animate-spin" : "group-hover:rotate-180 transition-transform duration-500"}`} />
+                    {resending ? t("resending") : t("resend_link")}
+                  </>
+                )}
               </button>
 
               <Link href={signupUrl} className="flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">

@@ -69,7 +69,6 @@ export default function SignUp() {
       <main dir={isRTL ? "rtl" : "ltr"} className="min-h-screen bg-zinc-50 dark:bg-[#050505] flex items-center justify-center p-4">
         <div className="bg-white dark:bg-zinc-950 rounded-[2rem] shadow-xl w-full max-w-5xl flex flex-col md:flex-row overflow-hidden border border-zinc-200 dark:border-white/5 min-h-[600px]">
           
-          {/* الجانب الأيسر - تم تصغير الـ Padding والخطوط */}
           <div className="md:w-5/12 bg-[#0E766E] p-8 text-white flex flex-col justify-between relative overflow-hidden">
             <div className="absolute top-[-10%] left-[-10%] w-64 h-64 bg-emerald-400/20 rounded-full blur-[60px]" />
             
@@ -126,7 +125,6 @@ export default function SignUp() {
                 </div>
               </div>
 
-              {/* الهاتف - تم تبسيط الحاوية لضمان عمل الدروب داون */}
               <div className="space-y-1">
                 <label className="text-[10px] font-black uppercase text-zinc-400 px-1">{t("fields.phone")}</label>
                 <div className="relative" dir="ltr">

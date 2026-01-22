@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import GuestPage from "@/app/components/protectedpages/guestPage";
 import axiosInstance from "@/lib/axiosInstance";
 import { useUserStore } from "@/app/store/userStore";
-import { CheckCircle2, MailOpen, RefreshCw } from "lucide-react";
+import { CheckCircle2, MailOpen, RefreshCw, Clock } from "lucide-react"; // إضافة Clock
 
 export default function VerifyAccount() {
   const t = useTranslations("verifyAccount");
@@ -22,7 +22,28 @@ export default function VerifyAccount() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
+  // --- إضافة حالات التايمر ---
+  const [timer, setTimer] = useState(60); // 60 ثانية
+
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+
+  // منطق العداد التنازلي
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  // دالة تنسيق الوقت
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const handleChange = (value: string, index: number) => {
     if (/^[0-9]?$/.test(value)) {
@@ -75,6 +96,8 @@ export default function VerifyAccount() {
   };
 
   const handleResend = async () => {
+    if (timer > 0) return; // منع الإرسال إذا كان التايمر يعمل
+
     setError(null);
     setMessage(null);
     setResending(true);
@@ -87,6 +110,7 @@ export default function VerifyAccount() {
       );
       setMessage(t("resend_success"));
       setCode(["", "", "", ""]);
+      setTimer(60); // إعادة ضبط التايمر
       inputsRef.current[0]?.focus();
     } catch (err: any) {
       setError(err.response?.data?.message || t("error_resend"));
@@ -103,7 +127,6 @@ export default function VerifyAccount() {
       >
         <div className="bg-white dark:bg-zinc-900 rounded-[2.5rem] shadow-2xl p-8 md:p-12 max-w-md w-full text-center border dark:border-zinc-800 relative overflow-hidden">
           
-          {/* أيقونة البريد */}
           <div className="w-20 h-20 bg-teal-50 dark:bg-teal-900/20 rounded-3xl flex items-center justify-center mb-8 mx-auto">
             <MailOpen size={40} className="text-[#0E766E]" />
           </div>
@@ -160,11 +183,22 @@ export default function VerifyAccount() {
               {t("did_not_receive")}{" "}
               <button
                 onClick={handleResend}
-                disabled={resending}
-                className="text-[#0E766E] font-bold hover:underline disabled:opacity-50 inline-flex items-center gap-1 group"
+                disabled={resending || timer > 0}
+                className={`font-bold inline-flex items-center gap-1 group transition-colors ${
+                  timer > 0 ? "text-zinc-400 cursor-not-allowed" : "text-[#0E766E] hover:underline"
+                }`}
               >
-                <RefreshCw size={14} className={`${resending ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
-                {resending ? t("resending") : t("resend_btn")}
+                {timer > 0 ? (
+                  <>
+                    <Clock size={14} className="animate-pulse" />
+                    <span dir="ltr">{formatTime(timer)}</span>
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw size={14} className={`${resending ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
+                    {resending ? t("resending") : t("resend_btn")}
+                  </>
+                )}
               </button>
             </p>
           </div>

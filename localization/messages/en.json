@@ -630,6 +630,7 @@
   "plans": {
     "step_badge": "Step 2: Business Scale",
     "hero_title": "Select Your Business Scale",
+    "back_btn": "Back to Account Setup",
     "hero_subtitle": "Choose the tier that best fits your facility management needs. You can change this later from your settings.",
     "individual": {
       "title": "Individual",
