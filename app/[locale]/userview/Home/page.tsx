@@ -45,7 +45,7 @@ export default function HomePage() {
         <TrustedSection />
         <FAQSection questions="FAQ" />
         <ContactSection />
-        <FeaturesSection />
+        {/* <FeaturesSection /> */}
         <AboutSection />
       </div>
     </main>
