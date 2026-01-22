@@ -12,7 +12,7 @@ export default function AboutSection() {
   const router=useRouter();
 
   return (
-    <section className="py-16 bg-white dark:bg-[#0a0a0a] transition-colors overflow-hidden">
+    <section className="py-16 dark:bg-[#0a0a0a] transition-colors overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
           
