@@ -5,11 +5,12 @@ import { Star, Calendar, ShieldCheck, Edit3, Loader2, ImageOff } from "lucide-re
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { facilitiesData } from "@/app/constants/content";
 
 export default function ReservationCard() {
   const router = useRouter();
   const locale = useLocale();
-  const t = useTranslations("ReservationCard"); // تأكد من إضافة هذا القسم في ملفات الترجمة
+  const t = useTranslations("ReservationCard"); 
   const isRTL = locale === "ar";
   const [reservation, setReservation] = useState<any>(null);
 
@@ -94,8 +95,7 @@ export default function ReservationCard() {
           <span>{t("freeCancellation")}</span>
         </div>
         <p className="text-[11px] text-emerald-600/80 dark:text-emerald-500/80 leading-relaxed">
-          {t("cancelNotice")} <strong>20/11/2025</strong>. 
-          <button className="underline mx-1 font-semibold">{t("viewPolicy")}</button>
+          <button onClick={()=>router.push(`/${locale}/userview/allFacilities/${reservation.id}`)} className="underline mx-1 font-semibold">{t("viewPolicy")}</button>
         </p>
       </div>
 

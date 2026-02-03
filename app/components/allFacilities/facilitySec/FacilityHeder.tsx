@@ -54,6 +54,10 @@ export default function FacilityHeader() {
             address: data.address ?? "",
             webSite: data.website ?? "",
             taxNumber: data.taxNumber ?? "",
+            policy : data.policy || "",
+            overview : data.overview || "",
+            features : data.features || "",
+            rule : data.rules || "",
           });
         }
       } catch (err) {
