@@ -22,7 +22,6 @@ export default function FacilityCalendar() {
 
   const [isMobile, setIsMobile] = useState(false);
   
-  // --- نفس اللوجيك القديم تماماً ---
   const formatLocalDate = (date: Date): string => {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
@@ -50,7 +49,6 @@ export default function FacilityCalendar() {
   const start = range.startDate!;
   const end = range.endDate!;
 
-  // اللوجيك الخاص بالأيام المحجوزة (سيبته زي ما هو عشان تضيف الـ API براحتك)
   const bookedDates: string[] = []; 
   const booked = bookedDates.map((d) => new Date(d).toDateString());
 
@@ -69,7 +67,6 @@ export default function FacilityCalendar() {
 
   const totalPrice = availableDays * facility.price;
 
-  // --- نفس لوجيك الـ API القديم ---
   const handleRentNow = async () => {
     if (!facility) return;
     const formattedStartDate = formatLocalDate(start);
@@ -98,6 +95,7 @@ export default function FacilityCalendar() {
           start: formattedStartDate,
           end: formattedEndDate,
           username: user?.name,
+          policy :  facility.policy||"",
         };
         localStorage.setItem("reservationData", JSON.stringify(reservationData));
         window.location.href = `/${locale}/userview/allFacilities/reservation`;

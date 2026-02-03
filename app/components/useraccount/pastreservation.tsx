@@ -168,7 +168,7 @@ export default function Reservations() {
                   <th className={`px-6 py-2 ${isRTL ? "text-right" : "text-left"}`}>{t("colDates")}</th>
                   <th className="px-6 py-2 text-center">{t("colAmount")}</th>
                   <th className="px-6 py-2 text-center">{t("colStatus")}</th>
-                  <th className={`px-6 py-2 ${isRTL ? "text-left" : "text-right"}`}>{t("colAction")}</th>
+                  <th className={`px-6 py-2 text-center`}>{t("colAction")}</th>
                 </tr>
               </thead>
               <tbody>
