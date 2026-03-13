@@ -15,8 +15,8 @@ export default function Footer() {
   const mainLinks = [
     { label: isArabic ? "عن سكايفارينت" : "About SKV Rent", href: `/${locale}/userview/aboutUs` },
     { label: isArabic ? "تواصل" : "Contact us", href: `/${locale}/userview/contactUs` },
-    { label: isArabic ? "جميع المرافق" : "All Facilities", href: `/${locale}/userview/facilities` },
-    { label: isArabic ? "الانضمام كمؤجر" : "Join as Provider", href: `/${locale}/userview/register` },
+    { label: isArabic ? "جميع المرافق" : "All Facilities", href: `/${locale}/userview/allFacilities` },
+    { label: isArabic ? "الانضمام كمؤجر" : "Join as Provider", href: `/${locale}/providerview/Home` },
   ];
 
   const socialLinks = [
@@ -50,7 +50,6 @@ export default function Footer() {
         
         <div className="grid gap-12 lg:grid-cols-3 md:grid-cols-1">
           
-          {/* العمود الأول + اللوجو (في الموبايل فقط) */}
           <div className="flex flex-row justify-between items-start lg:block">
             <div className={clsx(isArabic ? "text-right" : "text-left")}>
               <h3 className="font-bold text-gray-900 mb-6 text-lg">
@@ -70,7 +69,6 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* اللوجو يظهر هنا بجانب العمود الأول في الموبايل فقط */}
             <div className="lg:hidden shrink-0">
                <Link href="/">
                 <Image
