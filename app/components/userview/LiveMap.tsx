@@ -18,7 +18,7 @@ export default function LiveMap() {
   const isRTL = locale === "ar";
   
   const [places, setPlaces] = useState<any[]>([]);
-  const [userLocation, setUserLocation] = useState<[number, number]>([30.0444, 31.2357]);
+  const [userLocation, setUserLocation] = useState<[number, number]>([24.714157, 46.680219]);
   const [icons, setIcons] = useState<{ user: any; place: any } | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<any>(null);
 
@@ -62,7 +62,7 @@ export default function LiveMap() {
         setUserLocation([latitude, longitude]);
         fetchNearest(latitude, longitude);
       },
-      () => fetchNearest(30.0444, 31.2357)
+      () => fetchNearest(24.714157, 46.680219)
     );
   }, [locale]);
 
